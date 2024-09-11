@@ -23,6 +23,8 @@ import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { useRouter } from "expo-router";
 import { FastForward } from "~/lib/icons/FastForward";
+import { Stack } from "expo-router";
+import { ThemeToggle } from "~/components/ThemeToggle";
 
 export default function Screen() {
   const [userName, setUserName] = React.useState("");
@@ -38,90 +40,104 @@ export default function Screen() {
     setPassword(text);
   };
 
+  const signUp = () => {
+    router.push("/SignUp");
+  };
+
   const login = () => {
     router.replace("Dashboard");
   };
 
   return (
-    <View className="flex-1 justify-center items-center gap-5 p-6 bg-secondary/30">
-      <Card className="w-full max-w-sm p-6 rounded-2xl">
-        <CardHeader className="items-center">
-          <FastForward
-            className="text-foreground"
-            size={86}
-            strokeWidth={1.25}
-          />
-          <View className="p-3" />
-          <CardTitle className="pb-2 text-center">
-            Log in to your account
-          </CardTitle>
-          <View className="flex-row">
-            <CardDescription className="text-base font-semibold">
-              Manage your business with Brisk
-            </CardDescription>
-          </View>
-        </CardHeader>
-        <CardContent>
-          <View className="gap-4">
-            <View className="gap-2">
-              <Label nativeID="email">Email</Label>
-              <Input
-                placeholder="Business Email"
-                value={userName}
-                onChangeText={onChangeUserName}
-                aria-labelledby="email"
-                aria-errormessage="inputError"
-              />
+    <>
+      <Stack.Screen
+        options={{
+          title: "App Name",
+          headerRight: () => (
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                marginRight: 10,
+              }}
+            >
+              <ThemeToggle />
+              <Button className="shadow shadow-foreground/5" onPress={signUp}>
+                <Text>Sign Up</Text>
+              </Button>
             </View>
+          ),
+        }}
+      />
+      <View className="flex-1 justify-center items-center gap-5 p-6 bg-secondary/30">
+        <Card className="w-full max-w-sm md:w-1/2 p-6 rounded-2xl">
+          <CardHeader className="items-center">
+            <FastForward
+              className="text-foreground"
+              size={86}
+              strokeWidth={1.25}
+            />
+            <View className="p-3" />
+            <CardTitle className="pb-2 text-center">
+              Log in to your account
+            </CardTitle>
+            <View className="flex-row">
+              <CardDescription className="text-base font-semibold">
+                Manage your business with Brisk
+              </CardDescription>
+            </View>
+          </CardHeader>
 
-            <View className="gap-2">
-              <Label nativeID="password">Password</Label>
-              <Input
-                placeholder="Password"
-                value={password}
-                onChangeText={onChangePassword}
-                aria-labelledby="password"
-                aria-errormessage="inputError"
-                secureTextEntry={true}
-              />
-              <View style={{ alignSelf: "flex-end" }}>
-                <Button
-                  variant="link"
-                  className="shadow shadow-foreground/5"
-                  onPress={login}
-                >
-                  <Text className="text-primary mt-2 text-right">
-                    Forgot Password
-                  </Text>
-                </Button>
+          <CardContent>
+            <View className="gap-4">
+              <View className="gap-2">
+                <Label nativeID="email">Email</Label>
+                <Input
+                  placeholder="Business Email"
+                  value={userName}
+                  onChangeText={onChangeUserName}
+                  aria-labelledby="email"
+                  aria-errormessage="inputError"
+                />
+              </View>
+
+              <View className="gap-2">
+                <Label nativeID="password">Password</Label>
+                <Input
+                  placeholder="Password"
+                  value={password}
+                  onChangeText={onChangePassword}
+                  aria-labelledby="password"
+                  aria-errormessage="inputError"
+                  secureTextEntry={true}
+                />
+                <View style={{ alignSelf: "flex-end" }}>
+                  <Button
+                    variant="link"
+                    className="shadow shadow-foreground/5"
+                    onPress={login}
+                  >
+                    <Text className="text-primary mt-2 text-right">
+                      Forgot Password
+                    </Text>
+                  </Button>
+                </View>
               </View>
             </View>
-          </View>
-        </CardContent>
-        <CardFooter className="flex-col gap-3 pb-0">
-          <Button
-            // variant="outline"
-            size="lg"
-            className="shadow shadow-foreground/5 w-full"
-            onPress={login}
-          >
-            <Text>Login</Text>
-          </Button>
-
-          <View className="flex-row justify-center items-center">
-            <Text className="text-primary mt-1 text-right">
-              Don't have an account?
-            </Text>
+          </CardContent>
+          <CardFooter className="flex-col gap-3 pb-0">
             <Button
-              variant="link"
-              className="shadow shadow-foreground/5"
+              // variant="outline"
+              size="lg"
+              className="shadow shadow-foreground/5 w-full"
               onPress={login}
             >
-              <Text className="text-primary text-center">Sign Up</Text>
+              <Text>Login</Text>
             </Button>
-          </View>
-        </CardFooter>
-      </Card>
-    </View>
+          </CardFooter>
+        </Card>
+      </View>
+    </>
   );
 }

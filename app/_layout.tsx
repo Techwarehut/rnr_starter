@@ -16,8 +16,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Text } from "~/components/ui/text";
 import { Button } from "~/components/ui/button";
 import { FastForward } from "~/lib/icons/FastForward";
-
-const AVATAR_URI = "https://randomuser.me/api/portraits/men/32.jpg";
+import { BottomSheetModalProvider } from "~/components/ui/bottom-sheet/bottomSheet";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const LIGHT_THEME: Theme = {
   dark: false,
@@ -42,17 +42,21 @@ export default function RootLayout() {
 
   React.useEffect(() => {
     (async () => {
+      console.log("I am here");
       const theme = await AsyncStorage.getItem("theme");
       if (Platform.OS === "web") {
         // Adds the background color to the html element to prevent white background on overscroll.
         document.documentElement.classList.add("bg-background");
       }
+      console.log(theme);
       if (!theme) {
         AsyncStorage.setItem("theme", colorScheme);
         setIsColorSchemeLoaded(true);
         return;
       }
       const colorTheme = theme === "dark" ? "dark" : "light";
+      console.log("color theme", colorTheme);
+      console.log("color scheme", colorScheme);
       if (colorTheme !== colorScheme) {
         setColorScheme(colorTheme);
         setAndroidNavigationBar(colorTheme);
@@ -70,72 +74,36 @@ export default function RootLayout() {
     return null;
   }
 
-  //const router = useRouter();
-  const signUp = () => {
-    //router.push("SignUp");
-  };
-
   return (
-    <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-      <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
-      <Stack
-        screenOptions={{
-          headerLeft: () => (
-            <FastForward
-              className="text-foreground items-center justify-center ml-2"
-              size={24}
-              strokeWidth={1.25}
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <BottomSheetModalProvider>
+        <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
+          <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
+          <Stack
+            screenOptions={{
+              headerShadowVisible: false,
+
+              headerLeft: () => (
+                <FastForward
+                  className="text-foreground items-center justify-center ml-2"
+                  size={24}
+                  strokeWidth={1.25}
+                />
+              ),
+            }}
+          >
+            <Stack.Screen name="index" />
+            <Stack.Screen name="SignUp" />
+            <Stack.Screen
+              name="(tabs)"
+              options={{
+                headerShown: false,
+              }}
             />
-          ),
-        }}
-      >
-        <Stack.Screen
-          name="index"
-          options={{
-            title: "App Name",
-            headerRight: () => (
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginRight: 10,
-                }}
-              >
-                <ThemeToggle />
-                <Button className="shadow shadow-foreground/5" onPress={signUp}>
-                  <Text>Sign Up</Text>
-                </Button>
-              </View>
-            ),
-          }}
-        />
-        <Stack.Screen
-          name="(tabs)"
-          options={{
-            title: "Company Name",
-            headerRight: () => (
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginRight: 10,
-                }}
-              >
-                <ThemeToggle />
-                <Avatar alt="Rick Sanchez's Avatar" className="w-10 h-10">
-                  <AvatarImage source={{ uri: AVATAR_URI }} />
-                  <AvatarFallback>
-                    <Text>RS</Text>
-                  </AvatarFallback>
-                </Avatar>
-              </View>
-            ),
-          }}
-        />
-      </Stack>
-      <PortalHost />
-    </ThemeProvider>
+          </Stack>
+          <PortalHost />
+        </ThemeProvider>
+      </BottomSheetModalProvider>
+    </GestureHandlerRootView>
   );
 }

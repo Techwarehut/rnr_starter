@@ -1,4 +1,5 @@
-import { StyleSheet, Text, useWindowDimensions, View } from "react-native";
+import { StyleSheet, useWindowDimensions, View } from "react-native";
+import { Text } from "~/components/ui/text";
 
 export default function Settings() {
   const { width } = useWindowDimensions();
@@ -7,7 +8,7 @@ export default function Settings() {
     <View
       style={[styles.container, isLargeScreen && styles.largeScreenPadding]}
     >
-      <Text className="text-primary">I am in Settings Screen</Text>
+      <Text>I am in Settings Screen</Text>
     </View>
   );
 }

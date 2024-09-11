@@ -1,4 +1,5 @@
-import { StyleSheet, Text, useWindowDimensions, View } from "react-native";
+import { StyleSheet, useWindowDimensions, View } from "react-native";
+import { Text } from "~/components/ui/text";
 
 export default function Purchases() {
   const { width } = useWindowDimensions();
@@ -7,7 +8,7 @@ export default function Purchases() {
     <View
       style={[styles.container, isLargeScreen && styles.largeScreenPadding]}
     >
-      <Text className="text-primary">I am in Purchases Screen</Text>
+      <Text>I am in Purchases Screen</Text>
     </View>
   );
 }

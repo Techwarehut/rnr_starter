@@ -12,6 +12,15 @@ import { Layers } from "~/lib/icons/Layers";
 import { ReceiptText } from "~/lib/icons/ReceiptText";
 import { CreditCard } from "~/lib/icons/CreditCard";
 import { Settings } from "~/lib/icons/Settings";
+import { Contact } from "~/lib/icons/Contact";
+import { ThemeToggle } from "~/components/ThemeToggle";
+
+import { View } from "react-native";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import { Text } from "~/components/ui/text";
+import { Button } from "~/components/ui/button";
+
+const AVATAR_URI = "https://randomuser.me/api/portraits/men/32.jpg";
 
 export default function TabLayout() {
   const { width } = useWindowDimensions(); // Get screen width
@@ -28,7 +37,29 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: activeTintColor,
         tabBarInactiveTintColor: inactiveTintColor, // Optional: Set the color for inactive tabs
-        headerShown: false,
+        headerShown: true,
+        headerShadowVisible: false,
+        headerTitleStyle: {
+          paddingLeft: isLargeScreen ? 80 : 0, // Corrected conditional syntax
+        },
+        headerRight: () => (
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              marginRight: 10,
+            }}
+          >
+            <ThemeToggle />
+            <Avatar alt="Rick Sanchez's Avatar" className="w-10 h-10">
+              <AvatarImage source={{ uri: AVATAR_URI }} />
+              <AvatarFallback>
+                <Text>RS</Text>
+              </AvatarFallback>
+            </Avatar>
+          </View>
+        ),
       }}
     >
       <Tabs.Screen
@@ -37,9 +68,9 @@ export default function TabLayout() {
           title: "Dashboard",
           tabBarIcon: ({ color, focused }) => (
             <LayoutDashboard
-              className="text-foreground"
+              className={focused ? "text-green-500" : "text-foreground"}
               size={24}
-              strokeWidth={focused ? 1.25 : 1}
+              strokeWidth={1}
             />
           ),
         }}
@@ -49,11 +80,7 @@ export default function TabLayout() {
         options={{
           title: "Jobs",
           tabBarIcon: ({ color, focused }) => (
-            <Layers
-              className="text-foreground"
-              size={24}
-              strokeWidth={focused ? 1.25 : 1}
-            />
+            <Layers className="text-foreground" size={24} strokeWidth={1} />
           ),
         }}
       />
@@ -65,7 +92,7 @@ export default function TabLayout() {
             <ReceiptText
               className="text-foreground"
               size={24}
-              strokeWidth={focused ? 1.25 : 1}
+              strokeWidth={1}
             />
           ),
         }}
@@ -75,11 +102,7 @@ export default function TabLayout() {
         options={{
           title: "Sales",
           tabBarIcon: ({ color, focused }) => (
-            <CreditCard
-              className="text-foreground"
-              size={24}
-              strokeWidth={focused ? 1.25 : 1}
-            />
+            <CreditCard className="text-foreground" size={24} strokeWidth={1} />
           ),
         }}
       />
@@ -89,11 +112,16 @@ export default function TabLayout() {
         options={{
           title: "Team",
           tabBarIcon: ({ color, focused }) => (
-            <Users
-              className="text-foreground"
-              size={24}
-              strokeWidth={focused ? 1.25 : 1}
-            />
+            <Users className="text-foreground" size={24} strokeWidth={1} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="Customers"
+        options={{
+          title: "Customers",
+          tabBarIcon: ({ color, focused }) => (
+            <Contact className="text-foreground" size={24} strokeWidth={1} />
           ),
         }}
       />
@@ -102,11 +130,7 @@ export default function TabLayout() {
         options={{
           title: "OnBoard",
           tabBarIcon: ({ color, focused }) => (
-            <UserPlus
-              className="text-foreground"
-              size={24}
-              strokeWidth={focused ? 1.25 : 1}
-            />
+            <UserPlus className="text-foreground" size={24} strokeWidth={1} />
           ),
         }}
       />
@@ -115,11 +139,7 @@ export default function TabLayout() {
         options={{
           title: "Setting",
           tabBarIcon: ({ color, focused }) => (
-            <Settings
-              className="text-foreground"
-              size={24}
-              strokeWidth={focused ? 1.25 : 1}
-            />
+            <Settings className="text-foreground" size={24} strokeWidth={1} />
           ),
         }}
       />

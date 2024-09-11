@@ -1,14 +1,14 @@
 import { StyleSheet, useWindowDimensions, View } from "react-native";
 import { Text } from "~/components/ui/text";
 
-export default function JobScreen() {
+export default function CustomerScreen() {
   const { width } = useWindowDimensions();
   const isLargeScreen = width > 600; // Adjust threshold as needed
   return (
     <View
       style={[styles.container, isLargeScreen && styles.largeScreenPadding]}
     >
-      <Text>I am in Job Screen</Text>
+      <Text>I am in Customer Screen</Text>
     </View>
   );
 }
