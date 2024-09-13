@@ -1,39 +1,80 @@
-import * as React from 'react';
-import { Platform, StyleSheet } from 'react-native';
-import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
-import { TextClassContext } from '~/components/ui/text';
-import * as PopoverPrimitive from '@rn-primitives/popover';
-import { cn } from '~/lib/utils';
+// Popover.tsx (for BottomSheet - Mobile)
 
-const Popover = PopoverPrimitive.Root;
+import React, { useCallback, useMemo, useRef, useState } from "react";
+import { View, Pressable, Platform } from "react-native";
 
-const PopoverTrigger = PopoverPrimitive.Trigger;
+import {
+  BottomSheetModal,
+  BottomSheetView,
+  BottomSheetHandle,
+} from "~/components/ui/bottom-sheet/bottomSheet";
 
-const PopoverContent = React.forwardRef<
-  React.ElementRef<typeof PopoverPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Content> & { portalHost?: string }
->(({ className, align = 'center', sideOffset = 4, portalHost, ...props }, ref) => {
-  return (
-    <PopoverPrimitive.Portal hostName={portalHost}>
-      <PopoverPrimitive.Overlay style={Platform.OS !== 'web' ? StyleSheet.absoluteFill : undefined}>
-        <Animated.View entering={FadeIn.duration(200)} exiting={FadeOut}>
-          <TextClassContext.Provider value='text-popover-foreground'>
-            <PopoverPrimitive.Content
-              ref={ref}
-              align={align}
-              sideOffset={sideOffset}
-              className={cn(
-                'z-50 w-72 rounded-md web:cursor-auto border border-border bg-popover p-4 shadow-md shadow-foreground/5 web:outline-none web:data-[side=bottom]:slide-in-from-top-2 web:data-[side=left]:slide-in-from-right-2 web:data-[side=right]:slide-in-from-left-2 web:data-[side=top]:slide-in-from-bottom-2 web:animate-in web:zoom-in-95 web:fade-in-0',
-                className
-              )}
-              {...props}
-            />
-          </TextClassContext.Provider>
-        </Animated.View>
-      </PopoverPrimitive.Overlay>
-    </PopoverPrimitive.Portal>
+import { useSharedValue } from "react-native-reanimated";
+
+interface PopoverProps {
+  triggerContent: React.ReactNode;
+  screenContent: React.ReactNode[];
+  snapPoints?: (string | number)[]; // Accept snapPoints as a prop
+  contentInsets?: {
+    top: number;
+    bottom: number;
+    left: number;
+    right: number;
+  };
+}
+
+export const Popover: React.FC<PopoverProps> = ({
+  triggerContent,
+  screenContent,
+  snapPoints: propSnapPoints, // destructure the snapPoints from props
+}) => {
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const animatedIndex = useSharedValue<number>(0);
+  const animatedPosition = useSharedValue<number>(0);
+
+  // Use prop snapPoints if provided, otherwise default snap points
+  const snapPoints = useMemo(
+    () => propSnapPoints || [300, "40%", "50%"],
+    [propSnapPoints]
   );
-});
-PopoverContent.displayName = PopoverPrimitive.Content.displayName;
+  const handleSheetChanges = useCallback((index: number) => {
+    // handle sheet changes
+  }, []);
 
-export { Popover, PopoverContent, PopoverTrigger };
+  const handlePresentModalPress = useCallback(() => {
+    if (isOpen) {
+      bottomSheetModalRef.current?.dismiss();
+      setIsOpen(false);
+    } else {
+      bottomSheetModalRef.current?.present();
+      setIsOpen(true);
+    }
+  }, [isOpen]);
+
+  return (
+    <>
+      <Pressable onPress={handlePresentModalPress}>{triggerContent}</Pressable>
+
+      <BottomSheetModal
+        ref={bottomSheetModalRef}
+        index={1}
+        snapPoints={snapPoints}
+        onChange={handleSheetChanges}
+        handleComponent={() => (
+          <BottomSheetHandle
+            className="bg-green-300 mt-2"
+            animatedIndex={animatedIndex}
+            animatedPosition={animatedPosition}
+          />
+        )}
+      >
+        <BottomSheetView className="flex-1 bg-primary-foreground">
+          {screenContent}
+        </BottomSheetView>
+      </BottomSheetModal>
+    </>
+  );
+};
+
+export default Popover;

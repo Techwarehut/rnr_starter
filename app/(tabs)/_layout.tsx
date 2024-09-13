@@ -68,9 +68,10 @@ export default function TabLayout() {
           title: "Dashboard",
           tabBarIcon: ({ color, focused }) => (
             <LayoutDashboard
-              className={focused ? "text-green-500" : "text-foreground"}
+              className={focused ? "text-brand-primary" : "text-primary"}
               size={24}
               strokeWidth={1}
+              color={focused ? "#8bc34a" : ""}
             />
           ),
         }}
@@ -80,7 +81,11 @@ export default function TabLayout() {
         options={{
           title: "Jobs",
           tabBarIcon: ({ color, focused }) => (
-            <Layers className="text-foreground" size={24} strokeWidth={1} />
+            <Layers
+              className={focused ? "text-brand-primary" : "text-primary"}
+              size={24}
+              strokeWidth={1}
+            />
           ),
         }}
       />
@@ -90,7 +95,7 @@ export default function TabLayout() {
           title: "Purchases",
           tabBarIcon: ({ color, focused }) => (
             <ReceiptText
-              className="text-foreground"
+              className={focused ? "text-brand-primary" : "text-primary"}
               size={24}
               strokeWidth={1}
             />
@@ -102,7 +107,11 @@ export default function TabLayout() {
         options={{
           title: "Sales",
           tabBarIcon: ({ color, focused }) => (
-            <CreditCard className="text-foreground" size={24} strokeWidth={1} />
+            <CreditCard
+              className={focused ? "text-brand-primary " : "text-primary"}
+              size={24}
+              strokeWidth={1}
+            />
           ),
         }}
       />
@@ -112,7 +121,11 @@ export default function TabLayout() {
         options={{
           title: "Team",
           tabBarIcon: ({ color, focused }) => (
-            <Users className="text-foreground" size={24} strokeWidth={1} />
+            <Users
+              className={focused ? "text-brand-primary" : "text-primary"}
+              size={24}
+              strokeWidth={1}
+            />
           ),
         }}
       />
@@ -121,7 +134,11 @@ export default function TabLayout() {
         options={{
           title: "Customers",
           tabBarIcon: ({ color, focused }) => (
-            <Contact className="text-foreground" size={24} strokeWidth={1} />
+            <Contact
+              className={focused ? "text-brand-primary" : "text-primary"}
+              size={24}
+              strokeWidth={1}
+            />
           ),
         }}
       />
@@ -130,7 +147,11 @@ export default function TabLayout() {
         options={{
           title: "OnBoard",
           tabBarIcon: ({ color, focused }) => (
-            <UserPlus className="text-foreground" size={24} strokeWidth={1} />
+            <UserPlus
+              className={focused ? "text-brand-primary" : "text-primary"}
+              size={24}
+              strokeWidth={1}
+            />
           ),
         }}
       />
@@ -139,7 +160,11 @@ export default function TabLayout() {
         options={{
           title: "Setting",
           tabBarIcon: ({ color, focused }) => (
-            <Settings className="text-foreground" size={24} strokeWidth={1} />
+            <Settings
+              className={focused ? "text-brand-primary" : "text-primary"}
+              size={24}
+              strokeWidth={1}
+            />
           ),
         }}
       />

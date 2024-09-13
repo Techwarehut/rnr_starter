@@ -6,7 +6,7 @@ import { tabVariants } from "./TabVariants"; // Ensure correct import path
 // Import necessary types
 import { BottomTabNavigationOptions } from "@react-navigation/bottom-tabs";
 
-interface TabBarButtonProps {
+interface TabBarListItemProps {
   route: {
     key: string;
     name: string;
@@ -15,19 +15,15 @@ interface TabBarButtonProps {
   onPress: () => void;
   onLongPress: () => void;
   options: BottomTabNavigationOptions;
-  isLargeScreen: boolean;
-  isSpecialRoute: boolean;
 }
 
-export function TabBarButton({
+export function TabBarListItem({
   route,
   isFocused,
   onPress,
   onLongPress,
   options,
-  isLargeScreen,
-  isSpecialRoute,
-}: TabBarButtonProps) {
+}: TabBarListItemProps) {
   const label =
     typeof options.tabBarLabel === "function"
       ? options.tabBarLabel({
@@ -42,32 +38,33 @@ export function TabBarButton({
 
   return (
     <Pressable
-      key={route.key}
+      key={`popover-route-${route.key}`} // Add a unique key
       accessibilityRole="button"
       accessibilityState={isFocused ? { selected: true } : {}}
       accessibilityLabel={options.tabBarAccessibilityLabel}
       testID={options.tabBarTestID}
       onPress={onPress}
       onLongPress={onLongPress}
-      className={`${tabVariants({
-        isFocused,
-        size: isLargeScreen ? "largeScreen" : "default",
-      })} ${isLargeScreen && isSpecialRoute ? "mt-auto" : ""} `}
+      className="flex m-4 items-start"
     >
-      {options.tabBarIcon &&
-        options.tabBarIcon({
-          color: isFocused ? "text-brand-primary" : "text-primary",
-          focused: isFocused,
-          size: 21,
-        })}
+      <View className="flex flex-row items-center justify-center  gap-1">
+        {options.tabBarIcon &&
+          options.tabBarIcon({
+            color: isFocused ? "text-brand-primary" : "text-primary",
+            focused: isFocused,
 
-      <Text
-        className={`text-xs mt-1 ${
-          isFocused ? "text-brand-primary" : "text-primary"
-        }`}
-      >
-        {label}
-      </Text>
+            size: 21,
+          })}
+
+        {/*<Text className="font-medium leading-none native:text-xl">{label}</Text> */}
+        <Text
+          className={`text-sm  ${
+            isFocused ? "text-brand-primary" : "text-primary"
+          }`}
+        >
+          {label}
+        </Text>
+      </View>
     </Pressable>
   );
 }

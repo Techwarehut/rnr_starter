@@ -37,7 +37,7 @@ export function TabBarButton({
     typeof options.tabBarLabel === "function"
       ? options.tabBarLabel({
           focused: isFocused,
-          color: isFocused ? "green" : "#222",
+          color: isFocused ? "text-brand-primary" : "text-primary",
           position: "below-icon", // Ensure this is a valid position if 'bottom' is not correct
           children: route.name,
         })
@@ -77,13 +77,17 @@ export function TabBarButton({
         <Animated.View style={animatedIconStyle}>
           {options.tabBarIcon &&
             options.tabBarIcon({
-              color: isFocused ? "green" : "#222",
+              color: isFocused ? "text-brand-primary" : "text-primary",
               focused: isFocused,
               size: 24,
             })}
         </Animated.View>
         <Text
-          className={`text-primary ${isFocused ? "text-sm mt-1" : "text-xs"}`}
+          className={`text-primary ${
+            isFocused
+              ? "text-sm mt-1 text-brand-primary"
+              : "text-xs text-primary"
+          }`}
         >
           {typeof label === "string" ? label : label?.toString()}
         </Text>
