@@ -28,7 +28,7 @@ export function TabBarListItem({
     typeof options.tabBarLabel === "function"
       ? options.tabBarLabel({
           focused: isFocused,
-          color: isFocused ? "text-brand-primary" : "text-primary",
+          color: isFocused ? "text-primary" : "text-primary",
           position: "below-icon", // Ensure this is a valid position if 'bottom' is not correct
           children: route.name,
         })
@@ -50,7 +50,7 @@ export function TabBarListItem({
       <View className="flex flex-row items-center justify-center  gap-1">
         {options.tabBarIcon &&
           options.tabBarIcon({
-            color: isFocused ? "text-brand-primary" : "text-primary",
+            color: isFocused ? "text-primary" : "text-primary",
             focused: isFocused,
 
             size: 21,
@@ -58,9 +58,7 @@ export function TabBarListItem({
 
         {/*<Text className="font-medium leading-none native:text-xl">{label}</Text> */}
         <Text
-          className={`text-sm  ${
-            isFocused ? "text-brand-primary" : "text-primary"
-          }`}
+          className={`text-sm  ${isFocused ? "text-primary" : "text-primary"}`}
         >
           {label}
         </Text>

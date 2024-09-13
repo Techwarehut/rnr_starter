@@ -6,20 +6,11 @@ export default function Purchases() {
   const isLargeScreen = width > 600; // Adjust threshold as needed
   return (
     <View
-      style={[styles.container, isLargeScreen && styles.largeScreenPadding]}
+      className={`flex-1 justify-center items-center gap-5 bg-secondary/30 ${
+        isLargeScreen ? "pl-20" : "pl-4"
+      }`}
     >
       <Text>I am in Purchases Screen</Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    //justifyContent: "center",
-    // alignItems: "center",
-  },
-  largeScreenPadding: {
-    paddingLeft: 80, // This matches the width of your sidebar
-  },
-});

@@ -68,10 +68,9 @@ export default function TabLayout() {
           title: "Dashboard",
           tabBarIcon: ({ color, focused }) => (
             <LayoutDashboard
-              className={focused ? "text-brand-primary" : "text-primary"}
+              className={focused ? "fill-primary" : "text-primary fill-none"}
               size={24}
               strokeWidth={1}
-              color={focused ? "#8bc34a" : ""}
             />
           ),
         }}
@@ -82,7 +81,11 @@ export default function TabLayout() {
           title: "Jobs",
           tabBarIcon: ({ color, focused }) => (
             <Layers
-              className={focused ? "text-brand-primary" : "text-primary"}
+              className={
+                focused
+                  ? "text-primary-foreground fill-primary"
+                  : "text-primary fill-none"
+              }
               size={24}
               strokeWidth={1}
             />
@@ -95,7 +98,11 @@ export default function TabLayout() {
           title: "Purchases",
           tabBarIcon: ({ color, focused }) => (
             <ReceiptText
-              className={focused ? "text-brand-primary" : "text-primary"}
+              className={
+                focused
+                  ? "text-primary-foreground fill-primary"
+                  : "text-primary fill-none"
+              }
               size={24}
               strokeWidth={1}
             />
@@ -108,7 +115,11 @@ export default function TabLayout() {
           title: "Sales",
           tabBarIcon: ({ color, focused }) => (
             <CreditCard
-              className={focused ? "text-brand-primary " : "text-primary"}
+              className={
+                focused
+                  ? "text-primary-foreground fill-primary"
+                  : "text-primary fill-none"
+              }
               size={24}
               strokeWidth={1}
             />
@@ -122,7 +133,7 @@ export default function TabLayout() {
           title: "Team",
           tabBarIcon: ({ color, focused }) => (
             <Users
-              className={focused ? "text-brand-primary" : "text-primary"}
+              className={focused ? "fill-primary" : "text-primary fill-none"}
               size={24}
               strokeWidth={1}
             />
@@ -135,7 +146,11 @@ export default function TabLayout() {
           title: "Customers",
           tabBarIcon: ({ color, focused }) => (
             <Contact
-              className={focused ? "text-brand-primary" : "text-primary"}
+              className={
+                focused
+                  ? "text-primary-foreground fill-primary"
+                  : "text-primary fill-none"
+              }
               size={24}
               strokeWidth={1}
             />
@@ -148,7 +163,7 @@ export default function TabLayout() {
           title: "OnBoard",
           tabBarIcon: ({ color, focused }) => (
             <UserPlus
-              className={focused ? "text-brand-primary" : "text-primary"}
+              className={focused ? "fill-primary" : "text-primary fill-none"}
               size={24}
               strokeWidth={1}
             />
@@ -161,7 +176,11 @@ export default function TabLayout() {
           title: "Setting",
           tabBarIcon: ({ color, focused }) => (
             <Settings
-              className={focused ? "text-brand-primary" : "text-primary"}
+              className={
+                focused
+                  ? "text-primary-foreground fill-primary"
+                  : "text-primary fill-none"
+              }
               size={24}
               strokeWidth={1}
             />

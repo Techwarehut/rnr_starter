@@ -32,7 +32,7 @@ export function TabBarButton({
     typeof options.tabBarLabel === "function"
       ? options.tabBarLabel({
           focused: isFocused,
-          color: isFocused ? "text-brand-primary" : "text-primary",
+          color: isFocused ? "text-primary" : "text-primary",
           position: "below-icon", // Ensure this is a valid position if 'bottom' is not correct
           children: route.name,
         })
@@ -63,7 +63,7 @@ export function TabBarButton({
 
       <Text
         className={`text-xs mt-1 ${
-          isFocused ? "text-brand-primary" : "text-primary"
+          isFocused ? "text-primary" : "text-primary"
         }`}
       >
         {label}

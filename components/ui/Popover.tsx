@@ -63,13 +63,14 @@ export const Popover: React.FC<PopoverProps> = ({
         onChange={handleSheetChanges}
         handleComponent={() => (
           <BottomSheetHandle
-            className="bg-green-300 mt-2"
+            className="bg-popover"
+            indicatorStyle={{ backgroundColor: "#658b38" }} // Customize the dash color
             animatedIndex={animatedIndex}
             animatedPosition={animatedPosition}
           />
         )}
       >
-        <BottomSheetView className="flex-1 bg-primary-foreground">
+        <BottomSheetView className="flex-1 bg-popover">
           {screenContent}
         </BottomSheetView>
       </BottomSheetModal>
