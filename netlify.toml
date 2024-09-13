@@ -1,0 +1,3 @@
+[build]
+  publish = "dist" # or "web-build" if you renamed it
+  command = "npx expo export"
