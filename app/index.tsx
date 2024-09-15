@@ -45,7 +45,7 @@ export default function Screen() {
   };
 
   const login = () => {
-    router.replace("dashboard");
+    router.replace("Dashboard");
   };
 
   return (
