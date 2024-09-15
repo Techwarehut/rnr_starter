@@ -49,19 +49,14 @@ const MyTabBar: React.FC<MyTabBarProps> = ({
       }  border-input bg-background`}
     >
       {isLargeScreen && (
-        <View
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            marginBottom: 10,
-            paddingHorizontal: 10,
-          }}
-        >
-          <FastForward
-            className="fill-brand-primary text-brand-primary"
-            size={36}
-            strokeWidth={1.25}
-          />
+        <View className=" justify-center items-center pl-3 pr-3">
+          <View className="w-14 h-14 bg-brand-primary rounded-full justify-center items-center pl-1">
+            <FastForward
+              className="fill-primary text-primary"
+              size={36}
+              strokeWidth={1.25}
+            />
+          </View>
           <Separator className="my-4 " />
         </View>
       )}
@@ -76,16 +71,16 @@ const MyTabBar: React.FC<MyTabBarProps> = ({
 
         const isFocused = state.index === index;
 
-        const isSpecialRoute = route.name === "Onboarding";
+        const isSpecialRoute = route.name === "onboarding";
 
         const isPopoverRoute =
-          (!isLargeScreen && route.name === "Onboarding") ||
-          (!isLargeScreen && route.name === "Settings") ||
-          route.name === "Team" ||
-          route.name === "Customers";
+          (!isLargeScreen && route.name === "onboarding") ||
+          (!isLargeScreen && route.name === "settings") ||
+          route.name === "team" ||
+          route.name === "customers";
         const isLastPopoverRoute =
-          (!isLargeScreen && route.name === "Settings") ||
-          (isLargeScreen && route.name === "Customers");
+          (!isLargeScreen && route.name === "settings") ||
+          (isLargeScreen && route.name === "customers");
 
         const onPress = () => {
           const event = navigation.emit({

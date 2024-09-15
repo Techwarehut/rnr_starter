@@ -8,11 +8,11 @@ import MyTabBar from "~/components/navigation/TabBar"; // Import your custom tab
 import { LayoutDashboard } from "~/lib/icons/LayoutDashboard";
 import { UserPlus } from "~/lib/icons/UserPlus";
 import { Users } from "~/lib/icons/Users";
-import { Layers } from "~/lib/icons/Layers";
+import { ClipboardList } from "~/lib/icons/ClipboardList";
 import { ReceiptText } from "~/lib/icons/ReceiptText";
 import { CreditCard } from "~/lib/icons/CreditCard";
 import { Settings } from "~/lib/icons/Settings";
-import { Contact } from "~/lib/icons/Contact";
+import { UsersRound } from "~/lib/icons/UsersRound";
 import { ThemeToggle } from "~/components/ThemeToggle";
 
 import { View } from "react-native";
@@ -63,7 +63,7 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="Dashboard"
+        name="dashboard"
         options={{
           title: "Dashboard",
           tabBarIcon: ({ color, focused }) => (
@@ -73,14 +73,15 @@ export default function TabLayout() {
               strokeWidth={1}
             />
           ),
+          tabBarLabel: "Dashboard",
         }}
       />
       <Tabs.Screen
-        name="Jobs"
+        name="jobs"
         options={{
           title: "Jobs",
           tabBarIcon: ({ color, focused }) => (
-            <Layers
+            <ClipboardList
               className={
                 focused
                   ? "text-primary-foreground fill-primary"
@@ -90,10 +91,11 @@ export default function TabLayout() {
               strokeWidth={1}
             />
           ),
+          tabBarLabel: "Jobs",
         }}
       />
       <Tabs.Screen
-        name="Purchases"
+        name="purchases"
         options={{
           title: "Purchases",
           tabBarIcon: ({ color, focused }) => (
@@ -107,10 +109,11 @@ export default function TabLayout() {
               strokeWidth={1}
             />
           ),
+          tabBarLabel: "Purchases",
         }}
       />
       <Tabs.Screen
-        name="Sales"
+        name="sales"
         options={{
           title: "Sales",
           tabBarIcon: ({ color, focused }) => (
@@ -124,56 +127,62 @@ export default function TabLayout() {
               strokeWidth={1}
             />
           ),
+          tabBarLabel: "Sales",
         }}
       />
 
       <Tabs.Screen
-        name="Team"
+        name="team"
         options={{
           title: "Team",
           tabBarIcon: ({ color, focused }) => (
             <Users
-              className={focused ? "fill-primary" : "text-primary fill-none"}
-              size={24}
-              strokeWidth={1}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="Customers"
-        options={{
-          title: "Customers",
-          tabBarIcon: ({ color, focused }) => (
-            <Contact
               className={
-                focused
-                  ? "text-primary-foreground fill-primary"
-                  : "text-primary fill-none"
+                focused ? "fill-primary text-primary" : "text-primary fill-none"
               }
               size={24}
               strokeWidth={1}
             />
           ),
+          tabBarLabel: "Team",
         }}
       />
       <Tabs.Screen
-        name="Onboarding"
+        name="customers"
         options={{
-          title: "OnBoard",
+          title: "Customers",
           tabBarIcon: ({ color, focused }) => (
-            <UserPlus
-              className={focused ? "fill-primary" : "text-primary fill-none"}
+            <UsersRound
+              className={
+                focused ? "text-primary fill-primary" : "text-primary fill-none"
+              }
               size={24}
               strokeWidth={1}
             />
           ),
+          tabBarLabel: "Customers",
         }}
       />
       <Tabs.Screen
-        name="Settings"
+        name="onboarding"
         options={{
-          title: "Setting",
+          title: "OnBoard",
+          tabBarIcon: ({ color, focused }) => (
+            <UserPlus
+              className={
+                focused ? "text-primary fill-primary" : "text-primary fill-none"
+              }
+              size={24}
+              strokeWidth={1}
+            />
+          ),
+          tabBarLabel: "OnBoard",
+        }}
+      />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: "Settings",
           tabBarIcon: ({ color, focused }) => (
             <Settings
               className={
@@ -185,6 +194,7 @@ export default function TabLayout() {
               strokeWidth={1}
             />
           ),
+          tabBarLabel: "Settings",
         }}
       />
     </Tabs>

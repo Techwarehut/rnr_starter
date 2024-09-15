@@ -83,9 +83,8 @@ export function TabBarButton({
             })}
         </Animated.View>
         <Text
-          className={`text-primary ${
-            isFocused ? "text-sm mt-1 text-primary" : "text-xs text-primary"
-          }`}
+          className="text-xs text-primary"
+          
         >
           {typeof label === "string" ? label : label?.toString()}
         </Text>
