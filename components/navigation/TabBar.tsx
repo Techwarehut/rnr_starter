@@ -50,11 +50,11 @@ const MyTabBar: React.FC<MyTabBarProps> = ({
     >
       {isLargeScreen && (
         <View className=" justify-center items-center pl-3 pr-3">
-          <View className="w-14 h-14 bg-brand-primary rounded-full justify-center items-center pl-1">
+          <View className="w-12 h-12 bg-brand-primary rounded-full justify-center items-center pl-1">
             <FastForward
               className="fill-primary text-primary"
-              size={36}
-              strokeWidth={1.25}
+              size={24}
+              strokeWidth={1}
             />
           </View>
           <Separator className="my-4 " />
