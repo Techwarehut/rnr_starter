@@ -45,7 +45,7 @@ export default function Screen() {
   };
 
   const SignUp = () => {
-    router.replace("Dashboard");
+    router.replace("/(tabs)");
   };
 
   const login = () => {

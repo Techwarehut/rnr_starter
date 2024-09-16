@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View } from "react-native";
+import { View, Image, useWindowDimensions, ScrollView } from "react-native";
 import Animated, {
   FadeInUp,
   FadeOutDown,
@@ -25,6 +25,7 @@ import { useRouter } from "expo-router";
 import { FastForward } from "~/lib/icons/FastForward";
 import { Stack } from "expo-router";
 import { ThemeToggle } from "~/components/ThemeToggle";
+import { H1, H2, Muted } from "~/components/ui/typography";
 
 export default function Screen() {
   const [userName, setUserName] = React.useState("");
@@ -45,8 +46,14 @@ export default function Screen() {
   };
 
   const login = () => {
-    router.replace("dashboard");
+    router.replace("/(tabs)");
   };
+
+  const googleLogoUri =
+    "https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg";
+
+  const { width } = useWindowDimensions();
+  const isLargeScreen = width > 680; // Adjust threshold as needed
 
   return (
     <>
@@ -70,7 +77,103 @@ export default function Screen() {
           ),
         }}
       />
-      <View className="flex-1 justify-center items-center gap-5 p-6 bg-secondary/30">
+      <ScrollView className="flex-1">
+        <View className="flex-1 flex-row flex-wrap justify-center items-center">
+          {isLargeScreen && (
+            <View
+              style={{ minWidth: 400 }}
+              className="flex gap-8 p-8 align-left"
+            >
+              <H1 className="text-foreground text-left">Your tagline</H1>
+              <View className="flex gap-3">
+                <Muted className="text-base text-left ml-8">Feature1</Muted>
+                <Muted className="text-base text-left ml-8">Feature2</Muted>
+                <Muted className="text-base text-left ml-8">Feature3</Muted>
+                <Muted className="text-base text-left ml-8">Feature4</Muted>
+                <Muted className="text-base text-left ml-8">Feature5</Muted>
+              </View>
+            </View>
+          )}
+          <View className="border border-input flex justify-center items-center m-2 rounded-lg">
+            <View className="p-4 native:pb-24 max-w-md gap-6">
+              <View className="gap-4">
+                <H2 className="text-foreground text-center">
+                  Sign into your account
+                </H2>
+                <Muted className="text-base text-center">
+                  Sign in with your google account or use your email below.
+                </Muted>
+                <Button variant="outline" onPress={login}>
+                  <View className="flex-row items-center gap-1">
+                    <Image
+                      source={{ uri: googleLogoUri }}
+                      style={{ width: 20, height: 20, marginRight: 8 }} // Adjust size and margin
+                    />
+                    <Text>Sign in with Google</Text>
+                  </View>
+                </Button>
+
+                <View className="flex-row items-center gap-3">
+                  <View className="flex-1 h-px bg-muted" />
+                  <Muted>OR CONTINUE WITH</Muted>
+                  <View className="flex-1 h-px bg-muted" />
+                </View>
+                <View className="gap-4">
+                  <View className="gap-2">
+                    <Label nativeID="email">Email</Label>
+                    <Input
+                      placeholder="Business Email"
+                      value={userName}
+                      onChangeText={onChangeUserName}
+                      aria-labelledby="email"
+                      aria-errormessage="inputError"
+                    />
+                  </View>
+
+                  <View className="gap-2">
+                    <Label nativeID="password">Password</Label>
+                    <Input
+                      placeholder="Password"
+                      value={password}
+                      onChangeText={onChangePassword}
+                      aria-labelledby="password"
+                      aria-errormessage="inputError"
+                      secureTextEntry={true}
+                    />
+                    <View style={{ alignSelf: "flex-end" }}>
+                      <Button
+                        variant="link"
+                        className="shadow shadow-foreground/5"
+                        onPress={login}
+                      >
+                        <Text className="text-primary mt-2 text-right">
+                          Forgot Password
+                        </Text>
+                      </Button>
+                    </View>
+                  </View>
+                </View>
+                <Button
+                  // variant="outline"
+                  size="lg"
+                  className="shadow shadow-foreground/5 w-full"
+                  onPress={login}
+                >
+                  <Text>Login</Text>
+                </Button>
+                <View>
+                  <Muted className="text-center">
+                    By continuing, you agree to our{" "}
+                    <Muted className="underline">Terms of Service</Muted> and{" "}
+                    <Muted className="underline">Privacy Policy</Muted>
+                  </Muted>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
+      {/*<View className="flex-1 justify-center items-center gap-5 p-6 bg-secondary/30">
         <Card className="w-full max-w-sm md:w-1/2 p-6 rounded-2xl">
           <CardHeader className="items-center">
             <FastForward
@@ -137,7 +240,7 @@ export default function Screen() {
             </Button>
           </CardFooter>
         </Card>
-      </View>
+      </View>*/}
     </>
   );
 }

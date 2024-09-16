@@ -65,27 +65,18 @@ export function TabBarButton({
       className={`${tabVariants({
         isFocused,
         size: isLargeScreen ? "largeScreen" : "default",
-      })} ${isLargeScreen && isSpecialRoute ? "mt-auto" : ""}`}
+      })} ${isLargeScreen && isSpecialRoute ? "mt-auto" : ""} `}
     >
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "flex-end",
-          alignItems: "center",
-        }}
-      >
-        <Animated.View style={animatedIconStyle}>
-          {options.tabBarIcon &&
-            options.tabBarIcon({
-              color: isFocused ? "text-primary" : "text-primary",
-              focused: isFocused,
-              size: 21,
-            })}
-        </Animated.View>
-        <Text
-          className="text-xs text-primary"
-          
-        >
+      <View className="w-full flex items-center justify-center">
+        {options.tabBarIcon &&
+          options.tabBarIcon({
+            color: isFocused ? "text-primary" : "text-primary",
+            //color: xc  color
+            focused: isFocused,
+            size: 21,
+          })}
+
+        <Text className="text-xs text-primary">
           {typeof label === "string" ? label : label?.toString()}
         </Text>
       </View>

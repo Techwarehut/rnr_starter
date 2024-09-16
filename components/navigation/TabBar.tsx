@@ -37,7 +37,7 @@ const MyTabBar: React.FC<MyTabBarProps> = ({
   let triggerContent: React.ReactNode;
 
   const logout = () => {
-    router.replace("/");
+    router.replace("/SignUp");
   };
 
   return (

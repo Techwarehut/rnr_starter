@@ -63,7 +63,7 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="dashboard"
+        name="index"
         options={{
           title: "Dashboard",
           tabBarIcon: ({ color, focused }) => (
@@ -71,6 +71,7 @@ export default function TabLayout() {
               className={focused ? "fill-primary" : "text-primary fill-none"}
               size={24}
               strokeWidth={1}
+              //color={color}
             />
           ),
           tabBarLabel: "Dashboard",
