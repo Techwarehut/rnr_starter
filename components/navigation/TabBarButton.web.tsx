@@ -65,7 +65,9 @@ export function TabBarButton({
       className={`${tabVariants({
         isFocused,
         size: isLargeScreen ? "largeScreen" : "default",
-      })} ${isLargeScreen && isSpecialRoute ? "mt-auto" : ""} `}
+      })} ${isLargeScreen && isSpecialRoute ? "mt-auto" : ""} ${
+        isLargeScreen && "web:hover:bg-accent web:hover:text-accent-foreground"
+      } ${isLargeScreen && isFocused && "bg-accent text-accent-foreground"}`}
     >
       <View className="w-full flex items-center justify-center">
         {options.tabBarIcon &&
@@ -76,7 +78,12 @@ export function TabBarButton({
             size: 21,
           })}
 
-        <Text className="text-xs text-primary">
+        {/* <Text className="text-xs text-primary"> */}
+        <Text
+          className={`text-xs mt-1 ${
+            isFocused ? "text-primary" : "text-muted-foreground"
+          }`}
+        >
           {typeof label === "string" ? label : label?.toString()}
         </Text>
       </View>

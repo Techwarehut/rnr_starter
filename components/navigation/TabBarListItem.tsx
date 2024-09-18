@@ -12,6 +12,7 @@ interface TabBarListItemProps {
     name: string;
   };
   isFocused: boolean;
+  isLargeScreen: boolean;
   onPress: () => void;
   onLongPress: () => void;
   options: BottomTabNavigationOptions;
@@ -20,6 +21,7 @@ interface TabBarListItemProps {
 export function TabBarListItem({
   route,
   isFocused,
+  isLargeScreen,
   onPress,
   onLongPress,
   options,
@@ -47,7 +49,13 @@ export function TabBarListItem({
       onLongPress={onLongPress}
       className="flex m-4 items-start"
     >
-      <View className="flex flex-row items-center justify-center  gap-1">
+      {/* <View className="flex flex-row items-center justify-center  gap-1"> */}
+      <View
+        className={`flex flex-row items-center justify-center  gap-1 ${
+          isLargeScreen &&
+          "web:hover:bg-accent web:hover:text-accent-foreground p-2 rounded-sm"
+        } ${isLargeScreen && isFocused && "bg-accent text-accent-foreground"}`}
+      >
         {options.tabBarIcon &&
           options.tabBarIcon({
             color: isFocused ? "text-primary" : "text-primary",
@@ -58,7 +66,9 @@ export function TabBarListItem({
 
         {/*<Text className="font-medium leading-none native:text-xl">{label}</Text> */}
         <Text
-          className={`text-sm  ${isFocused ? "text-primary" : "text-primary"}`}
+          className={`text-sm  ${
+            isFocused ? "text-primary" : "text-muted-foreground"
+          }`}
         >
           {label}
         </Text>

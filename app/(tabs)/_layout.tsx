@@ -68,7 +68,8 @@ export default function TabLayout() {
           title: "Dashboard",
           tabBarIcon: ({ color, focused }) => (
             <LayoutDashboard
-              className={focused ? "fill-primary" : "text-primary fill-none"}
+              //className={focused ? "fill-primary" : "text-primary fill-none"}
+              className={focused ? "text-primary" : "text-muted-foreground"}
               size={24}
               strokeWidth={1}
               //color={color}
@@ -83,11 +84,12 @@ export default function TabLayout() {
           title: "Jobs",
           tabBarIcon: ({ color, focused }) => (
             <ClipboardList
-              className={
+              /* className={
                 focused
                   ? "text-primary-foreground fill-primary"
                   : "text-primary fill-none"
-              }
+              } */
+              className={focused ? "text-primary" : "text-muted-foreground"}
               size={24}
               strokeWidth={1}
             />
@@ -101,11 +103,12 @@ export default function TabLayout() {
           title: "Purchases",
           tabBarIcon: ({ color, focused }) => (
             <ReceiptText
-              className={
+              /* className={
                 focused
                   ? "text-primary-foreground fill-primary"
                   : "text-primary fill-none"
-              }
+              } */
+              className={focused ? "text-primary" : "text-muted-foreground"}
               size={24}
               strokeWidth={1}
             />
@@ -119,11 +122,12 @@ export default function TabLayout() {
           title: "Sales",
           tabBarIcon: ({ color, focused }) => (
             <CreditCard
-              className={
+              /* className={
                 focused
                   ? "text-primary-foreground fill-primary"
                   : "text-primary fill-none"
-              }
+              } */
+              className={focused ? "text-primary" : "text-muted-foreground"}
               size={24}
               strokeWidth={1}
             />
@@ -138,9 +142,10 @@ export default function TabLayout() {
           title: "Team",
           tabBarIcon: ({ color, focused }) => (
             <Users
-              className={
+              /* className={
                 focused ? "fill-primary text-primary" : "text-primary fill-none"
-              }
+              } */
+              className={focused ? "text-primary" : "text-muted-foreground"}
               size={24}
               strokeWidth={1}
             />
@@ -154,9 +159,10 @@ export default function TabLayout() {
           title: "Customers",
           tabBarIcon: ({ color, focused }) => (
             <UsersRound
-              className={
+              /*  className={
                 focused ? "text-primary fill-primary" : "text-primary fill-none"
-              }
+              } */
+              className={focused ? "text-primary" : "text-muted-foreground"}
               size={24}
               strokeWidth={1}
             />
@@ -170,9 +176,10 @@ export default function TabLayout() {
           title: "OnBoard",
           tabBarIcon: ({ color, focused }) => (
             <UserPlus
-              className={
+              /* className={
                 focused ? "text-primary fill-primary" : "text-primary fill-none"
-              }
+              } */
+              className={focused ? "text-primary" : "text-muted-foreground"}
               size={24}
               strokeWidth={1}
             />
@@ -186,11 +193,12 @@ export default function TabLayout() {
           title: "Settings",
           tabBarIcon: ({ color, focused }) => (
             <Settings
-              className={
+              /* className={
                 focused
                   ? "text-primary-foreground fill-primary"
                   : "text-primary fill-none"
-              }
+              } */
+              className={focused ? "text-primary" : "text-muted-foreground"}
               size={24}
               strokeWidth={1}
             />

@@ -101,15 +101,13 @@ const MyTabBar: React.FC<MyTabBarProps> = ({
           });
         };
 
-        // variables
-        const snapPoints = useMemo(() => [300, "40%", "50%"], []);
-
         if (isPopoverRoute && !isLastPopoverRoute) {
           screenContent.push(
             <TabBarListItem
               key={route.key}
               route={route}
               isFocused={isFocused}
+              isLargeScreen={isLargeScreen}
               onPress={onPress}
               onLongPress={onLongPress}
               options={options}
@@ -118,19 +116,25 @@ const MyTabBar: React.FC<MyTabBarProps> = ({
           return null;
         } else if (isPopoverRoute && isLastPopoverRoute) {
           triggerContent = (
+            /*  <View className="w-full flex-1 items-center justify-center"> */
             <View
-              style={{
-                flex: 1,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
+              key={`${route.key}-morecontent`}
+              className={`w-full flex-1 items-center justify-center ${
+                isLargeScreen ? "" : "mr-3"
+              }`}
             >
               <Ellipsis
-                className="text-foreground"
+                className={isFocused ? "text-primary" : "text-muted-foreground"}
                 size={24}
-                strokeWidth={1.25}
+                strokeWidth={1}
               />
-              <Text className="text-xs">More</Text>
+              <Text
+                className={`text-xs mt-1 ${
+                  isFocused ? "text-primary" : "text-muted-foreground"
+                }`}
+              >
+                More
+              </Text>
             </View>
           );
 
@@ -141,6 +145,7 @@ const MyTabBar: React.FC<MyTabBarProps> = ({
                 key={route.key}
                 route={route}
                 isFocused={isFocused}
+                isLargeScreen={isLargeScreen}
                 onPress={onPress}
                 onLongPress={onLongPress}
                 options={options}
@@ -158,6 +163,7 @@ const MyTabBar: React.FC<MyTabBarProps> = ({
           return (
             <Popover
               key={route.key}
+              popoverKey={route.key}
               triggerContent={triggerContent}
               screenContent={screenContent}
               snapPoints={[300, "40%", "50%", "60%"]} // Custom snap points

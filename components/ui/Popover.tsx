@@ -21,12 +21,14 @@ interface PopoverProps {
     left: number;
     right: number;
   };
+  popoverKey: string | number; // Add key prop
 }
 
 export const Popover: React.FC<PopoverProps> = ({
   triggerContent,
   screenContent,
   snapPoints: propSnapPoints, // destructure the snapPoints from props
+  popoverKey, // Add key prop
 }) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -54,9 +56,15 @@ export const Popover: React.FC<PopoverProps> = ({
 
   return (
     <>
-      <Pressable onPress={handlePresentModalPress}>{triggerContent}</Pressable>
+      <Pressable
+        key={`${popoverKey}-trigger`}
+        onPress={handlePresentModalPress}
+      >
+        {triggerContent}
+      </Pressable>
 
       <BottomSheetModal
+        key={`${popoverKey}-content`}
         ref={bottomSheetModalRef}
         index={1}
         snapPoints={snapPoints}
@@ -71,7 +79,9 @@ export const Popover: React.FC<PopoverProps> = ({
         )}
       >
         <BottomSheetView className="flex-1 bg-popover">
-          {screenContent}
+          {screenContent.map((content, index) => (
+            <View key={`${popoverKey}-content-${index}`}>{content}</View>
+          ))}
         </BottomSheetView>
       </BottomSheetModal>
     </>
