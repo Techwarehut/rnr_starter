@@ -68,7 +68,7 @@ export default function Screen() {
             >
               <ThemeToggle />
               <Button className="shadow shadow-foreground/5" onPress={login}>
-                <Text>Sign Up</Text>
+                <Text>Login</Text>
               </Button>
             </View>
           ),

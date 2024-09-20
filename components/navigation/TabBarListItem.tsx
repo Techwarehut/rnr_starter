@@ -51,9 +51,9 @@ export function TabBarListItem({
     >
       {/* <View className="flex flex-row items-center justify-center  gap-1"> */}
       <View
-        className={`flex flex-row items-center justify-center  gap-1 ${
+        className={`flex flex-row items-center justify-center  gap-1 p-2 ${
           isLargeScreen &&
-          "web:hover:bg-accent web:hover:text-accent-foreground p-2 rounded-sm"
+          "web:hover:bg-accent web:hover:text-accent-foreground p-2 rounded-md"
         } ${isLargeScreen && isFocused && "bg-accent text-accent-foreground"}`}
       >
         {options.tabBarIcon &&

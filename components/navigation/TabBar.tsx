@@ -154,6 +154,7 @@ const MyTabBar: React.FC<MyTabBarProps> = ({
                 variant="outline"
                 key={`button-logout-${route.key}`}
                 className="shadow shadow-foreground/5 m-5"
+                size="lg"
                 onPress={logout}
               >
                 <Text>Logout</Text>
