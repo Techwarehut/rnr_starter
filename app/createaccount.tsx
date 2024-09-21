@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Image, useWindowDimensions, ScrollView } from "react-native";
+import { useWindowDimensions, View } from "react-native";
 import Animated, {
   FadeInUp,
   FadeOutDown,
@@ -31,6 +31,7 @@ import { useIsLargeScreen } from "~/lib/utils";
 export default function Screen() {
   const [userName, setUserName] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState("");
 
   const router = useRouter();
 
@@ -41,19 +42,19 @@ export default function Screen() {
   const onChangePassword = (text: string) => {
     setPassword(text);
   };
-
-  const signUp = () => {
-    router.push("/createaccount");
+  const onChangeConfirmPassword = (text: string) => {
+    setConfirmPassword(text);
   };
 
-  const login = () => {
+  const SignUp = () => {
     router.replace("/(tabs)");
   };
 
-  const googleLogoUri =
-    "https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg";
+  const login = () => {
+    router.replace("/");
+  };
 
-    const isLargeScreen = useIsLargeScreen();
+  const isLargeScreen = useIsLargeScreen();
 
   return (
     <>
@@ -70,14 +71,13 @@ export default function Screen() {
               }}
             >
               <ThemeToggle />
-              <Button className="shadow shadow-foreground/5" onPress={signUp}>
-                <Text>Sign Up</Text>
+              <Button className="shadow shadow-foreground/5" onPress={login}>
+                <Text>Login</Text>
               </Button>
             </View>
           ),
         }}
       />
-
       <View /* className="flex-1 justify-between items-center p-4"> */
       className={`${
         isLargeScreen
@@ -85,7 +85,7 @@ export default function Screen() {
           : "flex-1 flex-col justify-between"
       }   items-center p-4`}>
         <View className="gap-4">
-          <H1 className="text-foreground text-left">Sign into your account</H1>
+          <H1 className="text-foreground text-left">Create your account</H1>
           <Text className="text-base text-left">
             Run your business from anywhere with everything you need and nothing you don't!
           </Text>
@@ -134,22 +134,29 @@ export default function Screen() {
                 aria-errormessage="inputError"
                 secureTextEntry={true}
               />
-              <View style={{ alignSelf: "flex-end" }}>
-                <Button variant="link" onPress={login}>
-                  <Text className="text-primary text-right">
-                    Forgot Password
-                  </Text>
-                </Button>
-              </View>
+              
+            </View>
+
+            <View className="gap-2">
+              <Label nativeID="password">Password</Label>
+              <Input
+                placeholder="Confirm Password"
+                value={confirmPassword}
+                onChangeText={onChangeConfirmPassword}
+                aria-labelledby="password"
+                aria-errormessage="inputError"
+                secureTextEntry={true}
+              />
+              
             </View>
           </View>
           <Button
             // variant="outline"
             size="lg"
             className="shadow shadow-foreground/5 w-full"
-            onPress={login}
+            onPress={SignUp}
           >
-            <Text>Login</Text>
+            <Text>Sign Up</Text>
           </Button>
           <View>
             <Muted className="text-center">

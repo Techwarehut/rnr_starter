@@ -19,12 +19,12 @@ import { View } from "react-native";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Text } from "~/components/ui/text";
 import { Button } from "~/components/ui/button";
+import { useIsLargeScreen } from "~/lib/utils";
 
 const AVATAR_URI = "https://randomuser.me/api/portraits/men/32.jpg";
 
 export default function TabLayout() {
-  const { width } = useWindowDimensions(); // Get screen width
-  const isLargeScreen = width > 600; // Adjust the threshold as needed
+  const isLargeScreen = useIsLargeScreen();
   const { isDarkColorScheme, setColorScheme } = useColorScheme();
 
   // Define active and inactive colors based on the color scheme or your preference

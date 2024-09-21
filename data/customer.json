@@ -1,0 +1,62 @@
+[
+  {
+    "_id": "1",
+    "customerName": "John Doe",
+    "businessName": "Doe Enterprises",
+    "email": "john.doe@example.com",
+    "phone": "+1234567890",
+    "siteLocations": [
+      {
+        "address": "123 Main St, Springfield, IL",
+        "zipcode": "62701"
+      },
+      {
+        "address": "456 Elm St, Springfield, IL",
+        "zipcode": "62702"
+      }
+    ]
+  },
+  {
+    "_id": "2",
+    "customerName": "Jane Smith",
+    "businessName": "Smith Co.",
+    "email": "jane.smith@example.com",
+    "phone": "+0987654321",
+    "siteLocations": [
+      {
+        "address": "789 Maple Ave, Springfield, IL",
+        "zipcode": "62703"
+      }
+    ]
+  },
+  {
+    "_id": "3",
+    "customerName": "Alice Johnson",
+    "businessName": "Johnson Group",
+    "email": "alice.johnson@example.com",
+    "phone": "+1357924680",
+    "siteLocations": [
+      {
+        "address": "321 Oak St, Springfield, IL",
+        "zipcode": "62704"
+      },
+      {
+        "address": "654 Pine St, Springfield, IL",
+        "zipcode": "62705"
+      }
+    ]
+  },
+  {
+    "_id": "4",
+    "customerName": "Bob Brown",
+    "businessName": "Brown Industries",
+    "email": "bob.brown@example.com",
+    "phone": "+2468135790",
+    "siteLocations": [
+      {
+        "address": "987 Cedar Blvd, Springfield, IL",
+        "zipcode": "62706"
+      }
+    ]
+  }
+]

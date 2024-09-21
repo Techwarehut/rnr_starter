@@ -93,7 +93,7 @@ export default function RootLayout() {
             }}
           >
             <Stack.Screen name="index" />
-            <Stack.Screen name="SignUp" />
+            <Stack.Screen name="createaccount" />
             <Stack.Screen
               name="(tabs)"
               options={{

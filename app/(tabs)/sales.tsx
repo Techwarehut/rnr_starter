@@ -1,9 +1,9 @@
-import { StyleSheet, useWindowDimensions, View } from "react-native";
+import { View } from "react-native";
 import { Text } from "~/components/ui/text";
+import { useIsLargeScreen } from "~/lib/utils";
 
 export default function Sales() {
-  const { width } = useWindowDimensions();
-  const isLargeScreen = width > 600; // Adjust threshold as needed
+  const isLargeScreen = useIsLargeScreen();
   return (
     <View
       className={`flex-1 justify-center items-center gap-5 bg-secondary/30 ${

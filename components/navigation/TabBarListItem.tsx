@@ -47,11 +47,11 @@ export function TabBarListItem({
       testID={options.tabBarTestID}
       onPress={onPress}
       onLongPress={onLongPress}
-      className="flex m-4 items-start"
+      className="flex m-2 items-start"
     >
       {/* <View className="flex flex-row items-center justify-center  gap-1"> */}
       <View
-        className={`flex flex-row items-center justify-center  gap-1 p-2 ${
+        className={`flex flex-row items-center justify-center  gap-1 ${
           isLargeScreen &&
           "web:hover:bg-accent web:hover:text-accent-foreground p-2 rounded-md"
         } ${isLargeScreen && isFocused && "bg-accent text-accent-foreground"}`}

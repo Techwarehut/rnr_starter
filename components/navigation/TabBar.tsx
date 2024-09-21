@@ -37,7 +37,7 @@ const MyTabBar: React.FC<MyTabBarProps> = ({
   let triggerContent: React.ReactNode;
 
   const logout = () => {
-    router.replace("/SignUp");
+    router.replace("/createaccount");
   };
 
   return (
@@ -50,13 +50,13 @@ const MyTabBar: React.FC<MyTabBarProps> = ({
     >
       {isLargeScreen && (
         <View className=" justify-center items-center pl-3 pr-3">
-          <View className="w-12 h-12 bg-brand-primary rounded-full justify-center items-center pl-1">
+          {/* <View className="w-12 h-12 bg-brand-primary rounded-full justify-center items-center pl-1"> */}
             <FastForward
               className="fill-primary text-primary"
-              size={24}
+              size={36}
               strokeWidth={1}
             />
-          </View>
+         {/*  </View> */}
           <Separator className="my-4 " />
         </View>
       )}
