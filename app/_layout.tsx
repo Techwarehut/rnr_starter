@@ -66,9 +66,9 @@ export default function RootLayout() {
       setAndroidNavigationBar(colorTheme);
       setIsColorSchemeLoaded(true);
     })().finally(() => {
-      SplashScreen.hideAsync();
+      SplashScreen.hideAsync();     
     });
-  }, []);
+  }, []); 
 
   if (!isColorSchemeLoaded) {
     return null;

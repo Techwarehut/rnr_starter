@@ -10,3 +10,4 @@ export function useIsLargeScreen() {
   const { width } = useWindowDimensions();
   return width > 680; // Adjust threshold as needed
 }
+    
