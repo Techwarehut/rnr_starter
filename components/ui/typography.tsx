@@ -12,7 +12,7 @@ const H1 = React.forwardRef<TextRef, SlottableTextProps>(
         role="heading"
         aria-level="1"
         className={cn(
-          "web:scroll-m-20 text-4xl text-foreground font-bold tracking-tight lg:text-5xl web:select-text",
+          "web:scroll-m-20 text-4xl text-foreground font-semibold tracking-tight lg:text-5xl web:select-text",
           className
         )}
         ref={ref}
@@ -32,7 +32,7 @@ const H2 = React.forwardRef<TextRef, SlottableTextProps>(
         role="heading"
         aria-level="2"
         className={cn(
-          "web:scroll-m-20 border-b border-border pb-2 text-3xl text-foreground font-semibold tracking-tight first:mt-0 web:select-text",
+          "web:scroll-m-20 border-b border-border pb-2 text-3xl text-foreground tracking-tight first:mt-0 web:select-text",
           className
         )}
         ref={ref}
@@ -52,7 +52,7 @@ const H3 = React.forwardRef<TextRef, SlottableTextProps>(
         role="heading"
         aria-level="3"
         className={cn(
-          "web:scroll-m-20 text-2xl text-foreground font-semibold tracking-tight web:select-text",
+          "web:scroll-m-20 text-2xl text-foreground tracking-tight web:select-text",
           className
         )}
         ref={ref}

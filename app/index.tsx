@@ -1,22 +1,18 @@
 import * as React from "react";
 import { View, Image, useWindowDimensions, ScrollView } from "react-native";
-import Animated, {
-  FadeInUp,
-  FadeOutDown,
-  LayoutAnimationConfig,
-} from "react-native-reanimated";
+
 import { Info } from "~/lib/icons/Info";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
-import { Progress } from "~/components/ui/progress";
+import Animated, {
+  FadeInUp,
+  FadeOutDown,
+  Layout,
+  withTiming,
+  useSharedValue,
+  useAnimatedStyle,
+  withDelay,
+} from "react-native-reanimated";
 import { Text } from "~/components/ui/text";
 
 import { Input } from "~/components/ui/input";
@@ -25,7 +21,7 @@ import { useRouter } from "expo-router";
 import { FastForward } from "~/lib/icons/FastForward";
 import { Stack } from "expo-router";
 import { ThemeToggle } from "~/components/ThemeToggle";
-import { H1, H2, Muted } from "~/components/ui/typography";
+import { H1, H2, H3, Muted, P } from "~/components/ui/typography";
 import { useIsLargeScreen } from "~/lib/utils";
 
 export default function Screen() {
@@ -50,10 +46,12 @@ export default function Screen() {
     router.replace("/(tabs)");
   };
 
-  const googleLogoUri =
-    "https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg";
+  // Shared value to control the visibility of each item
+  const animations = Array(4)
+    .fill(null)
+    .map((_, index) => useSharedValue(0));
 
-    const isLargeScreen = useIsLargeScreen();
+  const isLargeScreen = useIsLargeScreen();
 
   return (
     <>
@@ -78,25 +76,75 @@ export default function Screen() {
         }}
       />
 
+      <View
+        className={`${
+          isLargeScreen ? "items-center justify-center" : ""
+        }   flex p-4 gap-4`}
+      >
+        <H1 className="text-foreground text-left">
+          Run your business from anywhere
+        </H1>
+        <H2>Sign into your account</H2>
+      </View>
       <View /* className="flex-1 justify-between items-center p-4"> */
-      className={`${
-        isLargeScreen
-          ? "flex flex-row flex-wrap justify-center gap-8" 
-          : "flex-1 flex-col justify-between"
-      }   items-center p-4`}>
-        <View className="gap-4">
-          <H1 className="text-foreground text-left">Sign into your account</H1>
-          <Text className="text-base text-left">
-            Run your business from anywhere with everything you need and nothing you don't!
-          </Text>
+        className={`${
+          isLargeScreen
+            ? "flex-1 flex-row flex-wrap justify-center gap-8"
+            : "flex-1 flex-col justify-between"
+        }   items-center p-4`}
+      >
+        <View className="gap-8">
+          {isLargeScreen && (
+            <>
+              <H3>Everything you need and nothing you don't!</H3>
+              {[
+                "Send Professional Estimates",
+                "Schedule Jobs",
+                "Track Purchases",
+                "Invoice and get paid",
+              ].map((text, index) => {
+                const animatedStyle = useAnimatedStyle(() => {
+                  return {
+                    opacity: animations[index].value,
+                    transform: [
+                      {
+                        translateY: withTiming(
+                          animations[index].value === 1 ? 0 : 10
+                        ),
+                      },
+                    ],
+                  };
+                });
+
+                React.useEffect(() => {
+                  animations[index].value = withDelay(
+                    index * 300,
+                    withTiming(1, { duration: 2500 })
+                  );
+                }, []);
+
+                return (
+                  <Animated.View key={index} style={animatedStyle}>
+                    <P
+                      className={`text-foreground text-left border-l-4 pl-4 mb-2 ml-8 ${
+                        index % 2 === 0
+                          ? "border-brand-primary"
+                          : "border-brand-secondary"
+                      }`}
+                    >
+                      {text}
+                    </P>
+                  </Animated.View>
+                );
+              })}
+            </>
+          )}
         </View>
         <View /* className="flex-1 justify-between items-center p-4"> */
-      className={`${
-        isLargeScreen
-          ? "w-auto" 
-          : "w-full"
-      }   gap-4 justify-center items-center p-4`}>
-        
+          className={`${
+            isLargeScreen ? "w-auto" : "w-full"
+          }   gap-4 justify-center items-center p-4`}
+        >
           {/* <Button variant="outline" size="lg" onPress={login}>
             <View className="flex-row items-center gap-1 w-full">
               <Image
