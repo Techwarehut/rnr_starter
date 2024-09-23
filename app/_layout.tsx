@@ -18,6 +18,7 @@ import { Button } from "~/components/ui/button";
 import { FastForward } from "~/lib/icons/FastForward";
 import { BottomSheetModalProvider } from "~/components/ui/bottom-sheet/bottomSheet";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Separator } from "~/components/ui/separator";
 
 const LIGHT_THEME: Theme = {
   dark: false,
@@ -39,6 +40,7 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const { colorScheme, setColorScheme, isDarkColorScheme } = useColorScheme();
   const [isColorSchemeLoaded, setIsColorSchemeLoaded] = React.useState(false);
+  const AVATAR_URI = "https://randomuser.me/api/portraits/men/32.jpg";
 
   React.useEffect(() => {
     (async () => {
@@ -66,9 +68,9 @@ export default function RootLayout() {
       setAndroidNavigationBar(colorTheme);
       setIsColorSchemeLoaded(true);
     })().finally(() => {
-      SplashScreen.hideAsync();     
+      SplashScreen.hideAsync();
     });
-  }, []); 
+  }, []);
 
   if (!isColorSchemeLoaded) {
     return null;
@@ -82,22 +84,67 @@ export default function RootLayout() {
           <Stack
             screenOptions={{
               headerShadowVisible: false,
-
-              headerLeft: () => (
-                <FastForward
-                  className="text-foreground items-center justify-center ml-2"
-                  size={24}
-                  strokeWidth={1.25}
-                />
-              ),
             }}
           >
-            <Stack.Screen name="index" />
-            <Stack.Screen name="createaccount" />
+            <Stack.Screen
+              name="index"
+              options={{
+                headerLeft: () => (
+                  <FastForward
+                    className="text-foreground items-center justify-center ml-2"
+                    size={24}
+                    strokeWidth={1.25}
+                  />
+                ),
+              }}
+            />
+            <Stack.Screen
+              name="createaccount"
+              options={{
+                headerLeft: () => (
+                  <FastForward
+                    className="text-foreground items-center justify-center ml-2"
+                    size={24}
+                    strokeWidth={1.25}
+                  />
+                ),
+              }}
+            />
             <Stack.Screen
               name="(tabs)"
               options={{
-                headerShown: false,
+                headerShown: true,
+                headerShadowVisible: true,
+                headerTitle: "Fast Forward",
+                headerSearchBarOptions: { placeholder: "Search" },
+                headerRight: () => (
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginRight: 10,
+                    }}
+                  >
+                    <ThemeToggle />
+                    <Avatar alt="Rick Sanchez's Avatar" className="w-10 h-10">
+                      <AvatarImage source={{ uri: AVATAR_URI }} />
+                      <AvatarFallback>
+                        <Text>RS</Text>
+                      </AvatarFallback>
+                    </Avatar>
+                  </View>
+                ),
+                headerLeft: () => (
+                  <View className=" justify-center items-center pl-3 pr-3">
+                    {/* <View className="w-12 h-12 bg-brand-primary rounded-full justify-center items-center pl-1"> */}
+                    <FastForward
+                      className=" text-primary"
+                      size={36}
+                      strokeWidth={1}
+                    />
+                  </View>
+                ),
               }}
             />
           </Stack>

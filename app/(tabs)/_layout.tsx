@@ -42,7 +42,8 @@ export default function TabLayout() {
         headerTitleStyle: {
           paddingLeft: isLargeScreen ? 80 : 0, // Corrected conditional syntax
         },
-        headerRight: () => (
+
+        /*  headerRight: () => (
           <View
             style={{
               flexDirection: "row",
@@ -59,7 +60,7 @@ export default function TabLayout() {
               </AvatarFallback>
             </Avatar>
           </View>
-        ),
+        ), */
       }}
     >
       <Tabs.Screen

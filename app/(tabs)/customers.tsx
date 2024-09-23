@@ -28,6 +28,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+import { Stack } from "expo-router";
 
 export default function CustomerScreen() {
   const isLargeScreen = useIsLargeScreen();
@@ -63,6 +64,8 @@ export default function CustomerScreen() {
     });
   };
 
+  const addNewCustomer = () => {};
+
   const animatedStyle = useAnimatedStyle(() => {
     return {
       transform: [{ translateX: translateX.value }],
@@ -70,89 +73,81 @@ export default function CustomerScreen() {
   });
 
   return (
-    <View /* className="flex-1 justify-between items-center p-4"> */
-      className={`${
-        isLargeScreen
-          ? "flex-1 flex-row flex-wrap pl-20"
-          : "flex-1 flex-col justify-between"
-      }   justify-center items-center gap-5 bg-secondary/304`}
-    >
-      <View className=" border border-input ml-2 rounded-md p-2">
-        <Table aria-labelledby="customer-table">
-          <TableHeader>
-            <TableRow>
-              <TableHead>
-                <View className=" flex-row gap-2">
-                  <View>
-                    <Input
-                      placeholder="Business Email"
-                      value={searchText}
-                      onChangeText={onChangeSearchText}
-                      aria-labelledby="email"
-                      aria-errormessage="inputError"
-                    />
-                  </View>
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    className="shadow-sm shadow-foreground/10 mr-3"
-                    onPress={() => {
-                      Alert.alert("action taken");
-                    }}
-                  >
-                    <Text>Add</Text>
-                  </Button>
-                </View>
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <FlatList
-              data={customers}
-              contentContainerStyle={{
-                paddingBottom: insets.bottom,
+    <>
+      <Stack.Screen
+        options={{
+          title: "Customers",
+          headerTitle: "Customers",
+
+          headerRight: () => (
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                marginRight: 10,
               }}
-              showsVerticalScrollIndicator={false}
-              renderItem={({ item: customer, index }) => {
-                return (
-                  <TableRow
-                    key={customer._id}
-                    className={cn(
-                      "active:bg-secondary",
-                      index % 2 && "bg-muted/40 "
-                    )}
-                  >
-                    <TableCell className="flex-1">
-                      <View className="flex-1 w-full flex-row justify-between items-center p-2 relative">
-                        <View>
-                          <Text>{customer.businessName}</Text>
-                          <Muted>{customer.customerName}</Muted>
+            >
+              <Button
+                className="shadow shadow-foreground/5"
+                onPress={addNewCustomer}
+              >
+                <Text>Add New Customer</Text>
+              </Button>
+            </View>
+          ),
+        }}
+      />
+      <View className="flex-1 flex-column w-full gap-5 bg-secondary/304 md:flex-row md:flex-wrap md:pl-20">
+        <View className="flex-1 md:flex-none md:border md:border-input md:m-2 md:rounded-md p-2">
+          <Table aria-labelledby="customer-table" className="flex-1">
+            <TableBody>
+              <FlatList
+                data={customers}
+                contentContainerStyle={{
+                  paddingBottom: insets.bottom,
+                }}
+                showsVerticalScrollIndicator={false}
+                renderItem={({ item: customer, index }) => {
+                  return (
+                    <TableRow
+                      key={customer._id}
+                      className={cn(
+                        "active:bg-secondary",
+                        index % 2 && "bg-muted/40 "
+                      )}
+                    >
+                      <TableCell>
+                        <View className="flex-1 w-full flex-row justify-between items-center p-2 relative">
+                          <View>
+                            <Text>{customer.businessName}</Text>
+                            <Muted>{customer.customerName}</Muted>
+                          </View>
+                          <View className="flex-row items-center gap-2">
+                            <Button
+                              variant="secondary"
+                              size="sm"
+                              className="shadow-sm shadow-foreground/10 mr-3"
+                              onPress={() => {
+                                Alert.alert("action taken");
+                              }}
+                            >
+                              <Text>Edit</Text>
+                            </Button>
+                            <Button
+                              variant="destructive"
+                              size="sm"
+                              className="shadow-sm shadow-foreground/10 mr-3"
+                              onPress={() => {
+                                Alert.alert("action taken");
+                              }}
+                            >
+                              <Text>delete</Text>
+                            </Button>
+                          </View>
                         </View>
-                        <View className="items-center gap-2">
-                          <Button
-                            variant="secondary"
-                            size="sm"
-                            className="shadow-sm shadow-foreground/10 mr-3"
-                            onPress={() => {
-                              Alert.alert("action taken");
-                            }}
-                          >
-                            <Text>Edit</Text>
-                          </Button>
-                          <Button
-                            variant="destructive"
-                            size="sm"
-                            className="shadow-sm shadow-foreground/10 mr-3"
-                            onPress={() => {
-                              Alert.alert("action taken");
-                            }}
-                          >
-                            <Text>delete</Text>
-                          </Button>
-                        </View>
-                      </View>
-                    </TableCell>
-                    {/* <TableCell className={`w-${columnWidths}`}>
+                      </TableCell>
+                      {/* <TableCell className={`w-${columnWidths}`}>
                     {customer.siteLocations.map((location, index) => (
                       <P
                         key={index}
@@ -166,18 +161,20 @@ export default function CustomerScreen() {
                       </P>
                     ))}
                   </TableCell> */}
-                  </TableRow>
-                );
-              }}
-            />
-          </TableBody>
-        </Table>
-      </View>
-      {isLargeScreen && (
-        <View className="flex-1 items-center justify-center border border-input rounded-md m-2">
-          <Text>Customer Detail Screen</Text>
+                    </TableRow>
+                  );
+                }}
+              />
+            </TableBody>
+          </Table>
         </View>
-      )}
-    </View>
+
+        {isLargeScreen && (
+          <View className="flex-1 items-center justify-center border border-input rounded-md m-2">
+            <Text>Customer Detail Screen</Text>
+          </View>
+        )}
+      </View>
+    </>
   );
 }

@@ -48,18 +48,6 @@ const MyTabBar: React.FC<MyTabBarProps> = ({
           : "flex-row border-t"
       }  border-input bg-background`}
     >
-      {isLargeScreen && (
-        <View className=" justify-center items-center pl-3 pr-3">
-          {/* <View className="w-12 h-12 bg-brand-primary rounded-full justify-center items-center pl-1"> */}
-            <FastForward
-              className="fill-primary text-primary"
-              size={36}
-              strokeWidth={1}
-            />
-         {/*  </View> */}
-          <Separator className="my-4 " />
-        </View>
-      )}
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
