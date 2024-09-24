@@ -116,7 +116,7 @@ export default function RootLayout() {
                 headerShown: true,
                 headerShadowVisible: true,
                 headerTitle: "Fast Forward",
-                headerSearchBarOptions: { placeholder: "Search" },
+
                 headerRight: () => (
                   <View
                     style={{

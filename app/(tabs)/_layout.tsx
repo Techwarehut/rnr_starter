@@ -19,7 +19,7 @@ import { View } from "react-native";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Text } from "~/components/ui/text";
 import { Button } from "~/components/ui/button";
-import { useIsLargeScreen } from "~/lib/utils";
+import { cn, useIsLargeScreen } from "~/lib/utils";
 
 const AVATAR_URI = "https://randomuser.me/api/portraits/men/32.jpg";
 
@@ -39,6 +39,9 @@ export default function TabLayout() {
         tabBarInactiveTintColor: inactiveTintColor, // Optional: Set the color for inactive tabs
         headerShown: true,
         headerShadowVisible: false,
+        headerStyle: {
+          backgroundColor: cn("bg-brand-primary"),
+        },
         headerTitleStyle: {
           paddingLeft: isLargeScreen ? 80 : 0, // Corrected conditional syntax
         },

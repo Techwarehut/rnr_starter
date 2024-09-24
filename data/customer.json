@@ -58,5 +58,57 @@
         "zipcode": "62706"
       }
     ]
+  },
+  {
+    "_id": "5",
+    "customerName": "Charlie Green",
+    "businessName": "Green Solutions",
+    "email": "charlie.green@example.com",
+    "phone": "+1472583690",
+    "siteLocations": [
+      {
+        "address": "159 Birch St, Springfield, IL",
+        "zipcode": "62707"
+      }
+    ]
+  },
+  {
+    "_id": "6",
+    "customerName": "Diana Prince",
+    "businessName": "Themyscira Enterprises",
+    "email": "diana.prince@example.com",
+    "phone": "+1597534862",
+    "siteLocations": [
+      {
+        "address": "246 Willow Dr, Springfield, IL",
+        "zipcode": "62708"
+      }
+    ]
+  },
+  {
+    "_id": "7",
+    "customerName": "Ethan Hunt",
+    "businessName": "Hunt Productions",
+    "email": "ethan.hunt@example.com",
+    "phone": "+2589631470",
+    "siteLocations": [
+      {
+        "address": "753 Fir Ln, Springfield, IL",
+        "zipcode": "62709"
+      }
+    ]
+  },
+  {
+    "_id": "8",
+    "customerName": "Fiona Gallagher",
+    "businessName": "Gallagher Realty",
+    "email": "fiona.gallagher@example.com",
+    "phone": "+3692581470",
+    "siteLocations": [
+      {
+        "address": "852 Cedar St, Springfield, IL",
+        "zipcode": "62710"
+      }
+    ]
   }
 ]

@@ -62,4 +62,26 @@
     --brand-secondary-light: 269 51% 59%; /*#9563cc*/
     --brand-secondary-dark: 268 44% 45%; /*#6f40a5*/
   }
+
+  /* For web only */
+  ::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.5); /* Color of the scrollbar thumb */
+    border-radius: 10px; /* Rounded edges */
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1); /* Color of the scrollbar track */
+  }
+
+  .dark ::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3); /* Light scrollbar thumb */
+  }
+
+  .dark ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1); /* Dark scrollbar track */
+  }
 }
