@@ -111,6 +111,14 @@ export default function RootLayout() {
               }}
             />
             <Stack.Screen
+              name="customerdetail"
+              options={{
+                headerShown: true,
+                headerTitle: "Customer Detail",
+                presentation: "modal",
+              }}
+            />
+            <Stack.Screen
               name="(tabs)"
               options={{
                 headerShown: true,

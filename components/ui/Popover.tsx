@@ -10,6 +10,8 @@ import {
 } from "~/components/ui/bottom-sheet/bottomSheet";
 
 import { useSharedValue } from "react-native-reanimated";
+import { cn } from "~/lib/utils";
+import { useColorScheme } from "~/lib/useColorScheme";
 
 interface PopoverProps {
   triggerContent: React.ReactNode;
@@ -54,6 +56,8 @@ export const Popover: React.FC<PopoverProps> = ({
     }
   }, [isOpen]);
 
+  const { isDarkColorScheme, setColorScheme } = useColorScheme();
+
   return (
     <>
       <Pressable
@@ -72,7 +76,9 @@ export const Popover: React.FC<PopoverProps> = ({
         handleComponent={() => (
           <BottomSheetHandle
             className="bg-popover"
-            indicatorStyle={{ backgroundColor: "#658b38" }} // Customize the dash color
+            indicatorStyle={{
+              backgroundColor: isDarkColorScheme ? "#FFF" : "#000",
+            }} // Customize the dash color
             animatedIndex={animatedIndex}
             animatedPosition={animatedPosition}
           />

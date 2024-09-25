@@ -24,6 +24,7 @@
     "@rn-primitives/separator": "^1.0.3",
     "@rn-primitives/slot": "~1.0.3",
     "@rn-primitives/table": "^1.0.4",
+    "@rn-primitives/tabs": "^1.0.4",
     "@rn-primitives/tooltip": "~1.0.3",
     "@rn-primitives/types": "~1.0.3",
     "class-variance-authority": "^0.7.0",

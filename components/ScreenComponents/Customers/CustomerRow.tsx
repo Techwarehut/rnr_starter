@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Alert, View } from "react-native";
+import { Alert, Pressable, View } from "react-native";
 import { TableCell, TableRow } from "~/components/ui/table"; // Your TableCell component
 import { Button } from "~/components/ui/button";
 import { Text } from "~/components/ui/text";
@@ -13,6 +13,7 @@ interface CustomerRowProps {
   index: number;
   onEdit: (item: any) => void;
   onDelete: (item: any) => void;
+  onPress: (item: any) => void;
 }
 
 const CustomerRow: React.FC<CustomerRowProps> = ({
@@ -20,6 +21,7 @@ const CustomerRow: React.FC<CustomerRowProps> = ({
   index,
   onEdit,
   onDelete,
+  onPress,
 }) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const isLargeScreen = useIsLargeScreen();
@@ -29,54 +31,11 @@ const CustomerRow: React.FC<CustomerRowProps> = ({
       className={cn("active:bg-secondary", index % 2 && "bg-muted/40 ")}
       onHoverIn={() => setHoveredIndex(index)}
       onHoverOut={() => setHoveredIndex(null)}
+      onPress={() => onPress(item)}
     >
       <TableCell className="flex-1">
-        <View className="flex-row justify-between items-center gap-4">
-          <View>
-            <Text>{item.businessName}</Text>
-            <Muted>{item.customerName}</Muted>
-          </View>
-          <View className="flex-row gap-2 justify-end opacity-100">
-            <Button
-              variant="secondary"
-              size="sm"
-              className="shadow-sm shadow-foreground/10 p-1 items-center justify-center "
-              style={{
-                opacity: hoveredIndex === index ? 1 : 0,
-              }}
-              onHoverIn={() => setHoveredIndex(index)}
-              /* onHoverOut={() => setHoveredIndex(null)} */
-              onPress={() => {
-                Alert.alert("action taken");
-              }}
-            >
-              <Pencil
-                className="text-foreground items-center justify-center p-1"
-                size={isLargeScreen ? 24 : 21}
-                strokeWidth={1.25}
-              />
-            </Button>
-            <Button
-              variant="destructive"
-              size="sm"
-              className="shadow-sm shadow-foreground/10 p-1 items-center justify-center "
-              onHoverIn={() => setHoveredIndex(index)}
-              /* onHoverOut={() => setHoveredIndex(null)} */
-              style={{
-                opacity: hoveredIndex === index ? 1 : 0,
-              }}
-              onPress={() => {
-                Alert.alert("action taken");
-              }}
-            >
-              <Trash2
-                className="text-foreground items-center justify-center p-1"
-                size={isLargeScreen ? 24 : 21}
-                strokeWidth={1.25}
-              />
-            </Button>
-          </View>
-        </View>
+        <Text>{item.businessName}</Text>
+        <Muted>{item.customerName}</Muted>
       </TableCell>
     </TableRow>
   );

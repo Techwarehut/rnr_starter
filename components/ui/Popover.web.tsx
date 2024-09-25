@@ -28,9 +28,9 @@ export const Popover: React.FC<PopoverProps> = ({
     <RNPopover key={`${popoverKey}-trigger`}>
       <PopoverTrigger asChild>{triggerContent}</PopoverTrigger>
       <PopoverContent side="bottom" insets={contentInsets} className="w-fit">
-      {screenContent.map((content, index) => (
-            <View key={`${popoverKey}-content-${index}`}>{content}</View>
-          ))}
+        {screenContent.map((content, index) => (
+          <View key={`${popoverKey}-content-${index}`}>{content}</View>
+        ))}
       </PopoverContent>
     </RNPopover>
   );

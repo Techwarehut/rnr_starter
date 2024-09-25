@@ -155,7 +155,7 @@ const MyTabBar: React.FC<MyTabBarProps> = ({
               popoverKey={route.key}
               triggerContent={triggerContent}
               screenContent={screenContent}
-              snapPoints={[300, "40%", "50%", "60%"]} // Custom snap points
+              snapPoints={[300, "30%", "40%"]} // Custom snap points
               contentInsets={contentInsets}
             />
           );

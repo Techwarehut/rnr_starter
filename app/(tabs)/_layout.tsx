@@ -75,7 +75,7 @@ export default function TabLayout() {
               //className={focused ? "fill-primary" : "text-primary fill-none"}
               className={focused ? "text-primary" : "text-muted-foreground"}
               size={24}
-              strokeWidth={1}
+              strokeWidth={1.5}
               //color={color}
             />
           ),
@@ -95,7 +95,7 @@ export default function TabLayout() {
               } */
               className={focused ? "text-primary" : "text-muted-foreground"}
               size={24}
-              strokeWidth={1}
+              strokeWidth={1.5}
             />
           ),
           tabBarLabel: "Jobs",
@@ -114,7 +114,7 @@ export default function TabLayout() {
               } */
               className={focused ? "text-primary" : "text-muted-foreground"}
               size={24}
-              strokeWidth={1}
+              strokeWidth={1.5}
             />
           ),
           tabBarLabel: "Purchases",
@@ -133,7 +133,7 @@ export default function TabLayout() {
               } */
               className={focused ? "text-primary" : "text-muted-foreground"}
               size={24}
-              strokeWidth={1}
+              strokeWidth={1.5}
             />
           ),
           tabBarLabel: "Sales",
@@ -151,7 +151,7 @@ export default function TabLayout() {
               } */
               className={focused ? "text-primary" : "text-muted-foreground"}
               size={24}
-              strokeWidth={1}
+              strokeWidth={1.5}
             />
           ),
           tabBarLabel: "Team",
@@ -168,7 +168,7 @@ export default function TabLayout() {
               } */
               className={focused ? "text-primary" : "text-muted-foreground"}
               size={24}
-              strokeWidth={1}
+              strokeWidth={1.5}
             />
           ),
           tabBarLabel: "Customers",
@@ -185,7 +185,7 @@ export default function TabLayout() {
               } */
               className={focused ? "text-primary" : "text-muted-foreground"}
               size={24}
-              strokeWidth={1}
+              strokeWidth={1.5}
             />
           ),
           tabBarLabel: "OnBoard",
@@ -204,7 +204,7 @@ export default function TabLayout() {
               } */
               className={focused ? "text-primary" : "text-muted-foreground"}
               size={24}
-              strokeWidth={1}
+              strokeWidth={1.5}
             />
           ),
           tabBarLabel: "Settings",
