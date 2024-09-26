@@ -5,9 +5,24 @@ import CustomerDetail from "~/components/ScreenComponents/Customers/CustomerDeta
 import { Stack, useLocalSearchParams } from "expo-router";
 import { H3, Muted } from "~/components/ui/typography";
 import { Button } from "~/components/ui/button";
+import NothingSelected from "~/components/ScreenComponents/NothingSelected";
+import ActionButtons from "~/components/ScreenComponents/ActionButtons";
 
 interface SiteLocation {
-  address: string;
+  siteName: string;
+  siteContactPerson: string;
+  AddressLine: string; // Updated to match the new JSON structure
+  City: string; // Updated to match the new JSON structure
+  Province: string; // Updated to match the new JSON structure
+  Country: string; // Updated to match the new JSON structure
+  zipcode: string;
+}
+
+interface BillingAddress {
+  AddressLine: string; // Updated to match the new JSON structure
+  City: string; // Updated to match the new JSON structure
+  Province: string; // Updated to match the new JSON structure
+  Country: string; // Updated to match the new JSON structure
   zipcode: string;
 }
 
@@ -17,6 +32,9 @@ interface Customer {
   customerName: string;
   email: string;
   phone: string;
+  website: string;
+  notes: string;
+  billingAddress: BillingAddress; // Use the BillingAddress interface
   siteLocations: SiteLocation[];
 }
 
@@ -39,10 +57,7 @@ const CustomerDetailScreen: React.FC = () => {
           <CustomerDetail customer={customer} />
         </View>
       ) : (
-        <View className="flex-1 items-center justify-center">
-          <H3>No customer data available</H3>
-          <Muted>Nothing is selected</Muted>
-        </View>
+        <NothingSelected />
       )}
     </>
   );

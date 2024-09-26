@@ -17,3 +17,25 @@ lg: 1024px (large screens)
 xl: 1280px (extra large screens)
 2xl: 1536px (double extra large screens) */
 }
+
+export function formatPhoneNumber(phone: string) {
+  // Remove non-digit characters
+  const cleaned = phone.replace(/\D/g, "");
+
+  // Check if cleaned string is empty
+  if (!cleaned) return "";
+
+  // Apply formatting based on the cleaned string length
+  const match = cleaned.match(/^(?:(\d{0,3})(\d{0,3})(\d{0,4}))?$/);
+
+  if (match) {
+    const [, areaCode, middle, last] = match;
+    if (middle) {
+      return `(${areaCode}) ${middle}${last ? "-" + last : ""}`;
+    }
+    if (areaCode) {
+      return `(${areaCode})`;
+    }
+  }
+  return phone; // Return the original if it doesn't match
+}
