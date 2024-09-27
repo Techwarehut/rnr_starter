@@ -84,6 +84,7 @@ export default function RootLayout() {
           <Stack
             screenOptions={{
               headerShadowVisible: false,
+              headerTitleAlign: "left",
             }}
           >
             <Stack.Screen
@@ -115,7 +116,10 @@ export default function RootLayout() {
               options={{
                 headerShown: true,
                 headerTitle: "Customer Detail",
-                presentation: "modal",
+                presentation: Platform.OS === "ios" ? "card" : "modal",
+                headerTitleAlign: "left",
+                //headerBackVisible: true,
+                headerBackTitleVisible: false,
               }}
             />
             <Stack.Screen
@@ -124,7 +128,7 @@ export default function RootLayout() {
                 headerShown: true,
                 headerShadowVisible: true,
                 headerTitle: "Fast Forward",
-
+                headerTitleAlign: "left",
                 headerRight: () => (
                   <View
                     style={{

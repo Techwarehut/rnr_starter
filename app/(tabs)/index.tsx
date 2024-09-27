@@ -14,7 +14,11 @@ export default function Dashboard() {
         isLargeScreen ? "pl-20" : "pl-4"
       }`}
     >
-      <Text>I am in Dashboard Screen</Text>
+      <View className="bg-destructive text-destructive-foreground">
+        <Text className="text-destructive-foreground">
+          I am in Dashboard Screen
+        </Text>
+      </View>
     </View>
   );
 }

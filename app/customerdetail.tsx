@@ -7,36 +7,7 @@ import { H3, Muted } from "~/components/ui/typography";
 import { Button } from "~/components/ui/button";
 import NothingSelected from "~/components/ScreenComponents/NothingSelected";
 import ActionButtons from "~/components/ScreenComponents/ActionButtons";
-
-interface SiteLocation {
-  siteName: string;
-  siteContactPerson: string;
-  AddressLine: string; // Updated to match the new JSON structure
-  City: string; // Updated to match the new JSON structure
-  Province: string; // Updated to match the new JSON structure
-  Country: string; // Updated to match the new JSON structure
-  zipcode: string;
-}
-
-interface BillingAddress {
-  AddressLine: string; // Updated to match the new JSON structure
-  City: string; // Updated to match the new JSON structure
-  Province: string; // Updated to match the new JSON structure
-  Country: string; // Updated to match the new JSON structure
-  zipcode: string;
-}
-
-interface Customer {
-  _id: string;
-  businessName: string;
-  customerName: string;
-  email: string;
-  phone: string;
-  website: string;
-  notes: string;
-  billingAddress: BillingAddress; // Use the BillingAddress interface
-  siteLocations: SiteLocation[];
-}
+import { Customer } from "~/components/ScreenComponents/Customers/types";
 
 const CustomerDetailScreen: React.FC = () => {
   const { customerParam } = useLocalSearchParams(); // Get the customer from navigation params
@@ -53,7 +24,7 @@ const CustomerDetailScreen: React.FC = () => {
   return (
     <>
       {customer ? (
-        <View className="flex-1 items-center justify-center m-2">
+        <View className="flex-1 items-center bg-secondary/30 justify-center m-2">
           <CustomerDetail customer={customer} />
         </View>
       ) : (

@@ -6,31 +6,29 @@
     "email": "john.doe@example.com",
     "phone": "(234) 567-8901",
     "website": "www.doeenterprises.ca",
-    "notes": "Preferred contact via email.",
     "billingAddress": {
       "AddressLine": "123 Billing St",
       "City": "Toronto",
       "Province": "ON",
-      "Country": "Canada",
       "zipcode": "M4B 1B3"
     },
     "siteLocations": [
       {
         "siteName": "Main Office",
         "siteContactPerson": "John Doe",
+        "siteContactPhone": "(234) 567-8901",
         "AddressLine": "123 Main St",
         "City": "Springfield",
         "Province": "ON",
-        "Country": "Canada",
         "zipcode": "K1A 0B1"
       },
       {
         "siteName": "Branch Office",
         "siteContactPerson": "Jane Doe",
+        "siteContactPhone": "(234) 567-8902",
         "AddressLine": "456 Elm St",
         "City": "Springfield",
         "Province": "ON",
-        "Country": "Canada",
         "zipcode": "K1A 0C2"
       }
     ]
@@ -42,22 +40,20 @@
     "email": "jane.smith@example.com",
     "phone": "(098) 765-4321",
     "website": "www.smithco.ca",
-    "notes": "Urgent requests should be directed to my assistant.",
     "billingAddress": {
       "AddressLine": "789 Billing St",
       "City": "Vancouver",
       "Province": "BC",
-      "Country": "Canada",
       "zipcode": "V5K 1A3"
     },
     "siteLocations": [
       {
         "siteName": "Headquarters",
         "siteContactPerson": "Jane Smith",
+        "siteContactPhone": "(098) 765-4322",
         "AddressLine": "789 Maple Ave",
         "City": "Springfield",
         "Province": "ON",
-        "Country": "Canada",
         "zipcode": "K1A 0D3"
       }
     ]
@@ -69,49 +65,47 @@
     "email": "alice.johnson@example.com",
     "phone": "(135) 792-4680",
     "website": "www.johnsongroup.ca",
-    "notes": "Looking to expand services.",
     "billingAddress": {
       "AddressLine": "321 Billing Rd",
       "City": "Montreal",
       "Province": "QC",
-      "Country": "Canada",
       "zipcode": "H1A 0B1"
     },
     "siteLocations": [
       {
         "siteName": "Main Location",
         "siteContactPerson": "Alice Johnson",
+        "siteContactPhone": "(135) 792-4681",
         "AddressLine": "321 Oak St",
         "City": "Springfield",
         "Province": "ON",
-        "Country": "Canada",
         "zipcode": "K1A 0E4"
       },
       {
         "siteName": "Secondary Location",
         "siteContactPerson": "Bob Johnson",
+        "siteContactPhone": "(135) 792-4682",
         "AddressLine": "654 Pine St",
         "City": "Springfield",
         "Province": "ON",
-        "Country": "Canada",
         "zipcode": "K1A 0F5"
       },
       {
         "siteName": "New Site",
         "siteContactPerson": "Charlie Johnson",
+        "siteContactPhone": "(135) 792-4683",
         "AddressLine": "111 Birch St",
         "City": "Springfield",
         "Province": "ON",
-        "Country": "Canada",
         "zipcode": "K1A 0G6"
       },
       {
         "siteName": "Temporary Location",
         "siteContactPerson": "Diane Johnson",
+        "siteContactPhone": "(135) 792-4684",
         "AddressLine": "222 Cedar St",
         "City": "Springfield",
         "Province": "ON",
-        "Country": "Canada",
         "zipcode": "K1A 0H7"
       }
     ]
@@ -123,22 +117,20 @@
     "email": "bob.brown@example.com",
     "phone": "(246) 813-5790",
     "website": "www.brownindustries.ca",
-    "notes": "",
     "billingAddress": {
       "AddressLine": "987 Billing Ave",
       "City": "Calgary",
       "Province": "AB",
-      "Country": "Canada",
       "zipcode": "T1X 1A3"
     },
     "siteLocations": [
       {
         "siteName": "Manufacturing Plant",
         "siteContactPerson": "Bob Brown",
+        "siteContactPhone": "(246) 813-5791",
         "AddressLine": "987 Cedar Blvd",
         "City": "Springfield",
         "Province": "ON",
-        "Country": "Canada",
         "zipcode": "K1A 0I8"
       }
     ]
@@ -150,22 +142,20 @@
     "email": "charlie.green@example.com",
     "phone": "(147) 258-3690",
     "website": "www.greensolutions.ca",
-    "notes": "Focus on eco-friendly projects.",
     "billingAddress": {
       "AddressLine": "159 Billing St",
       "City": "Edmonton",
       "Province": "AB",
-      "Country": "Canada",
       "zipcode": "T5A 1A3"
     },
     "siteLocations": [
       {
         "siteName": "Eco Center",
         "siteContactPerson": "Charlie Green",
+        "siteContactPhone": "(147) 258-3691",
         "AddressLine": "159 Birch St",
         "City": "Springfield",
         "Province": "ON",
-        "Country": "Canada",
         "zipcode": "K1A 0J9"
       }
     ]
@@ -177,22 +167,20 @@
     "email": "diana.prince@example.com",
     "phone": "(159) 753-4862",
     "website": "www.themyscira.ca",
-    "notes": "Special projects manager.",
     "billingAddress": {
       "AddressLine": "246 Billing Blvd",
       "City": "Ottawa",
       "Province": "ON",
-      "Country": "Canada",
       "zipcode": "K1A 0K1"
     },
     "siteLocations": [
       {
         "siteName": "Main Office",
         "siteContactPerson": "Diana Prince",
+        "siteContactPhone": "(159) 753-4863",
         "AddressLine": "246 Willow Dr",
         "City": "Springfield",
         "Province": "ON",
-        "Country": "Canada",
         "zipcode": "K1A 0L2"
       }
     ]
@@ -204,22 +192,20 @@
     "email": "ethan.hunt@example.com",
     "phone": "(258) 963-1470",
     "website": "www.huntproductions.ca",
-    "notes": "Requires weekly updates.",
     "billingAddress": {
       "AddressLine": "753 Billing St",
       "City": "Halifax",
       "Province": "NS",
-      "Country": "Canada",
       "zipcode": "B3K 1B3"
     },
     "siteLocations": [
       {
         "siteName": "Production Studio",
         "siteContactPerson": "Ethan Hunt",
+        "siteContactPhone": "(258) 963-1471",
         "AddressLine": "753 Fir Ln",
         "City": "Springfield",
         "Province": "ON",
-        "Country": "Canada",
         "zipcode": "K1A 0M3"
       }
     ]
@@ -231,22 +217,20 @@
     "email": "fiona.gallagher@example.com",
     "phone": "(369) 258-1470",
     "website": "www.gallagherrealty.ca",
-    "notes": "Looking for new listings.",
     "billingAddress": {
       "AddressLine": "852 Billing St",
       "City": "Victoria",
       "Province": "BC",
-      "Country": "Canada",
       "zipcode": "V8W 1A3"
     },
     "siteLocations": [
       {
         "siteName": "Main Office",
         "siteContactPerson": "Fiona Gallagher",
+        "siteContactPhone": "(369) 258-1471",
         "AddressLine": "852 Cedar St",
         "City": "Springfield",
         "Province": "ON",
-        "Country": "Canada",
         "zipcode": "K1A 0N4"
       }
     ]

@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { Ellipsis } from "~/lib/icons/Ellipsis";
 
@@ -46,7 +46,7 @@ const MyTabBar: React.FC<MyTabBarProps> = ({
         isLargeScreen
           ? "absolute flex-col h-full w-20 border-r pt-4"
           : "flex-row border-t"
-      }  border-input bg-background`}
+      } ${Platform.OS === "ios" ? "mb-4" : ""}  border-input bg-background`}
     >
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
@@ -108,7 +108,7 @@ const MyTabBar: React.FC<MyTabBarProps> = ({
             <View
               key={`${route.key}-morecontent`}
               className={`w-full flex-1 items-center justify-center ${
-                isLargeScreen ? "" : "mr-3"
+                isLargeScreen ? "" : "mr-8"
               }`}
             >
               <Ellipsis

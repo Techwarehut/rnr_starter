@@ -12,36 +12,7 @@ import { Plus } from "~/lib/icons/Plus";
 import CustomerDetail from "~/components/ScreenComponents/Customers/CustomerDetail";
 import { H2, H3, Muted } from "~/components/ui/typography";
 import NothingSelected from "~/components/ScreenComponents/NothingSelected";
-
-interface SiteLocation {
-  siteName: string;
-  siteContactPerson: string;
-  AddressLine: string; // Updated to match the new JSON structure
-  City: string; // Updated to match the new JSON structure
-  Province: string; // Updated to match the new JSON structure
-  Country: string; // Updated to match the new JSON structure
-  zipcode: string;
-}
-
-interface BillingAddress {
-  AddressLine: string; // Updated to match the new JSON structure
-  City: string; // Updated to match the new JSON structure
-  Province: string; // Updated to match the new JSON structure
-  Country: string; // Updated to match the new JSON structure
-  zipcode: string;
-}
-
-interface Customer {
-  _id: string;
-  businessName: string;
-  customerName: string;
-  email: string;
-  phone: string;
-  website: string;
-  notes: string;
-  billingAddress: BillingAddress; // Use the BillingAddress interface
-  siteLocations: SiteLocation[];
-}
+import { Customer } from "~/components/ScreenComponents/Customers/types";
 
 const CustomerScreen = () => {
   const [filteredCustomers, setFilteredCustomers] = useState(customers);

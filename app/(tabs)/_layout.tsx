@@ -39,6 +39,7 @@ export default function TabLayout() {
         tabBarInactiveTintColor: inactiveTintColor, // Optional: Set the color for inactive tabs
         headerShown: true,
         headerShadowVisible: false,
+        headerTitleAlign: "left",
         headerStyle: {
           backgroundColor: cn("bg-brand-primary"),
         },
