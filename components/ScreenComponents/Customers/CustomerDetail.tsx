@@ -24,6 +24,12 @@ import { Stack } from "expo-router";
 import DialogScreen from "../DialogScreen";
 import { Customer } from "./types";
 import SiteLocationCard from "./SiteLocationCard";
+import { useToast } from "../ToastMessage";
+import Toast from "react-native-toast-message";
+import InputField from "../InputField";
+import CustomerInfoFields from "./FormElements/CustomerNameField";
+import CustomerBasicInfo from "./FormElements/CustomerBasicInfo";
+import CustomerBillingAddress from "./FormElements/CustomerBillingAddress";
 
 interface CustomerDetailProps {
   customer: Customer;
@@ -34,6 +40,7 @@ const CustomerDetail: React.FC<CustomerDetailProps> = ({ customer }) => {
   const [value, setValue] = React.useState("active");
   const [editMode, setEditMode] = React.useState(false);
   const [customerData, setCustomerData] = React.useState<Customer>(customer);
+  const { showSuccessToast, showErrorToast } = useToast();
 
   // Optional: Update state when prop changes
   useEffect(() => {
@@ -41,6 +48,9 @@ const CustomerDetail: React.FC<CustomerDetailProps> = ({ customer }) => {
   }, [customer]);
   const onSave = () => {
     setEditMode(false);
+    // To show a success toast with custom text2
+    console.log("Before showing toast");
+    showSuccessToast("Customer saved succesfully!");
   };
 
   const handleInputChange = (
@@ -87,9 +97,9 @@ const CustomerDetail: React.FC<CustomerDetailProps> = ({ customer }) => {
   };
 
   // Phone number formatting
-  const handlePhoneChange = (phone: string) => {
+  const handlePhoneChange = (field: string, phone: string) => {
     const formattedPhone = formatPhoneNumber(phone);
-    handleInputChange("phone", formattedPhone);
+    handleInputChange(field, formattedPhone);
   };
   const cardWidth = 300; // Approximate width for min-w-80 (adjust as necessary)
 
@@ -108,14 +118,14 @@ const CustomerDetail: React.FC<CustomerDetailProps> = ({ customer }) => {
               />
             ),
             headerTitle: () => (
-              <View style={{ alignItems: "flex-start", marginLeft: 10 }}>
+              <View>
                 <Text>{customer.businessName}</Text>
-                <Muted>{customer.customerName}</Muted>
               </View>
             ),
           }}
         />
       )}
+
       <ScrollView
         showsVerticalScrollIndicator={isLargeScreen}
         className="flex-1 w-full gap-10 p-2"
@@ -136,151 +146,27 @@ const CustomerDetail: React.FC<CustomerDetailProps> = ({ customer }) => {
           </View>
         )}
 
-        {editMode && (
-          <View className="flex-1 flex-row flex-wrap gap-4 mb-8">
-            <View className="gap-1 w-full">
-              <Label nativeID="businessName">Business Name</Label>
+        <CustomerInfoFields
+          customerData={customerData}
+          handleInputChange={handleInputChange}
+          editMode={editMode}
+        />
 
-              <Input
-                placeholder="businessName"
-                value={customerData.email}
-                onChangeText={(value) =>
-                  handleInputChange("businessName", value)
-                }
-                aria-labelledby="Business Name"
-                aria-errormessage="inputError"
-                editable={editMode}
-              />
-            </View>
-            <View className="gap-1 w-full">
-              <Label nativeID="customerName">Customer Name</Label>
-
-              <Input
-                placeholder="Customer Name"
-                value={customerData.email}
-                onChangeText={(value) =>
-                  handleInputChange("customerName", value)
-                }
-                aria-labelledby="customerName"
-                aria-errormessage="inputError"
-                editable={editMode}
-              />
-            </View>
-          </View>
-        )}
         {/* Top Container*/}
         <View className="flex flex-col md:flex-row w-full gap-6  ">
           {/* Contact Details */}
-
-          <View className="flex-1 flex-col gap-2 w-full">
-            <View>
-              <Text className="text-xl">Basic Information</Text>
-              <Muted>Optional. It will appear on invoice.</Muted>
-            </View>
-
-            <View className="flex-column items-start justify-start gap-4 p-2 py-5 ">
-              <View className="gap-1 w-full">
-                <Label nativeID="email">Email</Label>
-
-                <Input
-                  placeholder="email"
-                  value={customerData.email}
-                  onChangeText={(value) => handleInputChange("email", value)}
-                  aria-labelledby="email"
-                  aria-errormessage="inputError"
-                  editable={editMode}
-                />
-              </View>
-              <View className="gap-1 w-full">
-                <Label nativeID="phone">Phone</Label>
-
-                <Input
-                  placeholder="phone"
-                  value={customerData.phone}
-                  onChangeText={(value) => handlePhoneChange(value)}
-                  aria-labelledby="phone"
-                  aria-errormessage="inputError"
-                  editable={editMode}
-                />
-              </View>
-
-              <View className="gap-1 w-full">
-                <Label nativeID="website">Website</Label>
-
-                <Input
-                  placeholder="website"
-                  value={customerData.website}
-                  onChangeText={(value) => handleInputChange("website", value)}
-                  aria-labelledby="website"
-                  aria-errormessage="inputError"
-                  editable={editMode}
-                />
-              </View>
-            </View>
-          </View>
-
+          <CustomerBasicInfo
+            customerData={customerData}
+            handleInputChange={handleInputChange}
+            editMode={editMode}
+            handlePhoneChange={handlePhoneChange}
+          />
           {/* Billing Address */}
-          <View className="flex-1 flex-col gap-2 w-full">
-            <View>
-              <Text className="text-xl">Billing Address</Text>
-              <Muted>Optional. It will appear on invoice.</Muted>
-            </View>
-            <View className="flex-column items-start justify-start gap-4 p-2 py-5">
-              <View className="gap-1 w-full">
-                <Label nativeID="Address">Address</Label>
-
-                <Input
-                  placeholder="Address"
-                  value={customerData.billingAddress.AddressLine}
-                  onChangeText={(value) =>
-                    handleInputChange("AddressLine", value)
-                  }
-                  aria-labelledby="BillingAddress"
-                  aria-errormessage="inputError"
-                  editable={editMode}
-                />
-              </View>
-              <View className="gap-1 w-full">
-                <Label nativeID="City">City</Label>
-                <Input
-                  placeholder="City"
-                  value={customerData.billingAddress.City}
-                  onChangeText={(value) => handleInputChange("City", value)}
-                  aria-labelledby="City"
-                  aria-errormessage="inputError"
-                  editable={editMode}
-                />
-              </View>
-              <View className="flex-row gap-1 w-full">
-                <View className="flex-1 gap-1">
-                  <Label nativeID="province">Province</Label>
-                  <Input
-                    placeholder="Province"
-                    value={customerData.billingAddress.Province}
-                    onChangeText={(value) =>
-                      handleInputChange("Province", value)
-                    }
-                    aria-labelledby="province"
-                    aria-errormessage="inputError"
-                    editable={editMode}
-                  />
-                </View>
-                <View className="flex-1 gap-1">
-                  <Label nativeID="zipcode">Zip Code</Label>
-                  <Input
-                    placeholder="zipcode"
-                    value={customerData.billingAddress.zipcode}
-                    onChangeText={(value) =>
-                      handleInputChange("zipcode", value)
-                    }
-                    aria-labelledby="zipcode"
-                    aria-errormessage="inputError"
-                    editable={editMode}
-                  />
-                </View>
-              </View>
-            </View>
-          </View>
+          <CustomerBillingAddress
+            customerData={customerData}
+            handleInputChange={handleInputChange}
+            editMode={editMode}
+          />
         </View>
 
         {/*Site Locations */}
@@ -309,7 +195,7 @@ const CustomerDetail: React.FC<CustomerDetailProps> = ({ customer }) => {
             />
           </View>
         ) : (
-          <View className="flex-row py-4 my-2 overflow-x-scroll">
+          <View className="flex flex-row flex-nowrap py-4 my-4 w-full overflow-x-scroll">
             <ScrollView
               horizontal={true}
               pagingEnabled
@@ -319,6 +205,9 @@ const CustomerDetail: React.FC<CustomerDetailProps> = ({ customer }) => {
               scrollEnabled
               contentContainerStyle={{
                 flexDirection: "row",
+                flexGrow: 1,
+                flexWrap: "nowrap",
+                overflow: "visible",
                 gap: 8,
               }}
               snapToInterval={cardWidth} // Snap to the width of each card
@@ -333,6 +222,7 @@ const CustomerDetail: React.FC<CustomerDetailProps> = ({ customer }) => {
           </View>
         )}
       </ScrollView>
+      <Toast />
     </>
   );
 };

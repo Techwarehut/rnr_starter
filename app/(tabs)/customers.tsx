@@ -13,16 +13,28 @@ import CustomerDetail from "~/components/ScreenComponents/Customers/CustomerDeta
 import { H2, H3, Muted } from "~/components/ui/typography";
 import NothingSelected from "~/components/ScreenComponents/NothingSelected";
 import { Customer } from "~/components/ScreenComponents/Customers/types";
+import { AddNewCustomer } from "~/components/ScreenComponents/Customers/AddNewCustomer";
 
 const CustomerScreen = () => {
   const [filteredCustomers, setFilteredCustomers] = useState(customers);
   const [selCust, setSelCust] = useState<Customer | null>(null);
+  const [dialogVisible, setDialogVisible] = useState(false);
 
   const insets = useSafeAreaInsets();
   const navigation = useNavigation();
 
   const addNewCustomer = () => {
     // Logic for adding a new customer
+    setDialogVisible(true);
+  };
+  const handleCloseDialog = () => {
+    setDialogVisible(false); // Function to close the dialog
+  };
+
+  const handleSaveCustomer = () => {
+    // Logic for saving a new customer goes here
+    console.log("Customer saved!");
+    handleCloseDialog(); // Close the dialog after saving
   };
 
   const showCustomerDetails = (customer: any) => {
@@ -42,14 +54,7 @@ const CustomerScreen = () => {
       headerTitle: "Customers",
       headerRight: () => (
         <View className="flex-1 flex-row justify-center items-center m-2 gap-1">
-          <Button
-            size="sm"
-            variant="default"
-            className="shadow shadow-foreground/5"
-            onPress={addNewCustomer}
-          >
-            <Text>Add New Customer</Text>
-          </Button>
+          <AddNewCustomer />
         </View>
       ),
     });

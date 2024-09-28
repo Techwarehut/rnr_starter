@@ -8,6 +8,7 @@ import { Button } from "~/components/ui/button";
 import NothingSelected from "~/components/ScreenComponents/NothingSelected";
 import ActionButtons from "~/components/ScreenComponents/ActionButtons";
 import { Customer } from "~/components/ScreenComponents/Customers/types";
+import Toast from "react-native-toast-message";
 
 const CustomerDetailScreen: React.FC = () => {
   const { customerParam } = useLocalSearchParams(); // Get the customer from navigation params

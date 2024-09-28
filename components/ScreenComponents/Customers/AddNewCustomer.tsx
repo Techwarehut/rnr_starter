@@ -1,49 +1,26 @@
-// Popover.tsx (for BottomSheet - Mobile)
-
-import React, { useCallback, useMemo, useRef, useState } from "react";
-import { View, Pressable, Platform } from "react-native";
-
+import React, { useCallback, useRef, useState } from "react";
+import { View, Pressable, StyleSheet } from "react-native";
 import {
   BottomSheetModal,
   BottomSheetView,
   BottomSheetHandle,
 } from "~/components/ui/bottom-sheet/bottomSheet";
-
+import { Button } from "~/components/ui/button";
+import { Text } from "~/components/ui/text";
 import { useSharedValue } from "react-native-reanimated";
-import { cn } from "~/lib/utils";
 import { useColorScheme } from "~/lib/useColorScheme";
+import AddNewCustomerForm from "./AddNewCustomerForm";
+import { H1, H3 } from "~/components/ui/typography";
 
-interface PopoverProps {
-  triggerContent: React.ReactNode;
-  screenContent: React.ReactNode[];
-  snapPoints?: (string | number)[]; // Accept snapPoints as a prop
-  contentInsets?: {
-    top: number;
-    bottom: number;
-    left: number;
-    right: number;
-  };
-  popoverKey: string | number; // Add key prop
-}
-
-export const Popover: React.FC<PopoverProps> = ({
-  triggerContent,
-  screenContent,
-  snapPoints: propSnapPoints, // destructure the snapPoints from props
-  popoverKey, // Add key prop
-}) => {
+export function AddNewCustomer() {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const [isOpen, setIsOpen] = useState(false);
   const animatedIndex = useSharedValue<number>(0);
   const animatedPosition = useSharedValue<number>(0);
+  const snapPoints = ["80%", "90%"];
+  const { isDarkColorScheme, setColorScheme } = useColorScheme();
 
-  // Use prop snapPoints if provided, otherwise default snap points
-  const snapPoints = useMemo(
-    () => propSnapPoints || [300, "40%", "50%"],
-    [propSnapPoints]
-  );
   const handleSheetChanges = useCallback((index: number) => {
-    console.log("Iam here", index);
     // handle sheet changes
   }, []);
 
@@ -57,19 +34,18 @@ export const Popover: React.FC<PopoverProps> = ({
     }
   }, [isOpen]);
 
-  const { isDarkColorScheme, setColorScheme } = useColorScheme();
-
   return (
     <>
-      <Pressable
-        key={`${popoverKey}-trigger`}
+      <Button
+        size="sm"
+        variant="default"
+        className="shadow shadow-foreground/5"
         onPress={handlePresentModalPress}
       >
-        {triggerContent}
-      </Pressable>
+        <Text>Add New Customer</Text>
+      </Button>
 
       <BottomSheetModal
-        key={`${popoverKey}-content`}
         ref={bottomSheetModalRef}
         index={1}
         snapPoints={snapPoints}
@@ -86,13 +62,10 @@ export const Popover: React.FC<PopoverProps> = ({
         )}
       >
         <BottomSheetView className="flex-1 bg-popover">
-          {screenContent.map((content, index) => (
-            <View key={`${popoverKey}-content-${index}`}>{content}</View>
-          ))}
+          <H3 className="text-center">Add New Customer</H3>
+          <AddNewCustomerForm />
         </BottomSheetView>
       </BottomSheetModal>
     </>
   );
-};
-
-export default Popover;
+}

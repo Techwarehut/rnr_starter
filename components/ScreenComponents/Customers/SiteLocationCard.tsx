@@ -10,7 +10,7 @@ import {
 import { Customer } from "./types"; // Make sure to define your Customer type
 import { Label } from "~/components/ui/label";
 import { Input } from "~/components/ui/input";
-import { useIsLargeScreen } from "~/lib/utils";
+import { formatPhoneNumber, useIsLargeScreen } from "~/lib/utils";
 
 interface SiteLocationCardProps {
   customer: Customer;
@@ -23,6 +23,12 @@ const SiteLocationCard: React.FC<SiteLocationCardProps> = ({
   editMode,
   handleInputChange,
 }) => {
+  // Phone number formatting
+  const handlePhoneChange = (field: string, phone: string, index: number) => {
+    const formattedPhone = formatPhoneNumber(phone);
+    handleInputChange(field, formattedPhone, index);
+  };
+
   return (
     <>
       {customer.siteLocations.map((site, index) => (
@@ -67,7 +73,7 @@ const SiteLocationCard: React.FC<SiteLocationCardProps> = ({
                 defaultValue={site.siteContactPhone}
                 editable={editMode}
                 onChangeText={(value) =>
-                  handleInputChange("siteContactPhone", value, index)
+                  handlePhoneChange("siteContactPhone", value, index)
                 }
               />
             </View>

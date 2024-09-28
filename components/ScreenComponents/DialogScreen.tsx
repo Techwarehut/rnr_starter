@@ -1,3 +1,4 @@
+import React from "react";
 import { ScrollView } from "react-native";
 import { Button } from "~/components/ui/button";
 import {
@@ -12,32 +13,48 @@ import {
 } from "~/components/ui/dialog";
 import { Text } from "~/components/ui/text";
 
-export default function DialogScreen() {
+interface DialogScreenProps {
+  title: React.ReactNode;
+  content: React.ReactNode;
+  trigger: React.ReactNode;
+  action: React.ReactNode;
+}
+
+const DialogScreen: React.FC<DialogScreenProps> = ({
+  title,
+  content,
+  trigger,
+  action,
+}) => {
   return (
-    <ScrollView contentContainerClassName="flex-1 justify-center items-center p-6">
+    <ScrollView
+      contentContainerStyle={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        padding: 24,
+      }}
+    >
       <Dialog>
-        <DialogTrigger asChild>
-          <Button variant="outline">
-            <Text>Edit Profile</Text>
-          </Button>
-        </DialogTrigger>
+        <DialogTrigger asChild>{trigger}</DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Edit profile</DialogTitle>
-            <DialogDescription>
-              Make changes to your profile here. Click save when you're done.
-            </DialogDescription>
+            <DialogTitle>{title}</DialogTitle>
+            <DialogDescription>{content}</DialogDescription>
           </DialogHeader>
 
           <DialogFooter>
             <DialogClose asChild>
               <Button>
-                <Text>OK</Text>
+                <Text>Cancel</Text>
               </Button>
             </DialogClose>
+            {action}
           </DialogFooter>
         </DialogContent>
       </Dialog>
     </ScrollView>
   );
-}
+};
+
+export default DialogScreen;
