@@ -11,6 +11,7 @@ import {
   DialogTrigger,
 } from "~/components/ui/dialog";
 import { Text } from "~/components/ui/text";
+import AddNewCustomerForm from "./AddNewCustomerForm";
 export function AddNewCustomer() {
   return (
     <View className="flex-1 flex-row justify-center items-center m-2 gap-1">
@@ -26,8 +27,10 @@ export function AddNewCustomer() {
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Add New Custome</DialogTitle>
-            <DialogDescription>Form will appear here</DialogDescription>
+            <DialogTitle>Add New Customer</DialogTitle>
+            <DialogDescription>
+              <AddNewCustomerForm />
+            </DialogDescription>
           </DialogHeader>
 
           <DialogFooter>
