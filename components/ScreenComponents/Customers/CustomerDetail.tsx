@@ -30,6 +30,7 @@ import InputField from "../InputField";
 import CustomerInfoFields from "./FormElements/CustomerNameField";
 import CustomerBasicInfo from "./FormElements/CustomerBasicInfo";
 import CustomerBillingAddress from "./FormElements/CustomerBillingAddress";
+import { AddNewSiteLocation } from "./AddNewSiteLocation";
 
 interface CustomerDetailProps {
   customer: Customer;
@@ -109,6 +110,7 @@ const CustomerDetail: React.FC<CustomerDetailProps> = ({ customer }) => {
         <Stack.Screen
           // Replace with your actual component
           options={{
+            headerTitleAlign: "left",
             headerRight: () => (
               <ActionButtons
                 onEdit={() => setEditMode(true)}
@@ -180,11 +182,10 @@ const CustomerDetail: React.FC<CustomerDetailProps> = ({ customer }) => {
               invoice.
             </Muted>
           </View>
-          <View className="flex items-end">
-            <Button>
-              <Text>Add New</Text>
-            </Button>
-          </View>
+          <AddNewSiteLocation
+            customer={customer}
+            onChange={(data) => setCustomerData(data)}
+          />
         </View>
         {isLargeScreen ? (
           <View className="flex-wrap flex-row gap-4">

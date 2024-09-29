@@ -20,7 +20,7 @@ const CustomerBasicInfo: React.FC<CustomerInfoFieldsProps> = ({
   handlePhoneChange,
 }) => {
   return (
-    <View className="flex-1 flex-col gap-2 w-full">
+    <View className="flex flex-col gap-2 w-full md:flex-1">
       <View>
         <Text className="text-xl">Basic Information</Text>
         <Muted>Optional. It will appear on invoice.</Muted>
@@ -44,7 +44,7 @@ const CustomerBasicInfo: React.FC<CustomerInfoFieldsProps> = ({
         <InputField
           label="Website"
           value={customerData.website}
-          onChangeText={(value) => handleInputChange("Website", value)}
+          onChangeText={(value) => handleInputChange("website", value)}
           editable={editMode}
           nativeID="Website"
         />

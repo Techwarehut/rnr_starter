@@ -12,33 +12,28 @@ import { useColorScheme } from "~/lib/useColorScheme";
 import AddNewCustomerForm from "./AddNewCustomerForm";
 import { H1, H3 } from "~/components/ui/typography";
 import { Customer } from "./types";
+import AddNewSiteForm from "./AddNewSiteForm";
 
-export function AddNewCustomer() {
+interface AddNewSiteProps {
+  customer: Customer;
+  onChange: (data: Customer) => void;
+}
+
+export const AddNewSiteLocation: React.FC<AddNewSiteProps> = ({
+  customer,
+  onChange,
+}) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const [isOpen, setIsOpen] = useState(false);
   const animatedIndex = useSharedValue<number>(0);
   const animatedPosition = useSharedValue<number>(0);
-  const snapPoints = ["80%", "90%"];
+  const snapPoints = ["60%", "70%"];
   const { isDarkColorScheme, setColorScheme } = useColorScheme();
   // Initialize with a default Customer object, including _id
-  const [customerData, setCustomerData] = React.useState<Customer>({
-    _id: "", // Add the required _id property
-    businessName: "",
-    customerName: "",
-    email: "",
-    phone: "",
-    website: "",
-    billingAddress: {
-      AddressLine: "",
-      City: "",
-      Province: "",
-      zipcode: "",
-    },
-    siteLocations: [],
-  });
 
-  const AddNewCust = () => {
-    console.log(customerData);
+  const AddNewSite = (data: Customer) => {
+    console.log(data);
+    if (onChange) onChange(data);
     handlePresentModalPress();
   };
 
@@ -58,14 +53,11 @@ export function AddNewCustomer() {
 
   return (
     <>
-      <Button
-        size="sm"
-        variant="default"
-        className="shadow shadow-foreground/5"
-        onPress={handlePresentModalPress}
-      >
-        <Text>Add New Customer</Text>
-      </Button>
+      <View className="flex items-end">
+        <Button onPress={handlePresentModalPress}>
+          <Text>Add New</Text>
+        </Button>
+      </View>
 
       <BottomSheetModal
         ref={bottomSheetModalRef}
@@ -84,18 +76,11 @@ export function AddNewCustomer() {
         )}
       >
         <BottomSheetView className="flex-1 bg-popover mb-8">
-          <H3 className="text-center">Add New Customer</H3>
-          <AddNewCustomerForm
-            customer={customerData}
-            onChange={setCustomerData}
-          />
-          <View className="p-4">
-            <Button onPress={AddNewCust}>
-              <Text>Save</Text>
-            </Button>
-          </View>
+          <H3 className="text-center">Add New Site</H3>
+
+          <AddNewSiteForm customer={customer} onChange={AddNewSite} />
         </BottomSheetView>
       </BottomSheetModal>
     </>
   );
-}
+};

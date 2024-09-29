@@ -20,7 +20,7 @@ const CustomerBillingAddress: React.FC<CustomerInfoFieldsProps> = ({
   editMode,
 }) => {
   return (
-    <View className="flex-1 flex-col gap-2 w-full">
+    <View className="flex flex-col gap-2 w-full md:flex-1">
       <View>
         <Text className="text-xl">Billing Address</Text>
         <Muted>Optional. It will appear on invoice.</Muted>
@@ -29,7 +29,7 @@ const CustomerBillingAddress: React.FC<CustomerInfoFieldsProps> = ({
         <InputField
           label="Address"
           value={customerData.billingAddress.AddressLine}
-          onChangeText={(value) => handleInputChange("Address", value)}
+          onChangeText={(value) => handleInputChange("AddressLine", value)}
           editable={editMode}
           nativeID="Address"
         />
@@ -46,7 +46,6 @@ const CustomerBillingAddress: React.FC<CustomerInfoFieldsProps> = ({
           <View className="flex-1 gap-1">
             <Label nativeID="province">Province</Label>
             <Input
-              placeholder="Province"
               value={customerData.billingAddress.Province}
               onChangeText={(value) => handleInputChange("Province", value)}
               aria-labelledby="province"
@@ -57,7 +56,6 @@ const CustomerBillingAddress: React.FC<CustomerInfoFieldsProps> = ({
           <View className="flex-1 gap-1">
             <Label nativeID="zipcode">Zip Code</Label>
             <Input
-              placeholder="zipcode"
               value={customerData.billingAddress.zipcode}
               onChangeText={(value) => handleInputChange("zipcode", value)}
               aria-labelledby="zipcode"

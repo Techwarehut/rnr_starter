@@ -6,7 +6,6 @@ export interface SiteLocation {
   AddressLine: string; // Matches the JSON structure
   City: string; // Matches the JSON structure
   Province: string; // Matches the JSON structure
-
   zipcode: string;
 }
 

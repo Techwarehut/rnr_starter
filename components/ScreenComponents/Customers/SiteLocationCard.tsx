@@ -11,6 +11,8 @@ import { Customer } from "./types"; // Make sure to define your Customer type
 import { Label } from "~/components/ui/label";
 import { Input } from "~/components/ui/input";
 import { formatPhoneNumber, useIsLargeScreen } from "~/lib/utils";
+import SiteContactInfo from "./SiteLocationElements/SiteContactInfo";
+import SiteLocationInfo from "./SiteLocationElements/SiteLocation";
 
 interface SiteLocationCardProps {
   customer: Customer;
@@ -37,92 +39,20 @@ const SiteLocationCard: React.FC<SiteLocationCardProps> = ({
             <CardTitle>{site.siteName}</CardTitle>
             <CardDescription>Contact: {site.siteContactPerson}</CardDescription>
           </CardHeader>
-          <CardContent className="gap-4 native:gap-2">
-            {editMode && (
-              <>
-                <View className=" gap-1">
-                  <Label nativeID={`siteName-${index}`}>Site Name</Label>
-                  <Input
-                    aria-labelledby={`siteName-${index}`}
-                    defaultValue={site.siteName}
-                    editable={editMode}
-                    onChangeText={
-                      (value) => handleInputChange("siteName", value, index) // Ensure the correct order of params
-                    }
-                  />
-                </View>
-                <View className="gap-1">
-                  <Label nativeID={`siteContactPerson-${index}`}>
-                    Site Contact Person
-                  </Label>
-                  <Input
-                    aria-labelledby={`siteName-${index}`}
-                    defaultValue={site.siteContactPerson}
-                    editable={editMode}
-                    onChangeText={(value) =>
-                      handleInputChange("siteContactPerson", value, index)
-                    }
-                  />
-                </View>
-              </>
-            )}
-            <View className="gap-1">
-              <Label nativeID={`phone-${index}`}>Phone</Label>
-              <Input
-                aria-labelledby={`phone-${index}`}
-                defaultValue={site.siteContactPhone}
-                editable={editMode}
-                onChangeText={(value) =>
-                  handlePhoneChange("siteContactPhone", value, index)
-                }
-              />
-            </View>
-            <View className="gap-1">
-              <Label nativeID={`address-${index}`}>Address</Label>
-              <Input
-                aria-labelledby={`address-${index}`}
-                defaultValue={site.AddressLine}
-                editable={editMode}
-                onChangeText={(value) =>
-                  handleInputChange("AddressLine", value, index)
-                }
-              />
-            </View>
-            <View className="gap-1">
-              <Label nativeID={`city-${index}`}>City</Label>
-              <Input
-                id={`city-${index}`}
-                defaultValue={site.City}
-                editable={editMode}
-                onChangeText={(value) =>
-                  handleInputChange("City", value, index)
-                }
-              />
-            </View>
-            <View className="flex-row gap-1">
-              <View className="flex-1 gap-1">
-                <Label nativeID={`province-${index}`}>Province</Label>
-                <Input
-                  id={`province-${index}`}
-                  defaultValue={site.Province}
-                  editable={editMode}
-                  onChangeText={(value) =>
-                    handleInputChange("Province", value, index)
-                  }
-                />
-              </View>
-              <View className="flex-1 gap-1">
-                <Label nativeID={`zipcode-${index}`}>Zip Code</Label>
-                <Input
-                  id={`zipcode-${index}`}
-                  defaultValue={site.zipcode}
-                  editable={editMode}
-                  onChangeText={(value) =>
-                    handleInputChange("zipcode", value, index)
-                  }
-                />
-              </View>
-            </View>
+          <CardContent>
+            <SiteContactInfo
+              site={site}
+              handleInputChange={handleInputChange}
+              editMode={editMode}
+              index={index}
+            />
+            <SiteLocationInfo
+              site={site}
+              handleInputChange={handleInputChange}
+              handlePhoneChange={handlePhoneChange}
+              editMode={editMode}
+              index={index}
+            />
           </CardContent>
         </Card>
       ))}

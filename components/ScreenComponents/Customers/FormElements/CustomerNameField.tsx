@@ -16,7 +16,7 @@ const CustomerInfoFields: React.FC<CustomerInfoFieldsProps> = ({
   editMode,
 }) => {
   return (
-    <View className="flex-1 flex-row flex-wrap gap-4 mb-8">
+    <View className="flex flex-row flex-wrap gap-4 mb-8">
       <InputField
         label="Business Name"
         value={customerData.businessName}
