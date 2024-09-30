@@ -33,34 +33,27 @@ const AddNewSiteForm: React.FC<AddNewSiteFormProps> = ({
   const index = customer.siteLocations.length;
 
   const handleInputChange = (field: string, value: string) => {
-    setNewSite((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
-
-  const handleSave = () => {
-    if (newSite.siteName && newSite.siteContactPerson) {
-      // Validate necessary fields
-      const updatedCustomerData = {
-        ...customer,
-        siteLocations: [...customer.siteLocations, newSite],
+    // Update the newSite state
+    setNewSite((prev) => {
+      const updatedSite = {
+        ...prev,
+        [field]: value,
       };
 
+      console.log(field);
+      console.log(value);
+
+      // Create updatedCustomerData using the updatedSite
+      const updatedCustomerData = {
+        ...customer,
+        siteLocations: [...customer.siteLocations, updatedSite],
+      };
+
+      // Call onChange with the updated customer data
       onChange(updatedCustomerData);
-      setNewSite({
-        // Reset form after saving
-        siteName: "",
-        siteContactPerson: "",
-        siteContactPhone: "",
-        AddressLine: "",
-        City: "",
-        Province: "",
-        zipcode: "",
-      });
-    } else {
-      console.warn("Please fill in all required fields.");
-    }
+
+      return updatedSite; // Return the updated state
+    });
   };
 
   // Phone number formatting
@@ -87,11 +80,6 @@ const AddNewSiteForm: React.FC<AddNewSiteFormProps> = ({
         editMode={true}
         index={index}
       />
-      <View className="mt-8">
-        <Button onPress={handleSave}>
-          <Text>Save</Text>
-        </Button>
-      </View>
     </ScrollView>
   );
 };

@@ -27,7 +27,9 @@ const SiteLocationCard: React.FC<SiteLocationCardProps> = ({
 }) => {
   // Phone number formatting
   const handlePhoneChange = (field: string, phone: string, index: number) => {
+    console.log(phone);
     const formattedPhone = formatPhoneNumber(phone);
+    console.log(formattedPhone);
     handleInputChange(field, formattedPhone, index);
   };
 

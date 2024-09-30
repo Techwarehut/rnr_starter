@@ -29,11 +29,11 @@ export const AddNewSiteLocation: React.FC<AddNewSiteProps> = ({
   const animatedPosition = useSharedValue<number>(0);
   const snapPoints = ["60%", "70%"];
   const { isDarkColorScheme, setColorScheme } = useColorScheme();
+  const [customerData, setCustomerData] = React.useState<Customer>(customer);
   // Initialize with a default Customer object, including _id
 
-  const AddNewSite = (data: Customer) => {
-    console.log(data);
-    if (onChange) onChange(data);
+  const AddNewSite = () => {
+    if (onChange) onChange(customerData);
     handlePresentModalPress();
   };
 
@@ -78,7 +78,12 @@ export const AddNewSiteLocation: React.FC<AddNewSiteProps> = ({
         <BottomSheetView className="flex-1 bg-popover mb-8">
           <H3 className="text-center">Add New Site</H3>
 
-          <AddNewSiteForm customer={customer} onChange={AddNewSite} />
+          <AddNewSiteForm customer={customer} onChange={setCustomerData} />
+          <View className="p-4">
+            <Button onPress={AddNewSite}>
+              <Text>Save</Text>
+            </Button>
+          </View>
         </BottomSheetView>
       </BottomSheetModal>
     </>

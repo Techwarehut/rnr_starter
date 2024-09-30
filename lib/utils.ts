@@ -20,13 +20,15 @@ xl: 1280px (extra large screens)
 
 export function formatPhoneNumber(phone: string) {
   // Remove non-digit characters
-  const cleaned = phone.replace(/\D/g, "");
-
+  console.log(phone);
+  const cleaned = phone.replace(/\D/g, "").slice(0, 10); // Limit to 10 characters
+  console.log("cleaced", cleaned);
   // Check if cleaned string is empty
   if (!cleaned) return "";
 
   // Apply formatting based on the cleaned string length
   const match = cleaned.match(/^(?:(\d{0,3})(\d{0,3})(\d{0,4}))?$/);
+  console.log("match", match);
 
   if (match) {
     const [, areaCode, middle, last] = match;
@@ -37,5 +39,5 @@ export function formatPhoneNumber(phone: string) {
       return `(${areaCode})`;
     }
   }
-  return phone; // Return the original if it doesn't match
+  return cleaned; // Return the cleaned version limited to 10 characters
 }

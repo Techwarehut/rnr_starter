@@ -31,6 +31,7 @@ import CustomerInfoFields from "./FormElements/CustomerNameField";
 import CustomerBasicInfo from "./FormElements/CustomerBasicInfo";
 import CustomerBillingAddress from "./FormElements/CustomerBillingAddress";
 import { AddNewSiteLocation } from "./AddNewSiteLocation";
+import toastConfig from "../CustomToast";
 
 interface CustomerDetailProps {
   customer: Customer;
@@ -54,6 +55,11 @@ const CustomerDetail: React.FC<CustomerDetailProps> = ({ customer }) => {
     showSuccessToast("Customer saved succesfully!");
   };
 
+  const onAddSiteLocation = (data: Customer) => {
+    setCustomerData(data);
+    showSuccessToast("Site added succesfully!");
+  };
+
   const handleInputChange = (
     field: string,
     value: string,
@@ -61,6 +67,7 @@ const CustomerDetail: React.FC<CustomerDetailProps> = ({ customer }) => {
   ) => {
     setCustomerData((prevData) => {
       // If siteIndex is defined, update a site location
+
       if (siteIndex !== undefined) {
         const updatedSiteLocations = prevData.siteLocations.map(
           (site, index) => {
@@ -70,6 +77,7 @@ const CustomerDetail: React.FC<CustomerDetailProps> = ({ customer }) => {
                 [field]: value,
               };
             }
+
             return site;
           }
         );
@@ -184,7 +192,7 @@ const CustomerDetail: React.FC<CustomerDetailProps> = ({ customer }) => {
           </View>
           <AddNewSiteLocation
             customer={customer}
-            onChange={(data) => setCustomerData(data)}
+            onChange={onAddSiteLocation}
           />
         </View>
         {isLargeScreen ? (

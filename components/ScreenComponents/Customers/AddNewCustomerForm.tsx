@@ -11,15 +11,25 @@ import { ScrollView } from "react-native-gesture-handler";
 import { Button } from "~/components/ui/button";
 
 interface AddCustomerFormProps {
-  customer: Customer;
   onChange: (data: Customer) => void;
 }
 
-const AddNewCustomerForm: React.FC<AddCustomerFormProps> = ({
-  customer,
-  onChange,
-}) => {
-  const [customerData, setCustomerData] = React.useState<Customer>(customer);
+const AddNewCustomerForm: React.FC<AddCustomerFormProps> = ({ onChange }) => {
+  const [customerData, setCustomerData] = React.useState<Customer>({
+    _id: "", // Add the required _id property
+    businessName: "",
+    customerName: "",
+    email: "",
+    phone: "",
+    website: "",
+    billingAddress: {
+      AddressLine: "",
+      City: "",
+      Province: "",
+      zipcode: "",
+    },
+    siteLocations: [],
+  });
 
   const handleInputChange = (field: string, value: string) => {
     let updatedCustomerData = { ...customerData };

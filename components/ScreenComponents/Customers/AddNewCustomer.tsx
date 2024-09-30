@@ -13,7 +13,12 @@ import AddNewCustomerForm from "./AddNewCustomerForm";
 import { H1, H3 } from "~/components/ui/typography";
 import { Customer } from "./types";
 
-export function AddNewCustomer() {
+interface AddNewCustomerProps {
+  onNewCustAdd: (data: Customer) => void;
+}
+export const AddNewCustomer: React.FC<AddNewCustomerProps> = ({
+  onNewCustAdd,
+}) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const [isOpen, setIsOpen] = useState(false);
   const animatedIndex = useSharedValue<number>(0);
@@ -39,6 +44,7 @@ export function AddNewCustomer() {
 
   const AddNewCust = () => {
     console.log(customerData);
+    onNewCustAdd(customerData);
     handlePresentModalPress();
   };
 
@@ -85,10 +91,7 @@ export function AddNewCustomer() {
       >
         <BottomSheetView className="flex-1 bg-popover mb-8">
           <H3 className="text-center">Add New Customer</H3>
-          <AddNewCustomerForm
-            customer={customerData}
-            onChange={setCustomerData}
-          />
+          <AddNewCustomerForm onChange={setCustomerData} />
           <View className="p-4">
             <Button onPress={AddNewCust}>
               <Text>Save</Text>
@@ -98,4 +101,4 @@ export function AddNewCustomer() {
       </BottomSheetModal>
     </>
   );
-}
+};

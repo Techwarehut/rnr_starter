@@ -14,28 +14,13 @@ import { H2, H3, Muted } from "~/components/ui/typography";
 import NothingSelected from "~/components/ScreenComponents/NothingSelected";
 import { Customer } from "~/components/ScreenComponents/Customers/types";
 import { AddNewCustomer } from "~/components/ScreenComponents/Customers/AddNewCustomer";
+import { useToast } from "~/components/ScreenComponents/ToastMessage";
+import Toast from "react-native-toast-message";
 
 const CustomerScreen = () => {
   const [filteredCustomers, setFilteredCustomers] = useState(customers);
   const [selCust, setSelCust] = useState<Customer | null>(null);
-  const [dialogVisible, setDialogVisible] = useState(false);
-
-  const insets = useSafeAreaInsets();
-  const navigation = useNavigation();
-
-  const addNewCustomer = () => {
-    // Logic for adding a new customer
-    setDialogVisible(true);
-  };
-  const handleCloseDialog = () => {
-    setDialogVisible(false); // Function to close the dialog
-  };
-
-  const handleSaveCustomer = () => {
-    // Logic for saving a new customer goes here
-    console.log("Customer saved!");
-    handleCloseDialog(); // Close the dialog after saving
-  };
+  const { showSuccessToast, showErrorToast } = useToast();
 
   const showCustomerDetails = (customer: any) => {
     // Logic for adding a new customer
@@ -50,15 +35,8 @@ const CustomerScreen = () => {
   };
 
   useEffect(() => {
-    navigation.setOptions({
-      headerTitle: "Customers",
-      headerRight: () => (
-        <View className="flex-1 flex-row justify-center items-center m-2 gap-1">
-          <AddNewCustomer />
-        </View>
-      ),
-    });
-  }, [navigation]);
+    setFilteredCustomers(customers);
+  }, [customers]);
 
   const handleSearch = (searchText: string) => {
     const filtered = customers.filter(
@@ -73,23 +51,42 @@ const CustomerScreen = () => {
   const isLargeScreen = useIsLargeScreen();
 
   return (
-    <View className="flex-1 flex-column w-full gap-4 bg-secondary/30 md:flex-row md:flex-nowrap md:pl-20 ">
-      <View className="flex-1 md:flex-none md:min-w-80">
-        <CustomerTable
-          customers={filteredCustomers}
-          onSearch={handleSearch}
-          onPress={showCustomerDetails}
-        />
+    <>
+      <Stack.Screen
+        options={{
+          headerTitle: "Customers",
+          headerRight: () => (
+            <View className="flex-1 flex-row justify-center items-center m-2 gap-1">
+              <AddNewCustomer
+                onNewCustAdd={(data) => {
+                  data._id = (customers.length + 1).toString(); // Update data._id to customers.length
+                  customers.push(data); // Push updated data into the customers array
+                  showSuccessToast("Customer Added succesfully!");
+                }}
+              />
+            </View>
+          ),
+        }}
+      />
+      <View className="flex-1 flex-column w-full gap-4 bg-secondary/30 md:flex-row md:flex-nowrap md:pl-20 ">
+        <View className="flex-1 md:flex-none md:min-w-80">
+          <CustomerTable
+            customers={filteredCustomers}
+            onSearch={handleSearch}
+            onPress={showCustomerDetails}
+          />
+        </View>
+        {isLargeScreen &&
+          (selCust ? (
+            <View className="flex-1 items-start justify-start md:border md:border-input md:rounded-md m-2 p-5">
+              <CustomerDetail customer={selCust} />
+            </View>
+          ) : (
+            <NothingSelected />
+          ))}
       </View>
-      {isLargeScreen &&
-        (selCust ? (
-          <View className="flex-1 items-start justify-start md:border md:border-input md:rounded-md m-2 p-5">
-            <CustomerDetail customer={selCust} />
-          </View>
-        ) : (
-          <NothingSelected />
-        ))}
-    </View>
+      <Toast />
+    </>
   );
 };
 

@@ -1,6 +1,10 @@
 import React from "react";
 import { View, Text } from "react-native";
-import Toast, { BaseToast, ErrorToast } from "react-native-toast-message";
+import Toast, {
+  BaseToast,
+  ErrorToast,
+  ToastConfigParams,
+} from "react-native-toast-message";
 
 import { cn } from "~/lib/utils";
 
@@ -20,19 +24,12 @@ const toastConfig = {
       text2Style={cn("text-base")}
     />
   ),
-  /* tomatoToast: ({ text1, props }: { text1: string; props: any }) => (
-    <View style={NativeWindStyleSheet('h-15 w-full bg-tomato')}>
-      <Text>{text1}</Text>
-      <Text>{props.uuid}</Text>
+  /* customSuccessToast: ({ text1, props }: ToastConfigParams<any>) => (
+    <View className="h-15 w-full">
+      <Text>{text1 || "Default Success Message"}</Text>
+      {props?.uuid && <Text>{props.uuid}</Text>}
     </View>
   ), */
 };
 
-export function App() {
-  return (
-    <>
-      {/* Other components go here */}
-      <Toast config={toastConfig} />
-    </>
-  );
-}
+export default toastConfig;

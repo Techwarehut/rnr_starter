@@ -30,8 +30,7 @@ export const AddNewSiteLocation: React.FC<AddNewSiteProps> = ({
   const [customerData, setCustomerData] = React.useState<Customer>(customer);
 
   const AddNewSite = () => {
-    console.log(customerData);
-    onChange(customerData);
+    if (onChange) onChange(customerData);
   };
 
   return (
@@ -45,9 +44,22 @@ export const AddNewSiteLocation: React.FC<AddNewSiteProps> = ({
         <DialogHeader>
           <DialogTitle>Add New Site</DialogTitle>
           <DialogDescription>
-            <AddNewSiteForm customer={customerData} onChange={AddNewSite} />
+            <AddNewSiteForm
+              customer={customer}
+              onChange={(data) => {
+                setCustomerData(data);
+                // Programmatically close the dialog
+              }}
+            />
           </DialogDescription>
         </DialogHeader>
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button onPress={AddNewSite}>
+              <Text>Save</Text>
+            </Button>
+          </DialogClose>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

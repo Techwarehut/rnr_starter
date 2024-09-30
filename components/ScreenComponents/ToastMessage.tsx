@@ -28,21 +28,18 @@ export function useToast() {
     });
   };
 
-  /*  const showBaseToast = (text2: string) => {
+  /* const showCustomSuccessToast = (text1: string, text2: string) => {
     Toast.show({
-      type: "base",
-      text1: "Heads up!",
-      text2:
-        text2 || "You can use a terminal to run commands on your computer.",
-      props: {
-        // icon: Terminal,
-      },
+      type: "customSuccessToast",
+      text1: text1, // Provide a primary message
+      props: { uuid: text2 }, // Optional: Pass additional props if needed
       topOffset: insets.top === 0 ? 12 : insets.top,
-    });ß
-  }; */
-
+    });
+  };
+ */
   return {
     showSuccessToast,
     showErrorToast,
+    //showCustomSuccessToast,
   };
 }

@@ -24,16 +24,16 @@ const SiteLocationInfo: React.FC<SiteLocationInfoProps> = ({
   index,
 }) => {
   return (
-    <View className="gap-4">
+    <View className="gap-4 mt-2">
       <View className="gap-1">
-        <Label nativeID={`phone-${index}`}>Phone</Label>
-        <Input
-          aria-labelledby={`phone-${index}`}
-          defaultValue={site.siteContactPhone}
-          editable={editMode}
+        <InputField
+          label="Phone"
+          value={site.siteContactPhone}
           onChangeText={(value) =>
             handlePhoneChange("siteContactPhone", value, index)
           }
+          editable={editMode}
+          nativeID="phone"
         />
       </View>
       <View className="gap-1">
