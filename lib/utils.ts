@@ -41,3 +41,24 @@ export function formatPhoneNumber(phone: string) {
   }
   return cleaned; // Return the cleaned version limited to 10 characters
 }
+
+export function getInitials(name: string): string {
+  // Split the name into an array
+  const nameParts = name.trim().split(" ");
+
+  // Check if the array has at least two parts
+  if (nameParts.length < 2) {
+    return ""; // Return empty string if there's no last name
+  }
+
+  // Get the first and last names
+  const firstName = nameParts[0];
+  const lastName = nameParts[nameParts.length - 1];
+
+  // Extract the initials
+  const initials = `${firstName.charAt(0).toUpperCase()}${lastName
+    .charAt(0)
+    .toUpperCase()}`;
+
+  return initials;
+}

@@ -35,7 +35,8 @@
       "name": "Maria Smith",
       "phone": "+5544332211"
     },
-    "profileUrl": "https://randomuser.me/api/portraits/men/2.jpg",
+    "profileUrl": "",
+
     "role": "Team Member"
   },
   {

@@ -7,6 +7,7 @@ import { User } from "~/components/ScreenComponents/Team/types";
 import { router } from "expo-router";
 import NothingSelected from "~/components/ScreenComponents/NothingSelected";
 import UserTable from "~/components/ScreenComponents/Team/UserTable";
+import UserDetail from "~/components/ScreenComponents/Team/UserDetail";
 
 export default function Team() {
   const [filteredUsers, setFilteredUsers] = useState(users);
@@ -18,8 +19,8 @@ export default function Team() {
     setSelUser(user);
     if (!isLargeScreen) {
       router.push({
-        pathname: "/userdetail",
-        params: { customerParam: JSON.stringify(user) }, // Pass the customer object
+        pathname: "/(user)/[username]",
+        params: { username: user.name, userParam: JSON.stringify(user) }, // Pass the customer object
       });
     }
   };
@@ -48,7 +49,9 @@ export default function Team() {
       </View>
       {isLargeScreen &&
         (selUser ? (
-          <View className="flex-1 items-start justify-start md:border md:border-input md:rounded-md m-2 p-5"></View>
+          <View className="flex-1 items-start justify-start md:border md:border-input md:rounded-md m-2 p-5">
+            <UserDetail user={selUser} />
+          </View>
         ) : (
           <NothingSelected />
         ))}

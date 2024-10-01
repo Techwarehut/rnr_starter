@@ -53,6 +53,11 @@ module.exports = {
       borderWidth: {
         hairline: hairlineWidth(),
       },
+      spacing: {
+        // You can explicitly redefine existing values or add new ones
+
+        15: "8rem", // your custom value
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

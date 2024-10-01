@@ -10,6 +10,7 @@ import ActionButtons from "~/components/ScreenComponents/ActionButtons";
 import { Customer } from "~/components/ScreenComponents/Customers/types";
 import Toast from "react-native-toast-message";
 import { User } from "~/components/ScreenComponents/Team/types";
+import UserDetail from "~/components/ScreenComponents/Team/UserDetail";
 
 const UserDetailScreen: React.FC = () => {
   const { userParam } = useLocalSearchParams(); // Get the customer from navigation params
@@ -26,7 +27,9 @@ const UserDetailScreen: React.FC = () => {
   return (
     <>
       {user ? (
-        <View className="flex-1 items-center bg-secondary/30 justify-center m-2"></View>
+        <View className="flex-1 items-center bg-secondary/30 justify-center m-2">
+          <UserDetail user={user} />
+        </View>
       ) : (
         <NothingSelected />
       )}

@@ -123,10 +123,9 @@ export default function RootLayout() {
               }}
             />
             <Stack.Screen
-              name="userdetail"
+              name="(user)/[username]"
               options={{
-                headerShown: true,
-                headerTitle: "User Detail",
+                headerTitle: "",
                 presentation: Platform.OS === "ios" ? "card" : "modal",
                 headerTitleAlign: "left",
                 //headerBackVisible: true,
