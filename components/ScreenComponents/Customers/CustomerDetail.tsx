@@ -195,7 +195,7 @@ const CustomerDetail: React.FC<CustomerDetailProps> = ({ customer }) => {
             onChange={onAddSiteLocation}
           />
         </View>
-        {isLargeScreen ? (
+        {Platform.OS === "web" ? (
           <View className="flex-wrap flex-row gap-4">
             <SiteLocationCard
               customer={customerData}
@@ -208,7 +208,7 @@ const CustomerDetail: React.FC<CustomerDetailProps> = ({ customer }) => {
             <ScrollView
               horizontal={true}
               pagingEnabled
-              showsHorizontalScrollIndicator={Platform.OS === "web"}
+              showsHorizontalScrollIndicator={false}
               scrollEventThrottle={200}
               decelerationRate="fast"
               scrollEnabled

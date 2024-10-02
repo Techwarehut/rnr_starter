@@ -16,11 +16,15 @@ export default function Team() {
   const showUserDetails = (user: User) => {
     // Logic for adding a new customer
 
+    const formattedUsername = user.name.replace(/\s+/g, "");
     setSelUser(user);
     if (!isLargeScreen) {
       router.push({
         pathname: "/(user)/[username]",
-        params: { username: user.name, userParam: JSON.stringify(user) }, // Pass the customer object
+        params: {
+          username: formattedUsername,
+          userParam: JSON.stringify(user),
+        }, // Pass the customer object
       });
     }
   };
@@ -40,7 +44,7 @@ export default function Team() {
 
   return (
     <View className="flex-1 flex-column w-full gap-4 bg-secondary/30 md:flex-row md:flex-nowrap md:pl-20 ">
-      <View className="flex-1 md:flex-none md:min-w-80">
+      <View className="flex-1 md:flex-none md:min-w-96">
         <UserTable
           users={filteredUsers}
           onSearch={handleSearch}

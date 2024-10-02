@@ -11,36 +11,36 @@ import {
   DialogTrigger,
 } from "~/components/ui/dialog";
 import { Text } from "~/components/ui/text";
-import AddNewCustomerForm from "./AddNewCustomerForm";
-import React from "react";
-import { Customer } from "./types";
 
-interface AddNewCustomerProps {
-  onNewCustAdd: (data: Customer) => void;
+import React from "react";
+import { Vendor } from "./types";
+import AddNewVendorForm from "./AddNewCustomerForm";
+
+interface AddNewVendorProps {
+  onNewVendorAdd: (data: Vendor) => void;
 }
-export const AddNewCustomer: React.FC<AddNewCustomerProps> = ({
-  onNewCustAdd,
+export const AddNewVendor: React.FC<AddNewVendorProps> = ({
+  onNewVendorAdd,
 }) => {
   // Initialize with a default Customer object, including _id
-  const [customerData, setCustomerData] = React.useState<Customer>({
+  const [vendorData, setVendorData] = React.useState<Vendor>({
     _id: "", // Add the required _id property
-    businessName: "",
-    customerName: "",
-    email: "",
-    phone: "",
-    website: "",
-    billingAddress: {
+    companyName: "",
+    contactPerson: {
+      name: "",
+      title: "",
+      email: "",
+      phone: "",
+    },
+    address: {
       AddressLine: "",
       City: "",
       Province: "",
       zipcode: "",
     },
-    siteLocations: [],
   });
 
-  const AddNewCust = () => {
-    console.log(customerData);
-  };
+  const AddNewVendor = () => {};
 
   return (
     <ScrollView contentContainerClassName="flex-1 justify-center items-center p-6 ">
@@ -51,20 +51,20 @@ export const AddNewCustomer: React.FC<AddNewCustomerProps> = ({
             variant="default"
             className="shadow shadow-foreground/5"
           >
-            <Text>Add New Customer</Text>
+            <Text>Add New Vendor</Text>
           </Button>
         </DialogTrigger>
         <DialogContent className="max-w-[300px] md:max-w-full">
           <DialogHeader>
-            <DialogTitle>Add New Customer</DialogTitle>
+            <DialogTitle>Add New Vendor</DialogTitle>
             <DialogDescription>
-              <AddNewCustomerForm onChange={setCustomerData} />
+              <AddNewVendorForm onChange={setVendorData} />
             </DialogDescription>
           </DialogHeader>
 
           <DialogFooter>
             <DialogClose asChild className="w-full">
-              <Button onPress={() => onNewCustAdd(customerData)}>
+              <Button onPress={() => onNewVendorAdd(vendorData)}>
                 <Text>Save</Text>
               </Button>
             </DialogClose>

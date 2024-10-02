@@ -6,7 +6,7 @@ import { Text } from "~/components/ui/text";
 import { router, Stack, useNavigation } from "expo-router";
 import CustomerTable from "~/components/ScreenComponents/Customers/CustomerTable";
 import SearchBar from "~/components/ScreenComponents/SearchBar";
-import customers from "~/data/customer.json"; // Your customer data
+import vendors from "~/data/vendor.json"; // Your customer data
 import { useIsLargeScreen } from "~/lib/utils";
 import { Plus } from "~/lib/icons/Plus";
 import CustomerDetail from "~/components/ScreenComponents/Customers/CustomerDetail";
@@ -16,40 +16,42 @@ import { Customer } from "~/components/ScreenComponents/Customers/types";
 import { AddNewCustomer } from "~/components/ScreenComponents/Customers/AddNewCustomer";
 import { useToast } from "~/components/ScreenComponents/ToastMessage";
 import Toast from "react-native-toast-message";
+import { Vendor } from "~/components/ScreenComponents/Vendors/types";
+import VendorTable from "~/components/ScreenComponents/Vendors/VendorTable";
+import VendorDetail from "~/components/ScreenComponents/Vendors/VendorDetail";
+import { AddNewVendor } from "~/components/ScreenComponents/Vendors/AddNewCustomer";
 
-const CustomerScreen = () => {
-  const [filteredCustomers, setFilteredCustomers] = useState(customers);
-  const [selCust, setSelCust] = useState<Customer | null>(null);
+const VendorScreen = () => {
+  const [filteredVendors, setFilteredVendors] = useState(vendors);
+  const [selVendor, setSelVendor] = useState<Vendor | null>(null);
   const { showSuccessToast, showErrorToast } = useToast();
 
-  const showCustomerDetails = (customer: any) => {
+  const showVendorDetails = (vendor: Vendor) => {
     // Logic for adding a new customer
-    const formattedcustomername = customer.businessName.replace(/\s+/g, "");
-    setSelCust(customer);
+    const formattedVendorname = vendor.companyName.replace(/\s+/g, "");
+    setSelVendor(vendor);
     if (!isLargeScreen) {
       router.push({
-        pathname: "/(customer)/[customerName]",
+        pathname: "/(vendor)/[vendorName]",
         params: {
-          customerName: formattedcustomername,
-          customerParam: JSON.stringify(customer),
+          vendorName: formattedVendorname,
+          vendorParam: JSON.stringify(vendor),
         }, // Pass the customer object
       });
     }
   };
 
   useEffect(() => {
-    setFilteredCustomers(customers);
-  }, [customers]);
+    setFilteredVendors(vendors);
+  }, [vendors]);
 
   const handleSearch = (searchText: string) => {
-    const filtered = customers.filter(
-      (customer) =>
-        customer.businessName
-          .toLowerCase()
-          .includes(searchText.toLowerCase()) ||
-        customer.customerName.toLowerCase().includes(searchText.toLowerCase())
+    const filtered = vendors.filter(
+      (vendor) =>
+        vendor.companyName.toLowerCase().includes(searchText.toLowerCase()) ||
+        vendor.companyName.toLowerCase().includes(searchText.toLowerCase())
     );
-    setFilteredCustomers(filtered);
+    setFilteredVendors(filtered);
   };
   const isLargeScreen = useIsLargeScreen();
 
@@ -57,14 +59,14 @@ const CustomerScreen = () => {
     <>
       <Stack.Screen
         options={{
-          headerTitle: "Customers",
+          headerTitle: "Vendors",
           headerRight: () => (
             <View className="flex-1 flex-row justify-center items-center m-2 gap-1">
-              <AddNewCustomer
-                onNewCustAdd={(data) => {
-                  data._id = (customers.length + 1).toString(); // Update data._id to customers.length
-                  customers.push(data); // Push updated data into the customers array
-                  showSuccessToast("Customer Added succesfully!");
+              <AddNewVendor
+                onNewVendorAdd={(data) => {
+                  data._id = (vendors.length + 1).toString(); // Update data._id to customers.length
+                  vendors.push(data); // Push updated data into the customers array
+                  showSuccessToast("Vendor Added succesfully!");
                 }}
               />
             </View>
@@ -73,16 +75,16 @@ const CustomerScreen = () => {
       />
       <View className="flex-1 flex-column w-full gap-4 bg-secondary/30 md:flex-row md:flex-nowrap md:pl-20 ">
         <View className="flex-1 md:flex-none md:min-w-96">
-          <CustomerTable
-            customers={filteredCustomers}
+          <VendorTable
+            vendors={filteredVendors}
             onSearch={handleSearch}
-            onPress={showCustomerDetails}
+            onPress={showVendorDetails}
           />
         </View>
         {isLargeScreen &&
-          (selCust ? (
+          (selVendor ? (
             <View className="flex-1 items-start justify-start md:border md:border-input md:rounded-md m-2 p-5">
-              <CustomerDetail customer={selCust} />
+              <VendorDetail vendor={selVendor} />
             </View>
           ) : (
             <NothingSelected />
@@ -93,4 +95,4 @@ const CustomerScreen = () => {
   );
 };
 
-export default CustomerScreen;
+export default VendorScreen;

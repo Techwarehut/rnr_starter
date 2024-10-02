@@ -1,0 +1,130 @@
+[
+  {
+    "_id": "VENDOR_001",
+    "companyName": "ABC Supplies Co.",
+    "contactPerson": {
+      "name": "John Doe",
+      "title": "Sales Manager",
+      "email": "johndoe@abcsupplies.com",
+      "phone": "(123) 456-7890"
+    },
+    "address": {
+      "AddressLine": "123 Supply St.",
+      "City": "Toronto",
+      "Province": "ON",
+      "zipcode": "M5H 2N2"
+    }
+  },
+  {
+    "_id": "VENDOR_002",
+    "companyName": "XYZ Manufacturing",
+    "contactPerson": {
+      "name": "Jane Smith",
+      "title": "Account Executive",
+      "email": "janesmith@xyzmanufacturing.com",
+      "phone": "(234) 567-8901"
+    },
+    "address": {
+      "AddressLine": "456 Industrial Rd.",
+      "City": "Vancouver",
+      "Province": "BC",
+      "zipcode": "V6B 3K6"
+    }
+  },
+  {
+    "_id": "VENDOR_003",
+    "companyName": "Widgets Inc.",
+    "contactPerson": {
+      "name": "Mike Johnson",
+      "title": "Operations Manager",
+      "email": "mikejohnson@widgetsinc.com",
+      "phone": "(345) 678-9012"
+    },
+    "address": {
+      "AddressLine": "789 Widget Ave.",
+      "City": "Montreal",
+      "Province": "QC",
+      "zipcode": "H2X 1Y3"
+    }
+  },
+  {
+    "_id": "VENDOR_004",
+    "companyName": "Tech Solutions",
+    "contactPerson": {
+      "name": "Emily Davis",
+      "title": "Sales Representative",
+      "email": "emilydavis@techsolutions.com",
+      "phone": "(456) 789-0123"
+    },
+    "address": {
+      "AddressLine": "321 Tech Blvd.",
+      "City": "Calgary",
+      "Province": "AB",
+      "zipcode": "T2P 1N4"
+    }
+  },
+  {
+    "_id": "VENDOR_005",
+    "companyName": "Gadgets Galore",
+    "contactPerson": {
+      "name": "Chris Brown",
+      "title": "Product Manager",
+      "email": "chrisbrown@gadgetsgalore.com",
+      "phone": "(567) 890-1234"
+    },
+    "address": {
+      "AddressLine": "654 Gadget St.",
+      "City": "Ottawa",
+      "Province": "ON",
+      "zipcode": "K1A 0B1"
+    }
+  },
+  {
+    "_id": "VENDOR_006",
+    "companyName": "Creative Designs",
+    "contactPerson": {
+      "name": "Sarah Wilson",
+      "title": "Design Lead",
+      "email": "sarahwilson@creativedesigns.com",
+      "phone": "(678) 901-2345"
+    },
+    "address": {
+      "AddressLine": "987 Design Dr.",
+      "City": "Halifax",
+      "Province": "NS",
+      "zipcode": "B3J 3A2"
+    }
+  },
+  {
+    "_id": "VENDOR_007",
+    "companyName": "Reliable Logistics",
+    "contactPerson": {
+      "name": "David Martinez",
+      "title": "Logistics Coordinator",
+      "email": "davidmartinez@reliablelogistics.com",
+      "phone": "(789) 012-3456"
+    },
+    "address": {
+      "AddressLine": "135 Logistics Ln.",
+      "City": "Winnipeg",
+      "Province": "MB",
+      "zipcode": "R3B 0B3"
+    }
+  },
+  {
+    "_id": "VENDOR_008",
+    "companyName": "Quality Materials",
+    "contactPerson": {
+      "name": "Laura Garcia",
+      "title": "Purchasing Agent",
+      "email": "lauragarcia@qualitymaterials.com",
+      "phone": "(890) 123-4567"
+    },
+    "address": {
+      "AddressLine": "246 Quality Rd.",
+      "City": "Victoria",
+      "Province": "BC",
+      "zipcode": "V8W 2N2"
+    }
+  }
+]

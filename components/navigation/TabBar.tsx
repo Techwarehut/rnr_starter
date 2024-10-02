@@ -65,10 +65,11 @@ const MyTabBar: React.FC<MyTabBarProps> = ({
           (!isLargeScreen && route.name === "onboarding") ||
           (!isLargeScreen && route.name === "settings") ||
           route.name === "team" ||
-          route.name === "customers";
+          route.name === "customers" ||
+          route.name === "vendors";
         const isLastPopoverRoute =
           (!isLargeScreen && route.name === "settings") ||
-          (isLargeScreen && route.name === "customers");
+          (isLargeScreen && route.name === "vendors");
 
         const onPress = () => {
           const event = navigation.emit({

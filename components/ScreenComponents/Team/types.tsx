@@ -14,6 +14,8 @@ export interface User {
   emergencyContact: EmergencyContact; // Emergency contact details
   profileUrl: string; // URL for the user's profile picture
   role: string; // Role of the user (e.g., Owner, Team Member)
+  activeJobs: number;
+  completedJobs: number;
 }
 
 // Define the UsersListProps interface for component props

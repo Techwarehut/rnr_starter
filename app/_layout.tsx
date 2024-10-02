@@ -112,7 +112,7 @@ export default function RootLayout() {
               }}
             />
             <Stack.Screen
-              name="customerdetail"
+              name="(customer)/[customerName]"
               options={{
                 headerShown: true,
                 headerTitle: "Customer Detail",

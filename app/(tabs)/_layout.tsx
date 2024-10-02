@@ -176,6 +176,23 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="vendors"
+        options={{
+          title: "Vendors",
+          tabBarIcon: ({ color, focused }) => (
+            <UsersRound
+              /*  className={
+                focused ? "text-primary fill-primary" : "text-primary fill-none"
+              } */
+              className={focused ? "text-primary" : "text-muted-foreground"}
+              size={24}
+              strokeWidth={1.5}
+            />
+          ),
+          tabBarLabel: "Vendors",
+        }}
+      />
+      <Tabs.Screen
         name="onboarding"
         options={{
           title: "OnBoard",
