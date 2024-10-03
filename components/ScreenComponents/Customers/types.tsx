@@ -1,5 +1,6 @@
 // Define the SiteLocation interface
 export interface SiteLocation {
+  site_id: string;
   siteName: string;
   siteContactPerson: string;
   siteContactPhone: string;

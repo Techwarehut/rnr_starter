@@ -17,7 +17,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   return (
     <View className="flex-1 p-1">
       <Input
-        placeholder="Search by Name or Business"
+        placeholder="Search..."
         value={searchText}
         onChangeText={handleChange}
       />

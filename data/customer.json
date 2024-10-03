@@ -14,6 +14,7 @@
     },
     "siteLocations": [
       {
+        "site_id": "1",
         "siteName": "Main Office",
         "siteContactPerson": "John Doe",
         "siteContactPhone": "(234) 567-8901",
@@ -23,6 +24,7 @@
         "zipcode": "K1A 0B1"
       },
       {
+        "site_id": "2",
         "siteName": "Branch Office",
         "siteContactPerson": "Jane Doe",
         "siteContactPhone": "(234) 567-8902",
@@ -48,6 +50,7 @@
     },
     "siteLocations": [
       {
+        "site_id": "1",
         "siteName": "Headquarters",
         "siteContactPerson": "Jane Smith",
         "siteContactPhone": "(098) 765-4322",
@@ -73,6 +76,7 @@
     },
     "siteLocations": [
       {
+        "site_id": "1",
         "siteName": "Main Location",
         "siteContactPerson": "Alice Johnson",
         "siteContactPhone": "(135) 792-4681",
@@ -82,6 +86,7 @@
         "zipcode": "K1A 0E4"
       },
       {
+        "site_id": "2",
         "siteName": "Secondary Location",
         "siteContactPerson": "Bob Johnson",
         "siteContactPhone": "(135) 792-4682",
@@ -91,6 +96,7 @@
         "zipcode": "K1A 0F5"
       },
       {
+        "site_id": "3",
         "siteName": "New Site",
         "siteContactPerson": "Charlie Johnson",
         "siteContactPhone": "(135) 792-4683",
@@ -100,6 +106,7 @@
         "zipcode": "K1A 0G6"
       },
       {
+        "site_id": "4",
         "siteName": "Temporary Location",
         "siteContactPerson": "Diane Johnson",
         "siteContactPhone": "(135) 792-4684",
@@ -125,6 +132,7 @@
     },
     "siteLocations": [
       {
+        "site_id": "1",
         "siteName": "Manufacturing Plant",
         "siteContactPerson": "Bob Brown",
         "siteContactPhone": "(246) 813-5791",
@@ -150,6 +158,7 @@
     },
     "siteLocations": [
       {
+        "site_id": "1",
         "siteName": "Eco Center",
         "siteContactPerson": "Charlie Green",
         "siteContactPhone": "(147) 258-3691",
@@ -175,6 +184,7 @@
     },
     "siteLocations": [
       {
+        "site_id": "1",
         "siteName": "Main Office",
         "siteContactPerson": "Diana Prince",
         "siteContactPhone": "(159) 753-4863",
@@ -200,6 +210,7 @@
     },
     "siteLocations": [
       {
+        "site_id": "1",
         "siteName": "Production Studio",
         "siteContactPerson": "Ethan Hunt",
         "siteContactPhone": "(258) 963-1471",
@@ -225,6 +236,7 @@
     },
     "siteLocations": [
       {
+        "site_id": "1",
         "siteName": "Main Office",
         "siteContactPerson": "Fiona Gallagher",
         "siteContactPhone": "(369) 258-1471",

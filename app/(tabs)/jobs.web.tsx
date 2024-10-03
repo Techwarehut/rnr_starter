@@ -1,14 +1,13 @@
-import { Stack } from "expo-router";
 import { useEffect, useState } from "react";
-import { FlatList, View } from "react-native";
-import Animated, { LinearTransition } from "react-native-reanimated";
-import Toast from "react-native-toast-message";
-import { CreateNew } from "~/components/ScreenComponents/Jobs/CreateNew";
-import { JobCard } from "~/components/ScreenComponents/Jobs/JobCard";
+import { View } from "react-native";
 import SearchBar from "~/components/ScreenComponents/SearchBar";
-import { useToast } from "~/components/ScreenComponents/ToastMessage";
 import { Text } from "~/components/ui/text";
+import { useIsLargeScreen } from "~/lib/utils";
 import projects from "~/data/projects.json"; // Your customer data
+import { Stack } from "expo-router";
+import { CreateNew } from "~/components/ScreenComponents/Jobs/CreateNew";
+import { useToast } from "~/components/ScreenComponents/ToastMessage";
+import Toast from "react-native-toast-message";
 
 export default function JobScreen() {
   const [filteredProjects, setFilteredProjects] = useState(projects);
@@ -37,6 +36,8 @@ export default function JobScreen() {
 
     setFilteredProjects(filtered);
   };
+
+  const isLargeScreen = useIsLargeScreen();
   return (
     <>
       <Stack.Screen
@@ -57,7 +58,8 @@ export default function JobScreen() {
           ),
         }}
       />
-      <View className="flex-1 flex-column w-full gap-4 bg-secondary/30 px-2 gap-4">
+
+      <View className="flex-1 gap-4 bg-secondary/30 md:pl-20 mx-2">
         <View>
           <SearchBar onSearch={handleSearch} />
           {/* filters */}
@@ -65,20 +67,17 @@ export default function JobScreen() {
           {/* priority */}
           {/* Group by : none, customer, assigned, projects */}
         </View>
-        <View className="flex-1">
-          <Animated.FlatList
-            data={filteredProjects}
-            contentContainerClassName="flex-1, flexGrow gap-2"
-            renderItem={({ item }) => (
-              <JobCard
-                key={item._id}
-                project={item} // Passing the correct job object
-              />
-            )}
-            keyExtractor={(item) => item._id}
-            showsVerticalScrollIndicator={false}
-            itemLayoutAnimation={LinearTransition}
-          />
+        <View className="flex-1 gap-4 bg-secondary/30 md:flex-row md:flex-nowrap">
+          {/* Backlog */}
+          <View className="flex-1 bg-secondary"></View>
+          {/*  Not Started */}
+          <View className="flex-1 bg-secondary"></View>
+          {/* In Progress */}
+          <View className="flex-1 bg-secondary"></View>
+          {/* Complete */}
+          <View className="flex-1 bg-secondary"></View>
+          {/* Cancelled */}
+          <View className="flex-1 bg-secondary"></View>
         </View>
       </View>
       <Toast />
