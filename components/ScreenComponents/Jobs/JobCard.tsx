@@ -8,13 +8,13 @@ import {
 import { Job, Project } from "./types";
 
 interface JobProps {
-  project: Project;
+  job: Job;
 }
-export const JobCard: React.FC<JobProps> = ({ project }) => {
+export const JobCard: React.FC<JobProps> = ({ job }) => {
   return (
     <Card className="p-2">
-      <CardTitle>{project.projectName}</CardTitle>
-      <CardDescription>{project.projectDescription}</CardDescription>
+      <CardTitle>{job.jobTitle}</CardTitle>
+      <CardDescription>{job.jobDescription}</CardDescription>
       <CardContent></CardContent>
       <CardFooter></CardFooter>
     </Card>

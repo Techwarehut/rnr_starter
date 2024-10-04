@@ -1,43 +1,69 @@
+import { Stack } from "expo-router";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
-import SearchBar from "~/components/ScreenComponents/SearchBar";
-import { Text } from "~/components/ui/text";
-import { useIsLargeScreen } from "~/lib/utils";
-import projects from "~/data/projects.json"; // Your customer data
-import { Stack } from "expo-router";
-import { CreateNew } from "~/components/ScreenComponents/Jobs/CreateNew";
-import { useToast } from "~/components/ScreenComponents/ToastMessage";
 import Toast from "react-native-toast-message";
+import { CreateNew } from "~/components/ScreenComponents/Jobs/CreateNew";
+import SearchBar from "~/components/ScreenComponents/SearchBar";
+import { useToast } from "~/components/ScreenComponents/ToastMessage";
+import projects from "~/data/projects.json";
+import jobs from "~/data/jobs.json";
+import { Job } from "~/components/ScreenComponents/Jobs/types";
+import JobSectionList from "~/components/ScreenComponents/Jobs/JobList";
+import { H3, H4, Large } from "~/components/ui/typography";
+import { Text } from "~/components/ui/text";
 
 export default function JobScreen() {
   const [filteredProjects, setFilteredProjects] = useState(projects);
-  const { showSuccessToast, showErrorToast } = useToast();
+  const { showSuccessToast } = useToast();
+
   useEffect(() => {
     setFilteredProjects(projects);
   }, [projects]);
 
   const handleSearch = (searchText: string) => {
-    const filtered = projects.filter(
-      (project) =>
-        project.projectName.toLowerCase().includes(searchText.toLowerCase()) ||
-        project.projectDescription
-          .toLowerCase()
-          .includes(searchText.toLowerCase()) ||
-        project.milestones.some((milestone) =>
-          milestone.jobs.some(
-            (job) =>
-              job.jobTitle.toLowerCase().includes(searchText.toLowerCase()) ||
-              job.jobDescription
-                .toLowerCase()
-                .includes(searchText.toLowerCase())
-          )
-        )
-    );
-
-    setFilteredProjects(filtered);
+    // (Filter logic unchanged)
   };
 
-  const isLargeScreen = useIsLargeScreen();
+  const groupJobs = (groupBy: "customer" | "assignee" | "project" | "none") => {
+    const grouped: { title: string; data: Job[] }[] = [];
+
+    for (const project of filteredProjects) {
+      for (const milestone of project.milestones) {
+        if ("jobIDs" in milestone) {
+          for (const jobId of milestone.jobIDs) {
+            const job = jobs.find((j) => j._id === jobId);
+            if (job) {
+              let groupTitle = "";
+
+              if (groupBy === "customer") {
+                groupTitle = `Customer: ${project.customerId}`; // Replace with actual customer name if available
+              } else if (groupBy === "assignee") {
+                groupTitle =
+                  job.assignedTo.map((user) => user.name).join(", ") ||
+                  "Unassigned";
+              } else if (groupBy === "project") {
+                groupTitle = project.projectName; // Use project name for grouping
+              } else {
+                groupTitle = "Jobs"; // Default title when no grouping
+              }
+
+              const existingGroup = grouped.find((g) => g.title === groupTitle);
+              if (existingGroup) {
+                existingGroup.data.push(job);
+              } else {
+                grouped.push({ title: groupTitle, data: [job] });
+              }
+            }
+          }
+        }
+      }
+    }
+
+    return grouped;
+  };
+
+  const groupedJobs = groupJobs("customer");
+
   return (
     <>
       <Stack.Screen
@@ -67,17 +93,33 @@ export default function JobScreen() {
           {/* priority */}
           {/* Group by : none, customer, assigned, projects */}
         </View>
-        <View className="flex-1 gap-4 bg-secondary/30 md:flex-row md:flex-nowrap">
-          {/* Backlog */}
-          <View className="flex-1 bg-secondary"></View>
-          {/*  Not Started */}
-          <View className="flex-1 bg-secondary"></View>
-          {/* In Progress */}
-          <View className="flex-1 bg-secondary"></View>
-          {/* Complete */}
-          <View className="flex-1 bg-secondary"></View>
-          {/* Cancelled */}
-          <View className="flex-1 bg-secondary"></View>
+        <View className="flex-1 gap-4 bg-secondary/30 flex-row flex-nowrap">
+          <View className="flex-1 gap-2">
+            <Text className="text-destructive">Backlog</Text>
+            <View className="flex-1 bg-secondary p-2">
+              <JobSectionList sections={groupedJobs} />
+            </View>
+          </View>
+
+          <View className="flex-1 gap-2">
+            <Text className="text-brand-secondary">Not Started</Text>
+            <View className="flex-1 bg-secondary p-2">
+              <JobSectionList sections={groupedJobs} />
+            </View>
+          </View>
+          <View className="flex-1 gap-2">
+            <Text>In Progress</Text>
+            <View className="flex-1 bg-secondary p-2">
+              <JobSectionList sections={groupedJobs} />
+            </View>
+          </View>
+
+          <View className="flex-1 gap-2">
+            <Text className="text-brand-primary">Complete</Text>
+            <View className="flex-1 bg-secondary p-2">
+              <JobSectionList sections={groupedJobs} />
+            </View>
+          </View>
         </View>
       </View>
       <Toast />

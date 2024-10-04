@@ -14,94 +14,22 @@
         "title": "Initial Assessment",
         "description": "Assess the site for HVAC installation requirements.",
         "dueDate": "2024-09-15T12:00:00Z",
-        "jobs": [
-          {
-            "_id": "job_001",
-            "jobTitle": "Site Assessment",
-            "jobDescription": "Conduct a thorough site assessment for HVAC installation.",
-            "jobType": "Field Service",
-            "reportedBy": {
-              "userId": "1",
-              "name": "Alice Johnson",
-
-              "profileUrl": "https://randomuser.me/api/portraits/women/1.jpg"
-            },
-            "assignedTo": [
-              {
-                "userId": "2",
-                "name": "Bob Smith",
-                "profileUrl": "https://randomuser.me/api/portraits/men/2.jpg"
-              }
-            ],
-            "status": "Completed",
-            "purchaseOrderNumber": "PO-001",
-            "dueDate": "2024-09-10T12:00:00Z",
-            "priority": "P1",
-            "projectId": "project_001",
-            "milestoneId": "milestone_001",
-            "customerId": "",
-            "siteLocationId": "1",
-            "estimateId": "estimate_001",
-            "invoiceId": "invoice_001",
-            "purchaseReqId": "req_001",
-            "comments": [],
-            "hoursSpent": [],
-            "createdAt": "2024-09-01T12:00:00Z",
-            "updatedAt": "2024-09-02T12:00:00Z"
-          }
-        ]
+        "jobIDs": ["job_001"],
+        "invoiceId": "invoice_001"
       },
       {
         "milestoneId": "milestone_002",
         "title": "Installation Phase",
         "description": "Install HVAC systems according to specifications.",
         "dueDate": "2024-09-30T12:00:00Z",
-        "jobs": [
-          {
-            "_id": "job_002",
-            "jobTitle": "HVAC System Installation",
-            "jobDescription": "Install the HVAC system at the client location.",
-            "jobType": "Field Service",
-            "reportedBy": {
-              "userId": "1",
-              "name": "Alice Johnson",
-              "profileUrl": "https://randomuser.me/api/portraits/men/7.jpg"
-            },
-            "assignedTo": [
-              {
-                "userId": "3",
-                "name": "Charlie Brown",
-                "profileUrl": "https://randomuser.me/api/portraits/men/3.jpg"
-              },
-              {
-                "userId": "4",
-                "name": "Diana Prince",
-                "profileUrl": "https://randomuser.me/api/portraits/women/2.jpg"
-              }
-            ],
-            "status": "In Progress",
-            "purchaseOrderNumber": "PO-001",
-            "dueDate": "2024-09-28T12:00:00Z",
-            "priority": "P1",
-            "projectId": "project_001",
-            "milestoneId": "milestone_002",
-            "customerId": "",
-            "siteLocationId": "1",
-            "estimateId": "estimate_002",
-            "invoiceId": "invoice_002",
-            "purchaseReqId": "req_002",
-            "comments": [],
-            "hoursSpent": [],
-            "createdAt": "2024-09-15T12:00:00Z",
-            "updatedAt": "2024-09-16T12:00:00Z"
-          }
-        ]
+        "jobIDs": ["job_002"],
+        "invoiceId": "invoice_002"
       }
     ],
+
     "customerId": "1",
     "siteLocationId": "1",
-    "estimateId": "estimate_001",
-    "invoiceId": "invoice_001"
+    "estimateId": "estimate_001"
   },
   {
     "_id": "project_002",
@@ -118,94 +46,21 @@
         "title": "Initial Consultation",
         "description": "Consult with the client to determine cleaning requirements.",
         "dueDate": "2024-09-20T12:00:00Z",
-        "jobs": [
-          {
-            "_id": "job_003",
-            "jobTitle": "Client Consultation",
-            "jobDescription": "Discuss cleaning schedule and requirements with the client.",
-            "jobType": "Field Service",
-            "reportedBy": {
-              "userId": "5",
-              "name": "Eva Green",
-
-              "profileUrl": "https://randomuser.me/api/portraits/women/3.jpg"
-            },
-            "assignedTo": [
-              {
-                "userId": "6",
-                "name": "Frank Castle",
-                "profileUrl": "https://randomuser.me/api/portraits/men/4.jpg"
-              }
-            ],
-            "status": "Completed",
-            "purchaseOrderNumber": "PO-002",
-            "dueDate": "2024-09-18T12:00:00Z",
-            "priority": "P2",
-            "projectId": "project_002",
-            "milestoneId": "milestone_001",
-            "customerId": "",
-            "siteLocationId": "1",
-            "estimateId": "estimate_003",
-            "invoiceId": "invoice_003",
-            "purchaseReqId": "req_003",
-            "comments": [],
-            "hoursSpent": [],
-            "createdAt": "2024-09-10T12:00:00Z",
-            "updatedAt": "2024-09-11T12:00:00Z"
-          }
-        ]
+        "jobIDs": ["job_003"],
+        "invoiceId": "invoice_003"
       },
       {
         "milestoneId": "milestone_002",
         "title": "Cleaning Schedule Setup",
         "description": "Establish a cleaning schedule based on client needs.",
         "dueDate": "2024-09-30T12:00:00Z",
-        "jobs": [
-          {
-            "_id": "job_004",
-            "jobTitle": "Schedule Cleaning Services",
-            "jobDescription": "Set up the recurring cleaning schedule for the client.",
-            "jobType": "Field Service",
-            "reportedBy": {
-              "userId": "5",
-              "name": "Eva Green",
-              "profileUrl": "https://randomuser.me/api/portraits/men/7.jpg"
-            },
-            "assignedTo": [
-              {
-                "userId": "7",
-                "name": "Gina Lin",
-                "profileUrl": "https://randomuser.me/api/portraits/women/4.jpg"
-              },
-              {
-                "userId": "8",
-                "name": "Harry Potter",
-                "profileUrl": "https://randomuser.me/api/portraits/men/5.jpg"
-              }
-            ],
-            "status": "In Progress",
-            "purchaseOrderNumber": "PO-002",
-            "dueDate": "2024-09-28T12:00:00Z",
-            "priority": "P2",
-            "projectId": "project_002",
-            "milestoneId": "milestone_001",
-            "customerId": "",
-            "siteLocationId": "1",
-            "estimateId": "estimate_004",
-            "invoiceId": "invoice_004",
-            "purchaseReqId": "req_004",
-            "comments": [],
-            "hoursSpent": [],
-            "createdAt": "2024-09-15T12:00:00Z",
-            "updatedAt": "2024-09-16T12:00:00Z"
-          }
-        ]
+        "jobIDs": ["job_004"],
+        "invoiceId": "invoice_004"
       }
     ],
     "customerId": "2",
     "siteLocationId": "2",
-    "estimateId": "estimate_002",
-    "invoiceId": "invoice_002"
+    "estimateId": "estimate_002"
   },
   {
     "_id": "project_003",
@@ -222,89 +77,20 @@
         "title": "Initial Diagnostics",
         "description": "Diagnose issues with the industrial machine.",
         "dueDate": "2024-09-25T12:00:00Z",
-        "jobs": [
-          {
-            "_id": "job_005",
-            "jobTitle": "Machine Diagnostics",
-            "jobDescription": "Perform diagnostics on the machine to identify issues.",
-            "jobType": "Field Service",
-            "reportedBy": {
-              "userId": "9",
-              "name": "Isaac Newton",
-
-              "profileUrl": "https://randomuser.me/api/portraits/men/6.jpg"
-            },
-            "assignedTo": [
-              {
-                "userId": "10",
-                "name": "Jack Daniels",
-                "profileUrl": "https://randomuser.me/api/portraits/men/7.jpg"
-              }
-            ],
-            "status": "Pending",
-            "purchaseOrderNumber": "PO-003",
-            "dueDate": "2024-09-24T12:00:00Z",
-            "priority": "P3",
-            "projectId": "project_003",
-
-            "milestoneId": "milestone_001",
-            "customerId": "",
-            "siteLocationId": "1",
-            "estimateId": "estimate_005",
-            "invoiceId": "invoice_005",
-            "purchaseReqId": "req_005",
-            "comments": [],
-            "hoursSpent": [],
-            "createdAt": "2024-09-15T12:00:00Z",
-            "updatedAt": "2024-09-16T12:00:00Z"
-          }
-        ]
+        "jobIDs": ["job_005"],
+        "invoiceId": "invoice_005"
       },
       {
         "milestoneId": "milestone_002",
         "title": "Repair Phase",
         "description": "Repair the identified issues in the machine.",
         "dueDate": "2024-10-05T12:00:00Z",
-        "jobs": [
-          {
-            "_id": "job_006",
-            "jobTitle": "Machine Repair",
-            "jobDescription": "Conduct repairs on the industrial machine as per diagnostics.",
-            "jobType": "Field Service",
-            "reportedBy": {
-              "userId": "9",
-              "name": "Isaac Newton",
-              "profileUrl": "https://randomuser.me/api/portraits/men/7.jpg"
-            },
-            "assignedTo": [
-              {
-                "userId": "10",
-                "name": "Jack Daniels",
-                "profileUrl": "https://randomuser.me/api/portraits/men/7.jpg"
-              }
-            ],
-            "status": "Pending",
-            "purchaseOrderNumber": "PO-003",
-            "dueDate": "2024-10-04T12:00:00Z",
-            "priority": "P3",
-            "projectId": "project_003",
-            "milestoneId": "milestone_002",
-            "customerId": "",
-            "siteLocationId": "1",
-            "estimateId": "estimate_006",
-            "invoiceId": "invoice_006",
-            "purchaseReqId": "req_006",
-            "comments": [],
-            "hoursSpent": [],
-            "createdAt": "2024-09-20T12:00:00Z",
-            "updatedAt": "2024-09-21T12:00:00Z"
-          }
-        ]
+        "jobIDs": ["job_006"],
+        "invoiceId": "invoice_006"
       }
     ],
     "customerId": "3",
     "siteLocationId": "3",
-    "estimateId": "estimate_003",
-    "invoiceId": "invoice_003"
+    "estimateId": "estimate_003"
   }
 ]

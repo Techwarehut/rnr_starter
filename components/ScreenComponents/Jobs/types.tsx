@@ -56,7 +56,8 @@ export interface Milestone {
   title: string; // Title of the milestone
   description: string; // Description of the milestone
   dueDate: string; // Due date for the milestone
-  jobs: Job[]; // Array of jobs associated with the milestone
+  jobIDs: string[]; // Array of jobs associated with the milestone
+  invoiceId: string; // ID of the invoice
 }
 
 // Define the Project interface
@@ -73,7 +74,6 @@ export interface Project {
   customerId: string; // ID of the associated customer
   siteLocationId: string; // ID of the associated site location
   estimateId: string; // ID of the estimate
-  invoiceId: string; // ID of the invoice
 }
 
 // Define the ProjectsListProps interface for component props
