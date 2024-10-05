@@ -56,7 +56,7 @@ export default function JobScreen() {
               let groupTitle = "";
 
               if (groupBy === "customer") {
-                groupTitle = `Customer: ${project.customerId}`; // Replace with actual customer name if available
+                groupTitle = `Customer: ${project.customer.businessName}`; // Replace with actual customer name if available
               } else if (groupBy === "assignee") {
                 groupTitle =
                   job.assignedTo.map((user) => user.name).join(", ") ||

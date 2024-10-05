@@ -36,7 +36,7 @@ export default function JobScreen() {
               let groupTitle = "";
 
               if (groupBy === "customer") {
-                groupTitle = `Customer: ${project.customerId}`; // Replace with actual customer name if available
+                groupTitle = `Customer: ${project.customer.businessName}`; // Replace with actual customer name if available
               } else if (groupBy === "assignee") {
                 groupTitle =
                   job.assignedTo.map((user) => user.name).join(", ") ||
@@ -88,34 +88,14 @@ export default function JobScreen() {
       <View className="flex-1 gap-4 bg-secondary/30 md:pl-20 mx-2">
         <View>
           <SearchBar onSearch={handleSearch} />
-          {/* filters */}
-          {/*  select Job Type */}
-          {/* priority */}
-          {/* Group by : none, customer, assigned, projects */}
+          {/* Scheduling - Backlog, employees (drag and drop) */}
+          {/*  Tracking - In Progress, on Hold, Customer approval Pending */}
+          {/* Invoicing -  Accounts Receiveable, Invoiced, Paid */}
+          {/* Group by : none, customer, assigned, projects, site Locattion */}
         </View>
         <View className="flex-1 gap-4 bg-secondary/30 flex-row flex-nowrap">
           <View className="flex-1 gap-2">
             <Text className="text-destructive">Backlog</Text>
-            <View className="flex-1 bg-secondary p-2">
-              <JobSectionList sections={groupedJobs} />
-            </View>
-          </View>
-
-          <View className="flex-1 gap-2">
-            <Text className="text-brand-secondary">Not Started</Text>
-            <View className="flex-1 bg-secondary p-2">
-              <JobSectionList sections={groupedJobs} />
-            </View>
-          </View>
-          <View className="flex-1 gap-2">
-            <Text>In Progress</Text>
-            <View className="flex-1 bg-secondary p-2">
-              <JobSectionList sections={groupedJobs} />
-            </View>
-          </View>
-
-          <View className="flex-1 gap-2">
-            <Text className="text-brand-primary">Complete</Text>
             <View className="flex-1 bg-secondary p-2">
               <JobSectionList sections={groupedJobs} />
             </View>

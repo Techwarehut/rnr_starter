@@ -1,3 +1,5 @@
+import { SiteLocation } from "../Customers/types";
+
 export interface User {
   userId: string; // Unique identifier for the user
   name: string; // Name of the user
@@ -5,6 +7,11 @@ export interface User {
   profileUrl: string; // URL of the user's profile picture
 
   // You can add other fields if necessary, but keep them optional or read them only when needed.
+}
+
+export interface customer {
+  _id: string; // Unique identifier for the user
+  businessName: string; // Name of the user
 }
 
 // Define the Comment interface
@@ -39,8 +46,8 @@ export interface Job {
   priority: string; // Priority level (e.g., P1, P2, P3)
   projectId: string; // ID of the associated project
   milestoneId?: string; // ID of the associated milestone
-  customerId?: string; // ID of the associated customer
-  siteLocationId: string; // ID of the associated site location
+  customer?: customer; // ID of the associated customer
+  siteLocation: SiteLocation; // ID of the associated site location
   estimateId?: string; // ID of the estimate
   invoiceId?: string; // ID of the invoice
   purchaseReqId?: string; // ID of the purchase requisition
@@ -71,8 +78,8 @@ export interface Project {
   createdAt: string; // Creation timestamp
   updatedAt: string; // Last update timestamp
   milestones: Milestone[]; // Array of milestones associated with the project
-  customerId: string; // ID of the associated customer
-  siteLocationId: string; // ID of the associated site location
+  customer: customer; // ID of the associated customer
+
   estimateId: string; // ID of the estimate
 }
 

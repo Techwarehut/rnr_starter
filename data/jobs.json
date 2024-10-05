@@ -17,14 +17,26 @@
         "profileUrl": "https://randomuser.me/api/portraits/men/2.jpg"
       }
     ],
-    "status": "Completed",
+    "status": "Customer approval Pending",
     "purchaseOrderNumber": "PO-001",
     "dueDate": "2024-09-10T12:00:00Z",
     "priority": "P1",
     "projectId": "project_001",
     "milestoneId": "milestone_001",
-    "customerId": "",
-    "siteLocationId": "1",
+    "customer": {
+      "_id": "2",
+      "businessName": "Smith Co."
+    },
+    "siteLocation": {
+      "site_id": "2",
+      "siteName": "Branch Office",
+      "siteContactPerson": "Jane Doe",
+      "siteContactPhone": "(234) 567-8902",
+      "AddressLine": "456 Elm St",
+      "City": "Springfield",
+      "Province": "ON",
+      "zipcode": "K1A 0C2"
+    },
     "estimateId": "estimate_001",
     "invoiceId": "invoice_001",
     "purchaseReqId": "req_001",
@@ -61,8 +73,20 @@
     "priority": "P1",
     "projectId": "project_001",
     "milestoneId": "milestone_002",
-    "customerId": "",
-    "siteLocationId": "1",
+    "customer": {
+      "_id": "3",
+      "businessName": "Smith Co."
+    },
+    "siteLocation": {
+      "site_id": "2",
+      "siteName": "Branch Office",
+      "siteContactPerson": "Jane Doe",
+      "siteContactPhone": "(234) 567-8902",
+      "AddressLine": "456 Elm St",
+      "City": "Springfield",
+      "Province": "ON",
+      "zipcode": "K1A 0C2"
+    },
     "estimateId": "estimate_002",
     "invoiceId": "invoice_002",
     "purchaseReqId": "req_002",
@@ -89,14 +113,26 @@
         "profileUrl": "https://randomuser.me/api/portraits/men/4.jpg"
       }
     ],
-    "status": "Completed",
+    "status": "on Hold",
     "purchaseOrderNumber": "PO-002",
     "dueDate": "2024-09-18T12:00:00Z",
     "priority": "P2",
     "projectId": "project_002",
     "milestoneId": "milestone_001",
-    "customerId": "",
-    "siteLocationId": "1",
+    "customer": {
+      "_id": "1",
+      "businessName": "Doe Enterprises"
+    },
+    "siteLocation": {
+      "site_id": "4",
+      "siteName": "Temporary Location",
+      "siteContactPerson": "Diane Johnson",
+      "siteContactPhone": "(135) 792-4684",
+      "AddressLine": "222 Cedar St",
+      "City": "Springfield",
+      "Province": "ON",
+      "zipcode": "K1A 0H7"
+    },
     "estimateId": "estimate_003",
     "invoiceId": "invoice_003",
     "purchaseReqId": "req_003",
@@ -127,14 +163,26 @@
         "profileUrl": "https://randomuser.me/api/portraits/men/5.jpg"
       }
     ],
-    "status": "In Progress",
+    "status": "Accounts Receiveable",
     "purchaseOrderNumber": "PO-002",
     "dueDate": "2024-09-28T12:00:00Z",
     "priority": "P2",
     "projectId": "project_002",
     "milestoneId": "milestone_001",
-    "customerId": "",
-    "siteLocationId": "1",
+    "customer": {
+      "_id": "3",
+      "businessName": "Johnson Group"
+    },
+    "siteLocation": {
+      "site_id": "3",
+      "siteName": "New Site",
+      "siteContactPerson": "Charlie Johnson",
+      "siteContactPhone": "(135) 792-4683",
+      "AddressLine": "111 Birch St",
+      "City": "Springfield",
+      "Province": "ON",
+      "zipcode": "K1A 0G6"
+    },
     "estimateId": "estimate_004",
     "invoiceId": "invoice_004",
     "purchaseReqId": "req_004",
@@ -161,15 +209,28 @@
         "profileUrl": "https://randomuser.me/api/portraits/men/7.jpg"
       }
     ],
-    "status": "Pending",
+    "status": "Invoiced",
     "purchaseOrderNumber": "PO-003",
     "dueDate": "2024-09-24T12:00:00Z",
     "priority": "P3",
     "projectId": "project_003",
 
     "milestoneId": "milestone_001",
-    "customerId": "",
-    "siteLocationId": "1",
+    "customer": {
+      "_id": "2",
+      "businessName": "Smith Co."
+    },
+
+    "siteLocation": {
+      "site_id": "1",
+      "siteName": "Headquarters",
+      "siteContactPerson": "Jane Smith",
+      "siteContactPhone": "(098) 765-4322",
+      "AddressLine": "789 Maple Ave",
+      "City": "Springfield",
+      "Province": "ON",
+      "zipcode": "K1A 0D3"
+    },
     "estimateId": "estimate_005",
     "invoiceId": "invoice_005",
     "purchaseReqId": "req_005",
@@ -195,14 +256,28 @@
         "profileUrl": "https://randomuser.me/api/portraits/men/7.jpg"
       }
     ],
-    "status": "Pending",
+    "status": "Paid",
     "purchaseOrderNumber": "PO-003",
     "dueDate": "2024-10-04T12:00:00Z",
     "priority": "P3",
     "projectId": "project_003",
     "milestoneId": "milestone_002",
-    "customerId": "",
-    "siteLocationId": "1",
+
+    "customer": {
+      "_id": "1",
+      "businessName": "Doe Enterprises"
+    },
+    "siteLocation": {
+      "site_id": "1",
+      "siteName": "Main Office",
+      "siteContactPerson": "John Doe",
+      "siteContactPhone": "(234) 567-8901",
+      "AddressLine": "123 Main St",
+      "City": "Springfield",
+      "Province": "ON",
+      "zipcode": "K1A 0B1"
+    },
+
     "estimateId": "estimate_006",
     "invoiceId": "invoice_006",
     "purchaseReqId": "req_006",

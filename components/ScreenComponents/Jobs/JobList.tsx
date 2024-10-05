@@ -11,16 +11,17 @@ interface JobSectionListProps {
 }
 
 const JobSectionList: React.FC<JobSectionListProps> = ({ sections }) => {
+  console.log(sections);
   return (
     <SectionList
       sections={sections}
       keyExtractor={(item) => item._id}
       renderItem={({ item }) => <JobCard key={item._id} job={item} />}
       renderSectionHeader={({ section: { title } }) => (
-        <Text className="font-bold text-lg">{title}</Text>
+        <Text className="text-lg my-2">{title}</Text>
       )}
       showsVerticalScrollIndicator={Platform.OS === "web"}
-      contentContainerClassName="flexGrow gap-4 md:mx-4"
+      contentContainerStyle={{ flexGrow: 1, gap: 8 }}
     />
   );
 };

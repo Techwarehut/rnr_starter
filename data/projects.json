@@ -27,8 +27,11 @@
       }
     ],
 
-    "customerId": "1",
-    "siteLocationId": "1",
+    "customer": {
+      "_id": "1",
+      "businessName": "Doe Enterprises"
+    },
+
     "estimateId": "estimate_001"
   },
   {
@@ -58,8 +61,11 @@
         "invoiceId": "invoice_004"
       }
     ],
-    "customerId": "2",
-    "siteLocationId": "2",
+    "customer": {
+      "_id": "2",
+      "businessName": "Johnson Group"
+    },
+
     "estimateId": "estimate_002"
   },
   {
@@ -89,8 +95,11 @@
         "invoiceId": "invoice_006"
       }
     ],
-    "customerId": "3",
-    "siteLocationId": "3",
+    "customer": {
+      "_id": "3",
+      "businessName": "Johnson Group"
+    },
+
     "estimateId": "estimate_003"
   }
 ]
