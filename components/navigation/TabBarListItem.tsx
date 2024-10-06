@@ -36,8 +36,6 @@ export function TabBarListItem({
         })
       : options.tabBarLabel ?? route.name;
 
-  console.log(label);
-
   return (
     <Pressable
       key={`popover-route-${route.key}`} // Add a unique key

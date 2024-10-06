@@ -42,12 +42,30 @@ module.exports = {
           foreground: "hsl(var(--card-foreground))",
         },
         brand: {
-          primary: "hsl(var(--brand-primary))",
-          primaryLight: "hsl(var(--brand-primary-light))",
-          primaryDark: "hsl(var(--brand-primary-dark))",
-          secondary: "hsl(var(--brand-secondary))",
-          secondaryLight: "hsl(var(--brand-secondary-light))",
-          secondaryDark: "hsl(var(--brand-secondary-dark))",
+          primary: {
+            DEFAULT: "hsl(var(--brand-primary))",
+            foreground: "hsl(var(--brand-primary-foreground))",
+          },
+          primaryLight: {
+            DEFAULT: "hsl(var(--brand-primary-light))",
+            foreground: "hsl(var(--brand-primary-light-foreground))",
+          },
+          primaryDark: {
+            DEFAULT: "hsl(var(--brand-primary-dark))",
+            foreground: "hsl(var(--brand-primary-dark-foreground))",
+          },
+          secondary: {
+            DEFAULT: "hsl(var(--brand-secondary))",
+            foreground: "hsl(var(--brand-secondary-foreground))",
+          },
+          secondaryLight: {
+            DEFAULT: "hsl(var(--brand-secondary-light))",
+            foreground: "hsl(var(--brand-secondary-light-foreground))",
+          },
+          secondaryDark: {
+            DEFAULT: "hsl(var(--brand-secondary-dark))",
+            foreground: "hsl(var(--brand-secondary-dark-foreground))",
+          },
         },
       },
       borderWidth: {

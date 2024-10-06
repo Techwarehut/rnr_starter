@@ -11,17 +11,40 @@ import { Job } from "~/components/ScreenComponents/Jobs/types";
 import JobSectionList from "~/components/ScreenComponents/Jobs/JobList";
 import { H3, H4, Large } from "~/components/ui/typography";
 import { Text } from "~/components/ui/text";
+import { SearchInput } from "~/components/ScreenComponents/SearchInput";
 
 export default function JobScreen() {
   const [filteredProjects, setFilteredProjects] = useState(projects);
   const { showSuccessToast } = useToast();
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     setFilteredProjects(projects);
   }, [projects]);
 
   const handleSearch = (searchText: string) => {
-    // (Filter logic unchanged)
+    setSearchText(searchText);
+    const filtered = projects.filter(
+      (project) =>
+        project.projectName.toLowerCase().includes(searchText.toLowerCase()) ||
+        project.projectDescription
+          .toLowerCase()
+          .includes(searchText.toLowerCase()) ||
+        project.milestones.some((milestone) =>
+          milestone.jobIDs.some((jobId: string) => {
+            const job = jobs.find((j) => j._id === jobId);
+            return (
+              job &&
+              (job.jobTitle.toLowerCase().includes(searchText.toLowerCase()) ||
+                job.jobDescription
+                  .toLowerCase()
+                  .includes(searchText.toLowerCase()))
+            );
+          })
+        )
+    );
+
+    setFilteredProjects(filtered);
   };
 
   const groupJobs = (groupBy: "customer" | "assignee" | "project" | "none") => {
@@ -87,7 +110,11 @@ export default function JobScreen() {
 
       <View className="flex-1 gap-4 bg-secondary/30 md:pl-20 mx-2">
         <View>
-          <SearchBar onSearch={handleSearch} />
+          <SearchInput
+            value={searchText}
+            onChangeText={handleSearch}
+            placeholder="Search..."
+          />
           {/* Scheduling - Backlog, employees (drag and drop) */}
           {/*  Tracking - In Progress, on Hold, Customer approval Pending */}
           {/* Invoicing -  Accounts Receiveable, Invoiced, Paid */}

@@ -11,16 +11,21 @@ import projects from "~/data/projects.json";
 import jobs from "~/data/jobs.json";
 import { Job } from "~/components/ScreenComponents/Jobs/types";
 import JobSectionList from "~/components/ScreenComponents/Jobs/JobList";
+import { SearchInput } from "~/components/ScreenComponents/SearchInput";
+import { JobFilters } from "~/components/ScreenComponents/Jobs/JobFilters";
 
 export default function JobScreen() {
   const [filteredProjects, setFilteredProjects] = useState(projects);
   const { showSuccessToast } = useToast();
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     setFilteredProjects(projects);
   }, [projects]);
 
   const handleSearch = (searchText: string) => {
+    setSearchText(searchText);
+    console.log("Iam in search", searchText);
     const filtered = projects.filter(
       (project) =>
         project.projectName.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -84,6 +89,8 @@ export default function JobScreen() {
 
   const groupedJobs = groupJobs("customer");
 
+  console.log("before render", searchText);
+
   return (
     <>
       <Stack.Screen
@@ -101,9 +108,15 @@ export default function JobScreen() {
         }}
       />
       <View className="flex-1 gap-4 bg-secondary/30 px-2">
-        <View className="flex mb-12">
-          <SearchBar onSearch={handleSearch} />
+        <View className="flex-row ">
+          <SearchInput
+            onChangeText={handleSearch}
+            placeholder="Search..."
+            value={searchText}
+          />
+          {/* Scheduling - Backlog, employees (drag and drop) */}
           {/* Filters and other UI components */}
+          <JobFilters />
         </View>
 
         <JobSectionList sections={groupedJobs} />

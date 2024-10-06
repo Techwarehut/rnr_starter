@@ -1,24 +1,27 @@
-// JobSectionList.tsx
 import React from "react";
 import { Platform, SectionList, View } from "react-native";
 
 import { Text } from "~/components/ui/text";
 import { Job } from "./types";
 import { JobCard } from "./JobCard";
+import { Collapsible } from "../Collapsible";
 
 interface JobSectionListProps {
   sections: { title: string; data: Job[] }[];
 }
 
 const JobSectionList: React.FC<JobSectionListProps> = ({ sections }) => {
-  console.log(sections);
   return (
     <SectionList
       sections={sections}
       keyExtractor={(item) => item._id}
-      renderItem={({ item }) => <JobCard key={item._id} job={item} />}
-      renderSectionHeader={({ section: { title } }) => (
-        <Text className="text-lg my-2">{title}</Text>
+      renderItem={({ item }) => null}
+      renderSectionHeader={({ section }) => (
+        <Collapsible title={section.title}>
+          {section.data.map((job) => (
+            <JobCard key={job._id} job={job} />
+          ))}
+        </Collapsible>
       )}
       showsVerticalScrollIndicator={Platform.OS === "web"}
       contentContainerStyle={{ flexGrow: 1, gap: 8 }}

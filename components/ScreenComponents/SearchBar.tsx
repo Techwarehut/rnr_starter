@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { TextInput, View } from "react-native";
 import { Input } from "~/components/ui/input"; // Your Input component
+import { SearchInput } from "./SearchInput";
 
 interface SearchBarProps {
   onSearch: (searchText: string) => void;
@@ -16,7 +17,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
 
   return (
     <View className="flex-1 p-1">
-      <Input
+      <SearchInput
         placeholder="Search..."
         value={searchText}
         onChangeText={handleChange}

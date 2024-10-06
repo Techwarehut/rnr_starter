@@ -12,7 +12,7 @@ const badgeVariants = cva(
       variant: {
         backlog: "text-foreground",
         inProgress:
-          "border-transparent bg-secondary web:hover:opacity-80 active:opacity-80",
+          "border-brand-primary bg-secondary web:hover:opacity-80 active:opacity-80",
         onHold:
           "border-transparent bg-destructive web:hover:opacity-80 active:opacity-80",
         customerApprovalPending:
@@ -39,9 +39,9 @@ const badgeTextVariants = cva("text-xs font-semibold ", {
       inProgress: "text-secondary-foreground",
       onHold: "text-destructive-foreground",
       customerApprovalPending: "text-destructive-foreground",
-      accountsReceivable: "text-destructive-foreground",
-      invoiced: "text-muted-foreground",
-      paid: "text-destructive-foreground",
+      accountsReceivable: "text-brand-secondary-foreground",
+      invoiced: "text-brand-primary-light-foreground",
+      paid: "text-brand-primary-foreground",
       default: "text-primary-foreground",
     },
   },

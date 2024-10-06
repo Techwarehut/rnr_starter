@@ -38,8 +38,6 @@ export function TabBarButton({
         })
       : options.tabBarLabel ?? route.name;
 
-  console.log(label);
-
   return (
     <Pressable
       key={route.key}
