@@ -18,6 +18,23 @@ export default function JobScreen() {
   const [filteredProjects, setFilteredProjects] = useState(projects);
   const { showSuccessToast } = useToast();
   const [searchText, setSearchText] = useState("");
+  const [group, setGroup] = useState("assignee");
+  const [selectedStatuses, setSelectedStatuses] = useState<
+    Record<string, boolean>
+  >({
+    backlog: false,
+    inProgress: false,
+    onHold: false,
+    customerApprovalPending: false,
+    accountsReceivable: false,
+    invoiced: false,
+    paid: false,
+  });
+
+  const handleStatusChange = (newStates: Record<string, boolean>) => {
+    setSelectedStatuses(newStates);
+    console.log(newStates); // Log the current checked states or handle as needed
+  };
 
   useEffect(() => {
     setFilteredProjects(projects);
@@ -49,7 +66,7 @@ export default function JobScreen() {
     setFilteredProjects(filtered);
   };
 
-  const groupJobs = (groupBy: "customer" | "assignee" | "project" | "none") => {
+  const groupJobs = (groupBy: string) => {
     const grouped: { title: string; data: Job[] }[] = [];
 
     for (const project of filteredProjects) {
@@ -60,16 +77,16 @@ export default function JobScreen() {
             if (job) {
               let groupTitle = "";
 
-              if (groupBy === "customer") {
+              if (groupBy === "Customer") {
                 groupTitle = `Customer: ${project.customer.businessName}`; // Replace with actual customer name if available
-              } else if (groupBy === "assignee") {
+              } else if (groupBy === "Assignee") {
                 groupTitle =
                   job.assignedTo.map((user) => user.name).join(", ") ||
                   "Unassigned";
-              } else if (groupBy === "project") {
+              } else if (groupBy === "Project") {
                 groupTitle = project.projectName; // Use project name for grouping
               } else {
-                groupTitle = "Jobs"; // Default title when no grouping
+                groupTitle = "All Jobs"; // Default title when no grouping
               }
 
               const existingGroup = grouped.find((g) => g.title === groupTitle);
@@ -87,7 +104,7 @@ export default function JobScreen() {
     return grouped;
   };
 
-  const groupedJobs = groupJobs("customer");
+  const groupedJobs = groupJobs(group);
 
   console.log("before render", searchText);
 
@@ -107,8 +124,8 @@ export default function JobScreen() {
           ),
         }}
       />
-      <View className="flex-1 gap-4 bg-secondary/30 px-2">
-        <View className="flex-row ">
+      <View className="flex-1 gap-4 bg-secondary/30 px-2  md:pl-20 md:mx-2">
+        <View className="flex-row gap-2 items-center">
           <SearchInput
             onChangeText={handleSearch}
             placeholder="Search..."
@@ -116,7 +133,11 @@ export default function JobScreen() {
           />
           {/* Scheduling - Backlog, employees (drag and drop) */}
           {/* Filters and other UI components */}
-          <JobFilters />
+          <JobFilters
+            selectedGroupValue={group}
+            setSelectedGroupValue={setGroup}
+            handleStatusChange={handleStatusChange}
+          />
         </View>
 
         <JobSectionList sections={groupedJobs} />

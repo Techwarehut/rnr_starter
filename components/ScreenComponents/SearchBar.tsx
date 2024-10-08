@@ -16,7 +16,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   };
 
   return (
-    <View className="flex-1 p-1">
+    <View className="flex-1 flex-row p-1">
       <SearchInput
         placeholder="Search..."
         value={searchText}

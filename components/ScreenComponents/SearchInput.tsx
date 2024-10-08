@@ -18,7 +18,7 @@ const SearchInput = React.forwardRef<
   };
 
   return (
-    <View className="relative w-full">
+    <View className="relative flex-1">
       <TextInput
         ref={ref}
         value={value} // Use the value prop from the parent

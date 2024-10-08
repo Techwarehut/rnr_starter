@@ -17,7 +17,7 @@ export function Collapsible({
         accessibilityRole="button"
         accessibilityLabel={isOpen ? "Collapse" : "Expand"}
         accessibilityState={{ expanded: isOpen }}
-        className="flex-row items-center gap-6"
+        className="flex-row items-center gap-2"
         onPress={() => setIsOpen((value) => !value)}
       >
         {isOpen ? (
@@ -28,7 +28,7 @@ export function Collapsible({
 
         <Text>{title}</Text>
       </Pressable>
-      {isOpen && <View className="mt-4 ml-8 p-2 gap-4">{children}</View>}
+      {isOpen && <View className="mt-4 ml-4 p-2 gap-4">{children}</View>}
     </View>
   );
 }
