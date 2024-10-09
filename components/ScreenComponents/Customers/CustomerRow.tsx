@@ -23,14 +23,9 @@ const CustomerRow: React.FC<CustomerRowProps> = ({
   onDelete,
   onPress,
 }) => {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const isLargeScreen = useIsLargeScreen();
-
   return (
     <TableRow
       className={cn("active:bg-secondary", index % 2 && "bg-muted/40 ")}
-      onHoverIn={() => setHoveredIndex(index)}
-      onHoverOut={() => setHoveredIndex(null)}
       onPress={() => onPress(item)}
     >
       <TableCell className="flex-1">

@@ -18,7 +18,7 @@ export default function JobScreen() {
   const [filteredProjects, setFilteredProjects] = useState(projects);
   const { showSuccessToast } = useToast();
   const [searchText, setSearchText] = useState("");
-  const [group, setGroup] = useState("assignee");
+  const [group, setGroup] = useState("Assignee");
   const [selectedStatuses, setSelectedStatuses] = useState<
     Record<string, boolean>
   >({
