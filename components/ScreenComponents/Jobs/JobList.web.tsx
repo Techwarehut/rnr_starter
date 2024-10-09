@@ -27,6 +27,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Plus } from "~/lib/icons/Plus";
 import { Badge } from "~/components/ui/badge";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { statusKeyMapping } from "./Filters/Statustypes";
 
 interface JobSectionListProps {
   sections: { title: string; data: Job[] }[];
@@ -34,36 +35,6 @@ interface JobSectionListProps {
 
 const MIN_COLUMN_WIDTHS = [100, 120, 100, 120, 120];
 const JobSectionList: React.FC<JobSectionListProps> = ({ sections }) => {
-  const { width } = useWindowDimensions();
-  const insets = useSafeAreaInsets();
-
-  const columnWidths = React.useMemo(() => {
-    return MIN_COLUMN_WIDTHS.map((minWidth) => {
-      const evenWidth = width / MIN_COLUMN_WIDTHS.length;
-      return evenWidth > minWidth ? evenWidth : minWidth;
-    });
-  }, [width]);
-  const getBadgeVariant = (status: string) => {
-    switch (status) {
-      case "Backlog":
-        return "backlog"; // Example variant for "In Progress"
-      case "In Progress":
-        return "inProgress"; // Example variant for "Completed"
-      case "on Hold":
-        return "onHold"; // Example variant for "Pending"
-      case "Customer approval Pending":
-        return "customerApprovalPending"; // Example variant for "Cancelled"
-      case "Accounts Receiveable":
-        return "accountsReceivable"; // Example variant for "Cancelled"
-      case "Invoiced":
-        return "invoiced"; // Example variant for "Cancelled"
-      case "Paid":
-        return "paid"; // Example variant for "Cancelled"
-      default:
-        return "default"; // Default variant
-    }
-  };
-
   return (
     <SectionList
       sections={sections}
@@ -150,7 +121,7 @@ const JobSectionList: React.FC<JobSectionListProps> = ({ sections }) => {
 
                   <TableCell style={{ flex: 2 }}>
                     <Badge
-                      variant={getBadgeVariant(job.status)}
+                      variant={statusKeyMapping[job.status]}
                       className="p-1 px-4"
                     >
                       <Text>{job.status}</Text>

@@ -15,7 +15,7 @@ import { SearchInput } from "~/components/ScreenComponents/SearchInput";
 import { JobFilters } from "~/components/ScreenComponents/Jobs/JobFilters";
 
 export default function JobScreen() {
-  const [filteredProjects, setFilteredProjects] = useState(projects);
+  const [filteredJobs, setFilteredJobs] = useState(jobs);
   const { showSuccessToast } = useToast();
   const [searchText, setSearchText] = useState("");
   const [group, setGroup] = useState("Assignee");
@@ -23,81 +23,76 @@ export default function JobScreen() {
     Record<string, boolean>
   >({
     backlog: false,
-    inProgress: false,
-    onHold: false,
-    customerApprovalPending: false,
-    accountsReceivable: false,
+    inprogress: false,
+    onhold: false,
+    approvalpending: false,
+    accountsreceivable: false,
     invoiced: false,
     paid: false,
   });
 
+  // Log the selected statuses whenever they change
+  useEffect(() => {
+    console.log("Re-rendering for ", selectedStatuses);
+
+    // Filter jobs based on the selected statuses
+    const filtered = jobs.filter((job) => {
+      const statusKey = job.status.toLowerCase().replace(/ /g, ""); // Normalize the status
+      console.log("Filtering job", job._id, job.status, statusKey);
+      // Check if the job's status is selected
+      return selectedStatuses[statusKey] === true;
+    });
+
+    console.log("Filtered jobs:", filtered);
+    setFilteredJobs(filtered);
+  }, [selectedStatuses]);
+
   const handleStatusChange = (newStates: Record<string, boolean>) => {
     setSelectedStatuses(newStates);
-    console.log(newStates); // Log the current checked states or handle as needed
   };
 
   useEffect(() => {
-    setFilteredProjects(projects);
-  }, [projects]);
+    setFilteredJobs(jobs);
+  }, [jobs]);
 
   const handleSearch = (searchText: string) => {
     setSearchText(searchText);
-    console.log("Iam in search", searchText);
-    const filtered = projects.filter(
-      (project) =>
-        project.projectName.toLowerCase().includes(searchText.toLowerCase()) ||
-        project.projectDescription
-          .toLowerCase()
-          .includes(searchText.toLowerCase()) ||
-        project.milestones.some((milestone) =>
-          milestone.jobIDs.some((jobId: string) => {
-            const job = jobs.find((j) => j._id === jobId);
-            return (
-              job &&
-              (job.jobTitle.toLowerCase().includes(searchText.toLowerCase()) ||
-                job.jobDescription
-                  .toLowerCase()
-                  .includes(searchText.toLowerCase()))
-            );
-          })
-        )
+
+    const filtered = jobs.filter(
+      (job) =>
+        job.jobTitle.toLowerCase().includes(searchText.toLowerCase()) ||
+        job.jobDescription.toLowerCase().includes(searchText.toLowerCase())
     );
 
-    setFilteredProjects(filtered);
+    setFilteredJobs(filtered);
   };
 
   const groupJobs = (groupBy: string) => {
     const grouped: { title: string; data: Job[] }[] = [];
 
-    for (const project of filteredProjects) {
-      for (const milestone of project.milestones) {
-        if ("jobIDs" in milestone) {
-          for (const jobId of milestone.jobIDs) {
-            const job = jobs.find((j) => j._id === jobId);
-            if (job) {
-              let groupTitle = "";
+    for (const job of filteredJobs) {
+      let groupTitle = "";
 
-              if (groupBy === "Customer") {
-                groupTitle = `Customer: ${project.customer.businessName}`; // Replace with actual customer name if available
-              } else if (groupBy === "Assignee") {
-                groupTitle =
-                  job.assignedTo.map((user) => user.name).join(", ") ||
-                  "Unassigned";
-              } else if (groupBy === "Project") {
-                groupTitle = project.projectName; // Use project name for grouping
-              } else {
-                groupTitle = "All Jobs"; // Default title when no grouping
-              }
+      if (groupBy === "Customer") {
+        groupTitle = job.customer?.businessName
+          ? `Customer: ${job.customer.businessName}`
+          : "Customer: Unassigned";
+      } else if (groupBy === "Assignee") {
+        groupTitle =
+          job.assignedTo && job.assignedTo.length > 0
+            ? job.assignedTo.map((user) => user.name).join(", ")
+            : "Unassigned";
+      } else if (groupBy === "Project") {
+        groupTitle = job.projectId || "No Project"; // Use projectId or default to "No Project"
+      } else {
+        groupTitle = "All Jobs"; // Default title when no grouping
+      }
 
-              const existingGroup = grouped.find((g) => g.title === groupTitle);
-              if (existingGroup) {
-                existingGroup.data.push(job);
-              } else {
-                grouped.push({ title: groupTitle, data: [job] });
-              }
-            }
-          }
-        }
+      const existingGroup = grouped.find((g) => g.title === groupTitle);
+      if (existingGroup) {
+        existingGroup.data.push(job);
+      } else {
+        grouped.push({ title: groupTitle, data: [job] });
       }
     }
 

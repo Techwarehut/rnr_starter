@@ -17,7 +17,7 @@
         "profileUrl": "https://randomuser.me/api/portraits/men/2.jpg"
       }
     ],
-    "status": "Customer approval Pending",
+    "status": "Approval Pending",
     "purchaseOrderNumber": "PO-001",
     "dueDate": "2024-09-10T12:00:00Z",
     "priority": "P1",
@@ -163,7 +163,7 @@
         "profileUrl": "https://randomuser.me/api/portraits/men/5.jpg"
       }
     ],
-    "status": "Accounts Receiveable",
+    "status": "Accounts Receivable",
     "purchaseOrderNumber": "PO-002",
     "dueDate": "2024-09-28T12:00:00Z",
     "priority": "P2",

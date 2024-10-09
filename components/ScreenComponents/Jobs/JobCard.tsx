@@ -17,38 +17,19 @@ import { Phone } from "~/lib/icons/Phone";
 import { User2 } from "~/lib/icons/User";
 import { Link } from "expo-router";
 import { Large, Muted } from "~/components/ui/typography";
+import { statusKeyMapping } from "./Filters/Statustypes";
 
 interface JobProps {
   job: Job;
 }
 export const JobCard: React.FC<JobProps> = ({ job }) => {
-  const getBadgeVariant = () => {
-    switch (job.status) {
-      case "Backlog":
-        return "backlog"; // Example variant for "In Progress"
-      case "In Progress":
-        return "inProgress"; // Example variant for "Completed"
-      case "on Hold":
-        return "onHold"; // Example variant for "Pending"
-      case "Customer approval Pending":
-        return "customerApprovalPending"; // Example variant for "Cancelled"
-      case "Accounts Receiveable":
-        return "accountsReceivable"; // Example variant for "Cancelled"
-      case "Invoiced":
-        return "invoiced"; // Example variant for "Cancelled"
-      case "Paid":
-        return "paid"; // Example variant for "Cancelled"
-      default:
-        return "default"; // Default variant
-    }
-  };
   return (
     <Card className="p-4 gap-4">
       <CardTitle>{job.jobTitle}</CardTitle>
 
       <CardDescription>{job.jobDescription}</CardDescription>
       <View className="flex-row">
-        <Badge variant={getBadgeVariant()} className="p-1 px-4">
+        <Badge variant={statusKeyMapping[job.status]} className="p-1 px-4">
           <Text>{job.status}</Text>
         </Badge>
       </View>

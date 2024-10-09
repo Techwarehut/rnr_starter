@@ -14,7 +14,7 @@ import { Label } from "~/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { Text } from "~/components/ui/text";
 import { ChevronDown } from "~/lib/icons/ChevronDown";
-import { StatusKeys } from "./Statustypes";
+import { StatusKeys, statusLabelMapping } from "./Statustypes";
 import { useState } from "react";
 import { Checkbox } from "~/components/ui/checkbox";
 
@@ -27,10 +27,10 @@ const StatusFilter: React.FC<StatusFilterProps> = ({ onChange }) => {
     Record<StatusKeys, boolean>
   >({
     backlog: false,
-    inProgress: false,
-    onHold: false,
-    customerApprovalPending: false,
-    accountsReceivable: false,
+    inprogress: false,
+    onhold: false,
+    approvalpending: false,
+    accountsreceivable: false,
     invoiced: false,
     paid: false,
   });
@@ -68,10 +68,7 @@ const StatusFilter: React.FC<StatusFilterProps> = ({ onChange }) => {
       >
         <DropdownMenuGroup>
           {Object.entries(checkedStates).map(([status, checked]) => {
-            const formattedStatus = status.replace(/([A-Z])/g, " $1").trim();
-            const displayLabel =
-              formattedStatus.charAt(0).toUpperCase() +
-              formattedStatus.slice(1);
+            const displayLabel = statusLabelMapping[status as StatusKeys];
 
             return (
               <DropdownMenuItem className="flex-row gap-3 items-center justify-start self-start">

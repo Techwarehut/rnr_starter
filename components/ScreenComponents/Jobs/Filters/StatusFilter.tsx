@@ -13,10 +13,10 @@ const StatusFilter: React.FC<StatusFilterProps> = ({ onChange }) => {
     Record<StatusKeys, boolean>
   >({
     backlog: false,
-    inProgress: false,
-    onHold: false,
-    customerApprovalPending: false,
-    accountsReceivable: false,
+    inprogress: false,
+    onhold: false,
+    approvalpending: false,
+    accountsreceivable: false,
     invoiced: false,
     paid: false,
   });
