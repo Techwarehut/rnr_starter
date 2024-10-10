@@ -22,12 +22,17 @@ import {
 import { Button } from "~/components/ui/button";
 import { cn, getInitials } from "~/lib/utils";
 import { User2 } from "~/lib/icons/User";
-import { H3, Large } from "~/components/ui/typography";
+import { H3, Large, Muted } from "~/components/ui/typography";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Plus } from "~/lib/icons/Plus";
 import { Badge } from "~/components/ui/badge";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { statusKeyMapping } from "./Filters/Statustypes";
+import {
+  getJobPriorityIcon,
+  statusActionMapping,
+  statusKeyMapping,
+} from "./Filters/Statustypes";
+import { UpdateStatus } from "./UpdateStatus";
 
 interface JobSectionListProps {
   sections: { title: string; data: Job[] }[];
@@ -42,23 +47,33 @@ const JobSectionList: React.FC<JobSectionListProps> = ({ sections }) => {
       renderItem={({ item }) => null} // This could be removed if not needed
       renderSectionHeader={({ section }) => (
         <Collapsible title={section.title}>
-          <Table aria-labelledby="customer-table" className="flex-1">
+          <Table
+            aria-labelledby="customer-table"
+            className="flex-1 border border-input rounded-md"
+          >
             <TableHeader>
               <TableRow style={{ flexDirection: "row" }}>
-                <TableHead style={{ flex: 1 }}>
+                <TableHead style={{ flex: 5 }}>
                   <Text>Job</Text>
                 </TableHead>
-                <TableHead style={{ flex: 4 }}>
+                <TableHead style={{ flex: 5 }}>
+                  <Text>Priority</Text>
+                </TableHead>
+                <TableHead style={{ flex: 40 }}>
                   <Text>Job Description</Text>
                 </TableHead>
-                <TableHead style={{ flex: 2 }}>
-                  <Text>Site Details</Text>
-                </TableHead>
-                <TableHead style={{ flex: 3 }}>
+                <TableHead style={{ flex: 10 }}>
                   <Text>Assigned</Text>
                 </TableHead>
-                <TableHead style={{ flex: 2 }}>
+                <TableHead style={{ flex: 10 }}>
+                  <Text>Job Type</Text>
+                </TableHead>
+
+                <TableHead style={{ flex: 15 }}>
                   <Text>Status</Text>
+                </TableHead>
+                <TableHead style={{ flex: 17 }}>
+                  <Text>Action</Text>
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -67,38 +82,33 @@ const JobSectionList: React.FC<JobSectionListProps> = ({ sections }) => {
                 <TableRow
                   key={job._id}
                   className={cn(
-                    "active:bg-secondary ",
-                    index % 2 && "bg-muted/40 "
+                    "active:bg-secondary items-center justify-center",
+                    index % 2 && "bg-muted/40 items-center justify-center"
                   )}
                 >
                   <TableCell
                     style={{
-                      flex: 1,
+                      flex: 5,
                     }}
                   >
-                    <View>
-                      <Button variant="link">
-                        <Text>{job._id}</Text>
-                      </Button>
+                    <Button variant="link">
+                      <Text>{job._id}</Text>
+                    </Button>
+                  </TableCell>
+                  <TableCell style={{ flex: 5 }}>
+                    <View className="flex-row gap-2 items-center justify-center">
+                      {getJobPriorityIcon(job.priority)}
                     </View>
                   </TableCell>
-                  <TableCell style={{ flex: 4 }}>
+                  <TableCell style={{ flex: 40 }}>
                     <View>
-                      <Large>{job.jobTitle}</Large>
-                      <Text>{job.jobDescription}</Text>
-                    </View>
-                  </TableCell>
-                  <TableCell style={{ flex: 2 }}>
-                    <View>
-                      <Text>{`${job.customer?.businessName} - ${job.siteLocation?.siteName}`}</Text>
-                      <View className="flex-row items-center gap-2">
-                        <User2 className="text-primary" size={18} />
+                      <Text className="text-xl">{job.jobTitle}</Text>
 
-                        <Text>{job.siteLocation.siteContactPerson}</Text>
-                      </View>
+                      <Muted numberOfLines={2}>{job.jobDescription}</Muted>
                     </View>
                   </TableCell>
-                  <TableCell style={{ flex: 3 }}>
+
+                  <TableCell style={{ flex: 10 }}>
                     <View className="flex-row flex-wrap gap-2 items-center">
                       {job.assignedTo.map((item) => (
                         <Avatar
@@ -112,20 +122,36 @@ const JobSectionList: React.FC<JobSectionListProps> = ({ sections }) => {
                           </AvatarFallback>
                         </Avatar>
                       ))}
-
-                      <Pressable className="h-10 w-10 bg-brand-primary rounded-3xl items-center justify-center p-1">
-                        <Plus className="text-primary-foreground" size={18} />
-                      </Pressable>
                     </View>
                   </TableCell>
+                  <TableCell style={{ flex: 10 }}>
+                    <Badge className="p-1 px-2">
+                      <Text>{job.jobType}</Text>
+                    </Badge>
+                  </TableCell>
 
-                  <TableCell style={{ flex: 2 }}>
+                  <TableCell style={{ flex: 15 }}>
                     <Badge
                       variant={statusKeyMapping[job.status]}
                       className="p-1 px-4"
                     >
                       <Text>{job.status}</Text>
                     </Badge>
+                  </TableCell>
+                  <TableCell style={{ flex: 17 }}>
+                    <View className="flex-row border border-input bg-background rounded-md items-center justify-center">
+                      <Pressable className="flex-1 p-2 web:hover:bg-accent web:hover:text-accent-foreground active:bg-accent">
+                        <Text className="group-active:text-accent-foreground">
+                          {statusActionMapping[job.status]}
+                        </Text>
+                      </Pressable>
+                      <UpdateStatus
+                        onUpdateStatus={() =>
+                          console.log("Job status updated!")
+                        }
+                        selectedOption=""
+                      />
+                    </View>
                   </TableCell>
                 </TableRow>
               ))}

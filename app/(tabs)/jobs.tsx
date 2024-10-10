@@ -13,12 +13,13 @@ import { Job } from "~/components/ScreenComponents/Jobs/types";
 import JobSectionList from "~/components/ScreenComponents/Jobs/JobList";
 import { SearchInput } from "~/components/ScreenComponents/SearchInput";
 import { JobFilters } from "~/components/ScreenComponents/Jobs/JobFilters";
+import { JobTypeKeys } from "~/components/ScreenComponents/Jobs/Filters/Statustypes";
 
 export default function JobScreen() {
   const [filteredJobs, setFilteredJobs] = useState(jobs);
   const { showSuccessToast } = useToast();
   const [searchText, setSearchText] = useState("");
-  const [group, setGroup] = useState("Assignee");
+  const [group, setGroup] = useState("None");
   const [selectedStatuses, setSelectedStatuses] = useState<
     Record<string, boolean>
   >({
@@ -31,24 +32,39 @@ export default function JobScreen() {
     paid: false,
   });
 
-  // Log the selected statuses whenever they change
-  useEffect(() => {
-    console.log("Re-rendering for ", selectedStatuses);
+  const [selectedJobType, setSelectedJobType] = useState<
+    Record<JobTypeKeys, boolean>
+  >({
+    Inspection: false,
+    ServiceVisit: false,
+    Consultation: false,
+    Maintenance: false,
+  });
 
-    // Filter jobs based on the selected statuses
+  useEffect(() => {
     const filtered = jobs.filter((job) => {
       const statusKey = job.status.toLowerCase().replace(/ /g, ""); // Normalize the status
-      console.log("Filtering job", job._id, job.status, statusKey);
-      // Check if the job's status is selected
-      return selectedStatuses[statusKey] === true;
+      const jobTypeKey = job.jobType as JobTypeKeys; // Type assertion here
+
+      const statusMatches =
+        selectedStatuses[statusKey] === true ||
+        !Object.values(selectedStatuses).some(Boolean);
+      const jobTypeMatches =
+        selectedJobType[jobTypeKey] === true ||
+        !Object.values(selectedJobType).some(Boolean);
+
+      return statusMatches && jobTypeMatches;
     });
 
-    console.log("Filtered jobs:", filtered);
     setFilteredJobs(filtered);
-  }, [selectedStatuses]);
+  }, [selectedStatuses, selectedJobType]);
 
   const handleStatusChange = (newStates: Record<string, boolean>) => {
     setSelectedStatuses(newStates);
+  };
+
+  const handleJobTypeChange = (newStates: Record<string, boolean>) => {
+    setSelectedJobType(newStates);
   };
 
   useEffect(() => {
@@ -83,7 +99,12 @@ export default function JobScreen() {
             ? job.assignedTo.map((user) => user.name).join(", ")
             : "Unassigned";
       } else if (groupBy === "Project") {
-        groupTitle = job.projectId || "No Project"; // Use projectId or default to "No Project"
+        if (job.projectId) {
+          const projectName = job.projectName; // Adjust this according to your data structure
+          groupTitle = `${job.projectId}: ${projectName}`;
+        } else {
+          groupTitle = "No Project"; // Default when there is no project
+        }
       } else {
         groupTitle = "All Jobs"; // Default title when no grouping
       }
@@ -132,6 +153,7 @@ export default function JobScreen() {
             selectedGroupValue={group}
             setSelectedGroupValue={setGroup}
             handleStatusChange={handleStatusChange}
+            handleJobTypeChange={handleJobTypeChange}
           />
         </View>
 

@@ -45,6 +45,7 @@ export interface Job {
   dueDate: string; // Due date for the job
   priority: string; // Priority level (e.g., P1, P2, P3)
   projectId: string; // ID of the associated project
+  projectName: string; // Name of the associated project
   milestoneId?: string; // ID of the associated milestone
   customer?: customer; // ID of the associated customer
   siteLocation: SiteLocation; // ID of the associated site location

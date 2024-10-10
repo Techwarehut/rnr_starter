@@ -2,8 +2,8 @@
   {
     "_id": "job_001",
     "jobTitle": "Site Assessment",
-    "jobDescription": "Conduct a thorough site assessment for HVAC installation.",
-    "jobType": "Field Service",
+    "jobDescription": "Conduct a thorough site assessment for HVAC installation. This has long decription to fit in 2 lines. This should show no more than 2 lines.",
+    "jobType": "Inspection",
     "reportedBy": {
       "userId": "1",
       "name": "Alice Johnson",
@@ -20,8 +20,9 @@
     "status": "Approval Pending",
     "purchaseOrderNumber": "PO-001",
     "dueDate": "2024-09-10T12:00:00Z",
-    "priority": "P1",
-    "projectId": "project_001",
+    "priority": "High",
+    "projectId": "Project_001",
+    "projectName": "HVAC Installation and Maintenance",
     "milestoneId": "milestone_001",
     "customer": {
       "_id": "2",
@@ -49,7 +50,7 @@
     "_id": "job_002",
     "jobTitle": "HVAC System Installation",
     "jobDescription": "Install the HVAC system at the client location.",
-    "jobType": "Field Service",
+    "jobType": "ServiceVisit",
     "reportedBy": {
       "userId": "1",
       "name": "Alice Johnson",
@@ -70,8 +71,9 @@
     "status": "In Progress",
     "purchaseOrderNumber": "PO-001",
     "dueDate": "2024-09-28T12:00:00Z",
-    "priority": "P1",
-    "projectId": "project_001",
+    "priority": "High",
+    "projectId": "Project_001",
+    "projectName": "HVAC Installation and Maintenance",
     "milestoneId": "milestone_002",
     "customer": {
       "_id": "3",
@@ -99,7 +101,7 @@
     "_id": "job_003",
     "jobTitle": "Client Consultation",
     "jobDescription": "Discuss cleaning schedule and requirements with the client.",
-    "jobType": "Field Service",
+    "jobType": "Consultation",
     "reportedBy": {
       "userId": "5",
       "name": "Eva Green",
@@ -113,11 +115,12 @@
         "profileUrl": "https://randomuser.me/api/portraits/men/4.jpg"
       }
     ],
-    "status": "on Hold",
+    "status": "On Hold",
     "purchaseOrderNumber": "PO-002",
     "dueDate": "2024-09-18T12:00:00Z",
-    "priority": "P2",
-    "projectId": "project_002",
+    "priority": "Medium",
+    "projectId": "Project_002",
+    "projectName": "Office Cleaning Services",
     "milestoneId": "milestone_001",
     "customer": {
       "_id": "1",
@@ -145,7 +148,7 @@
     "_id": "job_004",
     "jobTitle": "Schedule Cleaning Services",
     "jobDescription": "Set up the recurring cleaning schedule for the client.",
-    "jobType": "Field Service",
+    "jobType": "Maintenance",
     "reportedBy": {
       "userId": "5",
       "name": "Eva Green",
@@ -166,8 +169,9 @@
     "status": "Accounts Receivable",
     "purchaseOrderNumber": "PO-002",
     "dueDate": "2024-09-28T12:00:00Z",
-    "priority": "P2",
-    "projectId": "project_002",
+    "priority": "Medium",
+    "projectId": "Project_002",
+    "projectName": "Office Cleaning Services",
     "milestoneId": "milestone_001",
     "customer": {
       "_id": "3",
@@ -195,7 +199,7 @@
     "_id": "job_005",
     "jobTitle": "Machine Diagnostics",
     "jobDescription": "Perform diagnostics on the machine to identify issues.",
-    "jobType": "Field Service",
+    "jobType": "ServiceVisit",
     "reportedBy": {
       "userId": "9",
       "name": "Isaac Newton",
@@ -212,9 +216,9 @@
     "status": "Invoiced",
     "purchaseOrderNumber": "PO-003",
     "dueDate": "2024-09-24T12:00:00Z",
-    "priority": "P3",
-    "projectId": "project_003",
-
+    "priority": "Low",
+    "projectId": "Project_003",
+    "projectName": "Industrial Machine Repair",
     "milestoneId": "milestone_001",
     "customer": {
       "_id": "2",
@@ -243,7 +247,7 @@
     "_id": "job_006",
     "jobTitle": "Machine Repair",
     "jobDescription": "Conduct repairs on the industrial machine as per diagnostics.",
-    "jobType": "Field Service",
+    "jobType": "ServiceVisit",
     "reportedBy": {
       "userId": "9",
       "name": "Isaac Newton",
@@ -259,8 +263,9 @@
     "status": "Paid",
     "purchaseOrderNumber": "PO-003",
     "dueDate": "2024-10-04T12:00:00Z",
-    "priority": "P3",
-    "projectId": "project_003",
+    "priority": "Low",
+    "projectId": "Project_003",
+    "projectName": "Industrial Machine Repair",
     "milestoneId": "milestone_002",
 
     "customer": {

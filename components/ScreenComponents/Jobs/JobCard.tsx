@@ -15,9 +15,15 @@ import { getInitials } from "~/lib/utils";
 import { Plus } from "~/lib/icons/Plus";
 import { Phone } from "~/lib/icons/Phone";
 import { User2 } from "~/lib/icons/User";
+
 import { Link } from "expo-router";
 import { Large, Muted } from "~/components/ui/typography";
-import { statusKeyMapping } from "./Filters/Statustypes";
+import {
+  getJobPriorityIcon,
+  statusActionMapping,
+  statusKeyMapping,
+} from "./Filters/Statustypes";
+import { UpdateStatus } from "./UpdateStatus";
 
 interface JobProps {
   job: Job;
@@ -25,10 +31,16 @@ interface JobProps {
 export const JobCard: React.FC<JobProps> = ({ job }) => {
   return (
     <Card className="p-4 gap-4">
+      <View className="flex-row gap-2 items-center">
+        {getJobPriorityIcon(job.priority)}
+      </View>
       <CardTitle>{job.jobTitle}</CardTitle>
 
-      <CardDescription>{job.jobDescription}</CardDescription>
-      <View className="flex-row">
+      <CardDescription numberOfLines={2}>{job.jobDescription}</CardDescription>
+      <View className="flex-row gap-2">
+        <Badge className="p-1 px-4">
+          <Text>{job.jobType}</Text>
+        </Badge>
         <Badge variant={statusKeyMapping[job.status]} className="p-1 px-4">
           <Text>{job.status}</Text>
         </Badge>
@@ -68,13 +80,18 @@ export const JobCard: React.FC<JobProps> = ({ job }) => {
           </View>
         </View>
       </CardContent>
-      <CardFooter className="justify-between">
-        <Button variant="outline">
-          <Text>Update Status</Text>
-        </Button>
-        <Button>
-          <Text>Get Directions</Text>
-        </Button>
+      <CardFooter className="flex-none">
+        <View className="flex-row border border-input bg-background rounded-md items-center justify-center">
+          <Pressable className="flex p-2 web:hover:bg-accent web:hover:text-accent-foreground active:bg-accent">
+            <Text className="group-active:text-accent-foreground">
+              {statusActionMapping[job.status]}
+            </Text>
+          </Pressable>
+          <UpdateStatus
+            onUpdateStatus={() => console.log("Job status updated!")}
+            selectedOption=""
+          />
+        </View>
       </CardFooter>
     </Card>
   );

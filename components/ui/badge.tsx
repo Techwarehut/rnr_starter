@@ -22,8 +22,7 @@ const badgeVariants = cva(
         invoiced:
           "border-transparent bg-brand-primaryLight web:hover:opacity-80 active:opacity-80",
         paid: "border-transparent bg-brand-primary web:hover:opacity-80 active:opacity-80",
-        default:
-          "border-transparent bg-primary web:hover:opacity-80 active:opacity-80",
+        default: "border-primary web:hover:opacity-80 active:opacity-80",
       },
     },
     defaultVariants: {
@@ -42,7 +41,7 @@ const badgeTextVariants = cva("text-xs font-semibold ", {
       accountsreceivable: "text-brand-secondary-foreground",
       invoiced: "text-brand-primary-light-foreground",
       paid: "text-brand-primary-foreground",
-      default: "text-primary-foreground",
+      default: "text-primary",
     },
   },
   defaultVariants: {

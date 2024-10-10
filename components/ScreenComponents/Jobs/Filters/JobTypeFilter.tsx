@@ -2,26 +2,23 @@ import { View } from "react-native";
 import React from "react";
 import { Checkbox } from "~/components/ui/checkbox";
 import { Label } from "~/components/ui/label";
-import { StatusKeys, statusLabelMapping } from "./Statustypes";
+import { JobTypeKeys, StatusKeys, statusLabelMapping } from "./Statustypes";
 
-interface StatusFilterProps {
-  onChange: (checkedStates: Record<StatusKeys, boolean>) => void; // Prop to pass checked states
+interface JobTypeFilterProps {
+  onChange: (checkedStates: Record<JobTypeKeys, boolean>) => void; // Prop to pass checked states
 }
 
-const StatusFilter: React.FC<StatusFilterProps> = ({ onChange }) => {
+const JobTypeFilter: React.FC<JobTypeFilterProps> = ({ onChange }) => {
   const [checkedStates, setCheckedStates] = React.useState<
-    Record<StatusKeys, boolean>
+    Record<JobTypeKeys, boolean>
   >({
-    backlog: false,
-    inprogress: false,
-    onhold: false,
-    approvalpending: false,
-    accountsreceivable: false,
-    invoiced: false,
-    paid: false,
+    Inspection: false,
+    ServiceVisit: false,
+    Consultation: false,
+    Maintenance: false,
   });
 
-  const handleCheckboxChange = (status: StatusKeys) => {
+  const handleCheckboxChange = (status: JobTypeKeys) => {
     setCheckedStates((prev) => {
       const newCheckedStates = { ...prev, [status]: !prev[status] };
 
@@ -34,20 +31,20 @@ const StatusFilter: React.FC<StatusFilterProps> = ({ onChange }) => {
   return (
     <View className="flex-1 justify-start items-start p-2 gap-2">
       {Object.entries(checkedStates).map(([status, checked]) => {
-        const displayLabel = statusLabelMapping[status as StatusKeys];
-
         return (
           <View key={status} className="flex-row gap-3 items-center">
             <Checkbox
               aria-labelledby={status}
               checked={checked}
-              onCheckedChange={() => handleCheckboxChange(status as StatusKeys)}
+              onCheckedChange={() =>
+                handleCheckboxChange(status as JobTypeKeys)
+              }
             />
             <Label
               nativeID={status}
-              onPress={() => handleCheckboxChange(status as StatusKeys)}
+              onPress={() => handleCheckboxChange(status as JobTypeKeys)}
             >
-              {displayLabel}
+              {status}
             </Label>
           </View>
         );
@@ -56,4 +53,4 @@ const StatusFilter: React.FC<StatusFilterProps> = ({ onChange }) => {
   );
 };
 
-export default StatusFilter;
+export default JobTypeFilter;

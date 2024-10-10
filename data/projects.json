@@ -1,6 +1,6 @@
 [
   {
-    "_id": "project_001",
+    "_id": "Project_001",
     "projectName": "HVAC Installation and Maintenance",
     "projectDescription": "Complete installation and routine maintenance for HVAC systems.",
     "status": "In Progress",
@@ -35,7 +35,7 @@
     "estimateId": "estimate_001"
   },
   {
-    "_id": "project_002",
+    "_id": "Project_002",
     "projectName": "Office Cleaning Services",
     "projectDescription": "Provide regular cleaning services for client offices.",
     "status": "In Progress",
@@ -69,7 +69,7 @@
     "estimateId": "estimate_002"
   },
   {
-    "_id": "project_003",
+    "_id": "Project_003",
     "projectName": "Industrial Machine Repair",
     "projectDescription": "Repair and maintenance services for industrial machinery.",
     "status": "Pending",
