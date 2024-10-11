@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import { Button } from "~/components/ui/button";
-
+import React from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,21 +19,16 @@ import { useState } from "react";
 import { Checkbox } from "~/components/ui/checkbox";
 
 interface StatusFilterProps {
+  initialCheckedStates: Record<StatusKeys, boolean>; // Accept initial checked states as prop
   onChange: (checkedStates: Record<StatusKeys, boolean>) => void; // Prop to pass checked states
 }
 
-const StatusFilter: React.FC<StatusFilterProps> = ({ onChange }) => {
-  const [checkedStates, setCheckedStates] = useState<
-    Record<StatusKeys, boolean>
-  >({
-    backlog: false,
-    inprogress: false,
-    onhold: false,
-    approvalpending: false,
-    accountsreceivable: false,
-    invoiced: false,
-    paid: false,
-  });
+const StatusFilter: React.FC<StatusFilterProps> = ({
+  initialCheckedStates,
+  onChange,
+}) => {
+  const [checkedStates, setCheckedStates] =
+    useState<Record<StatusKeys, boolean>>(initialCheckedStates);
 
   const contentInsets = {
     left: 12,

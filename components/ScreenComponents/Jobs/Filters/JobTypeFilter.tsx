@@ -5,18 +5,16 @@ import { Label } from "~/components/ui/label";
 import { JobTypeKeys, StatusKeys, statusLabelMapping } from "./Statustypes";
 
 interface JobTypeFilterProps {
+  initialCheckedStates: Record<JobTypeKeys, boolean>; // Accept initial checked states as prop
   onChange: (checkedStates: Record<JobTypeKeys, boolean>) => void; // Prop to pass checked states
 }
 
-const JobTypeFilter: React.FC<JobTypeFilterProps> = ({ onChange }) => {
-  const [checkedStates, setCheckedStates] = React.useState<
-    Record<JobTypeKeys, boolean>
-  >({
-    Inspection: false,
-    ServiceVisit: false,
-    Consultation: false,
-    Maintenance: false,
-  });
+const JobTypeFilter: React.FC<JobTypeFilterProps> = ({
+  initialCheckedStates,
+  onChange,
+}) => {
+  const [checkedStates, setCheckedStates] =
+    React.useState<Record<JobTypeKeys, boolean>>(initialCheckedStates);
 
   const handleCheckboxChange = (status: JobTypeKeys) => {
     setCheckedStates((prev) => {

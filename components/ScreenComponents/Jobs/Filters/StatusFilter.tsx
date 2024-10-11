@@ -5,22 +5,16 @@ import { Label } from "~/components/ui/label";
 import { StatusKeys, statusLabelMapping } from "./Statustypes";
 
 interface StatusFilterProps {
+  initialCheckedStates: Record<StatusKeys, boolean>; // Accept initial checked states as prop
   onChange: (checkedStates: Record<StatusKeys, boolean>) => void; // Prop to pass checked states
 }
 
-const StatusFilter: React.FC<StatusFilterProps> = ({ onChange }) => {
-  const [checkedStates, setCheckedStates] = React.useState<
-    Record<StatusKeys, boolean>
-  >({
-    backlog: false,
-    inprogress: false,
-    onhold: false,
-    approvalpending: false,
-    accountsreceivable: false,
-    invoiced: false,
-    paid: false,
-  });
-
+const StatusFilter: React.FC<StatusFilterProps> = ({
+  initialCheckedStates,
+  onChange,
+}) => {
+  const [checkedStates, setCheckedStates] =
+    React.useState<Record<StatusKeys, boolean>>(initialCheckedStates);
   const handleCheckboxChange = (status: StatusKeys) => {
     setCheckedStates((prev) => {
       const newCheckedStates = { ...prev, [status]: !prev[status] };

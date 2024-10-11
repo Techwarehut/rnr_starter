@@ -62,3 +62,7 @@ export function getInitials(name: string): string {
 
   return initials;
 }
+
+export const generateUniqueId = () => {
+  return `${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+};

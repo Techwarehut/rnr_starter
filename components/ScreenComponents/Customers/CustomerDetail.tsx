@@ -20,7 +20,7 @@ import { Label } from "~/components/ui/label";
 import { Input } from "~/components/ui/input";
 import { ScrollView } from "react-native-gesture-handler";
 import ActionButtons from "../ActionButtons";
-import { Stack } from "expo-router";
+import { router, Stack } from "expo-router";
 import DialogScreen from "../DialogScreen";
 import { Customer } from "./types";
 import SiteLocationCard from "./SiteLocationCard";
@@ -32,6 +32,11 @@ import CustomerBasicInfo from "./FormElements/CustomerBasicInfo";
 import CustomerBillingAddress from "./FormElements/CustomerBillingAddress";
 import { AddNewSiteLocation } from "./AddNewSiteLocation";
 import toastConfig from "../CustomToast";
+import {
+  deleteCustomer,
+  editCustomer,
+  fetchCustomers,
+} from "~/api/customerApi";
 
 interface CustomerDetailProps {
   customer: Customer;
@@ -48,11 +53,29 @@ const CustomerDetail: React.FC<CustomerDetailProps> = ({ customer }) => {
   useEffect(() => {
     setCustomerData(customer);
   }, [customer]);
-  const onSave = () => {
-    setEditMode(false);
-    // To show a success toast with custom text2
-    console.log("Before showing toast");
-    showSuccessToast("Customer saved succesfully!");
+
+  const handleEditCustomer = async () => {
+    try {
+      setEditMode(false);
+      const returnedCustomer = await editCustomer(customerData);
+
+      setCustomerData(returnedCustomer);
+
+      showSuccessToast("Customer updated successfully!");
+    } catch (error) {
+      showErrorToast("Error updating customer!");
+    }
+  };
+
+  const handleDeleteCustomer = async () => {
+    try {
+      await deleteCustomer(customerData._id);
+
+      showSuccessToast("Customer deleted successfully!");
+      router.replace("/(tabs)/customers");
+    } catch (error) {
+      showErrorToast("Error deleting customer!");
+    }
   };
 
   const onAddSiteLocation = (data: Customer) => {
@@ -122,8 +145,8 @@ const CustomerDetail: React.FC<CustomerDetailProps> = ({ customer }) => {
             headerRight: () => (
               <ActionButtons
                 onEdit={() => setEditMode(true)}
-                onDelete={() => console.log("Delete pressed")}
-                onSave={onSave}
+                onDelete={handleDeleteCustomer}
+                onSave={handleEditCustomer}
                 editMode={editMode}
               />
             ),
@@ -149,8 +172,8 @@ const CustomerDetail: React.FC<CustomerDetailProps> = ({ customer }) => {
             </View>
             <ActionButtons
               onEdit={() => setEditMode(true)}
-              onDelete={() => console.log("Delete pressed")}
-              onSave={onSave}
+              onDelete={handleDeleteCustomer}
+              onSave={handleEditCustomer}
               editMode={editMode}
             />
           </View>

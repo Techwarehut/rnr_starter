@@ -151,6 +151,8 @@ export default function JobScreen() {
           {/* Filters and other UI components */}
           <JobFilters
             selectedGroupValue={group}
+            initialStatusCheckedStates={selectedStatuses}
+            initialJobTypeCheckedStates={selectedJobType}
             setSelectedGroupValue={setGroup}
             handleStatusChange={handleStatusChange}
             handleJobTypeChange={handleJobTypeChange}

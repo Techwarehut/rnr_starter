@@ -43,7 +43,7 @@ export const AddNewCustomer: React.FC<AddNewCustomerProps> = ({
   });
 
   const AddNewCust = () => {
-    console.log(customerData);
+    console.log("Adding Customer", customerData.customerName);
     onNewCustAdd(customerData);
     handlePresentModalPress();
   };

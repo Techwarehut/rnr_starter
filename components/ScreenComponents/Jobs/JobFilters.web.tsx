@@ -6,6 +6,8 @@ import JobTypeFilter from "./Filters/JobTypeFilter";
 
 interface FilterProps {
   selectedGroupValue: string;
+  initialStatusCheckedStates: Record<StatusKeys, boolean>;
+  initialJobTypeCheckedStates: Record<JobTypeKeys, boolean>;
   setSelectedGroupValue: (value: string) => void;
   handleStatusChange: (checkedStates: Record<StatusKeys, boolean>) => void;
   handleJobTypeChange: (checkedStates: Record<JobTypeKeys, boolean>) => void;
@@ -13,6 +15,8 @@ interface FilterProps {
 
 export const JobFilters: React.FC<FilterProps> = ({
   selectedGroupValue,
+  initialStatusCheckedStates,
+  initialJobTypeCheckedStates,
   setSelectedGroupValue,
   handleStatusChange,
   handleJobTypeChange,
@@ -23,8 +27,14 @@ export const JobFilters: React.FC<FilterProps> = ({
         value={selectedGroupValue}
         onValueChange={setSelectedGroupValue}
       />
-      <StatusFilter onChange={handleStatusChange} />
-      <JobTypeFilter onChange={handleJobTypeChange} />
+      <StatusFilter
+        initialCheckedStates={initialStatusCheckedStates}
+        onChange={handleStatusChange}
+      />
+      <JobTypeFilter
+        initialCheckedStates={initialJobTypeCheckedStates}
+        onChange={handleJobTypeChange}
+      />
     </>
   );
 };

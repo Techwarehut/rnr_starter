@@ -16,11 +16,41 @@ import { Customer } from "~/components/ScreenComponents/Customers/types";
 import { AddNewCustomer } from "~/components/ScreenComponents/Customers/AddNewCustomer";
 import { useToast } from "~/components/ScreenComponents/ToastMessage";
 import Toast from "react-native-toast-message";
+import { addCustomer, fetchCustomers } from "~/api/customerApi";
 
 const CustomerScreen = () => {
-  const [filteredCustomers, setFilteredCustomers] = useState(customers);
   const [selCust, setSelCust] = useState<Customer | null>(null);
   const { showSuccessToast, showErrorToast } = useToast();
+  const [filteredCustomers, setFilteredCustomers] = useState<Customer[]>([]);
+
+  const loadCustomers = async () => {
+    try {
+      const data = await fetchCustomers(); // Call the API
+      setFilteredCustomers(data);
+    } catch (error) {
+      showErrorToast("Failed to fetch customers!");
+    }
+  };
+
+  const handleAddCustomer = async (newCustomer: Customer) => {
+    try {
+      const exists = filteredCustomers.some(
+        (customer) => customer.email === newCustomer.email
+      );
+
+      if (exists) {
+        showErrorToast("Customer email already exists!");
+        return;
+      }
+
+      const addedCustomer = await addCustomer(newCustomer);
+      setSelCust(addedCustomer);
+      // Update state if needed
+      showSuccessToast("Customer Added successfully!");
+    } catch (error) {
+      showErrorToast("Error Adding customer!");
+    }
+  };
 
   const showCustomerDetails = (customer: any) => {
     // Logic for adding a new customer
@@ -38,11 +68,11 @@ const CustomerScreen = () => {
   };
 
   useEffect(() => {
-    setFilteredCustomers(customers);
-  }, [customers]);
+    loadCustomers(); // Fetch customers on mount
+  }, []);
 
   const handleSearch = (searchText: string) => {
-    const filtered = customers.filter(
+    const filtered = filteredCustomers.filter(
       (customer) =>
         customer.businessName
           .toLowerCase()
@@ -60,13 +90,7 @@ const CustomerScreen = () => {
           headerTitle: "Customers",
           headerRight: () => (
             <View className="flex-1 flex-row justify-center items-center m-2 gap-1">
-              <AddNewCustomer
-                onNewCustAdd={(data) => {
-                  data._id = (customers.length + 1).toString(); // Update data._id to customers.length
-                  customers.push(data); // Push updated data into the customers array
-                  showSuccessToast("Customer Added succesfully!");
-                }}
-              />
+              <AddNewCustomer onNewCustAdd={handleAddCustomer} />
             </View>
           ),
         }}

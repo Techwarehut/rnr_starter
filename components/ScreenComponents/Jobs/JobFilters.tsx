@@ -20,6 +20,8 @@ import JobTypeFilter from "./Filters/JobTypeFilter";
 
 interface FilterProps {
   selectedGroupValue: string;
+  initialStatusCheckedStates: Record<StatusKeys, boolean>;
+  initialJobTypeCheckedStates: Record<JobTypeKeys, boolean>;
   setSelectedGroupValue: (value: string) => void;
   handleStatusChange: (checkedStates: Record<StatusKeys, boolean>) => void;
   handleJobTypeChange: (checkedStates: Record<JobTypeKeys, boolean>) => void;
@@ -27,6 +29,8 @@ interface FilterProps {
 
 export const JobFilters: React.FC<FilterProps> = ({
   selectedGroupValue,
+  initialStatusCheckedStates,
+  initialJobTypeCheckedStates,
   setSelectedGroupValue,
   handleStatusChange,
   handleJobTypeChange,
@@ -95,14 +99,20 @@ export const JobFilters: React.FC<FilterProps> = ({
               <Text className="text-xl">Status</Text>
             </View>
             <View className="flex m-4">
-              <StatusFilter onChange={handleStatusChange} />
+              <StatusFilter
+                initialCheckedStates={initialStatusCheckedStates}
+                onChange={handleStatusChange}
+              />
             </View>
 
             <View className="flex ">
               <Text className="text-xl">Job Type</Text>
             </View>
             <View className="flex m-4 ">
-              <JobTypeFilter onChange={handleJobTypeChange} />
+              <JobTypeFilter
+                initialCheckedStates={initialJobTypeCheckedStates}
+                onChange={handleJobTypeChange}
+              />
             </View>
           </ScrollView>
         </BottomSheetView>
