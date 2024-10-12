@@ -12,15 +12,12 @@ import { Button } from "~/components/ui/button";
 import { Text } from "~/components/ui/text";
 
 interface AddNewSiteFormProps {
-  customer: Customer;
-  onChange: (data: Customer) => void;
+  onChange: (data: SiteLocation) => void;
 }
 
-const AddNewSiteForm: React.FC<AddNewSiteFormProps> = ({
-  customer,
-  onChange,
-}) => {
+const AddNewSiteForm: React.FC<AddNewSiteFormProps> = ({ onChange }) => {
   const [newSite, setNewSite] = React.useState<SiteLocation>({
+    site_id: "",
     siteName: "",
     siteContactPerson: "",
     siteContactPhone: "",
@@ -30,8 +27,6 @@ const AddNewSiteForm: React.FC<AddNewSiteFormProps> = ({
     zipcode: "",
   });
 
-  const index = customer.siteLocations.length;
-
   const handleInputChange = (field: string, value: string) => {
     // Update the newSite state
     setNewSite((prev) => {
@@ -40,17 +35,8 @@ const AddNewSiteForm: React.FC<AddNewSiteFormProps> = ({
         [field]: value,
       };
 
-      console.log(field);
-      console.log(value);
-
-      // Create updatedCustomerData using the updatedSite
-      const updatedCustomerData = {
-        ...customer,
-        siteLocations: [...customer.siteLocations, updatedSite],
-      };
-
       // Call onChange with the updated customer data
-      onChange(updatedCustomerData);
+      onChange(updatedSite);
 
       return updatedSite; // Return the updated state
     });
@@ -71,14 +57,14 @@ const AddNewSiteForm: React.FC<AddNewSiteFormProps> = ({
         site={newSite}
         handleInputChange={handleInputChange}
         editMode={true}
-        index={index}
+        index={999}
       />
       <SiteLocationInfo
         site={newSite}
         handleInputChange={handleInputChange}
         handlePhoneChange={handlePhoneChange}
         editMode={true}
-        index={index}
+        index={999}
       />
     </ScrollView>
   );

@@ -11,17 +11,15 @@ import { useSharedValue } from "react-native-reanimated";
 import { useColorScheme } from "~/lib/useColorScheme";
 import AddNewCustomerForm from "./AddNewCustomerForm";
 import { H1, H3 } from "~/components/ui/typography";
-import { Customer } from "./types";
+import { Customer, SiteLocation } from "./types";
 import AddNewSiteForm from "./AddNewSiteForm";
 
 interface AddNewSiteProps {
-  customer: Customer;
-  onChange: (data: Customer) => void;
+  onAddNewSite: (data: SiteLocation) => void;
 }
 
 export const AddNewSiteLocation: React.FC<AddNewSiteProps> = ({
-  customer,
-  onChange,
+  onAddNewSite,
 }) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -29,11 +27,22 @@ export const AddNewSiteLocation: React.FC<AddNewSiteProps> = ({
   const animatedPosition = useSharedValue<number>(0);
   const snapPoints = ["60%", "70%"];
   const { isDarkColorScheme, setColorScheme } = useColorScheme();
-  const [customerData, setCustomerData] = React.useState<Customer>(customer);
+  const [newSiteLocation, setNewSiteLocation] = React.useState<SiteLocation>({
+    site_id: "",
+    siteName: "",
+    siteContactPerson: "",
+    siteContactPhone: "",
+    AddressLine: "",
+    City: "",
+    Province: "",
+    zipcode: "",
+  });
+
+  // State for new site location data
   // Initialize with a default Customer object, including _id
 
   const AddNewSite = () => {
-    if (onChange) onChange(customerData);
+    if (onAddNewSite) onAddNewSite(newSiteLocation);
     handlePresentModalPress();
   };
 
@@ -78,7 +87,7 @@ export const AddNewSiteLocation: React.FC<AddNewSiteProps> = ({
         <BottomSheetView className="flex-1 bg-popover mb-8">
           <H3 className="text-center">Add New Site</H3>
 
-          <AddNewSiteForm customer={customer} onChange={setCustomerData} />
+          <AddNewSiteForm onChange={setNewSiteLocation} />
           <View className="p-4">
             <Button onPress={AddNewSite}>
               <Text>Save</Text>

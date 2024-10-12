@@ -2,27 +2,15 @@ import React, { useEffect } from "react";
 import { Platform, View } from "react-native";
 import { Button } from "~/components/ui/button";
 import { H1, H2, H3, H4, Large, Muted } from "~/components/ui/typography";
-import { Mail } from "~/lib/icons/Mail";
-import { Phone } from "~/lib/icons/Phone";
-import { MapPin } from "~/lib/icons/MapPin";
+
 import { formatPhoneNumber, useIsLargeScreen } from "~/lib/utils";
 import { Text } from "~/components/ui/text";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
-import { Label } from "~/components/ui/label";
-import { Input } from "~/components/ui/input";
+
 import { ScrollView } from "react-native-gesture-handler";
 import ActionButtons from "../ActionButtons";
 import { router, Stack } from "expo-router";
-import DialogScreen from "../DialogScreen";
-import { Customer } from "./types";
+
+import { Customer, SiteLocation } from "./types";
 import SiteLocationCard from "./SiteLocationCard";
 import { useToast } from "../ToastMessage";
 import Toast from "react-native-toast-message";
@@ -33,8 +21,11 @@ import CustomerBillingAddress from "./FormElements/CustomerBillingAddress";
 import { AddNewSiteLocation } from "./AddNewSiteLocation";
 import toastConfig from "../CustomToast";
 import {
+  addSiteLocation,
   deleteCustomer,
+  deleteSiteLocation,
   editCustomer,
+  fetchCustomerById,
   fetchCustomers,
 } from "~/api/customerApi";
 
@@ -78,9 +69,36 @@ const CustomerDetail: React.FC<CustomerDetailProps> = ({ customer }) => {
     }
   };
 
-  const onAddSiteLocation = (data: Customer) => {
-    setCustomerData(data);
-    showSuccessToast("Site added succesfully!");
+  const onAddSiteLocation = async (data: SiteLocation) => {
+    try {
+      await addSiteLocation(customerData._id, data);
+
+      // Fetch the specific customer by ID after adding the site
+      const updatedCustomer = await fetchCustomerById(customerData._id);
+      if (updatedCustomer) {
+        setCustomerData(updatedCustomer); // Update customer state with the fetched data
+      }
+
+      showSuccessToast("Site added successfully!");
+    } catch (error) {
+      console.error("Error adding site location:", error);
+      showErrorToast("Failed to add site location. Please try again.");
+    }
+  };
+
+  const handleDeleteSite = async (siteId: string) => {
+    try {
+      await deleteSiteLocation(customerData._id, siteId); // Call your API to delete the site
+      // Fetch the specific customer by ID after adding the site
+      const updatedCustomer = await fetchCustomerById(customerData._id);
+      if (updatedCustomer) {
+        setCustomerData(updatedCustomer); // Update customer state with the fetched data
+      }
+      showSuccessToast("Site deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting site location:", error);
+      showErrorToast("Failed to delete site location. Please try again.");
+    }
   };
 
   const handleInputChange = (
@@ -134,6 +152,8 @@ const CustomerDetail: React.FC<CustomerDetailProps> = ({ customer }) => {
     handleInputChange(field, formattedPhone);
   };
   const cardWidth = 300; // Approximate width for min-w-80 (adjust as necessary)
+
+  console.log("Site Locations ");
 
   return (
     <>
@@ -206,17 +226,14 @@ const CustomerDetail: React.FC<CustomerDetailProps> = ({ customer }) => {
         <View className="flex-row items-center justify-between mb-2">
           <View className="flex-1">
             <Text className="text-xl">
-              Site Locations ({customer.siteLocations.length})
+              Site Locations ({customerData.siteLocations.length})
             </Text>
             <Muted>
               You can include several locations, and they will appear on your
               invoice.
             </Muted>
           </View>
-          <AddNewSiteLocation
-            customer={customer}
-            onChange={onAddSiteLocation}
-          />
+          <AddNewSiteLocation onAddNewSite={onAddSiteLocation} />
         </View>
         {Platform.OS === "web" ? (
           <View className="flex-wrap flex-row gap-4">
@@ -224,6 +241,7 @@ const CustomerDetail: React.FC<CustomerDetailProps> = ({ customer }) => {
               customer={customerData}
               editMode={editMode}
               handleInputChange={handleInputChange} // Pass the function here
+              handleDelete={handleDeleteSite}
             />
           </View>
         ) : (
@@ -249,6 +267,7 @@ const CustomerDetail: React.FC<CustomerDetailProps> = ({ customer }) => {
                 customer={customerData}
                 editMode={editMode}
                 handleInputChange={handleInputChange} // Pass the function here
+                handleDelete={handleDeleteSite}
               />
             </ScrollView>
           </View>

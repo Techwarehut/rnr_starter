@@ -20,11 +20,26 @@ import { Vendor } from "~/components/ScreenComponents/Vendors/types";
 import VendorTable from "~/components/ScreenComponents/Vendors/VendorTable";
 import VendorDetail from "~/components/ScreenComponents/Vendors/VendorDetail";
 import { AddNewVendor } from "~/components/ScreenComponents/Vendors/AddNewCustomer";
+import { getAllVendors } from "~/api/vendorApi";
 
 const VendorScreen = () => {
-  const [filteredVendors, setFilteredVendors] = useState(vendors);
+  const [filteredVendors, setFilteredVendors] = useState<Vendor[]>([]);
   const [selVendor, setSelVendor] = useState<Vendor | null>(null);
   const { showSuccessToast, showErrorToast } = useToast();
+
+  // Fetch vendors when the component mounts
+  useEffect(() => {
+    const fetchVendors = async () => {
+      try {
+        const vendors = await getAllVendors();
+        setFilteredVendors(vendors);
+      } catch (error) {
+        showErrorToast("Failed to load vendors");
+      }
+    };
+
+    fetchVendors();
+  }, []);
 
   const showVendorDetails = (vendor: Vendor) => {
     // Logic for adding a new customer
@@ -40,10 +55,6 @@ const VendorScreen = () => {
       });
     }
   };
-
-  useEffect(() => {
-    setFilteredVendors(vendors);
-  }, [vendors]);
 
   const handleSearch = (searchText: string) => {
     const filtered = vendors.filter(

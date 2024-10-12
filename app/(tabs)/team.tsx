@@ -8,10 +8,25 @@ import { router } from "expo-router";
 import NothingSelected from "~/components/ScreenComponents/NothingSelected";
 import UserTable from "~/components/ScreenComponents/Team/UserTable";
 import UserDetail from "~/components/ScreenComponents/Team/UserDetail";
+import { getAllUsers } from "~/api/UsersApi";
 
 export default function Team() {
-  const [filteredUsers, setFilteredUsers] = useState(users);
+  const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const [selUser, setSelUser] = useState<User | null>(null);
+
+  // Fetch all users when the component mounts
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const users = await getAllUsers(); // Call the function to fetch users
+        setFilteredUsers(users); // Set the fetched users to state
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+
+    fetchUsers(); // Invoke the fetch function
+  }, []); // Empty dependency array to run only on mount
 
   const showUserDetails = (user: User) => {
     // Logic for adding a new customer
@@ -28,10 +43,6 @@ export default function Team() {
       });
     }
   };
-
-  useEffect(() => {
-    setFilteredUsers(users);
-  }, [users]);
 
   const handleSearch = (searchText: string) => {
     const filtered = users.filter((user) =>

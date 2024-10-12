@@ -82,8 +82,8 @@ export const JobCard: React.FC<JobProps> = ({ job }) => {
       </CardContent>
       <CardFooter className="flex-none">
         <View className="flex-row border border-input bg-background rounded-md items-center justify-center">
-          <Pressable className="flex p-2 web:hover:bg-accent web:hover:text-accent-foreground active:bg-accent">
-            <Text className="group-active:text-accent-foreground">
+          <Pressable className="flex p-2  web:hover:bg-accent web:hover:text-accent-foreground active:bg-accent">
+            <Text className="text-center group-active:text-accent-foreground">
               {statusActionMapping[job.status]}
             </Text>
           </Pressable>

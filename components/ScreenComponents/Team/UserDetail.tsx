@@ -129,11 +129,12 @@ const UserDetail: React.FC<UserDetailProps> = ({ user }) => {
           <Large className="text-destructive">Emergeny Contact</Large>
           <View className="flex border border-destructive rounded-md gap-4 p-4">
             <View className="flex-row items-center gap-2">
-              <User2
-                className="text-destructive"
-                size={isLargeScreen ? 18 : 18}
-              />
-
+              <View className="h-8 w-8 bg-primary-foreground rounded-2xl items-center justify-center p-1">
+                <User2
+                  className="text-destructive"
+                  size={isLargeScreen ? 18 : 18}
+                />
+              </View>
               <Text>{user.emergencyContact.name}</Text>
             </View>
             <View className="flex-row items-center gap-2">

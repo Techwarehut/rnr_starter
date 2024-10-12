@@ -1,5 +1,8 @@
 // api/customerApi.ts
-import { Customer } from "~/components/ScreenComponents/Customers/types";
+import {
+  Customer,
+  SiteLocation,
+} from "~/components/ScreenComponents/Customers/types";
 import customersData from "~/data/customer.json"; // Your static JSON data
 import { generateUniqueId } from "~/lib/utils";
 
@@ -48,6 +51,58 @@ export const deleteCustomer = async (customerId: string): Promise<void> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       customers = customers.filter((customer) => customer._id !== customerId);
+      resolve();
+    }, 500); // Simulating a delay
+  });
+};
+
+// api/customerApi.ts
+export const fetchCustomerById = async (
+  customerId: string
+): Promise<Customer | undefined> => {
+  const customersList = await fetchCustomers(); // Get the full list
+  return customersList.find((customer) => customer._id === customerId); // Return the matching customer
+};
+
+export const addSiteLocation = async (
+  customerId: string,
+  newSiteLocation: SiteLocation
+): Promise<SiteLocation> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      newSiteLocation.site_id = generateUniqueId();
+      customers = customers.map((customer) => {
+        if (customer._id === customerId) {
+          return {
+            ...customer,
+            siteLocations: [...customer.siteLocations, newSiteLocation],
+          };
+        }
+        return customer;
+      });
+      resolve(newSiteLocation); // Return the newly added site location
+    }, 500); // Simulating a delay
+  });
+};
+
+export const deleteSiteLocation = async (
+  customerId: string,
+  siteLocationId: string
+): Promise<void> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      customers = customers.map((customer) => {
+        if (customer._id === customerId) {
+          const filteredLocations = customer.siteLocations.filter(
+            (location) => location.site_id !== siteLocationId
+          );
+          return {
+            ...customer,
+            siteLocations: filteredLocations,
+          };
+        }
+        return customer;
+      });
       resolve();
     }, 500); // Simulating a delay
   });

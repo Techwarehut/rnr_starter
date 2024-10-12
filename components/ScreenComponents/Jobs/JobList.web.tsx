@@ -39,7 +39,7 @@ interface JobSectionListProps {
   sections: { title: string; data: Job[] }[];
 }
 
-const MIN_COLUMN_WIDTHS = [70, 90, 250, 100, 120, 160, 177]; // Minimum widths for each of the 7 columns
+const MIN_COLUMN_WIDTHS = [70, 90, 250, 100, 120, 200, 220]; // Minimum widths for each of the 7 columns
 
 // Use columnWidths in your layout as needed
 
@@ -162,7 +162,7 @@ const JobSectionList: React.FC<JobSectionListProps> = ({ sections }) => {
                     <TableCell style={{ width: columnWidths[6] }}>
                       <View className="flex-row border border-input bg-background rounded-md items-center justify-center">
                         <Pressable className="flex-1 p-2 web:hover:bg-accent web:hover:text-accent-foreground active:bg-accent">
-                          <Text className="group-active:text-accent-foreground">
+                          <Text className="text-center group-active:text-accent-foreground">
                             {statusActionMapping[job.status]}
                           </Text>
                         </Pressable>

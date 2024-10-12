@@ -13,24 +13,31 @@ import {
 import { Text } from "~/components/ui/text";
 import AddNewCustomerForm from "./AddNewCustomerForm";
 import React from "react";
-import { Customer } from "./types";
+import { Customer, SiteLocation } from "./types";
 import AddNewSiteForm from "./AddNewSiteForm";
 
 interface AddNewSiteProps {
-  customer: Customer;
-  onChange: (data: Customer) => void;
+  onAddNewSite: (data: SiteLocation) => void;
 }
 
 export const AddNewSiteLocation: React.FC<AddNewSiteProps> = ({
-  customer,
-  onChange,
+  onAddNewSite,
 }) => {
   // Initialize with a default Customer object, including _id
   // Initialize with a default Customer object, including _id
-  const [customerData, setCustomerData] = React.useState<Customer>(customer);
+  const [newSiteLocation, setNewSiteLocation] = React.useState<SiteLocation>({
+    site_id: "",
+    siteName: "",
+    siteContactPerson: "",
+    siteContactPhone: "",
+    AddressLine: "",
+    City: "",
+    Province: "",
+    zipcode: "",
+  });
 
   const AddNewSite = () => {
-    if (onChange) onChange(customerData);
+    if (onAddNewSite) onAddNewSite(newSiteLocation);
   };
 
   return (
@@ -45,9 +52,8 @@ export const AddNewSiteLocation: React.FC<AddNewSiteProps> = ({
           <DialogTitle>Add New Site</DialogTitle>
           <DialogDescription>
             <AddNewSiteForm
-              customer={customer}
               onChange={(data) => {
-                setCustomerData(data);
+                setNewSiteLocation(data);
                 // Programmatically close the dialog
               }}
             />
