@@ -46,8 +46,8 @@ export interface Job {
   priority: string; // Priority level (e.g., P1, P2, P3)
   projectId: string; // ID of the associated project
   projectName: string; // Name of the associated project
-  milestoneId?: string; // ID of the associated milestone
-  customer?: customer; // ID of the associated customer
+
+  customer: customer; // ID of the associated customer
   siteLocation: SiteLocation; // ID of the associated site location
   estimateId?: string; // ID of the estimate
   invoiceId?: string; // ID of the invoice

@@ -11,7 +11,9 @@ export type StatusKeys =
   | "approvalpending"
   | "accountsreceivable"
   | "invoiced"
-  | "paid";
+  | "paid"
+  | "baddebt"
+  | "cancelled";
 
 // Statustypes.ts
 export type JobTypeKeys =
@@ -28,6 +30,8 @@ export const statusLabelMapping: Record<StatusKeys, string> = {
   accountsreceivable: "Accounts Receivable",
   invoiced: "Invoiced",
   paid: "Paid",
+  baddebt: "Bad Debt",
+  cancelled: "Cancelled",
 };
 
 export const statusKeyMapping: Record<string, StatusKeys> = {
@@ -38,16 +42,35 @@ export const statusKeyMapping: Record<string, StatusKeys> = {
   "Accounts Receivable": "accountsreceivable",
   Invoiced: "invoiced",
   Paid: "paid",
+  "Bad Debt": "baddebt",
+  Cancelled: "cancelled",
 };
 
-export const statusActionMapping: Record<string, string> = {
-  Backlog: "Assign",
-  "In Progress": "Mark Complete",
-  "On Hold": "In Progress",
-  "Approval Pending": "Approve",
-  "Accounts Receivable": "Generate Invoice",
-  Invoiced: "Mark as Paid",
-  Paid: "On Hold",
+export const statusActionMapping: Record<string, string[]> = {
+  Backlog: ["Assign", "Mark as Cancelled"],
+  "In Progress": ["Mark Complete", "On Hold", "Mark as Cancelled"],
+  "On Hold": ["In Progress", "Mark as Cancelled"],
+  "Approval Pending": ["Approve", "Back to In Progress"],
+  "Accounts Receivable": ["Generate Invoice", "Mark as Bad Debt"],
+  Invoiced: ["Mark as Paid", "Send Reminder", "Mark as Bad Debt"],
+  Paid: ["Re Open"],
+  "Bad Debt": ["Mark as Paid"],
+};
+
+export const actionStatusMapping: Record<string, string> = {
+  Assign: "In Progress",
+  "Mark as Cancelled": "Cancelled",
+  "In Progress": "In Progress",
+  "Mark Complete": "Approval Pending",
+  "On Hold": "On Hold",
+  Approve: "Accounts Receivable",
+  "Back to In Progress": "In Progress",
+
+  "Generate Invoice": "Invoiced",
+  "Send Reminder": "Invoiced",
+  "Mark as Bad Debt": "Bad Debt",
+  "Mark as Paid": "Paid",
+  "Re Open": "Backlog",
 };
 
 export const getJobPriorityIcon = (priority: string) => {

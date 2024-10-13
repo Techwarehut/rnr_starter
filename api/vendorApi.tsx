@@ -1,7 +1,9 @@
+import VendorBasicInfo from "~/components/ScreenComponents/Vendors/FormElements/VendorBasicInfo";
 import { Vendor } from "~/components/ScreenComponents/Vendors/types";
 import vendorsData from "~/data/vendor.json"; // Your static JSON data
 import { generateUniqueId } from "~/lib/utils"; // Import the unique ID generator
 
+let vendors: Vendor[] = vendorsData; // Initialize with JSON data
 // Function to fetch all vendors
 export const getAllVendors = async (): Promise<Vendor[]> => {
   return new Promise((resolve) => {
@@ -25,19 +27,13 @@ export const addVendor = async (
 };
 
 // Function to update a vendor
-export const updateVendor = async (
-  vendorId: string,
-  updatedVendor: Partial<Vendor>
-): Promise<Vendor> => {
+export const editVendor = async (updatedVendor: Vendor): Promise<Vendor> => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      const index = vendorsData.findIndex((v) => v._id === vendorId);
-      if (index !== -1) {
-        vendorsData[index] = { ...vendorsData[index], ...updatedVendor };
-        resolve(vendorsData[index]);
-      } else {
-        reject(new Error("Vendor not found"));
-      }
+      vendors = vendors.map((vendor) =>
+        vendor._id === updatedVendor._id ? updatedVendor : vendor
+      );
+      resolve(updatedVendor);
     }, 1000); // Simulate a delay
   });
 };

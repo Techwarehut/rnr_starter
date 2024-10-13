@@ -24,11 +24,13 @@ import {
   statusKeyMapping,
 } from "./Filters/Statustypes";
 import { UpdateStatus } from "./UpdateStatus";
+import JobStatusUpdate from "./JobStatusUpdate";
 
 interface JobProps {
   job: Job;
+  onChangeStatus: (jobId: string, newStatus: string) => void;
 }
-export const JobCard: React.FC<JobProps> = ({ job }) => {
+export const JobCard: React.FC<JobProps> = ({ job, onChangeStatus }) => {
   return (
     <Card className="p-4 gap-4">
       <View className="flex-row gap-2 items-center">
@@ -81,17 +83,10 @@ export const JobCard: React.FC<JobProps> = ({ job }) => {
         </View>
       </CardContent>
       <CardFooter className="flex-none">
-        <View className="flex-row border border-input bg-background rounded-md items-center justify-center">
-          <Pressable className="flex p-2  web:hover:bg-accent web:hover:text-accent-foreground active:bg-accent">
-            <Text className="text-center group-active:text-accent-foreground">
-              {statusActionMapping[job.status]}
-            </Text>
-          </Pressable>
-          <UpdateStatus
-            onUpdateStatus={() => console.log("Job status updated!")}
-            selectedOption=""
-          />
-        </View>
+        <JobStatusUpdate
+          onChangeStatus={(newStatus) => onChangeStatus(job._id, newStatus)}
+          status={job.status}
+        />
       </CardFooter>
     </Card>
   );

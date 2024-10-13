@@ -8,18 +8,21 @@ import SearchBar from "~/components/ScreenComponents/SearchBar";
 import { useToast } from "~/components/ScreenComponents/ToastMessage";
 import { Text } from "~/components/ui/text";
 import projects from "~/data/projects.json";
-import jobs from "~/data/jobs.json";
+
 import { Job } from "~/components/ScreenComponents/Jobs/types";
 import JobSectionList from "~/components/ScreenComponents/Jobs/JobList";
 import { SearchInput } from "~/components/ScreenComponents/SearchInput";
 import { JobFilters } from "~/components/ScreenComponents/Jobs/JobFilters";
 import { JobTypeKeys } from "~/components/ScreenComponents/Jobs/Filters/Statustypes";
+import { getAllJobs, updateJobStatus } from "~/api/jobsApi";
 
 export default function JobScreen() {
-  const [filteredJobs, setFilteredJobs] = useState(jobs);
-  const { showSuccessToast } = useToast();
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const { showSuccessToast, showErrorToast } = useToast();
   const [searchText, setSearchText] = useState("");
   const [group, setGroup] = useState("None");
+  const [refreshKey, setRefreshKey] = useState(0);
+
   const [selectedStatuses, setSelectedStatuses] = useState<
     Record<string, boolean>
   >({
@@ -41,6 +44,18 @@ export default function JobScreen() {
     Maintenance: false,
   });
 
+  const fetchJobs = async () => {
+    try {
+      const data = await getAllJobs(); // Call the API
+      setJobs(data);
+    } catch (error) {
+      showErrorToast("Failed to fetch Jobs!");
+    }
+  };
+  useEffect(() => {
+    fetchJobs();
+  }, []);
+
   useEffect(() => {
     const filtered = jobs.filter((job) => {
       const statusKey = job.status.toLowerCase().replace(/ /g, ""); // Normalize the status
@@ -56,32 +71,36 @@ export default function JobScreen() {
       return statusMatches && jobTypeMatches;
     });
 
-    setFilteredJobs(filtered);
+    setJobs(filtered);
   }, [selectedStatuses, selectedJobType]);
 
-  const handleStatusChange = (newStates: Record<string, boolean>) => {
+  const handleStatusFilter = (newStates: Record<string, boolean>) => {
     setSelectedStatuses(newStates);
   };
 
-  const handleJobTypeChange = (newStates: Record<string, boolean>) => {
+  const handleJobTypeFilter = (newStates: Record<string, boolean>) => {
     setSelectedJobType(newStates);
   };
 
-  useEffect(() => {
-    setFilteredJobs(jobs);
-  }, [jobs]);
+  const handleChangeStatus = async (jobId: string, newStatus: string) => {
+    try {
+      const updatedJob = await updateJobStatus(jobId, newStatus);
+      console.log(updatedJob.jobTitle, updatedJob.status);
+      setRefreshKey((prev) => prev + 1);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleSearch = (searchText: string) => {
     setSearchText(searchText);
-
-    const filtered = jobs.filter(
-      (job) =>
-        job.jobTitle.toLowerCase().includes(searchText.toLowerCase()) ||
-        job.jobDescription.toLowerCase().includes(searchText.toLowerCase())
-    );
-
-    setFilteredJobs(filtered);
   };
+
+  const filteredJobs = jobs.filter(
+    (job) =>
+      job.jobTitle.toLowerCase().includes(searchText.toLowerCase()) ||
+      job.jobDescription.toLowerCase().includes(searchText.toLowerCase())
+  );
 
   const groupJobs = (groupBy: string) => {
     const grouped: { title: string; data: Job[] }[] = [];
@@ -154,12 +173,15 @@ export default function JobScreen() {
             initialStatusCheckedStates={selectedStatuses}
             initialJobTypeCheckedStates={selectedJobType}
             setSelectedGroupValue={setGroup}
-            handleStatusChange={handleStatusChange}
-            handleJobTypeChange={handleJobTypeChange}
+            handleStatusChange={handleStatusFilter}
+            handleJobTypeChange={handleJobTypeFilter}
           />
         </View>
 
-        <JobSectionList sections={groupedJobs} />
+        <JobSectionList
+          onChangeStatus={handleChangeStatus}
+          sections={groupedJobs}
+        />
       </View>
       <Toast />
     </>

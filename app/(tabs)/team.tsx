@@ -1,7 +1,7 @@
 import { View } from "react-native";
-import { Text } from "~/components/ui/text";
+
 import { useIsLargeScreen } from "~/lib/utils";
-import users from "~/data/team.json"; // Your customer data
+
 import { useEffect, useState } from "react";
 import { User } from "~/components/ScreenComponents/Team/types";
 import { router } from "expo-router";
@@ -11,15 +11,16 @@ import UserDetail from "~/components/ScreenComponents/Team/UserDetail";
 import { getAllUsers } from "~/api/UsersApi";
 
 export default function Team() {
-  const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [selUser, setSelUser] = useState<User | null>(null);
+  const [searchText, setSearchText] = useState("");
 
   // Fetch all users when the component mounts
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const users = await getAllUsers(); // Call the function to fetch users
-        setFilteredUsers(users); // Set the fetched users to state
+        setUsers(users); // Set the fetched users to state
       } catch (error) {
         console.error("Error fetching users:", error);
       }
@@ -45,12 +46,13 @@ export default function Team() {
   };
 
   const handleSearch = (searchText: string) => {
-    const filtered = users.filter((user) =>
-      user.name.toLowerCase().includes(searchText.toLowerCase())
-    );
-
-    setFilteredUsers(filtered);
+    setSearchText(searchText);
   };
+
+  const filteredUsers = users.filter((user) =>
+    user.name.toLowerCase().includes(searchText.toLowerCase())
+  );
+
   const isLargeScreen = useIsLargeScreen();
 
   return (

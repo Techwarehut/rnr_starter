@@ -14,21 +14,26 @@ import { ChevronDown } from "~/lib/icons/ChevronDown";
 import { AddNewProject } from "./AddNewProject";
 import { AddNewJob } from "./AddNewJob";
 import { Pressable } from "react-native";
-import { statusActionMapping } from "./Filters/Statustypes";
+import {
+  actionStatusMapping,
+  statusActionMapping,
+} from "./Filters/Statustypes";
 
 interface UpdateStatusProps {
-  onUpdateStatus: (data: Job) => void;
-  selectedOption: string;
+  onUpdateStatus: (data: string) => void;
+  status: string;
 }
 
 export const UpdateStatus: React.FC<UpdateStatusProps> = ({
   onUpdateStatus,
-  selectedOption,
+  status,
 }) => {
   const contentInsets = {
     left: 12,
     right: 12,
   };
+  const actions = (statusActionMapping[status] || []).slice(1);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -45,10 +50,11 @@ export const UpdateStatus: React.FC<UpdateStatusProps> = ({
         className="w-auto flex items-start justify-start"
       >
         <DropdownMenuGroup>
-          {Object.entries(statusActionMapping).map(([status, action]) => (
+          {actions.map((action, index) => (
             <DropdownMenuItem
-              key={status} // Ensure this is unique
+              key={index} // Ensure this is unique
               className="flex-1 w-full items-center self-start"
+              onPress={() => onUpdateStatus(actionStatusMapping[action])}
             >
               <Text>{action}</Text>
             </DropdownMenuItem>

@@ -8,7 +8,7 @@ import { Text } from "~/components/ui/text";
 
 import { ScrollView } from "react-native-gesture-handler";
 import ActionButtons from "../ActionButtons";
-import { Stack } from "expo-router";
+import { router, Stack } from "expo-router";
 
 import { useToast } from "../ToastMessage";
 import Toast from "react-native-toast-message";
@@ -17,6 +17,8 @@ import VendorInfoFields from "./FormElements/VendorInfoFields";
 import VendorBasicInfo from "./FormElements/VendorBasicInfo";
 import VendorBillingAddress from "./FormElements/VendorBillingAddress";
 import { Vendor } from "./types";
+import { editCustomer } from "~/api/customerApi";
+import { deleteVendor, editVendor } from "~/api/vendorApi";
 
 interface CustomerDetailProps {
   vendor: Vendor;
@@ -33,11 +35,29 @@ const VendorDetail: React.FC<CustomerDetailProps> = ({ vendor }) => {
   useEffect(() => {
     setVendorData(vendor);
   }, [vendor]);
-  const onSave = () => {
-    setEditMode(false);
-    // To show a success toast with custom text2
 
-    showSuccessToast("Customer saved succesfully!");
+  const handleEditVendor = async () => {
+    try {
+      setEditMode(false);
+      const returnedVendor = await editVendor(vendorData);
+
+      setVendorData(returnedVendor);
+
+      showSuccessToast("Vendor updated successfully!");
+    } catch (error) {
+      showErrorToast("Error updating vendor!");
+    }
+  };
+
+  const handleDeleteVendor = async () => {
+    try {
+      await deleteVendor(vendorData._id);
+
+      showSuccessToast("Vendor deleted successfully!");
+      router.replace("/(tabs)/vendors");
+    } catch (error) {
+      showErrorToast("Error deleting vendor!");
+    }
   };
 
   const handleInputChange = (field: string, value: string) => {
@@ -89,8 +109,8 @@ const VendorDetail: React.FC<CustomerDetailProps> = ({ vendor }) => {
             headerRight: () => (
               <ActionButtons
                 onEdit={() => setEditMode(true)}
-                onDelete={() => console.log("Delete pressed")}
-                onSave={onSave}
+                onDelete={handleDeleteVendor}
+                onSave={handleEditVendor}
                 editMode={editMode}
               />
             ),
@@ -116,8 +136,8 @@ const VendorDetail: React.FC<CustomerDetailProps> = ({ vendor }) => {
             </View>
             <ActionButtons
               onEdit={() => setEditMode(true)}
-              onDelete={() => console.log("Delete pressed")}
-              onSave={onSave}
+              onDelete={handleDeleteVendor}
+              onSave={handleEditVendor}
               editMode={editMode}
             />
           </View>

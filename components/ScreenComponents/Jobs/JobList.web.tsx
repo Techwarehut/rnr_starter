@@ -34,16 +34,21 @@ import {
   statusKeyMapping,
 } from "./Filters/Statustypes";
 import { UpdateStatus } from "./UpdateStatus";
+import JobStatusUpdate from "./JobStatusUpdate";
 
 interface JobSectionListProps {
   sections: { title: string; data: Job[] }[];
+  onChangeStatus: (jobId: string, newStatus: string) => void;
 }
 
 const MIN_COLUMN_WIDTHS = [70, 90, 250, 100, 120, 200, 220]; // Minimum widths for each of the 7 columns
 
 // Use columnWidths in your layout as needed
 
-const JobSectionList: React.FC<JobSectionListProps> = ({ sections }) => {
+const JobSectionList: React.FC<JobSectionListProps> = ({
+  sections,
+  onChangeStatus,
+}) => {
   const { width } = useWindowDimensions();
   console.log(width);
 
@@ -160,19 +165,12 @@ const JobSectionList: React.FC<JobSectionListProps> = ({ sections }) => {
                       </Badge>
                     </TableCell>
                     <TableCell style={{ width: columnWidths[6] }}>
-                      <View className="flex-row border border-input bg-background rounded-md items-center justify-center">
-                        <Pressable className="flex-1 p-2 web:hover:bg-accent web:hover:text-accent-foreground active:bg-accent">
-                          <Text className="text-center group-active:text-accent-foreground">
-                            {statusActionMapping[job.status]}
-                          </Text>
-                        </Pressable>
-                        <UpdateStatus
-                          onUpdateStatus={() =>
-                            console.log("Job status updated!")
-                          }
-                          selectedOption=""
-                        />
-                      </View>
+                      <JobStatusUpdate
+                        onChangeStatus={(newStatus) =>
+                          onChangeStatus(job._id, newStatus)
+                        }
+                        status={job.status}
+                      />
                     </TableCell>
                   </TableRow>
                 ))}

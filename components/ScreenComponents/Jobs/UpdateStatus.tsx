@@ -15,23 +15,27 @@ import { Job } from "./types";
 import { AddNewProject } from "./AddNewProject";
 import { AddNewJob } from "./AddNewJob";
 import { ChevronDown } from "~/lib/icons/ChevronDown";
-import { statusActionMapping } from "./Filters/Statustypes";
+import {
+  actionStatusMapping,
+  statusActionMapping,
+} from "./Filters/Statustypes";
 
 interface UpdateStatusProps {
-  onUpdateStatus: (data: Job) => void;
-  selectedOption: string;
+  onUpdateStatus: (data: string) => void;
+  status: string;
 }
 
 export const UpdateStatus: React.FC<UpdateStatusProps> = ({
   onUpdateStatus,
-  selectedOption,
+  status,
 }) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const [isOpen, setIsOpen] = useState(false);
   const animatedIndex = useSharedValue<number>(0);
   const animatedPosition = useSharedValue<number>(0);
-  const snapPoints = ["40%", "50%"];
+  const snapPoints = ["10%", "20%"];
   const { isDarkColorScheme, setColorScheme } = useColorScheme();
+  const actions = (statusActionMapping[status] || []).slice(1);
 
   const handleSheetChanges = useCallback((index: number) => {
     // handle sheet changes
@@ -78,14 +82,15 @@ export const UpdateStatus: React.FC<UpdateStatusProps> = ({
           />
         )}
       >
-        <BottomSheetView className="flex-1 bg-popover gap-2 self-start justify-center p-4 ">
-          {Object.entries(statusActionMapping).map(([status, action]) => (
-            <Pressable
-              key={status}
-              className="flex-1 w-full items-center self-start"
+        <BottomSheetView className="flex-1 bg-popover gap-2 items-center justify-center p-4 ">
+          {actions.map((action, index) => (
+            <Button
+              variant="ghost"
+              key={index}
+              onPress={() => onUpdateStatus(actionStatusMapping[action])}
             >
               <Text>{action}</Text>
-            </Pressable>
+            </Button>
           ))}
         </BottomSheetView>
       </BottomSheetModal>

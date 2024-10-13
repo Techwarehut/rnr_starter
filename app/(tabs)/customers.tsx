@@ -21,12 +21,13 @@ import { addCustomer, fetchCustomers } from "~/api/customerApi";
 const CustomerScreen = () => {
   const [selCust, setSelCust] = useState<Customer | null>(null);
   const { showSuccessToast, showErrorToast } = useToast();
-  const [filteredCustomers, setFilteredCustomers] = useState<Customer[]>([]);
+  const [searchText, setSearchText] = useState("");
+  const [customers, setCustomers] = useState<Customer[]>([]);
 
   const loadCustomers = async () => {
     try {
       const data = await fetchCustomers(); // Call the API
-      setFilteredCustomers(data);
+      setCustomers(data);
     } catch (error) {
       showErrorToast("Failed to fetch customers!");
     }
@@ -34,7 +35,7 @@ const CustomerScreen = () => {
 
   const handleAddCustomer = async (newCustomer: Customer) => {
     try {
-      const exists = filteredCustomers.some(
+      const exists = customers.some(
         (customer) => customer.email === newCustomer.email
       );
 
@@ -72,15 +73,14 @@ const CustomerScreen = () => {
   }, []);
 
   const handleSearch = (searchText: string) => {
-    const filtered = filteredCustomers.filter(
-      (customer) =>
-        customer.businessName
-          .toLowerCase()
-          .includes(searchText.toLowerCase()) ||
-        customer.customerName.toLowerCase().includes(searchText.toLowerCase())
-    );
-    setFilteredCustomers(filtered);
+    setSearchText(searchText); // Update search text
   };
+
+  const filteredCustomers = customers.filter(
+    (customer) =>
+      customer.businessName.toLowerCase().includes(searchText.toLowerCase()) ||
+      customer.customerName.toLowerCase().includes(searchText.toLowerCase())
+  );
   const isLargeScreen = useIsLargeScreen();
 
   return (

@@ -20,10 +20,11 @@ import { Vendor } from "~/components/ScreenComponents/Vendors/types";
 import VendorTable from "~/components/ScreenComponents/Vendors/VendorTable";
 import VendorDetail from "~/components/ScreenComponents/Vendors/VendorDetail";
 import { AddNewVendor } from "~/components/ScreenComponents/Vendors/AddNewCustomer";
-import { getAllVendors } from "~/api/vendorApi";
+import { addVendor, getAllVendors } from "~/api/vendorApi";
 
 const VendorScreen = () => {
-  const [filteredVendors, setFilteredVendors] = useState<Vendor[]>([]);
+  const [vendors, setVendors] = useState<Vendor[]>([]);
+  const [searchText, setSearchText] = useState("");
   const [selVendor, setSelVendor] = useState<Vendor | null>(null);
   const { showSuccessToast, showErrorToast } = useToast();
 
@@ -32,7 +33,7 @@ const VendorScreen = () => {
     const fetchVendors = async () => {
       try {
         const vendors = await getAllVendors();
-        setFilteredVendors(vendors);
+        setVendors(vendors);
       } catch (error) {
         showErrorToast("Failed to load vendors");
       }
@@ -56,14 +57,27 @@ const VendorScreen = () => {
     }
   };
 
-  const handleSearch = (searchText: string) => {
-    const filtered = vendors.filter(
-      (vendor) =>
-        vendor.companyName.toLowerCase().includes(searchText.toLowerCase()) ||
-        vendor.companyName.toLowerCase().includes(searchText.toLowerCase())
-    );
-    setFilteredVendors(filtered);
+  const handleAddVendor = async (newVendor: Vendor) => {
+    try {
+      const addedVendor = await addVendor(newVendor);
+      setSelVendor(addedVendor);
+      // Update state if needed
+      showSuccessToast("Vendor Added successfully!");
+    } catch (error) {
+      showErrorToast("Error Adding vendor!");
+    }
   };
+
+  const handleSearch = (searchText: string) => {
+    setSearchText(searchText);
+  };
+
+  const filteredVendors = vendors.filter(
+    (vendor) =>
+      vendor.companyName.toLowerCase().includes(searchText.toLowerCase()) ||
+      vendor.companyName.toLowerCase().includes(searchText.toLowerCase())
+  );
+
   const isLargeScreen = useIsLargeScreen();
 
   return (
@@ -73,13 +87,7 @@ const VendorScreen = () => {
           headerTitle: "Vendors",
           headerRight: () => (
             <View className="flex-1 flex-row justify-center items-center m-2 gap-1">
-              <AddNewVendor
-                onNewVendorAdd={(data) => {
-                  data._id = (vendors.length + 1).toString(); // Update data._id to customers.length
-                  vendors.push(data); // Push updated data into the customers array
-                  showSuccessToast("Vendor Added succesfully!");
-                }}
-              />
+              <AddNewVendor onNewVendorAdd={handleAddVendor} />
             </View>
           ),
         }}
