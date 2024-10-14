@@ -55,6 +55,7 @@ export const statusActionMapping: Record<string, string[]> = {
   Invoiced: ["Mark as Paid", "Send Reminder", "Mark as Bad Debt"],
   Paid: ["Re Open"],
   "Bad Debt": ["Mark as Paid"],
+  Cancelled: ["In Progress"],
 };
 
 export const actionStatusMapping: Record<string, string> = {

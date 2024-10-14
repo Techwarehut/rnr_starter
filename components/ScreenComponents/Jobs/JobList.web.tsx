@@ -39,6 +39,7 @@ import JobStatusUpdate from "./JobStatusUpdate";
 interface JobSectionListProps {
   sections: { title: string; data: Job[] }[];
   onChangeStatus: (jobId: string, newStatus: string) => void;
+  onJobDetail: (jobId: string) => void;
 }
 
 const MIN_COLUMN_WIDTHS = [70, 90, 250, 100, 120, 200, 220]; // Minimum widths for each of the 7 columns
@@ -48,6 +49,7 @@ const MIN_COLUMN_WIDTHS = [70, 90, 250, 100, 120, 200, 220]; // Minimum widths f
 const JobSectionList: React.FC<JobSectionListProps> = ({
   sections,
   onChangeStatus,
+  onJobDetail,
 }) => {
   const { width } = useWindowDimensions();
   console.log(width);
@@ -95,14 +97,32 @@ const JobSectionList: React.FC<JobSectionListProps> = ({
                   <TableHead style={{ width: columnWidths[3] }}>
                     <Text>Assigned</Text>
                   </TableHead>
-                  <TableHead style={{ width: columnWidths[4] }}>
+                  <TableHead
+                    style={{
+                      width: columnWidths[4],
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
                     <Text>Job Type</Text>
                   </TableHead>
 
-                  <TableHead style={{ width: columnWidths[5] }}>
+                  <TableHead
+                    style={{
+                      width: columnWidths[5],
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
                     <Text>Status</Text>
                   </TableHead>
-                  <TableHead style={{ width: columnWidths[6] }}>
+                  <TableHead
+                    style={{
+                      width: columnWidths[6],
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
                     <Text>Action</Text>
                   </TableHead>
                 </TableRow>
@@ -115,9 +135,17 @@ const JobSectionList: React.FC<JobSectionListProps> = ({
                       "active:bg-secondary items-center justify-center",
                       index % 2 && "bg-muted/40 items-center justify-center"
                     )}
+                    onPress={() => {
+                      onJobDetail(job._id);
+                    }}
                   >
                     <TableCell style={{ width: columnWidths[0] }}>
-                      <Button variant="link">
+                      <Button
+                        variant="link"
+                        onPress={() => {
+                          onJobDetail(job._id);
+                        }}
+                      >
                         <Text>{job._id}</Text>
                       </Button>
                     </TableCell>
@@ -151,26 +179,32 @@ const JobSectionList: React.FC<JobSectionListProps> = ({
                       </View>
                     </TableCell>
                     <TableCell style={{ width: columnWidths[4] }}>
-                      <Badge className="p-1 px-2">
-                        <Text>{job.jobType}</Text>
-                      </Badge>
+                      <View className="flex-row items-center justify-center">
+                        <Badge className="p-1 px-2">
+                          <Text>{job.jobType}</Text>
+                        </Badge>
+                      </View>
                     </TableCell>
 
                     <TableCell style={{ width: columnWidths[5] }}>
-                      <Badge
-                        variant={statusKeyMapping[job.status]}
-                        className="p-1 px-4"
-                      >
-                        <Text>{job.status}</Text>
-                      </Badge>
+                      <View className="flex-row items-center justify-center">
+                        <Badge
+                          variant={statusKeyMapping[job.status]}
+                          className="p-1 px-4"
+                        >
+                          <Text>{job.status}</Text>
+                        </Badge>
+                      </View>
                     </TableCell>
                     <TableCell style={{ width: columnWidths[6] }}>
-                      <JobStatusUpdate
-                        onChangeStatus={(newStatus) =>
-                          onChangeStatus(job._id, newStatus)
-                        }
-                        status={job.status}
-                      />
+                      <View className="flex-row items-center justify-center">
+                        <JobStatusUpdate
+                          onChangeStatus={(newStatus) =>
+                            onChangeStatus(job._id, newStatus)
+                          }
+                          status={job.status}
+                        />
+                      </View>
                     </TableCell>
                   </TableRow>
                 ))}

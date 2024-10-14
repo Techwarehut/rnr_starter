@@ -29,8 +29,13 @@ import JobStatusUpdate from "./JobStatusUpdate";
 interface JobProps {
   job: Job;
   onChangeStatus: (jobId: string, newStatus: string) => void;
+  onJobDetail: (jobId: string) => void;
 }
-export const JobCard: React.FC<JobProps> = ({ job, onChangeStatus }) => {
+export const JobCard: React.FC<JobProps> = ({
+  job,
+  onChangeStatus,
+  onJobDetail,
+}) => {
   return (
     <Card className="p-4 gap-4">
       <View className="flex-row gap-2 items-center">
@@ -51,7 +56,12 @@ export const JobCard: React.FC<JobProps> = ({ job, onChangeStatus }) => {
         <View className="flex gap-4">
           <Muted>Job Number</Muted>
           <View className="bg-secondary gap-2 rounded-md p-1 items-start">
-            <Button variant="link">
+            <Button
+              variant="link"
+              onPress={() => {
+                onJobDetail(job._id);
+              }}
+            >
               <Text>{job._id}</Text>
             </Button>
           </View>

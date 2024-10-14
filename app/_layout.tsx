@@ -123,9 +123,31 @@ export default function RootLayout() {
               }}
             />
             <Stack.Screen
+              name="(vendor)/[vendorName]"
+              options={{
+                headerShown: true,
+                headerTitle: "Vendor Detail",
+                presentation: Platform.OS === "ios" ? "card" : "modal",
+                headerTitleAlign: "left",
+                //headerBackVisible: true,
+                headerBackTitleVisible: false,
+              }}
+            />
+            <Stack.Screen
               name="(user)/[username]"
               options={{
                 headerTitle: "",
+                presentation: Platform.OS === "ios" ? "card" : "modal",
+                headerTitleAlign: "left",
+                //headerBackVisible: true,
+                headerBackTitleVisible: false,
+              }}
+            />
+            <Stack.Screen
+              name="job/[jobID]"
+              options={{
+                headerShown: true,
+                headerTitle: "Job Detail",
                 presentation: Platform.OS === "ios" ? "card" : "modal",
                 headerTitleAlign: "left",
                 //headerBackVisible: true,

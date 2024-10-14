@@ -1,4 +1,4 @@
-import { Stack } from "expo-router";
+import { router, Stack } from "expo-router";
 import { useEffect, useState } from "react";
 import { ScrollView, SectionList, View } from "react-native";
 import Toast from "react-native-toast-message";
@@ -96,10 +96,20 @@ export default function JobScreen() {
     setSearchText(searchText);
   };
 
+  const handleJobDetail = (jobID: string) => {
+    router.push({
+      pathname: "/job/[jobID]",
+      params: {
+        jobID: jobID,
+      }, // Pass the customer object
+    });
+  };
+
   const filteredJobs = jobs.filter(
     (job) =>
       job.jobTitle.toLowerCase().includes(searchText.toLowerCase()) ||
-      job.jobDescription.toLowerCase().includes(searchText.toLowerCase())
+      job.jobDescription.toLowerCase().includes(searchText.toLowerCase()) ||
+      job.projectName.toLowerCase().includes(searchText.toLowerCase())
   );
 
   const groupJobs = (groupBy: string) => {
@@ -181,6 +191,7 @@ export default function JobScreen() {
         <JobSectionList
           onChangeStatus={handleChangeStatus}
           sections={groupedJobs}
+          onJobDetail={handleJobDetail}
         />
       </View>
       <Toast />

@@ -9,11 +9,13 @@ import { ChevronRight } from "~/lib/icons/ChevronRight";
 interface JobSectionListProps {
   sections: { title: string; data: Job[] }[];
   onChangeStatus: (jobId: string, newStatus: string) => void;
+  onJobDetail: (jobId: string) => void;
 }
 
 const JobSectionList: React.FC<JobSectionListProps> = ({
   sections,
   onChangeStatus,
+  onJobDetail,
 }) => {
   const [expandedSections, setExpandedSections] = useState<{
     [key: string]: boolean;
@@ -32,7 +34,11 @@ const JobSectionList: React.FC<JobSectionListProps> = ({
       keyExtractor={(item) => item._id}
       renderItem={({ item, section }) =>
         expandedSections[section.title] ? (
-          <JobCard onChangeStatus={onChangeStatus} job={item} />
+          <JobCard
+            onChangeStatus={onChangeStatus}
+            job={item}
+            onJobDetail={onJobDetail}
+          />
         ) : null
       }
       renderSectionHeader={({ section }) => (

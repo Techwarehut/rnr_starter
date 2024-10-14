@@ -65,3 +65,17 @@ export const updateJobStatus = async (
     }, 1000); // Simulate a delay
   });
 };
+
+// Function to fetch a job by ID
+export const getJobById = async (jobId: string): Promise<Job | null> => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const job = jobs.find((j) => j._id === jobId);
+      if (job) {
+        resolve(job);
+      } else {
+        resolve(null); // Return null if no job is found
+      }
+    }, 1000); // Simulate a delay
+  });
+};
