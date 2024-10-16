@@ -22,6 +22,16 @@ export type JobTypeKeys =
   | "Consultation"
   | "Maintenance";
 
+// Statustypes.ts
+export type JobPriorityKeys = "High" | "Medium" | "Low";
+
+export const jobTypeKeys: JobTypeKeys[] = [
+  "Inspection",
+  "ServiceVisit",
+  "Consultation",
+  "Maintenance",
+];
+export const jobPriorityKeys: JobPriorityKeys[] = ["High", "Medium", "Low"];
 export const statusLabelMapping: Record<StatusKeys, string> = {
   backlog: "Backlog",
   inprogress: "In Progress",
@@ -74,7 +84,7 @@ export const actionStatusMapping: Record<string, string> = {
   "Re Open": "Backlog",
 };
 
-export const getJobPriorityIcon = (priority: string) => {
+export const getJobPriorityIcon = (priority: JobPriorityKeys) => {
   switch (priority) {
     case "High":
       return (

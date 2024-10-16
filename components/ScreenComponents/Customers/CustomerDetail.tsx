@@ -235,8 +235,17 @@ const CustomerDetail: React.FC<CustomerDetailProps> = ({ customer }) => {
           </View>
           <AddNewSiteLocation onAddNewSite={onAddSiteLocation} />
         </View>
-        {Platform.OS === "web" ? (
-          <View className="flex-wrap flex-row gap-4">
+        <ScrollView
+          pagingEnabled
+          scrollEventThrottle={200}
+          decelerationRate="fast"
+          snapToInterval={cardWidth}
+          snapToAlignment="center"
+          horizontal
+          showsHorizontalScrollIndicator={isLargeScreen}
+          contentContainerClassName="p-2"
+        >
+          <View className="flex-row gap-4">
             <SiteLocationCard
               customer={customerData}
               editMode={editMode}
@@ -244,34 +253,7 @@ const CustomerDetail: React.FC<CustomerDetailProps> = ({ customer }) => {
               handleDelete={handleDeleteSite}
             />
           </View>
-        ) : (
-          <View className="flex flex-row flex-nowrap py-4 my-4 w-full overflow-x-scroll">
-            <ScrollView
-              horizontal={true}
-              pagingEnabled
-              showsHorizontalScrollIndicator={false}
-              scrollEventThrottle={200}
-              decelerationRate="fast"
-              scrollEnabled
-              contentContainerStyle={{
-                flexDirection: "row",
-                flexGrow: 1,
-                flexWrap: "nowrap",
-                overflow: "visible",
-                gap: 8,
-              }}
-              snapToInterval={cardWidth} // Snap to the width of each card
-              snapToAlignment="center" // Align the start of the card
-            >
-              <SiteLocationCard
-                customer={customerData}
-                editMode={editMode}
-                handleInputChange={handleInputChange} // Pass the function here
-                handleDelete={handleDeleteSite}
-              />
-            </ScrollView>
-          </View>
-        )}
+        </ScrollView>
       </ScrollView>
       <Toast />
     </>

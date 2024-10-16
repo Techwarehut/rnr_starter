@@ -89,12 +89,12 @@ const JobDetail = () => {
               editMode={editMode}
             />
           ),
-          headerTitle: () => (
+          /*  headerTitle: () => (
             <View>
               <Text>{job.jobTitle}</Text>
               <Muted>{job._id}</Muted>
             </View>
-          ),
+          ), */
         }}
       />
       <JobDetailDisplay

@@ -98,7 +98,7 @@ export default function JobScreen() {
 
   const handleJobDetail = (jobID: string) => {
     router.push({
-      pathname: "/job/[jobID]",
+      pathname: "/jobs/[jobID]",
       params: {
         jobID: jobID,
       }, // Pass the customer object

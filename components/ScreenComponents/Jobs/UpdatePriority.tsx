@@ -17,25 +17,28 @@ import { AddNewJob } from "./AddNewJob";
 import { ChevronDown } from "~/lib/icons/ChevronDown";
 import {
   actionStatusMapping,
+  getJobPriorityIcon,
+  jobPriorityKeys,
+  JobPriorityKeys,
+  jobTypeKeys,
+  JobTypeKeys,
   statusActionMapping,
 } from "./Filters/Statustypes";
 
-interface UpdateStatusProps {
-  onUpdateStatus: (data: string) => void;
-  status: string;
+interface JobPriorityProps {
+  priority: JobPriorityKeys;
+  onChangePriority: (newPriority: JobPriorityKeys) => void; // Add this prop
 }
-
-export const UpdateStatus: React.FC<UpdateStatusProps> = ({
-  onUpdateStatus,
-  status,
+export const UpdatePrioritiy: React.FC<JobPriorityProps> = ({
+  priority,
+  onChangePriority,
 }) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const [isOpen, setIsOpen] = useState(false);
   const animatedIndex = useSharedValue<number>(0);
   const animatedPosition = useSharedValue<number>(0);
-  const snapPoints = ["10%", "20%"];
+  const snapPoints = ["20%", "30%"];
   const { isDarkColorScheme, setColorScheme } = useColorScheme();
-  const actions = (statusActionMapping[status] || []).slice(1);
 
   const handleSheetChanges = useCallback((index: number) => {
     // handle sheet changes
@@ -83,16 +86,18 @@ export const UpdateStatus: React.FC<UpdateStatusProps> = ({
         )}
       >
         <BottomSheetView className="flex-1 bg-popover gap-2 items-center justify-center p-4 ">
-          {actions.map((action, index) => (
+          {jobPriorityKeys.map((action, index) => (
             <Button
               variant="ghost"
               key={index}
               onPress={() => {
                 handlePresentModalPress();
-                onUpdateStatus(actionStatusMapping[action]);
+                onChangePriority(action);
               }}
             >
-              <Text>{action}</Text>
+              <View className="flex-row items-center gap-2">
+                {getJobPriorityIcon(action)}
+              </View>
             </Button>
           ))}
         </BottomSheetView>

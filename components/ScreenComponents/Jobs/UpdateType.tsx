@@ -17,25 +17,22 @@ import { AddNewJob } from "./AddNewJob";
 import { ChevronDown } from "~/lib/icons/ChevronDown";
 import {
   actionStatusMapping,
+  jobTypeKeys,
+  JobTypeKeys,
   statusActionMapping,
 } from "./Filters/Statustypes";
 
-interface UpdateStatusProps {
-  onUpdateStatus: (data: string) => void;
-  status: string;
+interface JobTypeProps {
+  type: JobTypeKeys;
+  onChangeType: (newtype: JobTypeKeys) => void; // Add this prop
 }
-
-export const UpdateStatus: React.FC<UpdateStatusProps> = ({
-  onUpdateStatus,
-  status,
-}) => {
+export const UpdateType: React.FC<JobTypeProps> = ({ type, onChangeType }) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const [isOpen, setIsOpen] = useState(false);
   const animatedIndex = useSharedValue<number>(0);
   const animatedPosition = useSharedValue<number>(0);
-  const snapPoints = ["10%", "20%"];
+  const snapPoints = ["30%", "40%"];
   const { isDarkColorScheme, setColorScheme } = useColorScheme();
-  const actions = (statusActionMapping[status] || []).slice(1);
 
   const handleSheetChanges = useCallback((index: number) => {
     // handle sheet changes
@@ -83,13 +80,13 @@ export const UpdateStatus: React.FC<UpdateStatusProps> = ({
         )}
       >
         <BottomSheetView className="flex-1 bg-popover gap-2 items-center justify-center p-4 ">
-          {actions.map((action, index) => (
+          {jobTypeKeys.map((action, index) => (
             <Button
               variant="ghost"
               key={index}
               onPress={() => {
                 handlePresentModalPress();
-                onUpdateStatus(actionStatusMapping[action]);
+                onChangeType(action);
               }}
             >
               <Text>{action}</Text>

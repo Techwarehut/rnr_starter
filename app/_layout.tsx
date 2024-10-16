@@ -144,10 +144,10 @@ export default function RootLayout() {
               }}
             />
             <Stack.Screen
-              name="job/[jobID]"
+              name="jobs/[jobID]"
               options={{
                 headerShown: true,
-                headerTitle: "Job Detail",
+                headerTitle: "",
                 presentation: Platform.OS === "ios" ? "card" : "modal",
                 headerTitleAlign: "left",
                 //headerBackVisible: true,

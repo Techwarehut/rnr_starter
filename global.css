@@ -77,6 +77,7 @@
   /* For web only */
   ::-webkit-scrollbar {
     width: 8px; /* Width of the scrollbar */
+    height: 8px; /* Height of horizontal scrollbar */
   }
 
   ::-webkit-scrollbar-thumb {

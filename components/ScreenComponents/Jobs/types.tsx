@@ -1,10 +1,12 @@
 import { SiteLocation } from "../Customers/types";
+import { JobPriorityKeys, JobTypeKeys } from "./Filters/Statustypes";
 
 export interface User {
   userId: string; // Unique identifier for the user
   name: string; // Name of the user
 
   profileUrl: string; // URL of the user's profile picture
+  hoursSpent: number;
 
   // You can add other fields if necessary, but keep them optional or read them only when needed.
 }
@@ -37,13 +39,13 @@ export interface Job {
   _id: string; // Unique identifier for the job
   jobTitle: string; // Job title
   jobDescription: string; // Job description
-  jobType: string; // Type of job
+  jobType: JobTypeKeys; // Type of job
   reportedBy: User; // User who reported the job
   assignedTo: User[]; // Array of users assigned to the job
   status: string; // Current status of the job
   purchaseOrderNumber: string; // Associated purchase order number
   dueDate: string; // Due date for the job
-  priority: string; // Priority level (e.g., P1, P2, P3)
+  priority: JobPriorityKeys; // Priority level (e.g., P1, P2, P3)
   projectId: string; // ID of the associated project
   projectName: string; // Name of the associated project
 

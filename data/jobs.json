@@ -2,19 +2,19 @@
   {
     "_id": "job_001",
     "jobTitle": "Site Assessment",
-    "jobDescription": "Conduct a thorough site assessment for HVAC installation. This has long decription to fit in 2 lines. This should show no more than 2 lines.",
+    "jobDescription": "Conduct a thorough site assessment for HVAC installation. This has long description to fit in 2 lines. This should show no more than 2 lines.",
     "jobType": "Inspection",
     "reportedBy": {
       "userId": "1",
       "name": "Alice Johnson",
-
       "profileUrl": "https://randomuser.me/api/portraits/women/1.jpg"
     },
     "assignedTo": [
       {
         "userId": "2",
-        "name": "Bob Smith",
-        "profileUrl": "https://randomuser.me/api/portraits/men/2.jpg"
+        "name": "Charlie Brown",
+        "profileUrl": "https://randomuser.me/api/portraits/men/1.jpg",
+        "hoursSpent": 5
       }
     ],
     "status": "Approval Pending",
@@ -23,26 +23,43 @@
     "priority": "High",
     "projectId": "Project_001",
     "projectName": "HVAC Installation and Maintenance",
-
     "customer": {
       "_id": "2",
       "businessName": "Smith Co."
     },
     "siteLocation": {
-      "site_id": "2",
-      "siteName": "Branch Office",
-      "siteContactPerson": "Jane Doe",
-      "siteContactPhone": "(234) 567-8902",
-      "AddressLine": "456 Elm St",
+      "site_id": "1",
+      "siteName": "Headquarters",
+      "siteContactPerson": "Jane Smith",
+      "siteContactPhone": "(098) 765-4322",
+      "AddressLine": "789 Maple Ave",
       "City": "Springfield",
       "Province": "ON",
-      "zipcode": "K1A 0C2"
+      "zipcode": "K1A 0D3"
     },
     "estimateId": "estimate_001",
     "invoiceId": "invoice_001",
     "purchaseReqId": "req_001",
-    "comments": [],
-    "hoursSpent": [],
+    "comments": [
+      {
+        "commentId": "comment_001",
+        "text": "Please ensure all measurements are accurate.",
+        "createdBy": {
+          "userId": "3",
+          "name": "Bob Smith"
+        },
+        "createdAt": "2024-09-01T15:30:00Z"
+      },
+      {
+        "commentId": "comment_002",
+        "text": "Please ensure all measurements are accurate.",
+        "createdBy": {
+          "userId": "3",
+          "name": "Bob Smith"
+        },
+        "createdAt": "2024-09-01T15:30:00Z"
+      }
+    ],
     "createdAt": "2024-09-01T12:00:00Z",
     "updatedAt": "2024-09-02T12:00:00Z"
   },
@@ -54,18 +71,20 @@
     "reportedBy": {
       "userId": "1",
       "name": "Alice Johnson",
-      "profileUrl": "https://randomuser.me/api/portraits/men/7.jpg"
+      "profileUrl": "https://randomuser.me/api/portraits/women/1.jpg"
     },
     "assignedTo": [
       {
-        "userId": "3",
+        "userId": "2",
         "name": "Charlie Brown",
-        "profileUrl": "https://randomuser.me/api/portraits/men/3.jpg"
+        "profileUrl": "https://randomuser.me/api/portraits/men/1.jpg",
+        "hoursSpent": 10
       },
       {
         "userId": "4",
-        "name": "Diana Prince",
-        "profileUrl": "https://randomuser.me/api/portraits/women/2.jpg"
+        "name": "Eve Davis",
+        "profileUrl": "https://randomuser.me/api/portraits/women/2.jpg",
+        "hoursSpent": 8
       }
     ],
     "status": "In Progress",
@@ -74,157 +93,10 @@
     "priority": "High",
     "projectId": "Project_001",
     "projectName": "HVAC Installation and Maintenance",
-
-    "customer": {
-      "_id": "3",
-      "businessName": "Smith Co."
-    },
-    "siteLocation": {
-      "site_id": "2",
-      "siteName": "Branch Office",
-      "siteContactPerson": "Jane Doe",
-      "siteContactPhone": "(234) 567-8902",
-      "AddressLine": "456 Elm St",
-      "City": "Springfield",
-      "Province": "ON",
-      "zipcode": "K1A 0C2"
-    },
-    "estimateId": "estimate_002",
-    "invoiceId": "invoice_002",
-    "purchaseReqId": "req_002",
-    "comments": [],
-    "hoursSpent": [],
-    "createdAt": "2024-09-15T12:00:00Z",
-    "updatedAt": "2024-09-16T12:00:00Z"
-  },
-  {
-    "_id": "job_003",
-    "jobTitle": "Client Consultation",
-    "jobDescription": "Discuss cleaning schedule and requirements with the client.",
-    "jobType": "Consultation",
-    "reportedBy": {
-      "userId": "5",
-      "name": "Eva Green",
-
-      "profileUrl": "https://randomuser.me/api/portraits/women/3.jpg"
-    },
-    "assignedTo": [
-      {
-        "userId": "6",
-        "name": "Frank Castle",
-        "profileUrl": "https://randomuser.me/api/portraits/men/4.jpg"
-      }
-    ],
-    "status": "On Hold",
-    "purchaseOrderNumber": "PO-002",
-    "dueDate": "2024-09-18T12:00:00Z",
-    "priority": "Medium",
-    "projectId": "Project_002",
-    "projectName": "Office Cleaning Services",
-
-    "customer": {
-      "_id": "1",
-      "businessName": "Doe Enterprises"
-    },
-    "siteLocation": {
-      "site_id": "4",
-      "siteName": "Temporary Location",
-      "siteContactPerson": "Diane Johnson",
-      "siteContactPhone": "(135) 792-4684",
-      "AddressLine": "222 Cedar St",
-      "City": "Springfield",
-      "Province": "ON",
-      "zipcode": "K1A 0H7"
-    },
-    "estimateId": "estimate_003",
-    "invoiceId": "invoice_003",
-    "purchaseReqId": "req_003",
-    "comments": [],
-    "hoursSpent": [],
-    "createdAt": "2024-09-10T12:00:00Z",
-    "updatedAt": "2024-09-11T12:00:00Z"
-  },
-  {
-    "_id": "job_004",
-    "jobTitle": "Schedule Cleaning Services",
-    "jobDescription": "Set up the recurring cleaning schedule for the client.",
-    "jobType": "Maintenance",
-    "reportedBy": {
-      "userId": "5",
-      "name": "Eva Green",
-      "profileUrl": "https://randomuser.me/api/portraits/men/7.jpg"
-    },
-    "assignedTo": [
-      {
-        "userId": "7",
-        "name": "Gina Lin",
-        "profileUrl": "https://randomuser.me/api/portraits/women/4.jpg"
-      },
-      {
-        "userId": "8",
-        "name": "Harry Potter",
-        "profileUrl": "https://randomuser.me/api/portraits/men/5.jpg"
-      }
-    ],
-    "status": "Accounts Receivable",
-    "purchaseOrderNumber": "PO-002",
-    "dueDate": "2024-09-28T12:00:00Z",
-    "priority": "Medium",
-    "projectId": "Project_002",
-    "projectName": "Office Cleaning Services",
-
-    "customer": {
-      "_id": "3",
-      "businessName": "Johnson Group"
-    },
-    "siteLocation": {
-      "site_id": "3",
-      "siteName": "New Site",
-      "siteContactPerson": "Charlie Johnson",
-      "siteContactPhone": "(135) 792-4683",
-      "AddressLine": "111 Birch St",
-      "City": "Springfield",
-      "Province": "ON",
-      "zipcode": "K1A 0G6"
-    },
-    "estimateId": "estimate_004",
-    "invoiceId": "invoice_004",
-    "purchaseReqId": "req_004",
-    "comments": [],
-    "hoursSpent": [],
-    "createdAt": "2024-09-15T12:00:00Z",
-    "updatedAt": "2024-09-16T12:00:00Z"
-  },
-  {
-    "_id": "job_005",
-    "jobTitle": "Machine Diagnostics",
-    "jobDescription": "Perform diagnostics on the machine to identify issues.",
-    "jobType": "ServiceVisit",
-    "reportedBy": {
-      "userId": "9",
-      "name": "Isaac Newton",
-
-      "profileUrl": "https://randomuser.me/api/portraits/men/6.jpg"
-    },
-    "assignedTo": [
-      {
-        "userId": "10",
-        "name": "Jack Daniels",
-        "profileUrl": "https://randomuser.me/api/portraits/men/7.jpg"
-      }
-    ],
-    "status": "Invoiced",
-    "purchaseOrderNumber": "PO-003",
-    "dueDate": "2024-09-24T12:00:00Z",
-    "priority": "Low",
-    "projectId": "Project_003",
-    "projectName": "Industrial Machine Repair",
-
     "customer": {
       "_id": "2",
       "businessName": "Smith Co."
     },
-
     "siteLocation": {
       "site_id": "1",
       "siteName": "Headquarters",
@@ -235,11 +107,189 @@
       "Province": "ON",
       "zipcode": "K1A 0D3"
     },
+    "estimateId": "estimate_002",
+    "invoiceId": "invoice_002",
+    "purchaseReqId": "req_002",
+    "comments": [
+      {
+        "commentId": "comment_002",
+        "text": "Let's make sure to check the ductwork compatibility.",
+        "createdBy": {
+          "userId": "5",
+          "name": "Frank Wilson"
+        },
+        "createdAt": "2024-09-15T10:00:00Z"
+      }
+    ],
+    "createdAt": "2024-09-15T12:00:00Z",
+    "updatedAt": "2024-09-16T12:00:00Z"
+  },
+  {
+    "_id": "job_003",
+    "jobTitle": "Client Consultation",
+    "jobDescription": "Discuss cleaning schedule and requirements with the client.",
+    "jobType": "Consultation",
+    "reportedBy": {
+      "userId": "5",
+      "name": "Frank Wilson",
+      "profileUrl": "https://randomuser.me/api/portraits/men/3.jpg"
+    },
+    "assignedTo": [
+      {
+        "userId": "6",
+        "name": "Grace Lee",
+        "profileUrl": "https://randomuser.me/api/portraits/women/3.jpg",
+        "hoursSpent": 4
+      }
+    ],
+    "status": "On Hold",
+    "purchaseOrderNumber": "PO-002",
+    "dueDate": "2024-09-18T12:00:00Z",
+    "priority": "Medium",
+    "projectId": "Project_002",
+    "projectName": "Office Cleaning Services",
+    "customer": {
+      "_id": "1",
+      "businessName": "Doe Enterprises"
+    },
+    "siteLocation": {
+      "site_id": "2",
+      "siteName": "Branch Office",
+      "siteContactPerson": "Jane Doe",
+      "siteContactPhone": "(234) 567-8902",
+      "AddressLine": "456 Elm St",
+      "City": "Springfield",
+      "Province": "ON"
+    },
+    "estimateId": "estimate_003",
+    "invoiceId": "invoice_003",
+    "purchaseReqId": "req_003",
+    "comments": [
+      {
+        "commentId": "comment_003",
+        "text": "Make sure to confirm the client's availability.",
+        "createdBy": {
+          "userId": "7",
+          "name": "Henry Thomas"
+        },
+        "createdAt": "2024-09-10T09:30:00Z"
+      }
+    ],
+    "createdAt": "2024-09-10T12:00:00Z",
+    "updatedAt": "2024-09-11T12:00:00Z"
+  },
+  {
+    "_id": "job_004",
+    "jobTitle": "Schedule Cleaning Services",
+    "jobDescription": "Set up the recurring cleaning schedule for the client.",
+    "jobType": "Maintenance",
+    "reportedBy": {
+      "userId": "5",
+      "name": "Frank Wilson",
+      "profileUrl": "https://randomuser.me/api/portraits/men/3.jpg"
+    },
+    "assignedTo": [
+      {
+        "userId": "7",
+        "name": "Henry Thomas",
+        "profileUrl": "https://randomuser.me/api/portraits/men/4.jpg",
+        "hoursSpent": 6
+      },
+      {
+        "userId": "8",
+        "name": "Ivy Green",
+        "profileUrl": "https://randomuser.me/api/portraits/women/4.jpg",
+        "hoursSpent": 3
+      }
+    ],
+    "status": "Accounts Receivable",
+    "purchaseOrderNumber": "PO-002",
+    "dueDate": "2024-09-28T12:00:00Z",
+    "priority": "Medium",
+    "projectId": "Project_002",
+    "projectName": "Office Cleaning Services",
+    "customer": {
+      "_id": "1",
+      "businessName": "Doe Enterprises"
+    },
+    "siteLocation": {
+      "site_id": "2",
+      "siteName": "Branch Office",
+      "siteContactPerson": "Jane Doe",
+      "siteContactPhone": "(234) 567-8902",
+      "AddressLine": "456 Elm St",
+      "City": "Springfield",
+      "Province": "ON"
+    },
+    "estimateId": "estimate_004",
+    "invoiceId": "invoice_004",
+    "purchaseReqId": "req_004",
+    "comments": [
+      {
+        "commentId": "comment_004",
+        "text": "Confirm the recurring schedule with the client.",
+        "createdBy": {
+          "userId": "9",
+          "name": "Ivy Green"
+        },
+        "createdAt": "2024-09-15T11:15:00Z"
+      }
+    ],
+    "createdAt": "2024-09-15T12:00:00Z",
+    "updatedAt": "2024-09-16T12:00:00Z"
+  },
+  {
+    "_id": "job_005",
+    "jobTitle": "Machine Diagnostics",
+    "jobDescription": "Perform diagnostics on the machine to identify issues.",
+    "jobType": "ServiceVisit",
+    "reportedBy": {
+      "userId": "1",
+      "name": "Alice Johnson",
+      "profileUrl": "https://randomuser.me/api/portraits/women/1.jpg"
+    },
+    "assignedTo": [
+      {
+        "userId": "10",
+        "name": "Kathy Brown",
+        "profileUrl": "https://randomuser.me/api/portraits/women/5.jpg",
+        "hoursSpent": 7
+      }
+    ],
+    "status": "Invoiced",
+    "purchaseOrderNumber": "PO-003",
+    "dueDate": "2024-09-24T12:00:00Z",
+    "priority": "Low",
+    "projectId": "Project_003",
+    "projectName": "Industrial Machine Repair",
+    "customer": {
+      "_id": "3",
+      "businessName": "Johnson Group"
+    },
+    "siteLocation": {
+      "site_id": "2",
+      "siteName": "Secondary Location",
+      "siteContactPerson": "Bob Johnson",
+      "siteContactPhone": "(135) 792-4682",
+      "AddressLine": "654 Pine St",
+      "City": "Springfield",
+      "Province": "ON",
+      "zipcode": "K1A 0F5"
+    },
     "estimateId": "estimate_005",
     "invoiceId": "invoice_005",
     "purchaseReqId": "req_005",
-    "comments": [],
-    "hoursSpent": [],
+    "comments": [
+      {
+        "commentId": "comment_005",
+        "text": "Diagnostics completed, awaiting approval.",
+        "createdBy": {
+          "userId": "1",
+          "name": "Alice Johnson"
+        },
+        "createdAt": "2024-09-15T14:00:00Z"
+      }
+    ],
     "createdAt": "2024-09-15T12:00:00Z",
     "updatedAt": "2024-09-16T12:00:00Z"
   },
@@ -249,15 +299,16 @@
     "jobDescription": "Conduct repairs on the industrial machine as per diagnostics.",
     "jobType": "ServiceVisit",
     "reportedBy": {
-      "userId": "9",
-      "name": "Isaac Newton",
-      "profileUrl": "https://randomuser.me/api/portraits/men/7.jpg"
+      "userId": "1",
+      "name": "Alice Johnson",
+      "profileUrl": "https://randomuser.me/api/portraits/women/1.jpg"
     },
     "assignedTo": [
       {
         "userId": "10",
-        "name": "Jack Daniels",
-        "profileUrl": "https://randomuser.me/api/portraits/men/7.jpg"
+        "name": "Kathy Brown",
+        "profileUrl": "https://randomuser.me/api/portraits/women/5.jpg",
+        "hoursSpent": 9
       }
     ],
     "status": "Paid",
@@ -266,27 +317,34 @@
     "priority": "Low",
     "projectId": "Project_003",
     "projectName": "Industrial Machine Repair",
-
     "customer": {
-      "_id": "1",
-      "businessName": "Doe Enterprises"
+      "_id": "3",
+      "businessName": "Johnson Group"
     },
     "siteLocation": {
-      "site_id": "1",
-      "siteName": "Main Office",
-      "siteContactPerson": "John Doe",
-      "siteContactPhone": "(234) 567-8901",
-      "AddressLine": "123 Main St",
+      "site_id": "2",
+      "siteName": "Secondary Location",
+      "siteContactPerson": "Bob Johnson",
+      "siteContactPhone": "(135) 792-4682",
+      "AddressLine": "654 Pine St",
       "City": "Springfield",
       "Province": "ON",
-      "zipcode": "K1A 0B1"
+      "zipcode": "K1A 0F5"
     },
-
     "estimateId": "estimate_006",
     "invoiceId": "invoice_006",
     "purchaseReqId": "req_006",
-    "comments": [],
-    "hoursSpent": [],
+    "comments": [
+      {
+        "commentId": "comment_006",
+        "text": "Repair completed, all functions are normal.",
+        "createdBy": {
+          "userId": "10",
+          "name": "Kathy Brown"
+        },
+        "createdAt": "2024-09-21T08:30:00Z"
+      }
+    ],
     "createdAt": "2024-09-20T12:00:00Z",
     "updatedAt": "2024-09-21T12:00:00Z"
   }

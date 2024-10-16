@@ -7,6 +7,16 @@ import TextField from "../../TextField";
 import { Badge } from "~/components/ui/badge";
 import { getJobPriorityIcon, statusKeyMapping } from "../Filters/Statustypes";
 import JobStatusUpdate from "../JobStatusUpdate";
+import JobTypeUpdate from "../JobTypeUpdate";
+import { H1, H2, H3, H4, Muted } from "~/components/ui/typography";
+import JobPriorityUpdate from "../JobPriorityUpdate";
+import JobPurchaseOrders from "./JobPurchaseOrders";
+import { Button } from "~/components/ui/button";
+import { Plus } from "~/lib/icons/Plus";
+import JobComments from "./JobComments";
+import { useIsLargeScreen } from "~/lib/utils";
+import { Input } from "~/components/ui/input";
+import { Textarea } from "~/components/ui/textarea";
 
 interface JobBasicInfoProps {
   job: Job;
@@ -19,41 +29,93 @@ const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
   handleInputChange,
   editMode,
 }) => {
+  const isLargeScreen = useIsLargeScreen();
   return (
-    <View className="flex gap-4">
-      <View className="flex-row items-center gap-2">
-        {getJobPriorityIcon(job.priority)}
+    <View className="flex gap-4 mb-4">
+      {editMode ? (
+        <>
+          <Input
+            value={job.jobTitle}
+            onChangeText={(value) => handleInputChange("jobTitle", value)}
+            editable={editMode}
+          />
+
+          <Textarea
+            value={job.jobDescription}
+            onChangeText={(value) => handleInputChange("jobDescription", value)}
+            editable={editMode}
+            nativeID="Job Description"
+          />
+        </>
+      ) : (
+        <>
+          <View>
+            {isLargeScreen ? (
+              <H2>
+                {job._id}: {job.jobTitle}
+              </H2>
+            ) : (
+              <H2>
+                {job._id}: {job.jobTitle}
+              </H2>
+            )}
+          </View>
+
+          <Text>{job.jobDescription}</Text>
+        </>
+      )}
+
+      <View className="flex-row gap-8 mb-8">
+        <JobPriorityUpdate
+          onChangePriority={(newPriority) => {
+            console.log(newPriority);
+          }}
+          priority={job.priority}
+        />
+        <JobTypeUpdate
+          onChangeType={(newType) => {
+            console.log(newType);
+          }}
+          type={job.jobType}
+        />
+
+        <JobStatusUpdate
+          onChangeStatus={(newStatus) => {}}
+          status={job.status}
+        />
       </View>
-      <InputField
-        label="Job Title"
-        value={job.jobTitle}
-        onChangeText={(value) => handleInputChange("jobTitle", value)}
-        editable={editMode}
-        nativeID="Job Title"
+
+      <View className="flex-row items-center justify-between">
+        <View>
+          <Text className="text-xl">Purchases</Text>
+          <Muted>All Purchases made for this job</Muted>
+        </View>
+        <Button variant="default">
+          <Plus className="text-primary-foreground" size={18} />
+        </Button>
+      </View>
+      <View></View>
+      <JobPurchaseOrders
+        job={job}
+        handleInputChange={handleInputChange}
+        editMode={editMode}
       />
 
-      <TextField
-        label="Job Description"
-        value={job.jobDescription}
-        onChangeText={(value) => handleInputChange("jobDescription", value)}
-        editable={editMode}
-        nativeID="Job Description"
-      />
-      <View className="flex-row gap-8">
-        <Badge className="p-1 px-2">
-          <Text>{job.jobType}</Text>
-        </Badge>
-        {editMode ? (
-          <JobStatusUpdate
-            onChangeStatus={(newStatus) => {}}
-            status={job.status}
-          />
-        ) : (
-          <Badge variant={statusKeyMapping[job.status]} className="p-1 px-4">
-            <Text>{job.status}</Text>
-          </Badge>
-        )}
+      <View className="flex-row items-center justify-between">
+        <View>
+          <Text className="text-xl">Notes</Text>
+          <Muted>Quick Notes for anyone to add</Muted>
+        </View>
+        <Button variant="default">
+          <Plus className="text-primary-foreground" size={18} />
+        </Button>
       </View>
+      <View></View>
+      <JobComments
+        job={job}
+        handleInputChange={handleInputChange}
+        editMode={editMode}
+      />
     </View>
   );
 };

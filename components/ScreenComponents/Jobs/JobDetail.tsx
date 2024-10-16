@@ -27,26 +27,13 @@ export const JobDetailDisplay: React.FC<JobDetaiDisplaylProps> = ({
         handleInputChange={handleInputChange}
         editMode={editMode}
       />
-      <JobBSecondaryInfo
-        job={job}
-        handleInputChange={handleInputChange}
-        editMode={editMode}
-      />
-      <JobTimesheet
-        job={job}
-        handleInputChange={handleInputChange}
-        editMode={editMode}
-      />
-      <JobPurchaseOrders
-        job={job}
-        handleInputChange={handleInputChange}
-        editMode={editMode}
-      />
-      <JobComments
-        job={job}
-        handleInputChange={handleInputChange}
-        editMode={editMode}
-      />
+      <View className="border border-input rounded-md p-2 mb-4">
+        <JobBSecondaryInfo
+          job={job}
+          handleInputChange={handleInputChange}
+          editMode={editMode}
+        />
+      </View>
     </ScrollView>
   );
 };
