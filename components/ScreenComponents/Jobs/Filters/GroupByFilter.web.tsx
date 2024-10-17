@@ -89,8 +89,8 @@ export const GroupByFilter: React.FC<GroupByFilterProps> = ({
             </DropdownMenuItem>
             <DropdownMenuItem className="items-center justify-start self-start">
               <RadioGroupItemWithLabel
-                value="Project"
-                onLabelPress={onLabelPress("Project")}
+                value="Purchase Order"
+                onLabelPress={onLabelPress("Purchase Order")}
               />
             </DropdownMenuItem>
             <DropdownMenuItem className="items-center justify-start self-start">

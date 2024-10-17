@@ -20,7 +20,7 @@ export default function JobScreen() {
   const [jobs, setJobs] = useState<Job[]>([]);
   const { showSuccessToast, showErrorToast } = useToast();
   const [searchText, setSearchText] = useState("");
-  const [group, setGroup] = useState("None");
+  const [group, setGroup] = useState("Purchase Order");
   const [refreshKey, setRefreshKey] = useState(0);
 
   const [selectedStatuses, setSelectedStatuses] = useState<
@@ -127,12 +127,12 @@ export default function JobScreen() {
           job.assignedTo && job.assignedTo.length > 0
             ? job.assignedTo.map((user) => user.name).join(", ")
             : "Unassigned";
-      } else if (groupBy === "Project") {
+      } else if (groupBy === "Purchase Order") {
         if (job.projectId) {
-          const projectName = job.projectName; // Adjust this according to your data structure
-          groupTitle = `${job.projectId}: ${projectName}`;
+          const purchaseOrderNumber = job.purchaseOrderNumber; // Adjust this according to your data structure
+          groupTitle = `${purchaseOrderNumber}`;
         } else {
-          groupTitle = "No Project"; // Default when there is no project
+          groupTitle = "No Purchase Order"; // Default when there is no project
         }
       } else {
         groupTitle = "All Jobs"; // Default title when no grouping
@@ -150,8 +150,6 @@ export default function JobScreen() {
   };
 
   const groupedJobs = groupJobs(group);
-
-  console.log("before render", searchText);
 
   return (
     <>

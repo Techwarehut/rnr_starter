@@ -17,6 +17,8 @@ import JobComments from "./JobComments";
 import { useIsLargeScreen } from "~/lib/utils";
 import { Input } from "~/components/ui/input";
 import { Textarea } from "~/components/ui/textarea";
+import JobTimesheet from "./JobTimesheet";
+import JobImages from "./JobImages";
 
 interface JobBasicInfoProps {
   job: Job;
@@ -85,6 +87,28 @@ const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
         />
       </View>
 
+      <JobTimesheet
+        job={job}
+        handleInputChange={handleInputChange}
+        editMode={editMode}
+      />
+
+      <View className="flex-row items-center justify-between">
+        <View>
+          <Text className="text-xl">Images</Text>
+          <Muted>Add before or after images</Muted>
+        </View>
+        <Button variant="default">
+          <Plus className="text-primary-foreground" size={18} />
+        </Button>
+      </View>
+
+      <JobImages
+        job={job}
+        handleInputChange={handleInputChange}
+        editMode={editMode}
+      />
+
       <View className="flex-row items-center justify-between">
         <View>
           <Text className="text-xl">Purchases</Text>
@@ -94,7 +118,7 @@ const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
           <Plus className="text-primary-foreground" size={18} />
         </Button>
       </View>
-      <View></View>
+
       <JobPurchaseOrders
         job={job}
         handleInputChange={handleInputChange}

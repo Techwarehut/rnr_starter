@@ -89,14 +89,17 @@ const JobPurchaseOrders: React.FC<JobInfoProps> = ({
       scrollEventThrottle={200}
       decelerationRate="fast"
       snapToInterval={cardWidth}
-      snapToAlignment="center"
+      snapToAlignment="start"
       horizontal
       showsHorizontalScrollIndicator={useIsLargeScreen()}
       contentContainerClassName="p-2"
     >
-      <View className="flex-row gap-4">
+      <View className="flex-row gap-4 mr-4">
         {fakePurchaseOrders.map((order) => (
-          <Card key={order.purchaseOrderNumber} className="p-4 w-80 gap-4">
+          <Card
+            key={order.purchaseOrderNumber}
+            className="p-4 w-80 web:w-64 gap-4"
+          >
             <View className="flex-row">
               <Badge className="p-1 px-4">
                 <Text
@@ -126,6 +129,11 @@ const JobPurchaseOrders: React.FC<JobInfoProps> = ({
                   <Text>${item.price.toFixed(2)}</Text>
                 </View>
               ))}
+              <View className="flex-row mt-4 justify-end -mr-2">
+                <Button variant="link">
+                  <Text>Add Items</Text>
+                </Button>
+              </View>
             </CardContent>
             <View className="flex-row items-center justify-between">
               <Text>Total</Text>

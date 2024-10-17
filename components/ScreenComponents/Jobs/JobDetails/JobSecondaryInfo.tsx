@@ -29,95 +29,105 @@ const JobBSecondaryInfo: React.FC<JobSecondaryInfoProps> = ({
   editMode,
 }) => {
   return (
-    <View className="flex gap-4">
-      <Text className="text-xl">Details</Text>
-      <View className="flex flex-row gap-4 items-center justify-between mr-4">
-        <Muted>Reporter:</Muted>
-        <View className="flex-row gap-4 items-center w-48">
-          <Avatar alt="Avatar" className="w-8 h-8">
-            <AvatarImage source={{ uri: job.reportedBy.profileUrl }} />
-            <AvatarFallback>
-              <Text>{getInitials(job.reportedBy.name)}</Text>
-            </AvatarFallback>
-          </Avatar>
+    <View className="flex gap-12 mb-4">
+      <View className="flex gap-4">
+        <View className="flex-row items-center justify-between my-2">
           <View>
-            <Text>{job.reportedBy.name}</Text>
+            <Text className="text-xl">Details</Text>
+            <Muted>Customer, Due Date and other details</Muted>
+          </View>
+        </View>
+
+        <View className="flex flex-row gap-4 items-center justify-between mr-4">
+          <Muted>Reporter:</Muted>
+          <View className="flex-row gap-2 items-center w-48">
+            <Avatar alt="Avatar" className="w-8 h-8">
+              <AvatarImage source={{ uri: job.reportedBy.profileUrl }} />
+              <AvatarFallback>
+                <Text>{getInitials(job.reportedBy.name)}</Text>
+              </AvatarFallback>
+            </Avatar>
+            <View>
+              <Text>{job.reportedBy.name}</Text>
+            </View>
+          </View>
+        </View>
+
+        <View className="flex flex-row gap-4 items-center justify-between mr-4">
+          <Muted>Customer:</Muted>
+          <View className="flex  w-48">
+            <Input
+              value={job.customer.businessName}
+              onChangeText={(value) => handleInputChange("customer", value)}
+              editable={editMode}
+              nativeID="Customer"
+            />
+          </View>
+        </View>
+
+        <View className="flex flex-row gap-4 items-center justify-between mr-4">
+          <Muted>Due Date:</Muted>
+          <View className="flex  w-48">
+            <Input
+              value={job.dueDate}
+              onChangeText={(value) => handleInputChange("dueDate", value)}
+              editable={editMode}
+              nativeID="Due Date"
+            />
+          </View>
+        </View>
+
+        <View className="flex flex-row gap-4 items-center justify-between mr-4">
+          <Muted>Status:</Muted>
+          <View className="flex-row gap-4 items-center w-48">
+            <Badge variant={statusKeyMapping[job.status]} className="p-1 px-4">
+              <Text>{job.status}</Text>
+            </Badge>
           </View>
         </View>
       </View>
 
-      <View className="flex flex-row gap-4 items-center justify-between mr-4">
-        <Muted>Customer:</Muted>
-        <View className="flex  w-48">
-          <Input
-            value={job.customer.businessName}
-            onChangeText={(value) => handleInputChange("customer", value)}
-            editable={editMode}
-            nativeID="Customer"
-          />
+      <View className="flex gap-4">
+        <View className="flex-row items-center justify-between my-2">
+          <View>
+            <Text className="text-xl">Links</Text>
+            <Muted>Links to Invoice, Estimate and PO</Muted>
+          </View>
         </View>
-      </View>
 
-      <View className="flex flex-row gap-4 items-center justify-between mr-4">
-        <Muted>Due Date:</Muted>
-        <View className="flex  w-48">
-          <Input
-            value={job.dueDate}
-            onChangeText={(value) => handleInputChange("dueDate", value)}
-            editable={editMode}
-            nativeID="Due Date"
-          />
+        <View className="flex flex-row gap-4 items-center justify-between mr-4">
+          <Muted>Linked PO</Muted>
+          <View className="flex  w-48">
+            <Input
+              value={job.purchaseOrderNumber}
+              onChangeText={(value) =>
+                handleInputChange("purchaseOrderNumber", value)
+              }
+              editable={editMode}
+            />
+          </View>
         </View>
-      </View>
 
-      <View className="flex flex-row gap-4 items-center justify-between mr-4">
-        <Muted>Status:</Muted>
-        <View className="flex-row gap-4 items-center w-48">
-          <Badge variant={statusKeyMapping[job.status]} className="p-1 px-4">
-            <Text>{job.status}</Text>
-          </Badge>
+        <View className="flex flex-row gap-4 items-center justify-between mr-4">
+          <Muted>Estimate:</Muted>
+          <View className="flex  w-48">
+            <Input
+              value={job.estimateId || ""}
+              onChangeText={(value) => handleInputChange("estimateId", value)}
+              editable={editMode}
+            />
+          </View>
         </View>
-      </View>
 
-      <JobTimesheet
-        job={job}
-        handleInputChange={handleInputChange}
-        editMode={editMode}
-      />
-
-      <Text className="text-xl">Links</Text>
-      <View className="flex flex-row gap-4 items-center justify-between mr-4">
-        <Muted>Linked PO</Muted>
-        <View className="flex  w-48">
-          <Input
-            value={job.purchaseOrderNumber}
-            onChangeText={(value) =>
-              handleInputChange("purchaseOrderNumber", value)
-            }
-            editable={editMode}
-          />
-        </View>
-      </View>
-
-      <View className="flex flex-row gap-4 items-center justify-between mr-4">
-        <Muted>Estimate:</Muted>
-        <View className="flex  w-48">
-          <Input
-            value={job.estimateId || ""}
-            onChangeText={(value) => handleInputChange("estimateId", value)}
-            editable={editMode}
-          />
-        </View>
-      </View>
-
-      <View className="flex flex-row gap-4 items-center justify-between mr-4">
-        <Muted>Invoice:</Muted>
-        <View className="flex  w-48">
-          <Input
-            value={job.invoiceId || ""}
-            onChangeText={(value) => handleInputChange("invoiceId", value)}
-            editable={editMode}
-          />
+        <View className="flex flex-row gap-4 items-center justify-between mr-4">
+          <Muted>Invoice:</Muted>
+          <View className="flex  w-48">
+            <Input
+              value={job.invoiceId || ""}
+              onChangeText={(value) => handleInputChange("invoiceId", value)}
+              editable={editMode}
+            />
+          </View>
         </View>
       </View>
     </View>

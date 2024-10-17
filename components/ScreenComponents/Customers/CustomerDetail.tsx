@@ -245,7 +245,7 @@ const CustomerDetail: React.FC<CustomerDetailProps> = ({ customer }) => {
           showsHorizontalScrollIndicator={isLargeScreen}
           contentContainerClassName="p-2"
         >
-          <View className="flex-row gap-4">
+          <View className="flex-row gap-4 mr-4">
             <SiteLocationCard
               customer={customerData}
               editMode={editMode}

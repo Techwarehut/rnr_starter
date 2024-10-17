@@ -114,3 +114,8 @@ export const getJobPriorityIcon = (priority: JobPriorityKeys) => {
       return null; // or a default icon
   }
 };
+
+export const getActionStyling = (action: String) => {
+  switch (action) {
+  }
+};

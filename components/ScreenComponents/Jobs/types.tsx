@@ -23,6 +23,7 @@ export interface Comment {
   createdBy: {
     userId: string; // ID of the user who created the comment
     name: string; // Name of the user
+    profileUrl: string; // URL of the user's profile picture
   };
   createdAt: string; // Timestamp of comment creation
 }
@@ -58,6 +59,7 @@ export interface Job {
   hoursSpent?: HoursSpent[]; // Array of hours spent on the job
   createdAt: string; // Creation timestamp
   updatedAt: string; // Last update timestamp
+  images: string[];
 }
 
 // Define the Milestone interface

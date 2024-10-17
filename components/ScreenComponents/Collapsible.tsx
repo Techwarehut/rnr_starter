@@ -26,7 +26,7 @@ export function Collapsible({
           <ChevronRight className="text-primary" size={18} />
         )}
 
-        <Text className="text-xl">{title}</Text>
+        <Text>{title}</Text>
       </Pressable>
       {isOpen && <View className="mt-4 p-2 gap-4">{children}</View>}
     </View>

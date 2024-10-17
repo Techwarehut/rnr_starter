@@ -41,7 +41,7 @@ const SiteLocationCard: React.FC<SiteLocationCardProps> = ({
   return (
     <>
       {customer.siteLocations.map((site, index) => (
-        <Card key={index} className="min-w-80">
+        <Card key={index} className="w-80 web:w-64">
           <CardHeader>
             <CardTitle>{site.siteName}</CardTitle>
             <CardDescription>Contact: {site.siteContactPerson}</CardDescription>

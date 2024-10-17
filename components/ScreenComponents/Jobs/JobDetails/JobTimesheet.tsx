@@ -25,7 +25,10 @@ const JobTimesheet: React.FC<JobInfoProps> = ({
   return (
     <View className="flex flex-col gap-2">
       <View className="flex-row items-center justify-between">
-        <Muted>Assignees:</Muted>
+        <View>
+          <Text className="text-xl">Assignees</Text>
+          <Muted>Add more assignee or Hours Spent</Muted>
+        </View>
         <Button variant="default">
           <Plus className="text-primary-foreground" size={18} />
         </Button>

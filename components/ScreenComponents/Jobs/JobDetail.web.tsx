@@ -18,10 +18,10 @@ export const JobDetailDisplay: React.FC<JobDetaiDisplaylProps> = ({
   editMode,
 }) => {
   return (
-    <View className="flex-1 flex-col md:flex-row w-full gap-2 p-4">
+    <ScrollView contentContainerClassName="flex-1 flex-col md:flex-row w-full gap-2 p-4">
       <ScrollView
         style={{ flex: 2 }}
-        contentContainerClassName="border border-input rounded-md p-4"
+        contentContainerClassName="md:border md:border-input md:rounded-md md:p-4"
         showsVerticalScrollIndicator={true}
       >
         <JobBasicInfo
@@ -30,17 +30,16 @@ export const JobDetailDisplay: React.FC<JobDetaiDisplaylProps> = ({
           editMode={editMode}
         />
       </ScrollView>
-      <ScrollView
+      <View
         style={{ flex: 1 }}
-        contentContainerClassName="flex-1 border border-input rounded-md p-4"
-        showsVerticalScrollIndicator={true}
+        className="flex-1 md:border md:border-input md:rounded-md md:p-4"
       >
         <JobBSecondaryInfo
           job={job}
           handleInputChange={handleInputChange}
           editMode={editMode}
         />
-      </ScrollView>
-    </View>
+      </View>
+    </ScrollView>
   );
 };
