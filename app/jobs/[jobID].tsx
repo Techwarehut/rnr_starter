@@ -4,10 +4,19 @@ import { Text } from "~/components/ui/text";
 import { Stack, useLocalSearchParams } from "expo-router";
 
 import { Job } from "~/components/ScreenComponents/Jobs/types"; // Import your Job type
-import { getJobById } from "~/api/jobsApi";
+import {
+  getJobById,
+  updateJobPriority,
+  updateJobStatus,
+  updateJobType,
+} from "~/api/jobsApi";
 import ActionButtons from "~/components/ScreenComponents/ActionButtons";
 import { Muted } from "~/components/ui/typography";
 import { JobDetailDisplay } from "~/components/ScreenComponents/Jobs/JobDetail";
+import {
+  JobPriorityKeys,
+  JobTypeKeys,
+} from "~/components/ScreenComponents/Jobs/Filters/Statustypes";
 
 const JobDetail = () => {
   const { jobID } = useLocalSearchParams();
@@ -15,6 +24,7 @@ const JobDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [editMode, setEditMode] = React.useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   // Ensure jobID is a string
   const id = Array.isArray(jobID) ? jobID[0] : jobID;
@@ -39,6 +49,42 @@ const JobDetail = () => {
   };
   const handleDeleteJob = () => {};
 
+  const handleChangeStatus = async (jobId: string, newStatus: string) => {
+    try {
+      const updatedJob = await updateJobStatus(jobId, newStatus);
+
+      setJob(updatedJob);
+      setRefreshKey((prev) => prev + 1);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleChangeJobType = async (jobId: string, newType: JobTypeKeys) => {
+    try {
+      const updatedJob = await updateJobType(jobId, newType);
+
+      setJob(updatedJob);
+      setRefreshKey((prev) => prev + 1);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleChangeJobPriority = async (
+    jobId: string,
+    newPriority: JobPriorityKeys
+  ) => {
+    try {
+      const updatedJob = await updateJobPriority(jobId, newPriority);
+
+      setJob(updatedJob);
+      setRefreshKey((prev) => prev + 1);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleInputChange = (
     field: keyof Job,
     value: string,
@@ -46,7 +92,7 @@ const JobDetail = () => {
   ) => {
     setJob((prevData) => {
       // Check if prevData is null
-      console.log("I am here with user", userId);
+
       if (prevData) {
         if (userId != undefined) {
           const updatedAssignedTo = prevData.assignedTo.map((user) => {
@@ -132,6 +178,9 @@ const JobDetail = () => {
       <JobDetailDisplay
         job={job}
         handleInputChange={handleInputChange}
+        onChangeStatus={handleChangeStatus}
+        onChangePriority={handleChangeJobPriority}
+        onChangeType={handleChangeJobType}
         editMode={editMode}
       />
     </>

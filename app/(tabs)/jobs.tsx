@@ -85,7 +85,7 @@ export default function JobScreen() {
   const handleChangeStatus = async (jobId: string, newStatus: string) => {
     try {
       const updatedJob = await updateJobStatus(jobId, newStatus);
-      console.log(updatedJob.jobTitle, updatedJob.status);
+
       setRefreshKey((prev) => prev + 1);
     } catch (error) {
       console.error(error);

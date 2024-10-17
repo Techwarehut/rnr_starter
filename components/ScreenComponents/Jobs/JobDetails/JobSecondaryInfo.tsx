@@ -69,7 +69,11 @@ const JobBSecondaryInfo: React.FC<JobSecondaryInfoProps> = ({
           <Muted>Due Date:</Muted>
           <View className="flex  w-48">
             <Input
-              value={new Date(job.dueDate).toLocaleString()}
+              value={new Date(job.dueDate).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "2-digit",
+              })}
               onChangeText={(value) => handleInputChange("dueDate", value)}
               editable={editMode}
               nativeID="Due Date"

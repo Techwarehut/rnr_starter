@@ -1,14 +1,18 @@
+import {
+  JobPriorityKeys,
+  JobTypeKeys,
+} from "~/components/ScreenComponents/Jobs/Filters/Statustypes";
 import { Job } from "~/components/ScreenComponents/Jobs/types"; // Import your Job type
 import jobsData from "~/data/jobs.json"; // Your static JSON data
 import { generateUniqueId } from "~/lib/utils"; // Import the unique ID generator
 
-let jobs: Job[] = jobsData; // Initialize with JSON data
+let jobs: Job[] = jobsData as Job[];
 
 // Function to fetch all jobs
 export const getAllJobs = async (): Promise<Job[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(jobsData);
+      resolve(jobs);
     }, 1000); // Simulate a delay
   });
 };
@@ -58,6 +62,42 @@ export const updateJobStatus = async (
       const index = jobs.findIndex((job) => job._id === jobId);
       if (index !== -1) {
         jobs[index].status = newStatus; // Update status
+        resolve(jobs[index]);
+      } else {
+        reject(new Error("Job not found"));
+      }
+    }, 1000); // Simulate a delay
+  });
+};
+
+// Function to update only job status
+export const updateJobType = async (
+  jobId: string,
+  newType: JobTypeKeys
+): Promise<Job> => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const index = jobs.findIndex((job) => job._id === jobId);
+      if (index !== -1) {
+        jobs[index].jobType = newType; // Update status
+        resolve(jobs[index]);
+      } else {
+        reject(new Error("Job not found"));
+      }
+    }, 1000); // Simulate a delay
+  });
+};
+
+// Function to update only job status
+export const updateJobPriority = async (
+  jobId: string,
+  newPriority: JobPriorityKeys
+): Promise<Job> => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const index = jobs.findIndex((job) => job._id === jobId);
+      if (index !== -1) {
+        jobs[index].priority = newPriority; // Update status
         resolve(jobs[index]);
       } else {
         reject(new Error("Job not found"));
