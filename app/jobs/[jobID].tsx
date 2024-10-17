@@ -39,14 +39,46 @@ const JobDetail = () => {
   };
   const handleDeleteJob = () => {};
 
-  const handleInputChange = (field: keyof Job, value: string) => {
+  const handleInputChange = (
+    field: keyof Job,
+    value: string,
+    userId?: String
+  ) => {
     setJob((prevData) => {
       // Check if prevData is null
+      console.log("I am here with user", userId);
       if (prevData) {
-        return {
-          ...prevData,
-          [field]: value,
-        };
+        if (userId != undefined) {
+          const updatedAssignedTo = prevData.assignedTo.map((user) => {
+            if (user.userId === userId) {
+              return {
+                ...user,
+                [field]: value, // Set to '0' if blank
+              };
+            }
+            return user; // Return the user unchanged if it's not the target
+          });
+
+          return {
+            ...prevData,
+            assignedTo: updatedAssignedTo, // Update the assignedTo array
+          };
+        } else if (field in prevData.assignedTo) {
+          console.log("Iam here with", field, value);
+          return {
+            ...prevData,
+            assignedTo: {
+              ...prevData.assignedTo,
+              [field]: value,
+            },
+          };
+        } else {
+          console.log("Iam in else with", field, value);
+          return {
+            ...prevData,
+            [field]: value,
+          };
+        }
       }
       return null; // or return an initial job object if desired
     });

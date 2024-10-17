@@ -22,7 +22,7 @@ import JobImages from "./JobImages";
 
 interface JobBasicInfoProps {
   job: Job;
-  handleInputChange: (field: keyof Job, value: string) => void;
+  handleInputChange: (field: keyof Job, value: string, userId?: String) => void;
   editMode: boolean;
 }
 
@@ -32,6 +32,7 @@ const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
   editMode,
 }) => {
   const isLargeScreen = useIsLargeScreen();
+
   return (
     <View className="flex gap-4 mb-4">
       {editMode ? (
@@ -67,7 +68,7 @@ const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
         </>
       )}
 
-      <View className="flex-row gap-8 mb-8">
+      <View className="flex-row flex-wrap gap-8 mb-8">
         <JobPriorityUpdate
           onChangePriority={(newPriority) => {
             console.log(newPriority);

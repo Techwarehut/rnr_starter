@@ -58,7 +58,7 @@ const JobBSecondaryInfo: React.FC<JobSecondaryInfoProps> = ({
           <View className="flex  w-48">
             <Input
               value={job.customer.businessName}
-              onChangeText={(value) => handleInputChange("customer", value)}
+              onChangeText={(value) => console.log(value)}
               editable={editMode}
               nativeID="Customer"
             />
@@ -69,7 +69,7 @@ const JobBSecondaryInfo: React.FC<JobSecondaryInfoProps> = ({
           <Muted>Due Date:</Muted>
           <View className="flex  w-48">
             <Input
-              value={job.dueDate}
+              value={new Date(job.dueDate).toLocaleString()}
               onChangeText={(value) => handleInputChange("dueDate", value)}
               editable={editMode}
               nativeID="Due Date"

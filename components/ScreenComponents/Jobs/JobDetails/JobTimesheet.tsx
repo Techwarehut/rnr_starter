@@ -13,7 +13,7 @@ import { Plus } from "~/lib/icons/Plus";
 
 interface JobInfoProps {
   job: Job;
-  handleInputChange: (field: keyof Job, value: string) => void;
+  handleInputChange: (field: keyof Job, value: string, userId?: String) => void;
   editMode: boolean;
 }
 
@@ -54,7 +54,9 @@ const JobTimesheet: React.FC<JobInfoProps> = ({
             <View className="flex  w-16">
               <Input
                 value={assignee.hoursSpent.toString()}
-                onChangeText={(value) => handleInputChange("assignedTo", value)}
+                onChangeText={(value) =>
+                  handleInputChange("hoursSpent", value, assignee.userId)
+                }
                 editable={editMode}
               />
             </View>
