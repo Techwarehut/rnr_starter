@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { Text } from "~/components/ui/text";
 import { Job } from "../types";
 import InputField from "../../InputField";
@@ -16,6 +16,8 @@ import JobTimesheet from "./JobTimesheet";
 import { Input } from "~/components/ui/input";
 import { Badge } from "~/components/ui/badge";
 import { statusKeyMapping } from "../Filters/Statustypes";
+import DeleteButton from "../../DeleteButton";
+import { deleteCustomerFromJob } from "~/api/jobsApi";
 
 interface JobSecondaryInfoProps {
   job: Job;
@@ -28,6 +30,23 @@ const JobBSecondaryInfo: React.FC<JobSecondaryInfoProps> = ({
   handleInputChange,
   editMode,
 }) => {
+  const [refreshKey, setRefreshKey] = useState(0);
+  const handleAssignCustomer = async () => {
+    try {
+      setRefreshKey((prev) => prev + 1);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDeleteCustomer = async () => {
+    try {
+      const deleted = await deleteCustomerFromJob(job._id);
+      setRefreshKey((prev) => prev + 1);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <View className="flex gap-12 mb-4">
       <View className="flex gap-4">
@@ -55,13 +74,16 @@ const JobBSecondaryInfo: React.FC<JobSecondaryInfoProps> = ({
 
         <View className="flex flex-row gap-4 items-center justify-between mr-4">
           <Muted>Customer:</Muted>
-          <View className="flex  w-48">
-            <Input
-              value={job.customer.businessName}
-              onChangeText={(value) => console.log(value)}
-              editable={editMode}
-              nativeID="Customer"
-            />
+          <View className="flex-row w-48">
+            <View className="flex-1">
+              <Input
+                value={job.customer.businessName}
+                onChangeText={(value) => console.log(value)}
+                editable={editMode}
+                nativeID="Customer"
+              />
+            </View>
+            <DeleteButton xIcon={true} onDelete={handleDeleteCustomer} />
           </View>
         </View>
 
@@ -71,7 +93,7 @@ const JobBSecondaryInfo: React.FC<JobSecondaryInfoProps> = ({
             <Input
               value={new Date(job.dueDate).toLocaleDateString("en-US", {
                 year: "numeric",
-                month: "long",
+                month: "short",
                 day: "2-digit",
               })}
               onChangeText={(value) => handleInputChange("dueDate", value)}

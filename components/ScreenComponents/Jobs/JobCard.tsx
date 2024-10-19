@@ -5,7 +5,7 @@ import {
   CardFooter,
   CardTitle,
 } from "~/components/ui/card";
-import { Job, Project } from "./types";
+import { Job } from "./types";
 import { Badge } from "~/components/ui/badge";
 import { Text } from "~/components/ui/text";
 import { Pressable, View } from "react-native";
@@ -25,6 +25,10 @@ import {
 } from "./Filters/Statustypes";
 import { UpdateStatus } from "./UpdateStatus";
 import JobStatusUpdate from "./JobStatusUpdate";
+import { AssignJob } from "./JobActions/AssignJob";
+import { useState } from "react";
+import { User } from "../Team/types";
+import { assignJob } from "~/api/jobsApi";
 
 interface JobProps {
   job: Job;
@@ -36,6 +40,15 @@ export const JobCard: React.FC<JobProps> = ({
   onChangeStatus,
   onJobDetail,
 }) => {
+  const [refreshKey, setRefreshKey] = useState(0);
+  const handleAssign = async (user: User) => {
+    try {
+      const assignedUser = await assignJob(job._id, user);
+      setRefreshKey((prev) => prev + 1);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <Card className="p-4 gap-4">
       <View className="flex-row gap-2 items-center">
@@ -76,19 +89,18 @@ export const JobCard: React.FC<JobProps> = ({
           </View>
           <Muted>Assigned:</Muted>
 
-          <View className="flex-row flex-wrap gap-2 bg-secondary p-2 rounded-md items-center">
-            {job.assignedTo.map((item) => (
-              <Avatar key={item.userId} alt="Avatar" className="w-10 h-10">
-                <AvatarImage source={{ uri: item.profileUrl }} />
-                <AvatarFallback>
-                  <Text>{getInitials(item.name)}</Text>
-                </AvatarFallback>
-              </Avatar>
-            ))}
-
-            <Pressable className="h-10 w-10 bg-brand-primary rounded-3xl items-center justify-center p-1">
-              <Plus className="text-primary-foreground" size={18} />
-            </Pressable>
+          <View className="flex-row flex-wrap gap-2 bg-secondary p-2 rounded-md items-center justify-between">
+            <View className="flex-row flex-wrap gap-2">
+              {job.assignedTo.map((item) => (
+                <Avatar key={item.userId} alt="Avatar" className="w-10 h-10">
+                  <AvatarImage source={{ uri: item.profileUrl }} />
+                  <AvatarFallback>
+                    <Text>{getInitials(item.name)}</Text>
+                  </AvatarFallback>
+                </Avatar>
+              ))}
+            </View>
+            <AssignJob onJobAssigned={handleAssign} />
           </View>
         </View>
       </CardContent>

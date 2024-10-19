@@ -8,12 +8,14 @@ import JobTimesheet from "./JobDetails/JobTimesheet";
 import JobPurchaseOrders from "./JobDetails/JobPurchaseOrders";
 import JobComments from "./JobDetails/JobComments";
 import { JobPriorityKeys, JobTypeKeys } from "./Filters/Statustypes";
+import { User } from "../Team/types";
 interface JobDetaiDisplaylProps {
   job: Job;
   handleInputChange: (field: keyof Job, value: string) => void;
   onChangeStatus: (jobId: string, newStatus: string) => void;
   onChangePriority: (jobId: string, newStatus: JobPriorityKeys) => void;
   onChangeType: (jobId: string, newStatus: JobTypeKeys) => void;
+
   editMode: boolean;
 }
 export const JobDetailDisplay: React.FC<JobDetaiDisplaylProps> = ({
@@ -22,6 +24,7 @@ export const JobDetailDisplay: React.FC<JobDetaiDisplaylProps> = ({
   onChangeStatus,
   onChangePriority,
   onChangeType,
+
   editMode,
 }) => {
   return (

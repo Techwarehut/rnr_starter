@@ -24,6 +24,7 @@ import { Input } from "~/components/ui/input";
 import { Textarea } from "~/components/ui/textarea";
 import JobTimesheet from "./JobTimesheet";
 import JobImages from "./JobImages";
+import { User } from "../../Team/types";
 
 interface JobBasicInfoProps {
   job: Job;
@@ -31,6 +32,7 @@ interface JobBasicInfoProps {
   onChangeStatus: (jobId: string, newStatus: string) => void;
   onChangePriority: (jobId: string, newStatus: JobPriorityKeys) => void;
   onChangeType: (jobId: string, newStatus: JobTypeKeys) => void;
+
   editMode: boolean;
 }
 
@@ -40,6 +42,7 @@ const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
   onChangeStatus,
   onChangePriority,
   onChangeType,
+
   editMode,
 }) => {
   const isLargeScreen = useIsLargeScreen();
@@ -85,7 +88,7 @@ const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
         editMode={editMode}
       />
 
-      <View className="flex-row flex-wrap gap-2 justify-around md:justify-start md:gap-8 ">
+      <View className="flex-row flex-wrap gap-2  md:gap-8 ">
         <JobPriorityUpdate
           onChangePriority={(newPriority) => {
             onChangePriority(job._id, newPriority);
@@ -105,16 +108,6 @@ const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
           }}
           status={job.status}
         />
-      </View>
-
-      <View className="flex-row items-center justify-between">
-        <View>
-          <Text className="text-xl">Images</Text>
-          <Muted>Add before or after images</Muted>
-        </View>
-        <Button variant="outline">
-          <Plus className="text-primary" size={18} />
-        </Button>
       </View>
 
       <JobImages
@@ -144,8 +137,8 @@ const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
           <Text className="text-xl">Notes</Text>
           <Muted>Quick Notes for anyone to add</Muted>
         </View>
-        <Button variant="outline">
-          <Plus className="text-primary" size={18} />
+        <Button variant="default">
+          <Plus className="text-primary-foreground" size={18} />
         </Button>
       </View>
 

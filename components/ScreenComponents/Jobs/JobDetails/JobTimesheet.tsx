@@ -1,5 +1,5 @@
 import { Pressable, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { Job } from "../types";
 import { Text } from "~/components/ui/text";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
@@ -10,18 +10,43 @@ import { Input } from "~/components/ui/input";
 import { X } from "~/lib/icons/X";
 import { Button } from "~/components/ui/button";
 import { Plus } from "~/lib/icons/Plus";
+import { AssignJob } from "../JobActions/AssignJob";
+import { User } from "../../Team/types";
+import { assignJob, deleteUserFromJob } from "~/api/jobsApi";
+import DeleteButton from "../../DeleteButton";
+import { deleteUser } from "~/api/UsersApi";
 
 interface JobInfoProps {
   job: Job;
   handleInputChange: (field: keyof Job, value: string, userId?: String) => void;
+
   editMode: boolean;
 }
 
 const JobTimesheet: React.FC<JobInfoProps> = ({
   job,
   handleInputChange,
+
   editMode,
 }) => {
+  const [refreshKey, setRefreshKey] = useState(0);
+  const handleAssign = async (user: User) => {
+    try {
+      const assignedUser = await assignJob(job._id, user);
+      setRefreshKey((prev) => prev + 1);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDelete = async (userId: string) => {
+    try {
+      const deleted = await deleteUserFromJob(job._id, userId);
+      setRefreshKey((prev) => prev + 1);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <View className="flex flex-col gap-2">
       <View className="flex-row items-center justify-between">
@@ -29,9 +54,7 @@ const JobTimesheet: React.FC<JobInfoProps> = ({
           <Text className="text-xl">Assignees</Text>
           <Muted>Add more assignee or Hours Spent</Muted>
         </View>
-        <Button variant="default">
-          <Plus className="text-primary-foreground" size={18} />
-        </Button>
+        <AssignJob onJobAssigned={handleAssign} />
       </View>
       {(job.assignedTo || []).map((assignee) => (
         <View
@@ -63,9 +86,12 @@ const JobTimesheet: React.FC<JobInfoProps> = ({
             <Text>hours</Text>
 
             <View className="flex">
-              <Button variant="link">
-                <X className="text-destructive" size={18} />
-              </Button>
+              <DeleteButton
+                xIcon={true}
+                onDelete={() => {
+                  handleDelete(assignee.userId);
+                }}
+              />
             </View>
           </View>
         </View>

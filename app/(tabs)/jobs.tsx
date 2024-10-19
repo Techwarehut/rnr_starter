@@ -109,7 +109,7 @@ export default function JobScreen() {
     (job) =>
       job.jobTitle.toLowerCase().includes(searchText.toLowerCase()) ||
       job.jobDescription.toLowerCase().includes(searchText.toLowerCase()) ||
-      job.projectName.toLowerCase().includes(searchText.toLowerCase())
+      job.purchaseOrderNumber.toLowerCase().includes(searchText.toLowerCase())
   );
 
   const groupJobs = (groupBy: string) => {
@@ -128,7 +128,7 @@ export default function JobScreen() {
             ? job.assignedTo.map((user) => user.name).join(", ")
             : "Unassigned";
       } else if (groupBy === "Purchase Order") {
-        if (job.projectId) {
+        if (job.purchaseOrderNumber) {
           const purchaseOrderNumber = job.purchaseOrderNumber; // Adjust this according to your data structure
           groupTitle = `${purchaseOrderNumber}`;
         } else {

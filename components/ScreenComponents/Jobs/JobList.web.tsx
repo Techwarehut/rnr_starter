@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Platform,
   Pressable,
@@ -35,6 +35,9 @@ import {
 } from "./Filters/Statustypes";
 import { UpdateStatus } from "./UpdateStatus";
 import JobStatusUpdate from "./JobStatusUpdate";
+import { AssignJob } from "./JobActions/AssignJob";
+import { User } from "../Team/types";
+import { assignJob } from "~/api/jobsApi";
 
 interface JobSectionListProps {
   sections: { title: string; data: Job[] }[];
@@ -66,6 +69,16 @@ const JobSectionList: React.FC<JobSectionListProps> = ({
       return Math.max(calculatedWidth, minWidth); // Ensure it doesn't go below minWidth
     });
   }, [width]);
+
+  const [refreshKey, setRefreshKey] = useState(0);
+  const handleAssign = async (jobId: string, user: User) => {
+    try {
+      const assignedUser = await assignJob(jobId, user);
+      setRefreshKey((prev) => prev + 1);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <SectionList
@@ -176,6 +189,9 @@ const JobSectionList: React.FC<JobSectionListProps> = ({
                             </AvatarFallback>
                           </Avatar>
                         ))}
+                        <AssignJob
+                          onJobAssigned={(user) => handleAssign(job._id, user)}
+                        />
                       </View>
                     </TableCell>
                     <TableCell style={{ width: columnWidths[4] }}>

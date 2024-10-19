@@ -5,6 +5,7 @@ import { Stack, useLocalSearchParams } from "expo-router";
 
 import { Job } from "~/components/ScreenComponents/Jobs/types"; // Import your Job type
 import {
+  assignJob,
   getJobById,
   updateJobPriority,
   updateJobStatus,
@@ -17,6 +18,7 @@ import {
   JobPriorityKeys,
   JobTypeKeys,
 } from "~/components/ScreenComponents/Jobs/Filters/Statustypes";
+import { User } from "~/components/ScreenComponents/Team/types";
 
 const JobDetail = () => {
   const { jobID } = useLocalSearchParams();

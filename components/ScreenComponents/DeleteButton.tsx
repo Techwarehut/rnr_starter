@@ -12,27 +12,42 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "~/components/ui/alert-dialog";
+import { X } from "~/lib/icons/X";
 
 interface ActionButtonsProps {
   onDelete: () => void;
+  xIcon?: boolean;
 }
 
-const DeleteButton: React.FC<ActionButtonsProps> = ({ onDelete }) => {
+const DeleteButton: React.FC<ActionButtonsProps> = ({ onDelete, xIcon }) => {
   const [isAlertDialogOpen, setAlertDialogOpen] = useState(false);
   return (
     <AlertDialog open={isAlertDialogOpen} onOpenChange={setAlertDialogOpen}>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive">
-          <Text className="text-destructive-foreground">Delete</Text>
-        </Button>
+        {!xIcon ? (
+          <Button variant="destructive">
+            <Text className="text-destructive-foreground">Delete</Text>
+          </Button>
+        ) : (
+          <Button variant="link">
+            <X className="text-destructive" size={18} />
+          </Button>
+        )}
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete the
-            selected item.
-          </AlertDialogDescription>
+          {xIcon ? (
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete the
+              data for selected item.
+            </AlertDialogDescription>
+          ) : (
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete the
+              selected item.
+            </AlertDialogDescription>
+          )}
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>
