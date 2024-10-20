@@ -1,4 +1,7 @@
-import { Customer } from "~/components/ScreenComponents/Customers/types";
+import {
+  Customer,
+  SiteLocation,
+} from "~/components/ScreenComponents/Customers/types";
 import {
   JobPriorityKeys,
   JobTypeKeys,
@@ -200,6 +203,16 @@ export const deleteCustomerFromJob = async (
       if (jobIndex !== -1) {
         // Clear the customer field
         jobs[jobIndex].customer = { _id: "", businessName: "" }; // Reset or clear customer
+        jobs[jobIndex].siteLocation = {
+          site_id: "",
+          siteName: "",
+          siteContactPerson: "",
+          siteContactPhone: "",
+          AddressLine: "",
+          City: "",
+          Province: "",
+          zipcode: "",
+        }; // Reset or clear site info
         resolve(jobs[jobIndex]); // Resolve with the updated job
       } else {
         reject(new Error("Job not found")); // Reject if job is not found
@@ -218,7 +231,54 @@ export const addCustomerToJob = async (
       const jobIndex = jobs.findIndex((job) => job._id === jobId);
       if (jobIndex !== -1) {
         // Assign the new customer to the job
-        jobs[jobIndex].customer = newCustomer;
+        jobs[jobIndex].customer = {
+          _id: newCustomer._id,
+          businessName: newCustomer.businessName,
+        };
+        resolve(jobs[jobIndex]); // Resolve with the updated job
+      } else {
+        reject(new Error("Job not found")); // Reject if job is not found
+      }
+    }, 1000); // Simulate a delay
+  });
+};
+
+export const addSiteToJob = async (
+  jobId: string,
+  newSite: SiteLocation
+): Promise<Job | null> => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const jobIndex = jobs.findIndex((job) => job._id === jobId);
+      if (jobIndex !== -1) {
+        // Assign the new customer to the job
+        jobs[jobIndex].siteLocation = newSite;
+        resolve(jobs[jobIndex]); // Resolve with the updated job
+      } else {
+        reject(new Error("Job not found")); // Reject if job is not found
+      }
+    }, 1000); // Simulate a delay
+  });
+};
+
+// Function to delete the customer from a job
+export const deleteSiteFromJob = async (jobId: string): Promise<Job | null> => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const jobIndex = jobs.findIndex((job) => job._id === jobId);
+      if (jobIndex !== -1) {
+        // Clear the customer field
+
+        jobs[jobIndex].siteLocation = {
+          site_id: "",
+          siteName: "",
+          siteContactPerson: "",
+          siteContactPhone: "",
+          AddressLine: "",
+          City: "",
+          Province: "",
+          zipcode: "",
+        }; // Reset or clear site info
         resolve(jobs[jobIndex]); // Resolve with the updated job
       } else {
         reject(new Error("Job not found")); // Reject if job is not found
