@@ -1,3 +1,4 @@
+import { DateType } from "react-native-ui-datepicker";
 import {
   Customer,
   SiteLocation,
@@ -282,6 +283,24 @@ export const deleteSiteFromJob = async (jobId: string): Promise<Job | null> => {
         resolve(jobs[jobIndex]); // Resolve with the updated job
       } else {
         reject(new Error("Job not found")); // Reject if job is not found
+      }
+    }, 1000); // Simulate a delay
+  });
+};
+
+// Function to update a job's due date
+export const updateJobDueDate = async (
+  jobId: string,
+  newDueDate: DateType
+): Promise<Job> => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const index = jobs.findIndex((job) => job._id === jobId);
+      if (index !== -1) {
+        jobs[index].dueDate = newDueDate; // Update dueDate
+        resolve(jobs[index]);
+      } else {
+        reject(new Error("Job not found"));
       }
     }, 1000); // Simulate a delay
   });

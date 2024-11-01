@@ -1,3 +1,4 @@
+import { DateType } from "react-native-ui-datepicker";
 import { SiteLocation } from "../Customers/types";
 import { JobPriorityKeys, JobTypeKeys } from "./Filters/Statustypes";
 
@@ -53,7 +54,7 @@ export interface Job {
   assignedTo: AssignedUser[]; // Array of users assigned to the job
   status: string; // Current status of the job
   purchaseOrderNumber: string; // Associated purchase order number
-  dueDate: string; // Due date for the job
+  dueDate: DateType; // Due date for the job
   priority: JobPriorityKeys; // Priority level (e.g., P1, P2, P3)
 
   customer: customer; // ID of the associated customer

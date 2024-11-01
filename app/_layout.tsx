@@ -15,10 +15,11 @@ import { View } from "react-native";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Text } from "~/components/ui/text";
 import { Button } from "~/components/ui/button";
-import { FastForward } from "~/lib/icons/FastForward";
+
 import { BottomSheetModalProvider } from "~/components/ui/bottom-sheet/bottomSheet";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Separator } from "~/components/ui/separator";
+import Logo from "~/components/ScreenComponents/Logo";
 
 const LIGHT_THEME: Theme = {
   dark: false,
@@ -90,25 +91,15 @@ export default function RootLayout() {
             <Stack.Screen
               name="index"
               options={{
-                headerLeft: () => (
-                  <FastForward
-                    className="text-foreground items-center justify-center ml-2"
-                    size={24}
-                    strokeWidth={1.25}
-                  />
-                ),
+                title: "fast forward",
+                headerLeft: () => <Logo />,
               }}
             />
             <Stack.Screen
               name="createaccount"
               options={{
-                headerLeft: () => (
-                  <FastForward
-                    className="text-foreground items-center justify-center ml-2"
-                    size={24}
-                    strokeWidth={1.25}
-                  />
-                ),
+                title: "fast forward",
+                headerLeft: () => <Logo />,
               }}
             />
             <Stack.Screen
@@ -159,7 +150,7 @@ export default function RootLayout() {
               options={{
                 headerShown: true,
                 headerShadowVisible: true,
-                headerTitle: "Fast Forward",
+                title: "fast forward",
                 headerTitleAlign: "left",
                 headerRight: () => (
                   <View
@@ -179,16 +170,7 @@ export default function RootLayout() {
                     </Avatar>
                   </View>
                 ),
-                headerLeft: () => (
-                  <View className=" justify-center items-center pl-3 pr-3">
-                    {/* <View className="w-12 h-12 bg-brand-primary rounded-full justify-center items-center pl-1"> */}
-                    <FastForward
-                      className=" text-primary"
-                      size={36}
-                      strokeWidth={1}
-                    />
-                  </View>
-                ),
+                headerLeft: () => <Logo />,
               }}
             />
           </Stack>

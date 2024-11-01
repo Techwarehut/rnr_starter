@@ -57,7 +57,6 @@ export default function Screen() {
     <>
       <Stack.Screen
         options={{
-          title: "App Name",
           headerRight: () => (
             <View
               style={{

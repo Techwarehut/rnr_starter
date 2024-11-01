@@ -1,4 +1,5 @@
 import { clsx, type ClassValue } from "clsx";
+import dayjs, { Dayjs } from "dayjs";
 import { useWindowDimensions } from "react-native";
 import { twMerge } from "tailwind-merge";
 
@@ -65,4 +66,27 @@ export function getInitials(name: string): string {
 
 export const generateUniqueId = () => {
   return `${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+};
+
+export const formatDueDate = (dueDate: string | number | Dayjs | Date) => {
+  if (dueDate instanceof Date) {
+    // If it's a Date object
+    return dueDate.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "2-digit",
+    });
+  } else if (dayjs.isDayjs(dueDate)) {
+    // If it's a Dayjs object
+    return dueDate.format("MMM DD, YYYY"); // Customize format as needed
+  } else if (typeof dueDate === "string" || typeof dueDate === "number") {
+    // Convert from string or number to Date
+    const date = new Date(dueDate);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "2-digit",
+    });
+  }
+  return ""; // Default return if none of the types match
 };

@@ -6,7 +6,7 @@ import { Job } from "../types";
 import { H3, Muted } from "~/components/ui/typography";
 
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
-import { getInitials } from "~/lib/utils";
+import { formatDueDate, getInitials } from "~/lib/utils";
 import { Calendar } from "~/lib/icons/Calendar";
 import { Input } from "~/components/ui/input";
 import { Badge } from "~/components/ui/badge";
@@ -17,15 +17,14 @@ import {
   addSiteToJob,
   deleteCustomerFromJob,
   deleteSiteFromJob,
+  updateJobDueDate,
 } from "~/api/jobsApi";
 import { Button } from "~/components/ui/button";
 import { AssignCustomer } from "../JobActions/AssignCustomer";
 import { Customer, SiteLocation } from "../../Customers/types";
 import { addSiteLocation } from "~/api/customerApi";
-import DateTimePicker, {
-  DateTimePickerEvent,
-} from "@react-native-community/datetimepicker";
-import DatePickerWeb from "../../DatePickerWeb";
+import DateTimePicker, { DateType } from "react-native-ui-datepicker";
+import { DatePicker } from "./DatePicker";
 
 interface JobSecondaryInfoProps {
   job: Job;
@@ -39,14 +38,14 @@ const JobBSecondaryInfo: React.FC<JobSecondaryInfoProps> = ({
   editMode,
 }) => {
   const [refreshKey, setRefreshKey] = useState(0);
-  const [date, setDate] = useState(new Date(1598051730000));
+  const [date, setDate] = useState<DateType>(new Date(1598051730000));
   const [show, setShow] = useState(false);
 
-  const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
+  const onChangeDate = async (selectedDate: DateType) => {
     // Handle the case where selectedDate might be undefined
     if (selectedDate) {
-      const currentDate = selectedDate;
-      setDate(currentDate);
+      const updatedJob = await updateJobDueDate(job._id, selectedDate);
+      setRefreshKey((prev) => prev + 1);
     }
     setShow(false); // Hide the picker regardless of selectedDate
   };
@@ -178,33 +177,15 @@ const JobBSecondaryInfo: React.FC<JobSecondaryInfoProps> = ({
           <Muted>Due Date:</Muted>
 
           <View className="flex-row  gap-4 items-center w-60 ">
-            {Platform.OS === "web" ? (
-              <DatePickerWeb
-                onChange={(date) => {
-                  console.log(date);
-                }}
+            <View className="flex-1">
+              <Input
+                value={job.dueDate ? formatDueDate(job.dueDate) : "No due date"}
+                onChangeText={(value) => handleInputChange("dueDate", value)}
+                editable={editMode}
+                nativeID="Due Date"
               />
-            ) : (
-              <>
-                <View className="flex-1">
-                  <Input
-                    value={new Date(job.dueDate).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "short",
-                      day: "2-digit",
-                    })}
-                    onChangeText={(value) =>
-                      handleInputChange("dueDate", value)
-                    }
-                    editable={editMode}
-                    nativeID="Due Date"
-                  />
-                </View>
-                <Pressable className=" mr-4" onPress={showDatePicker}>
-                  <Calendar className="text-primary" size={21} />
-                </Pressable>
-              </>
-            )}
+            </View>
+            <DatePicker date={job.dueDate} onChangeDate={onChangeDate} />
           </View>
         </View>
 
@@ -261,15 +242,6 @@ const JobBSecondaryInfo: React.FC<JobSecondaryInfoProps> = ({
           </View>
         </View>
       </View>
-      {show && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode="date"
-          is24Hour={true}
-          onChange={onChange}
-        />
-      )}
     </View>
   );
 };
