@@ -2,12 +2,8 @@ import { router, Stack } from "expo-router";
 import { useEffect, useState } from "react";
 import { ScrollView, SectionList, View } from "react-native";
 import Toast from "react-native-toast-message";
-import { CreateNew } from "~/components/ScreenComponents/Jobs/CreateNew";
-import { JobCard } from "~/components/ScreenComponents/Jobs/JobCard";
-import SearchBar from "~/components/ScreenComponents/SearchBar";
+
 import { useToast } from "~/components/ScreenComponents/ToastMessage";
-import { Text } from "~/components/ui/text";
-import projects from "~/data/projects.json";
 
 import { Job } from "~/components/ScreenComponents/Jobs/types";
 import JobSectionList from "~/components/ScreenComponents/Jobs/JobList";
@@ -15,6 +11,8 @@ import { SearchInput } from "~/components/ScreenComponents/SearchInput";
 import { JobFilters } from "~/components/ScreenComponents/Jobs/JobFilters";
 import { JobTypeKeys } from "~/components/ScreenComponents/Jobs/Filters/Statustypes";
 import { getAllJobs, updateJobStatus } from "~/api/jobsApi";
+
+import { AddNewJob } from "~/components/ScreenComponents/Jobs/AddNewJob";
 
 export default function JobScreen() {
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -109,7 +107,13 @@ export default function JobScreen() {
     (job) =>
       job.jobTitle.toLowerCase().includes(searchText.toLowerCase()) ||
       job.jobDescription.toLowerCase().includes(searchText.toLowerCase()) ||
-      job.purchaseOrderNumber.toLowerCase().includes(searchText.toLowerCase())
+      job.purchaseOrderNumber
+        .toLowerCase()
+        .includes(searchText.toLowerCase()) ||
+      job.assignedTo.some((user) =>
+        user.name.toLowerCase().includes(searchText.toLowerCase())
+      ) ||
+      job.customer.businessName.toLowerCase().includes(searchText.toLowerCase())
   );
 
   const groupJobs = (groupBy: string) => {
@@ -157,12 +161,7 @@ export default function JobScreen() {
         options={{
           headerRight: () => (
             <View className="flex-1 flex-row justify-center items-center m-2 gap-1">
-              <CreateNew
-                onNewJobAdd={() => showSuccessToast("Job Added successfully!")}
-                onNewProjectAdd={() =>
-                  showSuccessToast("Project Added successfully!")
-                }
-              />
+              <AddNewJob onNewJobAdd={(job) => console.log(job)} />
             </View>
           ),
         }}

@@ -13,6 +13,7 @@ import { useColorScheme } from "~/lib/useColorScheme";
 import { H1, H3 } from "~/components/ui/typography";
 import { Job } from "./types";
 import { FileText } from "~/lib/icons/FileText";
+import AddNewJobForm from "./AddNewJobFrom";
 
 interface AddNewJobProps {
   onNewJobAdd: (data: Job) => void;
@@ -41,9 +42,13 @@ export const AddNewJob: React.FC<AddNewJobProps> = ({ onNewJobAdd }) => {
 
   return (
     <>
-      <Button size="sm" variant="ghost" className="flex-row gap-2">
-        <FileText size={18} className="text-primary" />
-        <Text>Job</Text>
+      <Button
+        size="sm"
+        variant="default"
+        className="shadow shadow-foreground/5"
+        onPress={handlePresentModalPress}
+      >
+        <Text>Add New Job</Text>
       </Button>
 
       <BottomSheetModal
@@ -64,6 +69,8 @@ export const AddNewJob: React.FC<AddNewJobProps> = ({ onNewJobAdd }) => {
       >
         <BottomSheetView className="flex-1 bg-popover mb-8">
           <H3 className="text-center">Create New Job</H3>
+
+          <AddNewJobForm onChange={(data) => console.log(data.customer)} />
 
           <View className="p-4">
             <Button>

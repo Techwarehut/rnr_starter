@@ -30,7 +30,6 @@ const SiteLocationPicker: React.FC<SiteLocationProps> = ({
     item: SiteLocation;
     index: number;
   }) => {
-    console.log("Rendering item:", item); // Log the item here
     return (
       <TableRow
         className={cn("active:bg-secondary", index % 2 && "bg-muted/40")}

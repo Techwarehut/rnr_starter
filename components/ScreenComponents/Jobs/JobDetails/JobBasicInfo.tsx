@@ -29,21 +29,19 @@ import { User } from "../../Team/types";
 interface JobBasicInfoProps {
   job: Job;
   handleInputChange: (field: keyof Job, value: string, userId?: String) => void;
-  onChangeStatus: (jobId: string, newStatus: string) => void;
-  onChangePriority: (jobId: string, newStatus: JobPriorityKeys) => void;
-  onChangeType: (jobId: string, newStatus: JobTypeKeys) => void;
-
   editMode: boolean;
+  onChangeStatus?: (jobId: string, newStatus: string) => void;
+  onChangePriority?: (jobId: string, newStatus: JobPriorityKeys) => void;
+  onChangeType?: (jobId: string, newStatus: JobTypeKeys) => void;
 }
 
 const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
   job,
   handleInputChange,
+  editMode,
   onChangeStatus,
   onChangePriority,
   onChangeType,
-
-  editMode,
 }) => {
   const isLargeScreen = useIsLargeScreen();
 
@@ -91,20 +89,20 @@ const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
       <View className="flex-row flex-wrap gap-2  md:gap-8 ">
         <JobPriorityUpdate
           onChangePriority={(newPriority) => {
-            onChangePriority(job._id, newPriority);
+            if (onChangePriority) onChangePriority(job._id, newPriority);
           }}
           priority={job.priority}
         />
         <JobTypeUpdate
           onChangeType={(newType) => {
-            onChangeType(job._id, newType);
+            if (onChangeType) onChangeType(job._id, newType);
           }}
           type={job.jobType}
         />
 
         <JobStatusUpdate
           onChangeStatus={(newStatus) => {
-            onChangeStatus(job._id, newStatus);
+            if (onChangeStatus) onChangeStatus(job._id, newStatus);
           }}
           status={job.status}
         />

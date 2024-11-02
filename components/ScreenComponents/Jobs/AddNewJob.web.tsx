@@ -15,6 +15,7 @@ import { Text } from "~/components/ui/text";
 import React from "react";
 import { Job } from "./types";
 import { FileText } from "~/lib/icons/FileText";
+import AddNewJobForm from "./AddNewJobFrom";
 
 interface AddNewJobProps {
   onNewJobAdd: (data: Job) => void;
@@ -24,15 +25,20 @@ export const AddNewJob: React.FC<AddNewJobProps> = ({ onNewJobAdd }) => {
     <ScrollView contentContainerClassName="flex-1 justify-center items-center p-6 ">
       <Dialog>
         <DialogTrigger asChild>
-          <Button size="sm" variant="ghost" className="flex-row gap-2">
-            <FileText size={18} className="text-primary" />
-            <Text>Job</Text>
+          <Button
+            size="sm"
+            variant="default"
+            className="shadow shadow-foreground/5"
+          >
+            <Text>Add New Job</Text>
           </Button>
         </DialogTrigger>
         <DialogContent className="max-w-[300px] md:max-w-full">
           <DialogHeader>
             <DialogTitle>Create New Job</DialogTitle>
-            <DialogDescription></DialogDescription>
+            <DialogDescription>
+              <AddNewJobForm onChange={(data) => console.log(data)} />
+            </DialogDescription>
           </DialogHeader>
 
           <DialogFooter>

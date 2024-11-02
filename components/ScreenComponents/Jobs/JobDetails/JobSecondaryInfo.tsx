@@ -1,7 +1,7 @@
 import { Platform, Pressable, View } from "react-native";
 import React, { useState } from "react";
 import { Text } from "~/components/ui/text";
-import { Job } from "../types";
+import { customer, Job } from "../types";
 
 import { H3, Muted } from "~/components/ui/typography";
 
@@ -28,18 +28,21 @@ import { DatePicker } from "./DatePicker";
 
 interface JobSecondaryInfoProps {
   job: Job;
-  handleInputChange: (field: keyof Job, value: string) => void;
+  handleInputChange: (
+    field: keyof Job,
+    value: string | Customer | SiteLocation
+  ) => void;
   editMode: boolean;
+  addNew?: boolean;
 }
 
 const JobBSecondaryInfo: React.FC<JobSecondaryInfoProps> = ({
   job,
   handleInputChange,
   editMode,
+  addNew = false,
 }) => {
   const [refreshKey, setRefreshKey] = useState(0);
-  const [date, setDate] = useState<DateType>(new Date(1598051730000));
-  const [show, setShow] = useState(false);
 
   const onChangeDate = async (selectedDate: DateType) => {
     // Handle the case where selectedDate might be undefined
@@ -47,7 +50,6 @@ const JobBSecondaryInfo: React.FC<JobSecondaryInfoProps> = ({
       const updatedJob = await updateJobDueDate(job._id, selectedDate);
       setRefreshKey((prev) => prev + 1);
     }
-    setShow(false); // Hide the picker regardless of selectedDate
   };
 
   const handleAssignCustomer = async (customer: Customer) => {
@@ -72,7 +74,24 @@ const JobBSecondaryInfo: React.FC<JobSecondaryInfoProps> = ({
 
   const handleDeleteCustomer = async () => {
     try {
-      const deleted = await deleteCustomerFromJob(job._id);
+      if (!addNew) {
+        const deleted = await deleteCustomerFromJob(job._id);
+      } else {
+        job.customer = {
+          _id: "",
+          businessName: "",
+        };
+        job.siteLocation = {
+          site_id: "",
+          siteName: "",
+          siteContactPerson: "",
+          siteContactPhone: "",
+          AddressLine: "",
+          City: "",
+          Province: "",
+          zipcode: "",
+        };
+      }
       setRefreshKey((prev) => prev + 1);
     } catch (error) {
       console.error(error);
@@ -81,16 +100,26 @@ const JobBSecondaryInfo: React.FC<JobSecondaryInfoProps> = ({
 
   const handleDeleteSiteLocation = async () => {
     try {
-      const deleted = await deleteSiteFromJob(job._id);
+      if (!addNew) {
+        const deleted = await deleteSiteFromJob(job._id);
+      } else {
+        job.siteLocation = {
+          site_id: "",
+          siteName: "",
+          siteContactPerson: "",
+          siteContactPhone: "",
+          AddressLine: "",
+          City: "",
+          Province: "",
+          zipcode: "",
+        };
+      }
       setRefreshKey((prev) => prev + 1);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const showDatePicker = () => {
-    setShow(true);
-  };
   return (
     <View className="flex gap-12 mb-4">
       <View className="flex gap-4">
@@ -123,8 +152,13 @@ const JobBSecondaryInfo: React.FC<JobSecondaryInfoProps> = ({
             {job.customer._id === "" ? (
               <AssignCustomer
                 onCustomerAssigned={(customer, site) => {
-                  handleAssignCustomer(customer);
-                  handleAssignSite(site);
+                  if (addNew) {
+                    handleInputChange("customer", customer);
+                    handleInputChange("siteLocation", site);
+                  } else {
+                    handleAssignCustomer(customer);
+                    handleAssignSite(site);
+                  }
                 }}
               />
             ) : (
@@ -133,7 +167,7 @@ const JobBSecondaryInfo: React.FC<JobSecondaryInfoProps> = ({
                   <Input
                     value={job.customer.businessName}
                     onChangeText={(value) => console.log(value)}
-                    editable={editMode}
+                    editable={false}
                     nativeID="Customer"
                   />
                 </View>
@@ -143,7 +177,7 @@ const JobBSecondaryInfo: React.FC<JobSecondaryInfoProps> = ({
           </View>
         </View>
 
-        <View className="flex flex-row items-center justify-between">
+        <View className="flex gap-4 flex-row items-center justify-between">
           <Muted>Site Location:</Muted>
 
           <View className="flex-row w-60">
@@ -151,7 +185,11 @@ const JobBSecondaryInfo: React.FC<JobSecondaryInfoProps> = ({
               <AssignCustomer
                 selectedCustomerId={job.customer._id}
                 onCustomerAssigned={(customer, site) => {
-                  handleAssignSite(site);
+                  if (addNew) {
+                    handleInputChange("siteLocation", site);
+                  } else {
+                    handleAssignSite(site);
+                  }
                 }}
               />
             ) : (
@@ -160,7 +198,7 @@ const JobBSecondaryInfo: React.FC<JobSecondaryInfoProps> = ({
                   <Input
                     value={job.siteLocation.siteName}
                     onChangeText={(value) => console.log(value)}
-                    editable={editMode}
+                    editable={false}
                     nativeID="Site Location"
                   />
                 </View>
@@ -181,7 +219,7 @@ const JobBSecondaryInfo: React.FC<JobSecondaryInfoProps> = ({
               <Input
                 value={job.dueDate ? formatDueDate(job.dueDate) : "No due date"}
                 onChangeText={(value) => handleInputChange("dueDate", value)}
-                editable={editMode}
+                editable={false}
                 nativeID="Due Date"
               />
             </View>
@@ -199,49 +237,51 @@ const JobBSecondaryInfo: React.FC<JobSecondaryInfoProps> = ({
         </View>
       </View>
 
-      <View className="flex gap-4">
-        <View className="flex-row items-center justify-between my-2">
-          <View>
-            <Text className="text-xl">Links</Text>
-            <Muted>Links to Invoice, Estimate and PO</Muted>
+      {!addNew && (
+        <View className="flex gap-4">
+          <View className="flex-row items-center justify-between my-2">
+            <View>
+              <Text className="text-xl">Links</Text>
+              <Muted>Links to Invoice, Estimate and PO</Muted>
+            </View>
           </View>
-        </View>
 
-        <View className="flex flex-row  items-center justify-between">
-          <Muted>Linked PO</Muted>
-          <View className="flex  w-60">
-            <Input
-              value={job.purchaseOrderNumber}
-              onChangeText={(value) =>
-                handleInputChange("purchaseOrderNumber", value)
-              }
-              editable={editMode}
-            />
+          <View className="flex flex-row  items-center justify-between">
+            <Muted>Linked PO</Muted>
+            <View className="flex  w-60">
+              <Input
+                value={job.purchaseOrderNumber}
+                onChangeText={(value) =>
+                  handleInputChange("purchaseOrderNumber", value)
+                }
+                editable={editMode}
+              />
+            </View>
           </View>
-        </View>
 
-        <View className="flex flex-row items-center justify-between">
-          <Muted>Estimate:</Muted>
-          <View className="flex  w-60">
-            <Input
-              value={job.estimateId || ""}
-              onChangeText={(value) => handleInputChange("estimateId", value)}
-              editable={editMode}
-            />
+          <View className="flex flex-row items-center justify-between">
+            <Muted>Estimate:</Muted>
+            <View className="flex  w-60">
+              <Input
+                value={job.estimateId || ""}
+                onChangeText={(value) => handleInputChange("estimateId", value)}
+                editable={editMode}
+              />
+            </View>
           </View>
-        </View>
 
-        <View className="flex flex-row  items-center justify-between">
-          <Muted>Invoice:</Muted>
-          <View className="flex  w-60">
-            <Input
-              value={job.invoiceId || ""}
-              onChangeText={(value) => handleInputChange("invoiceId", value)}
-              editable={editMode}
-            />
+          <View className="flex flex-row  items-center justify-between">
+            <Muted>Invoice:</Muted>
+            <View className="flex  w-60">
+              <Input
+                value={job.invoiceId || ""}
+                onChangeText={(value) => handleInputChange("invoiceId", value)}
+                editable={editMode}
+              />
+            </View>
           </View>
         </View>
-      </View>
+      )}
     </View>
   );
 };
