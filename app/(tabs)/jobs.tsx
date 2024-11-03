@@ -1,4 +1,4 @@
-import { router, Stack } from "expo-router";
+import { router, Stack, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { ScrollView, SectionList, View } from "react-native";
 import Toast from "react-native-toast-message";
@@ -12,7 +12,8 @@ import { JobFilters } from "~/components/ScreenComponents/Jobs/JobFilters";
 import { JobTypeKeys } from "~/components/ScreenComponents/Jobs/Filters/Statustypes";
 import { getAllJobs, updateJobStatus } from "~/api/jobsApi";
 
-import { AddNewJob } from "~/components/ScreenComponents/Jobs/AddNewJob";
+import { Button } from "~/components/ui/button";
+import { Text } from "~/components/ui/text";
 
 export default function JobScreen() {
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -42,6 +43,7 @@ export default function JobScreen() {
     Maintenance: false,
   });
 
+  const router = useRouter();
   const fetchJobs = async () => {
     try {
       const data = await getAllJobs(); // Call the API
@@ -161,7 +163,14 @@ export default function JobScreen() {
         options={{
           headerRight: () => (
             <View className="flex-1 flex-row justify-center items-center m-2 gap-1">
-              <AddNewJob onNewJobAdd={(job) => console.log(job)} />
+              <Button
+                size="sm"
+                variant="default"
+                className="shadow shadow-foreground/5"
+                onPress={() => router.push("/jobs/addnew")}
+              >
+                <Text>Add New Job</Text>
+              </Button>
             </View>
           ),
         }}

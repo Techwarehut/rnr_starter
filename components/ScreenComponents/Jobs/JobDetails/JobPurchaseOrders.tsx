@@ -1,5 +1,5 @@
 import { View, ScrollView, Platform } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Job } from "../types";
 import { Text } from "~/components/ui/text";
 import {
@@ -12,7 +12,12 @@ import {
 import { Button } from "~/components/ui/button";
 import { Muted } from "~/components/ui/typography";
 import { Badge } from "~/components/ui/badge";
-import { useIsLargeScreen } from "~/lib/utils";
+import { getStatusClassName, useIsLargeScreen } from "~/lib/utils";
+import { getPurchaseOrdersByJobID } from "~/api/purchasesApi";
+import { PurchaseOrder } from "../../Purchases/types";
+import { useToast } from "../../ToastMessage";
+import Toast from "react-native-toast-message";
+import PurchaseCard from "../../Purchases/PurchaseCard";
 
 // Example fake purchase orders array with status and total value
 const fakePurchaseOrders = [
@@ -70,102 +75,47 @@ const JobPurchaseOrders: React.FC<JobInfoProps> = ({
   editMode,
 }) => {
   const cardWidth = 300;
-
+  const [purchases, setPurchases] = useState<PurchaseOrder[]>([]);
+  const { showSuccessToast, showErrorToast } = useToast();
   // Function to calculate total value of items in a purchase order
-  const getStatusClassName = (status: string) => {
-    switch (status) {
-      case "Approved":
-        return "text-brand-primary";
-      case "Rejected":
-        return "text-destructive";
-      default:
-        return "text-muted-foreground"; // Default class for Pending or other statuses
+
+  const fetchPurchasesbyJob = async () => {
+    try {
+      const data = await getPurchaseOrdersByJobID(job._id); // Call the API
+      setPurchases(data);
+    } catch (error) {
+      showErrorToast("Failed to fetch Purchases!");
     }
   };
 
+  useEffect(() => {
+    fetchPurchasesbyJob();
+  }, []);
+
   return (
-    <ScrollView
-      pagingEnabled
-      scrollEventThrottle={200}
-      decelerationRate="fast"
-      snapToInterval={cardWidth}
-      snapToAlignment="start"
-      horizontal
-      showsHorizontalScrollIndicator={useIsLargeScreen()}
-      contentContainerClassName="p-2"
-    >
-      <View className="flex-row gap-4 mr-4">
-        {fakePurchaseOrders.map((order) => (
-          <Card
-            key={order.purchaseOrderNumber}
-            className="p-4 w-80 web:w-64 gap-4"
-          >
-            <View className="flex-row">
-              <Badge className="p-1 px-4">
-                <Text
-                  className={`p-1 px-4 ${getStatusClassName(order.status)}`}
-                >
-                  {order.status}
-                </Text>
-              </Badge>
-            </View>
-
-            <CardTitle>{order.supplierName}</CardTitle>
-            <CardDescription>{order.purchaseOrderNumber}</CardDescription>
-
-            <CardContent>
-              <View className="flex-row justify-between items-center mb-4">
-                <Muted>Item</Muted>
-                <Muted>Qty</Muted>
-                <Muted>Price</Muted>
-              </View>
-              {order.items.map((item, index) => (
-                <View
-                  key={index}
-                  className="flex-row justify-between items-center"
-                >
-                  <Text>{item.itemName}</Text>
-                  <Text>{item.quantity}</Text>
-                  <Text>${item.price.toFixed(2)}</Text>
-                </View>
-              ))}
-              <View className="flex-row mt-4 justify-end -mr-2">
-                <Button variant="link">
-                  <Text>Add Items</Text>
-                </Button>
-              </View>
-            </CardContent>
-            <View className="flex-row items-center justify-between">
-              <Text>Total</Text>
-              <Text
-                className={`text-xl semiBold ${getStatusClassName(
-                  order.status
-                )}`}
-              >
-                ${order.total.toFixed(2)}
-              </Text>
-            </View>
-
-            <CardFooter className="flex-row items-center justify-between gap-2">
-              {order.status === "Pending" ? (
-                <>
-                  <Button variant="outline">
-                    <Text>Approve</Text>
-                  </Button>
-                  <Button variant="destructive">
-                    <Text>Reject</Text>
-                  </Button>
-                </>
-              ) : (
-                <Button variant="outline">
-                  <Text>Move to Pending</Text>
-                </Button>
-              )}
-            </CardFooter>
-          </Card>
-        ))}
-      </View>
-    </ScrollView>
+    <>
+      <ScrollView
+        pagingEnabled
+        scrollEventThrottle={200}
+        decelerationRate="fast"
+        snapToInterval={cardWidth}
+        snapToAlignment="start"
+        horizontal
+        showsHorizontalScrollIndicator={useIsLargeScreen()}
+        contentContainerClassName="p-2"
+      >
+        <View className="flex-row gap-4 mr-4">
+          {purchases.map((order) => (
+            <PurchaseCard
+              key={order.purchaseOrderNumber}
+              item={order}
+              horizontalView={true}
+            />
+          ))}
+        </View>
+      </ScrollView>
+      <Toast />
+    </>
   );
 };
 

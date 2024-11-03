@@ -20,6 +20,7 @@ import TextField from "../TextField";
 import JobBSecondaryInfo from "./JobDetails/JobSecondaryInfo";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { AssignJob } from "./JobActions/AssignJob";
+import { DateType } from "react-native-ui-datepicker";
 
 interface AddJobFormProps {
   onChange: (data: Job) => void;
@@ -67,11 +68,9 @@ const AddNewJobForm: React.FC<AddJobFormProps> = ({ onChange }) => {
 
   const handleInputChange = (
     field: keyof Job,
-    value: string | Customer | SiteLocation | AssignedUser
+    value: string | Customer | SiteLocation | AssignedUser | DateType
   ) => {
     let updatedJobData = { ...job };
-
-    console.log(field, value);
 
     // Check if the field is a key of SiteLocation
     if (field in updatedJobData.siteLocation) {
@@ -118,7 +117,7 @@ const AddNewJobForm: React.FC<AddJobFormProps> = ({ onChange }) => {
   return (
     <ScrollView
       showsVerticalScrollIndicator={Platform.OS === "web"}
-      contentContainerClassName="p-4 flex gap-4"
+      contentContainerClassName="flex-1 p-4 gap-4"
     >
       {/* Top Container */}
       <View>
@@ -141,26 +140,26 @@ const AddNewJobForm: React.FC<AddJobFormProps> = ({ onChange }) => {
         />
       </View>
 
-      <View className="flex-row flex-wrap items-center  gap-2 my-4">
+      <View className="flex md:flex-row md:flex-wrap items-start md:items-center gap-2 my-4">
         <Label nativeID="Job Priority">Job Priority</Label>
         <JobPriorityUpdate
-          onChangePriority={(newPriority) => {}}
+          onChangePriority={(newPriority) => {
+            handleInputChange("priority", newPriority);
+          }}
           priority={job.priority}
         />
 
         <Label nativeID="Job Priority">Job type</Label>
 
-        <JobTypeUpdate onChangeType={(newType) => {}} type={job.jobType} />
+        <JobTypeUpdate
+          onChangeType={(newType) => {
+            handleInputChange("jobType", newType);
+          }}
+          type={job.jobType}
+        />
       </View>
 
       <View className="flex md:flex-row gap-8 md:w-full">
-        <JobBSecondaryInfo
-          job={job}
-          handleInputChange={handleInputChange}
-          editMode={true}
-          addNew={true}
-        />
-
         {/* Contact Details */}
         <View className="flex gap-4 md:flex-1">
           <View className="flex-row items-center justify-between my-2">
@@ -215,6 +214,14 @@ const AddNewJobForm: React.FC<AddJobFormProps> = ({ onChange }) => {
               nativeID="Estimate"
             />
           </View>
+        </View>
+        <View className="flex gap-4 md:flex-1">
+          <JobBSecondaryInfo
+            job={job}
+            handleInputChange={handleInputChange}
+            editMode={true}
+            addNew={true}
+          />
         </View>
       </View>
     </ScrollView>

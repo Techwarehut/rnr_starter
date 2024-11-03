@@ -30,7 +30,7 @@ interface JobSecondaryInfoProps {
   job: Job;
   handleInputChange: (
     field: keyof Job,
-    value: string | Customer | SiteLocation
+    value: string | Customer | SiteLocation | DateType
   ) => void;
   editMode: boolean;
   addNew?: boolean;
@@ -47,7 +47,11 @@ const JobBSecondaryInfo: React.FC<JobSecondaryInfoProps> = ({
   const onChangeDate = async (selectedDate: DateType) => {
     // Handle the case where selectedDate might be undefined
     if (selectedDate) {
-      const updatedJob = await updateJobDueDate(job._id, selectedDate);
+      if (!addNew) {
+        const updatedJob = await updateJobDueDate(job._id, selectedDate);
+      } else {
+        handleInputChange("dueDate", selectedDate);
+      }
       setRefreshKey((prev) => prev + 1);
     }
   };

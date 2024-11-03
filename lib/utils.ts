@@ -90,3 +90,14 @@ export const formatDueDate = (dueDate: string | number | Dayjs | Date) => {
   }
   return ""; // Default return if none of the types match
 };
+
+export const getStatusClassName = (status: string) => {
+  switch (status) {
+    case "Approved":
+      return "text-brand-primary";
+    case "Rejected":
+      return "text-destructive";
+    default:
+      return "text-muted-foreground"; // Default class for Pending or other statuses
+  }
+};

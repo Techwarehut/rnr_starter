@@ -9,9 +9,14 @@ import JobPurchaseOrders from "./JobDetails/JobPurchaseOrders";
 import JobComments from "./JobDetails/JobComments";
 import { JobPriorityKeys, JobTypeKeys } from "./Filters/Statustypes";
 import { User } from "../Team/types";
+import { Customer, SiteLocation } from "../Customers/types";
+import { DateType } from "react-native-ui-datepicker";
 interface JobDetaiDisplaylProps {
   job: Job;
-  handleInputChange: (field: keyof Job, value: string) => void;
+  handleInputChange: (
+    field: keyof Job,
+    value: string | Customer | SiteLocation | DateType
+  ) => void;
   onChangeStatus: (jobId: string, newStatus: string) => void;
   onChangePriority: (jobId: string, newStatus: JobPriorityKeys) => void;
   onChangeType: (jobId: string, newStatus: JobTypeKeys) => void;

@@ -145,6 +145,18 @@ export default function RootLayout() {
                 headerBackTitleVisible: false,
               }}
             />
+
+            <Stack.Screen
+              name="jobs/addnew"
+              options={{
+                headerShown: true,
+                headerTitle: "Add New Job",
+                presentation: Platform.OS === "ios" ? "card" : "modal",
+                headerTitleAlign: "left",
+                //headerBackVisible: true,
+                headerBackTitleVisible: false,
+              }}
+            />
             <Stack.Screen
               name="(tabs)"
               options={{
