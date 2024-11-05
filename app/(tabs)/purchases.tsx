@@ -3,8 +3,12 @@ import { useEffect, useState } from "react";
 import { View } from "react-native";
 import Toast from "react-native-toast-message";
 import { getAllPurchaseOrders } from "~/api/purchasesApi";
+import { PurchaseFilters } from "~/components/ScreenComponents/Purchases/PurchaseCardElements/PurchaseFilters";
 import PurchasesList from "~/components/ScreenComponents/Purchases/PurchasesList";
-import { PurchaseOrder } from "~/components/ScreenComponents/Purchases/types";
+import {
+  PurchaseOrder,
+  StatusKeys,
+} from "~/components/ScreenComponents/Purchases/types";
 import { SearchInput } from "~/components/ScreenComponents/SearchInput";
 import { useToast } from "~/components/ScreenComponents/ToastMessage";
 import { Button } from "~/components/ui/button";
@@ -15,6 +19,15 @@ export default function Purchases() {
   const [purchases, setPurchases] = useState<PurchaseOrder[]>([]);
   const { showSuccessToast, showErrorToast } = useToast();
   const [searchText, setSearchText] = useState("");
+  const [group, setGroup] = useState("Customer");
+  const [selectedStatuses, setSelectedStatuses] = useState<
+    Record<StatusKeys, boolean>
+  >({
+    Request: false,
+    Approved: false,
+    Issued: false,
+    Rejected: false,
+  });
   const router = useRouter();
 
   const fetchPurchases = async () => {
@@ -29,6 +42,25 @@ export default function Purchases() {
   useEffect(() => {
     fetchPurchases();
   }, []);
+
+  useEffect(() => {
+    const filtered = purchases.filter((purchase) => {
+      // Normalize the purchase status to match the key in selectedStatuses
+      const statusKey = purchase.status.replace(/\s+/g, "") as StatusKeys; // Remove spaces and cast to StatusKeys
+
+      const statusMatches =
+        selectedStatuses[statusKey] === true ||
+        !Object.values(selectedStatuses).some(Boolean);
+
+      return statusMatches;
+    });
+
+    setPurchases(filtered);
+  }, [selectedStatuses]);
+
+  const handleStatusFilter = (newStates: Record<string, boolean>) => {
+    setSelectedStatuses(newStates);
+  };
 
   const handleSearch = (searchText: string) => {
     setSearchText(searchText);
@@ -71,6 +103,12 @@ export default function Purchases() {
           />
           {/* Scheduling - Backlog, employees (drag and drop) */}
           {/* Filters and other UI components */}
+          <PurchaseFilters
+            selectedGroupValue={group}
+            initialStatusCheckedStates={selectedStatuses}
+            setSelectedGroupValue={setGroup}
+            handleStatusChange={handleStatusFilter}
+          />
         </View>
         <PurchasesList purchases={filteredPurchases} />
       </View>
