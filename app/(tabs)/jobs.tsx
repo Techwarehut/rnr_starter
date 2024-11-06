@@ -17,6 +17,7 @@ import { Text } from "~/components/ui/text";
 
 export default function JobScreen() {
   const [jobs, setJobs] = useState<Job[]>([]);
+  const [filteredjobs, setFilteredJobs] = useState<Job[]>([]);
   const { showSuccessToast, showErrorToast } = useToast();
   const [searchText, setSearchText] = useState("");
   const [group, setGroup] = useState("Purchase Order");
@@ -48,6 +49,7 @@ export default function JobScreen() {
     try {
       const data = await getAllJobs(); // Call the API
       setJobs(data);
+      setFilteredJobs(data);
     } catch (error) {
       showErrorToast("Failed to fetch Jobs!");
     }
@@ -71,7 +73,7 @@ export default function JobScreen() {
       return statusMatches && jobTypeMatches;
     });
 
-    setJobs(filtered);
+    setFilteredJobs(filtered);
   }, [selectedStatuses, selectedJobType]);
 
   const handleStatusFilter = (newStates: Record<string, boolean>) => {
@@ -105,7 +107,7 @@ export default function JobScreen() {
     });
   };
 
-  const filteredJobs = jobs.filter(
+  const searchfilteredJobs = filteredjobs.filter(
     (job) =>
       job.jobTitle.toLowerCase().includes(searchText.toLowerCase()) ||
       job.jobDescription.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -121,7 +123,7 @@ export default function JobScreen() {
   const groupJobs = (groupBy: string) => {
     const grouped: { title: string; data: Job[] }[] = [];
 
-    for (const job of filteredJobs) {
+    for (const job of searchfilteredJobs) {
       let groupTitle = "";
 
       if (groupBy === "Customer") {

@@ -1,6 +1,6 @@
 [
   {
-    "purchaseOrderNumber": "PN001",
+    "purchaseOrderNumber": "Purchase-001",
     "vendor": {
       "id": "VENDOR_001",
       "name": "ABC Supplies Co."
@@ -20,7 +20,7 @@
     "approvedBy": null
   },
   {
-    "purchaseOrderNumber": "PN002",
+    "purchaseOrderNumber": "Purchase-002",
     "vendor": {
       "id": "VENDOR_002",
       "name": "XYZ Manufacturing"
@@ -44,7 +44,7 @@
     }
   },
   {
-    "purchaseOrderNumber": "PN003",
+    "purchaseOrderNumber": "Purchase-003",
     "vendor": {
       "id": "VENDOR_003",
       "name": "Widgets Inc."
@@ -68,7 +68,7 @@
     }
   },
   {
-    "purchaseOrderNumber": "PN004",
+    "purchaseOrderNumber": "Purchase-004",
     "vendor": {
       "id": "VENDOR_004",
       "name": "Tech Solutions"
@@ -92,7 +92,7 @@
     }
   },
   {
-    "purchaseOrderNumber": "PN005",
+    "purchaseOrderNumber": "Purchase-005",
     "vendor": {
       "id": "VENDOR_005",
       "name": "Gadgets Galore"
@@ -112,7 +112,7 @@
     "approvedBy": null
   },
   {
-    "purchaseOrderNumber": "PN006",
+    "purchaseOrderNumber": "Purchase-006",
     "vendor": {
       "id": "VENDOR_006",
       "name": "Creative Designs"

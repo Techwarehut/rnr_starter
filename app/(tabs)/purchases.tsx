@@ -17,6 +17,9 @@ import { useIsLargeScreen } from "~/lib/utils";
 
 export default function Purchases() {
   const [purchases, setPurchases] = useState<PurchaseOrder[]>([]);
+  const [filteredPurchases, setfilteredPurchases] = useState<PurchaseOrder[]>(
+    []
+  );
   const { showSuccessToast, showErrorToast } = useToast();
   const [searchText, setSearchText] = useState("");
   const [group, setGroup] = useState("Customer");
@@ -34,6 +37,7 @@ export default function Purchases() {
     try {
       const data = await getAllPurchaseOrders(); // Call the API
       setPurchases(data);
+      setfilteredPurchases(data);
     } catch (error) {
       showErrorToast("Failed to fetch Purchases!");
     }
@@ -55,7 +59,7 @@ export default function Purchases() {
       return statusMatches;
     });
 
-    setPurchases(filtered);
+    setfilteredPurchases(filtered);
   }, [selectedStatuses]);
 
   const handleStatusFilter = (newStates: Record<string, boolean>) => {
@@ -66,7 +70,7 @@ export default function Purchases() {
     setSearchText(searchText);
   };
 
-  const filteredPurchases = purchases.filter(
+  const searchfilteredPurchases = filteredPurchases.filter(
     (po) =>
       po.purchaseOrderNumber.toLowerCase().includes(searchText.toLowerCase()) ||
       po.vendor.name.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -85,7 +89,6 @@ export default function Purchases() {
               <Button
                 size="sm"
                 variant="default"
-                className="shadow shadow-foreground/5"
                 onPress={() => router.push("/jobs/addnew")}
               >
                 <Text>New Purchase</Text>
@@ -110,7 +113,7 @@ export default function Purchases() {
             handleStatusChange={handleStatusFilter}
           />
         </View>
-        <PurchasesList purchases={filteredPurchases} />
+        <PurchasesList purchases={searchfilteredPurchases} />
       </View>
       <Toast />
     </>

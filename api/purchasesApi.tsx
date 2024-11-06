@@ -1,6 +1,9 @@
 import { generateUniqueId } from "~/lib/utils"; // Import the unique ID generator
 import purchaseOrdersData from "~/data/purchases.json"; // Your static JSON data
-import { PurchaseOrder } from "~/components/ScreenComponents/Purchases/types";
+import {
+  PurchaseOrder,
+  StatusKeys,
+} from "~/components/ScreenComponents/Purchases/types";
 
 let purchaseOrders: PurchaseOrder[] = purchaseOrdersData as PurchaseOrder[];
 
@@ -64,7 +67,7 @@ export const deletePurchaseOrder = async (
 // Function to update the status of a purchase order
 export const updatePurchaseOrderStatus = async (
   orderNumber: string,
-  newStatus: "Purchase Request" | "Approved" | "PO Issued" | "Rejected"
+  newStatus: StatusKeys
 ): Promise<PurchaseOrder> => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
