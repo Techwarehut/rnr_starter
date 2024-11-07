@@ -80,6 +80,37 @@ export default function Purchases() {
       )
   );
 
+  const groupPurchases = (groupBy: string) => {
+    const grouped: { title: string; data: PurchaseOrder[] }[] = [];
+
+    for (const purchase of searchfilteredPurchases) {
+      let groupTitle = "";
+
+      if (groupBy === "Customer") {
+        groupTitle = purchase.customer?.businessName
+          ? `Customer: ${purchase.customer.businessName}`
+          : "Customer: Unassigned";
+      } else if (groupBy === "Job") {
+        groupTitle = purchase.jobID
+          ? `Job: ${purchase.jobID}`
+          : "Job: Unassigned";
+      } else {
+        groupTitle = "All Purchases"; // Default title when no grouping
+      }
+
+      const existingGroup = grouped.find((g) => g.title === groupTitle);
+      if (existingGroup) {
+        existingGroup.data.push(purchase);
+      } else {
+        grouped.push({ title: groupTitle, data: [purchase] });
+      }
+    }
+
+    return grouped;
+  };
+
+  const groupedPurchases = groupPurchases(group);
+
   return (
     <>
       <Stack.Screen
@@ -113,7 +144,7 @@ export default function Purchases() {
             handleStatusChange={handleStatusFilter}
           />
         </View>
-        <PurchasesList purchases={searchfilteredPurchases} />
+        <PurchasesList sections={groupedPurchases} />
       </View>
       <Toast />
     </>

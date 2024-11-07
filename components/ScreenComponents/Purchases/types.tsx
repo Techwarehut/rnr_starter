@@ -1,10 +1,11 @@
-import { CreatedUser } from "../Jobs/types";
+import { CreatedUser, customer } from "../Jobs/types";
 
 // types.ts (or wherever your types are defined)
 
 export type StatusKeys = "Request" | "Approved" | "Issued" | "Rejected";
 
 export interface PurchaseOrderItem {
+  itemId: string;
   itemName: string; // Name of the item
   quantity: number; // Quantity of the item
   price: number; // Price of the item
@@ -24,4 +25,5 @@ export interface PurchaseOrder {
   jobID: string; // Linked job ID
   requestedBy: CreatedUser; // User who requested the purchase order
   approvedBy: CreatedUser | null; // User who approved the purchase order (can be null)
+  customer: customer;
 }

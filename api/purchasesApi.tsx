@@ -2,6 +2,7 @@ import { generateUniqueId } from "~/lib/utils"; // Import the unique ID generato
 import purchaseOrdersData from "~/data/purchases.json"; // Your static JSON data
 import {
   PurchaseOrder,
+  PurchaseOrderItem,
   StatusKeys,
 } from "~/components/ScreenComponents/Purchases/types";
 
@@ -84,19 +85,38 @@ export const updatePurchaseOrderStatus = async (
   });
 };
 
-// Function to update the linked job for a purchase order
-export const updateLinkedJob = async (
+export const addLinkedJob = async (
   orderNumber: string,
   newJobID: string
 ): Promise<PurchaseOrder> => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      const index = purchaseOrders.findIndex(
+      const order = purchaseOrders.find(
         (order) => order.purchaseOrderNumber === orderNumber
       );
-      if (index !== -1) {
-        purchaseOrders[index].jobID = newJobID; // Update linked job
-        resolve(purchaseOrders[index]);
+
+      if (order) {
+        order.jobID = newJobID; // Add the linked job ID
+        resolve(order);
+      } else {
+        reject(new Error("Purchase order not found"));
+      }
+    }, 1000); // Simulate a delay
+  });
+};
+
+export const removeLinkedJob = async (
+  orderNumber: string
+): Promise<PurchaseOrder> => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const order = purchaseOrders.find(
+        (order) => order.purchaseOrderNumber === orderNumber
+      );
+
+      if (order) {
+        order.jobID = ""; // Remove the linked job ID (set it to an empty string or null depending on your design)
+        resolve(order);
       } else {
         reject(new Error("Purchase order not found"));
       }
@@ -128,6 +148,65 @@ export const getPurchaseOrdersByJobID = async (
         (order) => order.jobID === jobID
       );
       resolve(filteredOrders);
+    }, 1000); // Simulate a delay
+  });
+};
+
+// Function to add a new item to a purchase order
+export const addItemToOrder = async (
+  orderNumber: string,
+  newItem: PurchaseOrderItem
+): Promise<PurchaseOrder | null> => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const order = purchaseOrders.find(
+        (order) => order.purchaseOrderNumber === orderNumber
+      );
+
+      if (order) {
+        // Assign unique ID for the item
+        newItem.itemId = generateUniqueId();
+        order.items.push(newItem);
+
+        // Update the order's total
+        order.total = order.total + newItem.price;
+        resolve(order);
+      } else {
+        reject(new Error("Purchase order not found"));
+      }
+    }, 1000); // Simulate a delay
+  });
+};
+
+export const deleteItemFromOrder = async (
+  orderNumber: string,
+  itemId: string
+): Promise<PurchaseOrder | null> => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const order = purchaseOrders.find(
+        (order) => order.purchaseOrderNumber === orderNumber
+      );
+
+      if (order) {
+        const itemIndex = order.items.findIndex(
+          (item) => item.itemId === itemId
+        );
+
+        if (itemIndex !== -1) {
+          const removedItem = order.items[itemIndex];
+          order.items.splice(itemIndex, 1); // Delete the item
+
+          // Update the order's total
+          order.total = order.total - removedItem.price;
+
+          resolve(order); // Return updated order
+        } else {
+          reject(new Error("Item not found"));
+        }
+      } else {
+        reject(new Error("Purchase order not found"));
+      }
     }, 1000); // Simulate a delay
   });
 };

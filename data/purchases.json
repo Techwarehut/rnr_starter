@@ -6,8 +6,8 @@
       "name": "ABC Supplies Co."
     },
     "items": [
-      { "itemName": "Item A1", "quantity": 2, "price": 20.0 },
-      { "itemName": "Item A2", "quantity": 1, "price": 15.0 }
+      { "itemId": "1", "itemName": "Item A1", "quantity": 2, "price": 20.0 },
+      { "itemId": "2", "itemName": "Item A2", "quantity": 1, "price": 15.0 }
     ],
     "status": "Request",
     "total": 35.0,
@@ -17,7 +17,11 @@
       "name": "David Smith",
       "profileUrl": "https://randomuser.me/api/portraits/women/2.jpg"
     },
-    "approvedBy": null
+    "approvedBy": null,
+    "customer": {
+      "_id": "2",
+      "businessName": "Smith Co."
+    }
   },
   {
     "purchaseOrderNumber": "Purchase-002",
@@ -26,8 +30,8 @@
       "name": "XYZ Manufacturing"
     },
     "items": [
-      { "itemName": "Item B1", "quantity": 5, "price": 5.0 },
-      { "itemName": "Item B2", "quantity": 3, "price": 8.0 }
+      { "itemId": "1", "itemName": "Item B1", "quantity": 5, "price": 5.0 },
+      { "itemId": "2", "itemName": "Item B2", "quantity": 3, "price": 8.0 }
     ],
     "status": "Approved",
     "total": 13.0,
@@ -41,6 +45,10 @@
       "userId": "1",
       "name": "Alice Johnson",
       "profileUrl": "https://randomuser.me/api/portraits/women/1.jpg"
+    },
+    "customer": {
+      "_id": "2",
+      "businessName": "Smith Co."
     }
   },
   {
@@ -50,8 +58,8 @@
       "name": "Widgets Inc."
     },
     "items": [
-      { "itemName": "Item C1", "quantity": 1, "price": 100.0 },
-      { "itemName": "Item C2", "quantity": 10, "price": 2.0 }
+      { "itemId": "1", "itemName": "Item C1", "quantity": 1, "price": 100.0 },
+      { "itemId": "2", "itemName": "Item C2", "quantity": 10, "price": 2.0 }
     ],
     "status": "Rejected",
     "total": 102.0,
@@ -65,6 +73,10 @@
       "userId": "2",
       "name": "Charlie Brown",
       "profileUrl": "https://randomuser.me/api/portraits/men/1.jpg"
+    },
+    "customer": {
+      "_id": "1",
+      "businessName": "Doe Enterprises"
     }
   },
   {
@@ -74,8 +86,8 @@
       "name": "Tech Solutions"
     },
     "items": [
-      { "itemName": "Item D1", "quantity": 4, "price": 12.0 },
-      { "itemName": "Item D2", "quantity": 2, "price": 30.0 }
+      { "itemId": "1", "itemName": "Item D1", "quantity": 4, "price": 12.0 },
+      { "itemId": "2", "itemName": "Item D2", "quantity": 2, "price": 30.0 }
     ],
     "status": "Issued",
     "total": 42.0,
@@ -89,6 +101,10 @@
       "userId": "1",
       "name": "Alice Johnson",
       "profileUrl": "https://randomuser.me/api/portraits/women/1.jpg"
+    },
+    "customer": {
+      "_id": "1",
+      "businessName": "Doe Enterprises"
     }
   },
   {
@@ -98,8 +114,8 @@
       "name": "Gadgets Galore"
     },
     "items": [
-      { "itemName": "Item E1", "quantity": 3, "price": 10.0 },
-      { "itemName": "Item E2", "quantity": 4, "price": 25.0 }
+      { "itemId": "1", "itemName": "Item E1", "quantity": 3, "price": 10.0 },
+      { "itemId": "2", "itemName": "Item E2", "quantity": 4, "price": 25.0 }
     ],
     "status": "Purchase Request",
     "total": 130.0,
@@ -109,7 +125,11 @@
       "name": "Frank Wilson",
       "profileUrl": "https://randomuser.me/api/portraits/men/3.jpg"
     },
-    "approvedBy": null
+    "approvedBy": null,
+    "customer": {
+      "_id": "3",
+      "businessName": "Johnson Group"
+    }
   },
   {
     "purchaseOrderNumber": "Purchase-006",
@@ -118,8 +138,8 @@
       "name": "Creative Designs"
     },
     "items": [
-      { "itemName": "Item F1", "quantity": 6, "price": 15.0 },
-      { "itemName": "Item F2", "quantity": 1, "price": 40.0 }
+      { "itemId": 1, "itemName": "Item F1", "quantity": 6, "price": 15.0 },
+      { "itemId": 2, "itemName": "Item F2", "quantity": 1, "price": 40.0 }
     ],
     "status": "Approved",
     "total": 130.0,
@@ -133,6 +153,10 @@
       "userId": "2",
       "name": "Charlie Brown",
       "profileUrl": "https://randomuser.me/api/portraits/men/1.jpg"
+    },
+    "customer": {
+      "_id": "3",
+      "businessName": "Johnson Group"
     }
   }
 ]

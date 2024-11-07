@@ -1,36 +1,54 @@
-import { View, FlatList } from "react-native";
-import React from "react";
+import { View, FlatList, SectionList, Pressable } from "react-native";
+import React, { useState } from "react";
 import { PurchaseOrder } from "./types";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardTitle,
-} from "~/components/ui/card";
-import { Badge } from "~/components/ui/badge";
-import { Muted } from "~/components/ui/typography";
-import { Button } from "~/components/ui/button";
-import { getInitials, getStatusClassName } from "~/lib/utils";
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
-import { router } from "expo-router";
+
 import PurchaseCard from "./PurchaseCard";
+import { Text } from "~/components/ui/text";
+import { ChevronDown } from "~/lib/icons/ChevronDown";
+import { ChevronRight } from "~/lib/icons/ChevronRight";
 
 interface PurchaseProps {
-  purchases: PurchaseOrder[];
+  sections: { title: string; data: PurchaseOrder[] }[];
 }
 
-export const PurchasesList: React.FC<PurchaseProps> = ({ purchases }) => {
-  const renderItem = ({ item }: { item: PurchaseOrder }) => (
-    <PurchaseCard item={item} />
-  );
+export const PurchasesList: React.FC<PurchaseProps> = ({ sections }) => {
+  const [expandedSections, setExpandedSections] = useState<{
+    [key: string]: boolean;
+  }>({});
+
+  const toggleSection = (title: string) => {
+    setExpandedSections((prev) => ({
+      ...prev,
+      [title]: !prev[title],
+    }));
+  };
 
   return (
-    <FlatList
-      data={purchases}
-      renderItem={renderItem}
+    <SectionList
+      sections={sections}
+      renderItem={({ item, section }) =>
+        expandedSections[section.title] ? <PurchaseCard item={item} /> : null
+      }
       keyExtractor={(item) => item.purchaseOrderNumber}
-      contentContainerClassName="flex gap-8"
+      contentContainerClassName="flex flex-col gap-2"
+      renderSectionHeader={({ section }) => (
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={
+            expandedSections[section.title] ? "Collapse" : "Expand"
+          }
+          accessibilityState={{ expanded: expandedSections[section.title] }}
+          className="flex-row items-center gap-2 web:mb-4"
+          onPress={() => toggleSection(section.title)}
+        >
+          {expandedSections[section.title] ? (
+            <ChevronDown className="text-primary" size={18} />
+          ) : (
+            <ChevronRight className="text-primary" size={18} />
+          )}
+          <Text>{section.title}</Text>
+        </Pressable>
+      )}
     />
   );
 };

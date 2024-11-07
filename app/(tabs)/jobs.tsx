@@ -14,6 +14,8 @@ import { getAllJobs, updateJobStatus } from "~/api/jobsApi";
 
 import { Button } from "~/components/ui/button";
 import { Text } from "~/components/ui/text";
+import { useIsLargeScreen } from "~/lib/utils";
+import JobSectionListWeb from "~/components/ScreenComponents/Jobs/JobListWeb";
 
 export default function JobScreen() {
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -107,6 +109,8 @@ export default function JobScreen() {
     });
   };
 
+  const islargeScreen = useIsLargeScreen();
+
   const searchfilteredJobs = filteredjobs.filter(
     (job) =>
       job.jobTitle.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -196,11 +200,19 @@ export default function JobScreen() {
           />
         </View>
 
-        <JobSectionList
-          onChangeStatus={handleChangeStatus}
-          sections={groupedJobs}
-          onJobDetail={handleJobDetail}
-        />
+        {islargeScreen ? (
+          <JobSectionListWeb
+            onChangeStatus={handleChangeStatus}
+            sections={groupedJobs}
+            onJobDetail={handleJobDetail}
+          />
+        ) : (
+          <JobSectionList
+            onChangeStatus={handleChangeStatus}
+            sections={groupedJobs}
+            onJobDetail={handleJobDetail}
+          />
+        )}
       </View>
       <Toast />
     </>

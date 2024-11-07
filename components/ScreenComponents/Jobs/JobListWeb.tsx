@@ -49,7 +49,7 @@ const MIN_COLUMN_WIDTHS = [70, 90, 250, 100, 120, 200, 220]; // Minimum widths f
 
 // Use columnWidths in your layout as needed
 
-const JobSectionList: React.FC<JobSectionListProps> = ({
+const JobSectionListWeb: React.FC<JobSectionListProps> = ({
   sections,
   onChangeStatus,
   onJobDetail,
@@ -236,4 +236,4 @@ const JobSectionList: React.FC<JobSectionListProps> = ({
   );
 };
 
-export default JobSectionList;
+export default JobSectionListWeb;
