@@ -10,12 +10,20 @@ interface JobSectionListProps {
   sections: { title: string; data: Job[] }[];
   onChangeStatus: (jobId: string, newStatus: string) => void;
   onJobDetail: (jobId: string) => void;
+  selectedJobs: Job[]; // Array of selected jobs
+  isSelectionRequired: boolean; // Boolean to indicate if selection is required
+  canSelectMultiple: boolean; // Boolean to allow single or multiple selection
+  onJobSelect: (selectedJobs: Job[]) => void; // Callback to handle job selection
 }
 
 const JobSectionList: React.FC<JobSectionListProps> = ({
   sections,
   onChangeStatus,
   onJobDetail,
+  selectedJobs,
+  isSelectionRequired,
+  canSelectMultiple,
+  onJobSelect,
 }) => {
   const [expandedSections, setExpandedSections] = useState<{
     [key: string]: boolean;
@@ -38,6 +46,10 @@ const JobSectionList: React.FC<JobSectionListProps> = ({
             onChangeStatus={onChangeStatus}
             job={item}
             onJobDetail={onJobDetail}
+            isSelectionRequired={isSelectionRequired || false}
+            checkboxEnabled={canSelectMultiple}
+            selectedJobs={selectedJobs}
+            onJobSelect={onJobSelect}
           />
         ) : null
       }

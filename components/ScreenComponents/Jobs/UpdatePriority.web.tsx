@@ -11,8 +11,7 @@ import {
 } from "~/components/ui/dropdown-menu";
 import { Text } from "~/components/ui/text";
 import { ChevronDown } from "~/lib/icons/ChevronDown";
-import { AddNewProject } from "./AddNewProject";
-import { AddNewJob } from "./AddNewJob";
+
 import { Pressable, View } from "react-native";
 import {
   actionStatusMapping,

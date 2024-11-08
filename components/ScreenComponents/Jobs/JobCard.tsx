@@ -12,12 +12,10 @@ import { Pressable, View } from "react-native";
 import { Button } from "~/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { getInitials } from "~/lib/utils";
-import { Plus } from "~/lib/icons/Plus";
-import { Phone } from "~/lib/icons/Phone";
+
 import { User2 } from "~/lib/icons/User";
 
-import { Link } from "expo-router";
-import { Large, Muted } from "~/components/ui/typography";
+import { Muted } from "~/components/ui/typography";
 import {
   getJobPriorityIcon,
   statusActionMapping,
@@ -26,21 +24,37 @@ import {
 import { UpdateStatus } from "./UpdateStatus";
 import JobStatusUpdate from "./JobStatusUpdate";
 import { AssignJob } from "./JobActions/AssignJob";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { User } from "../Team/types";
 import { assignJob } from "~/api/jobsApi";
+import { Checkbox } from "~/components/ui/checkbox";
 
 interface JobProps {
   job: Job;
   onChangeStatus: (jobId: string, newStatus: string) => void;
   onJobDetail: (jobId: string) => void;
+  isSelectionRequired: boolean; // Boolean to indicate if selection is required
+  checkboxEnabled: boolean; // Boolean to allow single or multiple selection
+  selectedJobs: Job[]; // Array of selected jobs
+  onJobSelect: (selectedJobs: Job[]) => void; // Callback to handle job selection
 }
 export const JobCard: React.FC<JobProps> = ({
   job,
   onChangeStatus,
   onJobDetail,
+  isSelectionRequired,
+  checkboxEnabled,
+  selectedJobs,
+  onJobSelect,
 }) => {
   const [refreshKey, setRefreshKey] = useState(0);
+  const [checked, setChecked] = useState(false);
+
+  // Set checked state based on whether the job is in selectedJobs
+  useEffect(() => {
+    setChecked(selectedJobs.some((selectedJob) => selectedJob._id === job._id));
+  }, [selectedJobs, job._id]);
+
   const handleAssign = async (user: User) => {
     try {
       const assignedUser = await assignJob(job._id, user);
@@ -49,9 +63,32 @@ export const JobCard: React.FC<JobProps> = ({
       console.error(error);
     }
   };
+
+  const handleCheckboxChange = () => {
+    if (checked) {
+      // Deselect the job
+      onJobSelect(
+        selectedJobs.filter((selectedJob) => selectedJob._id !== job._id)
+      );
+
+      setChecked(false);
+    } else {
+      // Select the job
+      onJobSelect([...selectedJobs, job]);
+      setChecked(true);
+    }
+  };
+
   return (
     <Card className="p-4 gap-4">
       <View className="flex-row gap-2 items-center">
+        {isSelectionRequired && (
+          <Checkbox
+            checked={checked}
+            onCheckedChange={handleCheckboxChange}
+            disabled={!checkboxEnabled && !checked} // Disable checkbox if only one selection is allowed and a job is selected
+          />
+        )}
         {getJobPriorityIcon(job.priority)}
       </View>
       <CardTitle>{job.jobTitle}</CardTitle>

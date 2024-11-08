@@ -1,43 +1,45 @@
 import React, { useCallback, useRef, useState } from "react";
-import { View, Pressable, StyleSheet } from "react-native";
+import {
+  View,
+  Pressable,
+  StyleSheet,
+  ScrollView,
+  Platform,
+} from "react-native";
 import {
   BottomSheetModal,
   BottomSheetView,
   BottomSheetHandle,
+  BottomSheetTrigger,
 } from "~/components/ui/bottom-sheet/bottomSheet";
-import { Button } from "~/components/ui/button";
-import { Text } from "~/components/ui/text";
+
 import { useSharedValue } from "react-native-reanimated";
 import { useColorScheme } from "~/lib/useColorScheme";
 
-import { ChevronDown } from "~/lib/icons/ChevronDown";
-import {
-  actionStatusMapping,
-  getJobPriorityIcon,
-  jobPriorityKeys,
-  JobPriorityKeys,
-  jobTypeKeys,
-  JobTypeKeys,
-  statusActionMapping,
-} from "./Filters/Statustypes";
+import { Filter } from "~/lib/icons/Filter";
 
-interface JobPriorityProps {
-  priority: JobPriorityKeys;
-  onChangePriority: (newPriority: JobPriorityKeys) => void; // Add this prop
+import { Text } from "~/components/ui/text";
+import { H3, Large } from "~/components/ui/typography";
+import { Button } from "~/components/ui/button";
+import SelectJob from "./SelectJobs";
+import { Job } from "./Jobs/types";
+import { Plus } from "~/lib/icons/Plus";
+
+interface LinkJobProps {
+  handleJobSelect: (selectedJobs: Job[]) => void; // Callback to handle job selection
 }
-export const UpdatePrioritiy: React.FC<JobPriorityProps> = ({
-  priority,
-  onChangePriority,
-}) => {
+
+export const LinkJobs: React.FC<LinkJobProps> = ({ handleJobSelect }) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const [isOpen, setIsOpen] = useState(false);
   const animatedIndex = useSharedValue<number>(0);
   const animatedPosition = useSharedValue<number>(0);
-  const snapPoints = ["20%", "30%"];
+  const snapPoints = ["80%", "90%"];
   const { isDarkColorScheme, setColorScheme } = useColorScheme();
 
   const handleSheetChanges = useCallback((index: number) => {
     // handle sheet changes
+    console.log("handleSheetChanges", index);
   }, []);
 
   const handlePresentModalPress = useCallback(() => {
@@ -50,17 +52,14 @@ export const UpdatePrioritiy: React.FC<JobPriorityProps> = ({
     }
   }, [isOpen]);
 
+  console.log("Iam gere");
   return (
     <>
-      <Pressable
-        onPress={handlePresentModalPress}
-        className="flex p-1 py-2 h-full web:hover:bg-accent web:hover:text-accent-foreground active:bg-accent"
-      >
-        <ChevronDown
-          size={21}
-          className="group-active:text-accent-foreground text-primary"
-        />
-      </Pressable>
+      {Platform.OS !== "web" && (
+        <Button variant="link" onPress={handlePresentModalPress}>
+          <Plus size={18} className="text-primary" />
+        </Button>
+      )}
 
       <BottomSheetModal
         ref={bottomSheetModalRef}
@@ -81,21 +80,26 @@ export const UpdatePrioritiy: React.FC<JobPriorityProps> = ({
           />
         )}
       >
-        <BottomSheetView className="flex-1 bg-popover gap-2 items-center justify-center p-4 ">
-          {jobPriorityKeys.map((action, index) => (
+        {Platform.OS === "web" && (
+          <>
+            <BottomSheetTrigger>
+              <Plus size={18} className="text-primary" />
+            </BottomSheetTrigger>
+          </>
+        )}
+        <BottomSheetView className="flex-1 bg-popover gap-2">
+          <View className="flex flex-row p-2 justify-between">
+            <Large>Select Job(s)</Large>
             <Button
-              variant="ghost"
-              key={index}
-              onPress={() => {
-                handlePresentModalPress();
-                onChangePriority(action);
-              }}
+              size="sm"
+              variant="default"
+              className="shadow shadow-foreground/5"
+              onPress={() => {}}
             >
-              <View className="flex-row items-center gap-2">
-                {getJobPriorityIcon(action)}
-              </View>
+              <Text>Select</Text>
             </Button>
-          ))}
+          </View>
+          <SelectJob isSelectionRequired={true} onJobSelect={handleJobSelect} />
         </BottomSheetView>
       </BottomSheetModal>
     </>

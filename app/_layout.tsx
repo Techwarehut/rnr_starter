@@ -157,6 +157,19 @@ export default function RootLayout() {
                 headerBackTitleVisible: false,
               }}
             />
+
+            <Stack.Screen
+              name="jobs/linkjob"
+              options={{
+                headerShown: true,
+                headerTitle: "Select Job(s)",
+
+                presentation: Platform.OS === "ios" ? "card" : "modal",
+                headerTitleAlign: "left",
+                //headerBackVisible: true,
+                headerBackTitleVisible: false,
+              }}
+            />
             <Stack.Screen
               name="(tabs)"
               options={{

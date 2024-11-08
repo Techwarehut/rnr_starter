@@ -8,6 +8,8 @@ import { Muted } from "~/components/ui/typography";
 import DeleteButton from "../../DeleteButton";
 import { addLinkedJob, removeLinkedJob } from "~/api/purchasesApi";
 import { Plus } from "~/lib/icons/Plus";
+import { LinkJobs } from "../../LinkJobs";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface LinkedJobSectionProps {
   jobID: string;
@@ -21,11 +23,25 @@ const LinkedJobSection: React.FC<LinkedJobSectionProps> = ({
   const router = useRouter();
   const [refreshKey, setRefreshKey] = useState(0);
   const [linkedJob, setLinkedJob] = useState<string>(jobID);
+  const insets = useSafeAreaInsets();
+
+  const contentInsets = {
+    top: insets.top,
+    bottom: insets.bottom,
+    left: insets.right,
+    right: 12,
+  };
 
   const handleJobClick = () => {
     router.push({
       pathname: "/jobs/[jobID]",
-      params: { jobID: jobID }, // 'query' is used for dynamic route params in Next.js
+      params: { jobID: jobID },
+    });
+  };
+
+  const handleLinkJob = () => {
+    router.push({
+      pathname: "/jobs/linkjob",
     });
   };
 
@@ -60,15 +76,15 @@ const LinkedJobSection: React.FC<LinkedJobSectionProps> = ({
         {linkedJob === "" ? (
           <>
             <Text>Link a Job</Text>
-            <Button variant="link" onPress={() => handleAddLinkedJob("1")}>
-              <Plus size={18} className="text-primary" />
-            </Button>
+
+            <LinkJobs handleJobSelect={(jobs) => console.log(jobs)} />
           </>
         ) : (
           <>
             <Button variant="link" onPress={handleJobClick}>
               <Text>{linkedJob}</Text>
             </Button>
+
             <DeleteButton xIcon={true} onDelete={handleDeleteLinkedJob} />
           </>
         )}

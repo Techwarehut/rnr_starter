@@ -47,6 +47,10 @@ export const GroupByFilter: React.FC<GroupByFilterProps> = ({
           onLabelPress={onLabelPress("None")}
         />
         <RadioGroupItemWithLabel
+          value="Vendor"
+          onLabelPress={onLabelPress("Vendor")}
+        />
+        <RadioGroupItemWithLabel
           value="Customer"
           onLabelPress={onLabelPress("Customer")}
         />

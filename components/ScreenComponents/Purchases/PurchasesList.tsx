@@ -1,4 +1,4 @@
-import { View, FlatList, SectionList, Pressable } from "react-native";
+import { View, FlatList, SectionList, Pressable, Platform } from "react-native";
 import React, { useState } from "react";
 import { PurchaseOrder } from "./types";
 
@@ -49,6 +49,8 @@ export const PurchasesList: React.FC<PurchaseProps> = ({ sections }) => {
           <Text>{section.title}</Text>
         </Pressable>
       )}
+      showsVerticalScrollIndicator={Platform.OS === "web"}
+      contentContainerStyle={{ flexGrow: 1, gap: 8 }}
     />
   );
 };

@@ -22,7 +22,7 @@ export default function Purchases() {
   );
   const { showSuccessToast, showErrorToast } = useToast();
   const [searchText, setSearchText] = useState("");
-  const [group, setGroup] = useState("Customer");
+  const [group, setGroup] = useState("Vendor");
   const [selectedStatuses, setSelectedStatuses] = useState<
     Record<StatusKeys, boolean>
   >({
@@ -94,6 +94,10 @@ export default function Purchases() {
         groupTitle = purchase.jobID
           ? `Job: ${purchase.jobID}`
           : "Job: Unassigned";
+      } else if (groupBy === "Vendor") {
+        groupTitle = purchase.vendor.name
+          ? `Vendor: ${purchase.vendor.name}`
+          : "Vendor: Unassigned";
       } else {
         groupTitle = "All Purchases"; // Default title when no grouping
       }
