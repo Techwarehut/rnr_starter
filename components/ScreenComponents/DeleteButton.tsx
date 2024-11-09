@@ -28,6 +28,7 @@ const DeleteButton: React.FC<ActionButtonsProps> = ({
   console.log("Alert Dialog", xIcon);
 
   return (
+<>
     <AlertDialog open={isAlertDialogOpen} onOpenChange={setAlertDialogOpen}>
       <AlertDialogTrigger asChild>
         <Button variant={xIcon ? "link" : "destructive"}>
@@ -59,6 +60,7 @@ const DeleteButton: React.FC<ActionButtonsProps> = ({
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
+</>
   );
 };
 
