@@ -36,6 +36,7 @@ export const LinkJobs: React.FC<LinkJobProps> = ({ handleJobSelect }) => {
   const animatedPosition = useSharedValue<number>(0);
   const snapPoints = ["80%", "90%"];
   const { isDarkColorScheme, setColorScheme } = useColorScheme();
+  const [localSelectedJobs, setLocalSelectedJobs] = useState<Job[]>([]);
 
   const handleSheetChanges = useCallback((index: number) => {
     // handle sheet changes
@@ -62,7 +63,7 @@ export const LinkJobs: React.FC<LinkJobProps> = ({ handleJobSelect }) => {
       )}
 
       <BottomSheetModal
-        ref={bottomSheetModalRef}
+        ref={Platform.OS !== "web" ? bottomSheetModalRef : null}
         index={1}
         snapPoints={snapPoints}
         onChange={handleSheetChanges}
@@ -87,19 +88,34 @@ export const LinkJobs: React.FC<LinkJobProps> = ({ handleJobSelect }) => {
             </BottomSheetTrigger>
           </>
         )}
-        <BottomSheetView className="flex-1 bg-popover gap-2">
+        <BottomSheetView className="flex-1 bg-popover ">
+          {Platform.OS === "web" && (
+            <BottomSheetHandle
+              className="bg-gray-300 mt-2"
+              animatedIndex={animatedIndex}
+              animatedPosition={animatedPosition}
+            />
+          )}
           <View className="flex flex-row p-2 justify-between">
             <Large>Select Job(s)</Large>
             <Button
               size="sm"
               variant="default"
               className="shadow shadow-foreground/5"
-              onPress={() => {}}
+              onPress={() => {
+                handleJobSelect(localSelectedJobs);
+                handlePresentModalPress();
+              }}
             >
               <Text>Select</Text>
             </Button>
           </View>
-          <SelectJob isSelectionRequired={true} onJobSelect={handleJobSelect} />
+
+          <SelectJob
+            selectedJobs={localSelectedJobs}
+            isSelectionRequired={true}
+            onJobSelect={setLocalSelectedJobs}
+          />
         </BottomSheetView>
       </BottomSheetModal>
     </>

@@ -5,11 +5,12 @@ import { View } from "react-native"; // Assuming you're using React Native
 import { Button } from "~/components/ui/button";
 import { Text } from "~/components/ui/text";
 import { Muted } from "~/components/ui/typography";
-import DeleteButton from "../../DeleteButton";
+
 import { addLinkedJob, removeLinkedJob } from "~/api/purchasesApi";
 import { Plus } from "~/lib/icons/Plus";
 import { LinkJobs } from "../../LinkJobs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import DeleteButton from "../../DeleteButton";
 
 interface LinkedJobSectionProps {
   jobID: string;
@@ -50,6 +51,7 @@ const LinkedJobSection: React.FC<LinkedJobSectionProps> = ({
     try {
       const updatedOrder = await addLinkedJob(orderNumber, newJobID);
       if (updatedOrder) {
+        setLinkedJob(updatedOrder.jobID);
         setRefreshKey((prev) => prev + 1);
       }
     } catch (error) {
@@ -77,15 +79,25 @@ const LinkedJobSection: React.FC<LinkedJobSectionProps> = ({
           <>
             <Text>Link a Job</Text>
 
-            <LinkJobs handleJobSelect={(jobs) => console.log(jobs)} />
+            <LinkJobs
+              handleJobSelect={(jobs) => {
+                // Check if the array is not empty
+                if (jobs.length > 0) {
+                  handleAddLinkedJob(jobs[0]._id); // Pass the first job to handleAddLinkedJob
+                } else {
+                  console.log("No jobs selected");
+                }
+              }}
+            />
           </>
         ) : (
           <>
             <Button variant="link" onPress={handleJobClick}>
               <Text>{linkedJob}</Text>
             </Button>
-
-            <DeleteButton xIcon={true} onDelete={handleDeleteLinkedJob} />
+            <View>
+              <DeleteButton xIcon={true} onDelete={handleDeleteLinkedJob} />
+            </View>
           </>
         )}
       </View>

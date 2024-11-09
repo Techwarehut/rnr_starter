@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-import { Button } from "../ui/button";
+import { View } from "react-native";
+import { Button } from "../ui/button"; // Assuming this renders a <button> element
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,6 +13,18 @@ import {
   AlertDialogTrigger,
 } from "~/components/ui/alert-dialog";
 import { X } from "~/lib/icons/X";
+import { ScrollView } from "react-native-gesture-handler";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
+import { Text } from "../ui/text";
 
 interface ActionButtonsProps {
   onDelete: () => void;
@@ -25,42 +37,47 @@ const DeleteButton: React.FC<ActionButtonsProps> = ({
 }) => {
   const [isAlertDialogOpen, setAlertDialogOpen] = useState(false);
 
-  console.log("Alert Dialog", xIcon);
+  // Handle the delete action and close the dialog
+  const handleDeleteAndClose = () => {
+    onDelete(); // Call the delete function passed as a prop
+    setAlertDialogOpen(false); // Close the dialog after performing the delete action
+  };
 
   return (
-<>
-    <AlertDialog open={isAlertDialogOpen} onOpenChange={setAlertDialogOpen}>
-      <AlertDialogTrigger asChild>
-        <Button variant={xIcon ? "link" : "destructive"}>
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button
+          variant={xIcon ? "link" : "destructive"}
+          onPress={() => setAlertDialogOpen(true)}
+        >
           {xIcon ? (
             <X className="text-destructive" size={18} />
           ) : (
             <Text className="text-destructive-foreground">Delete</Text>
           )}
         </Button>
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Are you absolutely sure?</DialogTitle>
+          <DialogDescription>
             This action cannot be undone. This will permanently delete the
             {xIcon ? " data for selected item" : " selected item"}.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>
-            <Text className="text-accent-foreground">Cancel</Text>
-          </AlertDialogCancel>
-          <AlertDialogAction
-            onPress={onDelete}
-            className="bg-destructive text-destructive-foreground"
-          >
-            <Text className="text-destructive-foreground">Continue</Text>
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
-</>
+          </DialogDescription>
+        </DialogHeader>
+
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button variant="secondary">
+              <Text>Cancel</Text>
+            </Button>
+          </DialogClose>
+          <Button variant="destructive" onPress={handleDeleteAndClose}>
+            <Text>Continue</Text>
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 };
 

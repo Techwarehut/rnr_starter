@@ -36,9 +36,7 @@ export default function SelectJob({
   const [searchText, setSearchText] = useState("");
   const [group, setGroup] = useState("Purchase Order");
   const [refreshKey, setRefreshKey] = useState(0);
-  const [localSelectedJobs, setLocalSelectedJobs] = useState<Job[]>(
-    selectedJobs || []
-  );
+
   const [checkboxEnabled, setCheckboxEnabled] = useState(true);
 
   const [selectedStatuses, setSelectedStatuses] = useState<
@@ -126,12 +124,12 @@ export default function SelectJob({
   };
 
   const handleJobSelect = (selectedJobs: Job[]) => {
-    setLocalSelectedJobs(selectedJobs);
     if (!canSelectMultiple && selectedJobs.length === 1) {
       setCheckboxEnabled(false);
     } else {
       setCheckboxEnabled(true);
     }
+    if (onJobSelect) onJobSelect(selectedJobs);
   };
 
   const islargeScreen = useIsLargeScreen();
@@ -253,7 +251,7 @@ export default function SelectJob({
               onJobDetail={handleJobDetail}
               isSelectionRequired={isSelectionRequired}
               canSelectMultiple={checkboxEnabled}
-              selectedJobs={localSelectedJobs}
+              selectedJobs={selectedJobs || []}
               onJobSelect={handleJobSelect}
             />
           ) : (
@@ -270,7 +268,7 @@ export default function SelectJob({
             onJobDetail={handleJobDetail}
             isSelectionRequired={isSelectionRequired}
             canSelectMultiple={checkboxEnabled}
-            selectedJobs={localSelectedJobs}
+            selectedJobs={selectedJobs || []}
             onJobSelect={handleJobSelect}
           />
         )}

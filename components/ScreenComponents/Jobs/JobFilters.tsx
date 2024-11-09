@@ -86,29 +86,27 @@ export const JobFilters: React.FC<FilterProps> = ({
             showsVerticalScrollIndicator={false}
             contentContainerClassName="flex-1 p-2"
           >
-            <View className="flex  ">
-              <Text className="text-xl">Group by</Text>
-            </View>
-            <View className="flex m-4 justify-center ">
+            <Text className="text-xl">Group by</Text>
+
+            <View className="flex flex-1 mx-4 mt-2 justify-center ">
               <GroupByFilter
                 value={selectedGroupValue}
                 onValueChange={setSelectedGroupValue}
               />
             </View>
-            <View className="flex ">
-              <Text className="text-xl">Status</Text>
-            </View>
-            <View className="flex m-4">
+
+            <Text className="text-xl">Status</Text>
+
+            <View className="flex flex-1 mb-8 mx-4 mt-2">
               <StatusFilter
                 initialCheckedStates={initialStatusCheckedStates}
                 onChange={handleStatusChange}
               />
             </View>
 
-            <View className="flex ">
-              <Text className="text-xl">Job Type</Text>
-            </View>
-            <View className="flex m-4 ">
+            <Text className="text-xl">Job Type</Text>
+
+            <View className="flex flex-1 m-4 ">
               <JobTypeFilter
                 initialCheckedStates={initialJobTypeCheckedStates}
                 onChange={handleJobTypeChange}

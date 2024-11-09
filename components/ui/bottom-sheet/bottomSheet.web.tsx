@@ -18,7 +18,7 @@ const BottomSheetView = forwardRef<
     <Drawer.Overlay className="fixed inset-0 bg-black/40" />
     <Drawer.Content
       ref={ref}
-      className={`bg-white shadow-lg flex flex-col rounded-t-[10px] h-full mt-24 fixed bottom-0 left-0 right-0 ${className}`}
+      className={`bg-popover shadow-lg flex flex-col rounded-t-[10px] h-full mt-24 fixed bottom-0 left-0 right-0 ${className}`}
     >
       {children}
     </Drawer.Content>

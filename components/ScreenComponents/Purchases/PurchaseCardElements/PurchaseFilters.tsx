@@ -84,19 +84,17 @@ export const PurchaseFilters: React.FC<FilterProps> = ({
             showsVerticalScrollIndicator={false}
             contentContainerClassName="flex-1 p-2 gap-4"
           >
-            <View className="flex-1 gap-4  ">
-              <Text className="text-xl">Group by</Text>
-            </View>
-            <View className="flex m-4 justify-center ">
+            <Text className="text-xl">Group by</Text>
+
+            <View className="flex-1 m-4 justify-center ">
               <GroupByFilter
                 value={selectedGroupValue}
                 onValueChange={setSelectedGroupValue}
               />
             </View>
 
-            <View className="flex-1 gap-4 ">
-              <Text className="text-xl">Status</Text>
-            </View>
+            <Text className="text-xl">Status</Text>
+
             <View className="flex-1 m-4">
               <StatusFilter
                 initialCheckedStates={initialStatusCheckedStates}
