@@ -159,6 +159,30 @@ export default function RootLayout() {
             />
 
             <Stack.Screen
+              name="purchases/[purchaseID]"
+              options={{
+                headerShown: true,
+                headerTitle: "",
+                presentation: Platform.OS === "ios" ? "card" : "modal",
+                headerTitleAlign: "left",
+                //headerBackVisible: true,
+                headerBackTitleVisible: false,
+              }}
+            />
+
+            <Stack.Screen
+              name="purchases/addnew"
+              options={{
+                headerShown: true,
+                headerTitle: "New Purchase",
+                presentation: Platform.OS === "ios" ? "card" : "modal",
+                headerTitleAlign: "left",
+                //headerBackVisible: true,
+                headerBackTitleVisible: false,
+              }}
+            />
+
+            <Stack.Screen
               name="jobs/linkjob"
               options={{
                 headerShown: true,

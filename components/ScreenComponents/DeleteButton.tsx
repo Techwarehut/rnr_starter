@@ -1,19 +1,9 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 import { Button } from "../ui/button"; // Assuming this renders a <button> element
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "~/components/ui/alert-dialog";
+
 import { X } from "~/lib/icons/X";
-import { ScrollView } from "react-native-gesture-handler";
+
 import {
   Dialog,
   DialogClose,
@@ -44,7 +34,7 @@ const DeleteButton: React.FC<ActionButtonsProps> = ({
   };
 
   return (
-    <Dialog>
+    <Dialog open={isAlertDialogOpen} onOpenChange={setAlertDialogOpen}>
       <DialogTrigger asChild>
         <Button
           variant={xIcon ? "link" : "destructive"}

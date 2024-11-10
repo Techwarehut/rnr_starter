@@ -224,7 +224,7 @@ export default function SelectJob({
           }}
         />
       )}
-      <View className="flex-1 gap-4 bg-secondary/30 px-2  md:pl-20 md:mx-2">
+      <View className="flex-1 gap-4 bg-secondary/30 px-2  md:pl-20 md:mx-2 web:overflow-y-auto">
         <View className="flex-row gap-2 items-center">
           <SearchInput
             onChangeText={handleSearch}

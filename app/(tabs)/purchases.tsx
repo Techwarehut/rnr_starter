@@ -124,7 +124,7 @@ export default function Purchases() {
               <Button
                 size="sm"
                 variant="default"
-                onPress={() => router.push("/jobs/addnew")}
+                onPress={() => router.push("/purchases/addnew")}
               >
                 <Text>New Purchase</Text>
               </Button>

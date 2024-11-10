@@ -117,7 +117,7 @@ const AddNewJobForm: React.FC<AddJobFormProps> = ({ onChange }) => {
   return (
     <ScrollView
       showsVerticalScrollIndicator={Platform.OS === "web"}
-      contentContainerClassName="flex-1 p-4 gap-4"
+      contentContainerClassName="flex-1 p-4 md:p-12 gap-4"
     >
       {/* Top Container */}
       <View>
@@ -159,9 +159,9 @@ const AddNewJobForm: React.FC<AddJobFormProps> = ({ onChange }) => {
         />
       </View>
 
-      <View className="flex md:flex-row gap-8 md:w-full">
+      <View className="flex md:flex-row gap-8 md:w-full ">
         {/* Contact Details */}
-        <View className="flex gap-4 md:flex-1">
+        <View className="flex gap-4 md:flex-1 md:border md:border-input md:rounded-md md:p-4">
           <View className="flex-row items-center justify-between my-2">
             <View>
               <Text className="text-xl">Assignee and Links</Text>
@@ -215,7 +215,7 @@ const AddNewJobForm: React.FC<AddJobFormProps> = ({ onChange }) => {
             />
           </View>
         </View>
-        <View className="flex gap-4 md:flex-1">
+        <View className="flex gap-4 md:flex-1 md:border md:border-input md:rounded-md md:p-4">
           <JobBSecondaryInfo
             job={job}
             handleInputChange={handleInputChange}

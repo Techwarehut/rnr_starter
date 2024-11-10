@@ -5,16 +5,34 @@ import { Button } from "~/components/ui/button";
 import { Text } from "~/components/ui/text";
 import { Muted } from "~/components/ui/typography";
 import { getStatusClassName } from "~/lib/utils";
-import { PurchaseOrder, PurchaseOrderItem } from "../types";
+import { PurchaseOrder, PurchaseOrderItem, StatusKeys, Vendor } from "../types";
 import DeleteButton from "../../DeleteButton";
 import { Plus } from "~/lib/icons/Plus";
 import { Input } from "~/components/ui/input";
+import { CreatedUser, customer } from "../../Jobs/types";
 
 interface ItemListProps {
   PurchaseOrder: PurchaseOrder;
+  handleInput?: (
+    field: keyof PurchaseOrder,
+    value:
+      | string
+      | Vendor
+      | PurchaseOrderItem
+      | StatusKeys
+      | CreatedUser
+      | customer
+      | number
+  ) => void;
+
+  addNew?: boolean;
 }
 
-const ItemList: React.FC<ItemListProps> = ({ PurchaseOrder }) => {
+const ItemList: React.FC<ItemListProps> = ({
+  PurchaseOrder,
+  handleInput,
+  addNew,
+}) => {
   const [refreshKey, setRefreshKey] = useState(0);
   const [items, setItems] = useState<PurchaseOrderItem[]>(PurchaseOrder.items);
   const [newItem, setNewItem] = useState<PurchaseOrderItem>({
@@ -37,21 +55,24 @@ const ItemList: React.FC<ItemListProps> = ({ PurchaseOrder }) => {
 
   // Add item to order
   const handleAddItem = async () => {
-    console.log(newItem);
     if (!newItem.itemName || newItem.price <= 0) {
       console.error("Please fill in the item details.");
       return;
     }
 
     try {
-      const updatedOrder = await addItemToOrder(
-        PurchaseOrder.purchaseOrderNumber,
-        newItem
-      );
-      if (updatedOrder) {
-        setItems(updatedOrder.items);
-        setNewItem({ itemName: "", quantity: 1, price: 0, itemId: "" });
-        setRefreshKey((prev) => prev + 1);
+      if (addNew) {
+        console.log("I am here with", items);
+      } else {
+        const updatedOrder = await addItemToOrder(
+          PurchaseOrder.purchaseOrderNumber,
+          newItem
+        );
+        if (updatedOrder) {
+          setItems(updatedOrder.items);
+          setNewItem({ itemName: "", quantity: 1, price: 0, itemId: "" });
+          setRefreshKey((prev) => prev + 1);
+        }
       }
     } catch (error) {
       console.error("Error", "Failed to add item.");

@@ -8,57 +8,44 @@ import { addJob } from "~/api/jobsApi";
 import { useToast } from "~/components/ScreenComponents/ToastMessage";
 import Toast from "react-native-toast-message";
 import { Text } from "~/components/ui/text";
+import AddNewPurchaseForm from "~/components/ScreenComponents/Purchases/AddNewPurchaseFrom";
+import { PurchaseOrder } from "~/components/ScreenComponents/Purchases/types";
+import { addPurchaseOrder } from "~/api/purchasesApi";
 
 const addnew = () => {
-  const [job, setJob] = React.useState<Job>({
-    _id: "", // or null if you prefer
-    jobTitle: "",
-    jobDescription: "",
-    jobType: "ServiceVisit",
-    reportedBy: {
+  // Initial state for PurchaseOrder
+  const [purchase, setPurchase] = React.useState<PurchaseOrder>({
+    purchaseOrderNumber: "",
+    vendor: {
+      id: "",
+      name: "",
+    },
+    items: [],
+    status: "Request", // Default status can be "Request"
+    total: 0, // Default total
+    jobID: "",
+    requestedBy: {
       userId: "",
       name: "",
       profileUrl: "",
     },
-    assignedTo: [],
-    status: "Backlog",
-    purchaseOrderNumber: "",
-    dueDate: new Date(),
-    priority: "High",
-
+    approvedBy: null, // Initially null until approved
     customer: {
       _id: "",
       businessName: "",
     },
-    siteLocation: {
-      site_id: "",
-      siteName: "",
-      siteContactPerson: "",
-      siteContactPhone: "",
-      AddressLine: "",
-      City: "",
-      Province: "",
-      zipcode: "",
-    },
-    estimateId: "",
-    invoiceId: "",
-    purchaseReqId: "",
-    comments: [],
-    createdAt: "", // You might want to handle these as Date objects
-    updatedAt: "",
-    images: [],
   });
 
   const router = useRouter();
   const { showSuccessToast, showErrorToast } = useToast();
-  const handleAddJob = async () => {
+  const handleAddPurchase = async () => {
     try {
-      const addedJob = await addJob(job);
+      const addedPurchase = await addPurchaseOrder(purchase);
 
-      showSuccessToast("Job Added successfully!");
-      router.replace("/(tabs)/jobs");
+      showSuccessToast("Purchase Added successfully!");
+      router.replace("/(tabs)/purchases");
     } catch (error) {
-      showErrorToast("Error Adding job!");
+      showErrorToast("Error Adding Purchase!");
     }
   };
 
@@ -68,14 +55,14 @@ const addnew = () => {
         options={{
           headerRight: () => (
             <View className="web:mr-4">
-              <Button size="sm" onPress={handleAddJob}>
-                <Text>Create</Text>
+              <Button size="sm" onPress={handleAddPurchase}>
+                <Text>Request</Text>
               </Button>
             </View>
           ),
         }}
       />
-      <AddNewJobForm onChange={setJob} />
+      <AddNewPurchaseForm onChange={setPurchase} />
       <Toast />
     </>
   );
