@@ -17,8 +17,8 @@ const addnew = () => {
   const [purchase, setPurchase] = React.useState<PurchaseOrder>({
     purchaseOrderNumber: "",
     vendor: {
-      id: "",
-      name: "",
+      _id: "",
+      companyName: "",
     },
     items: [],
     status: "Request", // Default status can be "Request"

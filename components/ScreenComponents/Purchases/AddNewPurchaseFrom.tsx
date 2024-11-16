@@ -17,18 +17,22 @@ import { CreatedUser, customer } from "../Jobs/types";
 import StatusBadge from "./PurchaseCardElements/StatusBadge";
 import ItemList from "./PurchaseCardElements/ItemList";
 import LinkedJobSection from "./PurchaseCardElements/LinkedJobSection";
+import DeleteButton from "../DeleteButton";
+import { Input } from "~/components/ui/input";
+import { AssignVendor } from "./PurchaseCardElements/AssignVendor";
 
 interface AddJobFormProps {
   onChange: (data: PurchaseOrder) => void;
 }
 
 const AddNewPurchaseForm: React.FC<AddJobFormProps> = ({ onChange }) => {
+  const [refreshKey, setRefreshKey] = React.useState(0);
   // Initial state for PurchaseOrder
   const [purchase, setPurchase] = React.useState<PurchaseOrder>({
     purchaseOrderNumber: "",
     vendor: {
-      id: "",
-      name: "",
+      _id: "",
+      companyName: "",
     },
     items: [],
     status: "Request", // Default status can be "Request"
@@ -63,10 +67,12 @@ const AddNewPurchaseForm: React.FC<AddJobFormProps> = ({ onChange }) => {
     // Check if the field is related to Vendor (for simplicity, let's assume Vendor type is used for certain fields)
     if (field === "vendor" && typeof value === "object" && value !== null) {
       updatedPurchaseData.vendor = value as Vendor;
+      console.log(updatedPurchaseData.vendor);
     }
     // Check if the field is related to items (PurchaseOrderItem)
-    else if (field === "items" && Array.isArray(value)) {
-      updatedPurchaseData.items = value as PurchaseOrderItem[];
+    else if (field === "items" && (value as PurchaseOrderItem)) {
+      updatedPurchaseData.items.push(value as PurchaseOrderItem);
+      updatedPurchaseData.total += (value as PurchaseOrderItem).price;
     }
     // Check if the field is related to StatusKeys
     else if (field === "total" && typeof value === "number") {
@@ -100,12 +106,45 @@ const AddNewPurchaseForm: React.FC<AddJobFormProps> = ({ onChange }) => {
     onChange(updatedPurchaseData); // Call onChange with the updated data
   };
 
+  const handleDeleteVendor = () => {
+    purchase.vendor = {
+      _id: "",
+      companyName: "",
+    };
+    setRefreshKey((prev) => prev + 1);
+  };
+
   return (
     <ScrollView
       showsVerticalScrollIndicator={Platform.OS === "web"}
-      contentContainerClassName="flex-1 p-4 md:p-12 gap-4"
+      contentContainerClassName="flex-1 p-4 gap-12 web:mb-12"
     >
-      <StatusBadge status={purchase.status} />
+      <View className="flex gap-2">
+        <Muted>Select a vendor</Muted>
+        <View className="flex-row gap-4 items-center justify-between ">
+          <View className="flex-1">
+            <Input
+              value={purchase.vendor.companyName}
+              onChangeText={(value) => console.log(value)}
+              editable={false}
+              nativeID="Vendor"
+            />
+          </View>
+          {purchase.vendor._id === "" ? (
+            <AssignVendor
+              onVendorAssigned={(vendor) => {
+                handleInputChange("vendor", {
+                  _id: vendor._id,
+                  companyName: vendor.companyName,
+                });
+              }}
+            />
+          ) : (
+            <DeleteButton xIcon={true} onDelete={handleDeleteVendor} />
+          )}
+        </View>
+      </View>
+
       <ItemList
         PurchaseOrder={purchase}
         handleInput={handleInputChange}
@@ -114,6 +153,8 @@ const AddNewPurchaseForm: React.FC<AddJobFormProps> = ({ onChange }) => {
       <LinkedJobSection
         jobID={purchase.jobID}
         orderNumber={purchase.purchaseOrderNumber}
+        handleInput={handleInputChange}
+        addNew={true}
       />
     </ScrollView>
   );

@@ -20,6 +20,12 @@ import {
 } from "~/components/ScreenComponents/Jobs/Filters/Statustypes";
 import { User } from "~/components/ScreenComponents/Team/types";
 
+import { DateType } from "react-native-ui-datepicker";
+import {
+  Customer,
+  SiteLocation,
+} from "~/components/ScreenComponents/Customers/types";
+
 const JobDetail = () => {
   const { jobID } = useLocalSearchParams();
   const [job, setJob] = useState<Job | null>(null);
@@ -89,7 +95,7 @@ const JobDetail = () => {
 
   const handleInputChange = (
     field: keyof Job,
-    value: string,
+    value: string | Customer | SiteLocation | DateType,
     userId?: String
   ) => {
     setJob((prevData) => {
@@ -112,7 +118,6 @@ const JobDetail = () => {
             assignedTo: updatedAssignedTo, // Update the assignedTo array
           };
         } else if (field in prevData.assignedTo) {
-          console.log("Iam here with", field, value);
           return {
             ...prevData,
             assignedTo: {
@@ -121,7 +126,6 @@ const JobDetail = () => {
             },
           };
         } else {
-          console.log("Iam in else with", field, value);
           return {
             ...prevData,
             [field]: value,

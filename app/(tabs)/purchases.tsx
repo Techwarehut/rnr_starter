@@ -73,7 +73,7 @@ export default function Purchases() {
   const searchfilteredPurchases = filteredPurchases.filter(
     (po) =>
       po.purchaseOrderNumber.toLowerCase().includes(searchText.toLowerCase()) ||
-      po.vendor.name.toLowerCase().includes(searchText.toLowerCase()) ||
+      po.vendor.companyName.toLowerCase().includes(searchText.toLowerCase()) ||
       po.jobID.toLowerCase().includes(searchText.toLowerCase()) ||
       po.items.some((item) =>
         item.itemName.toLowerCase().includes(searchText.toLowerCase())
@@ -95,8 +95,8 @@ export default function Purchases() {
           ? `Job: ${purchase.jobID}`
           : "Job: Unassigned";
       } else if (groupBy === "Vendor") {
-        groupTitle = purchase.vendor.name
-          ? `Vendor: ${purchase.vendor.name}`
+        groupTitle = purchase.vendor.companyName
+          ? `Vendor: ${purchase.vendor.companyName}`
           : "Vendor: Unassigned";
       } else {
         groupTitle = "All Purchases"; // Default title when no grouping

@@ -5,10 +5,8 @@ import { useIsLargeScreen } from "~/lib/utils";
 export function useToast() {
   const insets = useSafeAreaInsets();
   const isLargeScreen = useIsLargeScreen();
-  console.log(insets);
 
   const showSuccessToast = (text2: string) => {
-    console.log("I am here");
     Toast.show({
       type: "success",
       text1: "Success!",

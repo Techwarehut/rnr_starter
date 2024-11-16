@@ -43,7 +43,6 @@ export const Popover: React.FC<PopoverProps> = ({
     [propSnapPoints]
   );
   const handleSheetChanges = useCallback((index: number) => {
-    console.log("Iam here", index);
     // handle sheet changes
   }, []);
 

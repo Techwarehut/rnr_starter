@@ -44,7 +44,7 @@ const PurchaseCard: React.FC<PurchaseCardProps> = ({
     <Card key={item.purchaseOrderNumber} className={cardClassName}>
       <StatusBadge status={item.status} />
 
-      <CardTitle>{item.vendor.name}</CardTitle>
+      <CardTitle>{item.vendor.companyName}</CardTitle>
       <CardDescription>{item.purchaseOrderNumber}</CardDescription>
 
       <CardContent>

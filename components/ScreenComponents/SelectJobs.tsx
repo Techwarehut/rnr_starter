@@ -22,6 +22,7 @@ interface interfaceJobProps {
   isSelectionRequired?: boolean; // Boolean to indicate if selection is required
   canSelectMultiple?: boolean; // Boolean to allow single or multiple selection
   onJobSelect?: (selectedJobs: Job[]) => void; // Callback to handle job selection
+  filterInProgress?: boolean;
 }
 
 export default function SelectJob({
@@ -29,6 +30,7 @@ export default function SelectJob({
   isSelectionRequired = false,
   canSelectMultiple = false,
   onJobSelect,
+  filterInProgress = false,
 }: interfaceJobProps) {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [filteredjobs, setFilteredJobs] = useState<Job[]>([]);
@@ -60,6 +62,8 @@ export default function SelectJob({
     Maintenance: false,
   });
 
+  console.log("filter", filterInProgress);
+
   const router = useRouter();
   const fetchJobs = async () => {
     try {
@@ -72,6 +76,17 @@ export default function SelectJob({
   };
   useEffect(() => {
     fetchJobs();
+    if (filterInProgress) {
+      setSelectedStatuses({
+        backlog: false,
+        inprogress: true,
+        onhold: false,
+        approvalpending: false,
+        accountsreceivable: false,
+        invoiced: false,
+        paid: false,
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -188,7 +203,7 @@ export default function SelectJob({
 
   return (
     <>
-      {!isSelectionRequired && (
+      {!isSelectionRequired && !filterInProgress && (
         <Stack.Screen
           options={{
             headerRight: () => (
@@ -224,7 +239,11 @@ export default function SelectJob({
           }}
         />
       )}
-      <View className="flex-1 gap-4 bg-secondary/30 px-2  md:pl-20 md:mx-2 web:overflow-y-auto">
+      <View
+        className={`flex-1 gap-4 bg-secondary/30 px-2 md:mx-2 web:overflow-y-auto ${
+          !filterInProgress && !isSelectionRequired ? "md:pl-20" : ""
+        }`}
+      >
         <View className="flex-row gap-2 items-center">
           <SearchInput
             onChangeText={handleSearch}

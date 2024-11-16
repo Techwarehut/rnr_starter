@@ -12,9 +12,9 @@ export function ThemeToggle() {
     <Pressable
       onPress={() => {
         const newTheme = isDarkColorScheme ? "light" : "dark";
-        console.log("Before Changing Theme", newTheme);
+
         setColorScheme(newTheme);
-        console.log("After Setting Theme", newTheme);
+
         setAndroidNavigationBar(newTheme);
         AsyncStorage.setItem("theme", newTheme);
       }}

@@ -40,7 +40,6 @@ export const LinkJobs: React.FC<LinkJobProps> = ({ handleJobSelect }) => {
 
   const handleSheetChanges = useCallback((index: number) => {
     // handle sheet changes
-    console.log("handleSheetChanges", index);
   }, []);
 
   const handlePresentModalPress = useCallback(() => {
@@ -53,7 +52,6 @@ export const LinkJobs: React.FC<LinkJobProps> = ({ handleJobSelect }) => {
     }
   }, [isOpen]);
 
-  console.log("Iam gere");
   return (
     <>
       {Platform.OS !== "web" && (

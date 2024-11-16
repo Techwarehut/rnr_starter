@@ -11,15 +11,32 @@ import { Plus } from "~/lib/icons/Plus";
 import { LinkJobs } from "../../LinkJobs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import DeleteButton from "../../DeleteButton";
+import { PurchaseOrder, PurchaseOrderItem, StatusKeys, Vendor } from "../types";
+import { CreatedUser, customer } from "../../Jobs/types";
 
 interface LinkedJobSectionProps {
   jobID: string;
   orderNumber: string;
+  addNew?: boolean;
+  handleInput?: (
+    field: keyof PurchaseOrder,
+    value:
+      | string
+      | Vendor
+      | PurchaseOrderItem
+      | StatusKeys
+      | CreatedUser
+      | customer
+      | number
+  ) => void;
 }
 
 const LinkedJobSection: React.FC<LinkedJobSectionProps> = ({
   jobID,
   orderNumber,
+
+  addNew,
+  handleInput,
 }) => {
   const router = useRouter();
   const [refreshKey, setRefreshKey] = useState(0);
@@ -49,10 +66,16 @@ const LinkedJobSection: React.FC<LinkedJobSectionProps> = ({
   // Add item to order
   const handleAddLinkedJob = async (newJobID: string) => {
     try {
-      const updatedOrder = await addLinkedJob(orderNumber, newJobID);
-      if (updatedOrder) {
-        setLinkedJob(updatedOrder.jobID);
+      if (addNew) {
+        if (handleInput) handleInput("jobID", newJobID);
+        setLinkedJob(newJobID);
         setRefreshKey((prev) => prev + 1);
+      } else {
+        const updatedOrder = await addLinkedJob(orderNumber, newJobID);
+        if (updatedOrder) {
+          setLinkedJob(updatedOrder.jobID);
+          setRefreshKey((prev) => prev + 1);
+        }
       }
     } catch (error) {
       console.error("Error", "Failed to add item.");
@@ -62,9 +85,12 @@ const LinkedJobSection: React.FC<LinkedJobSectionProps> = ({
   // Delete item from order
   const handleDeleteLinkedJob = async () => {
     try {
-      const updatedOrder = await removeLinkedJob(orderNumber);
+      if (addNew) {
+        if (handleInput) handleInput("jobID", "");
+      } else {
+        const updatedOrder = await removeLinkedJob(orderNumber);
+      }
       setLinkedJob("");
-
       setRefreshKey((prev) => prev + 1);
     } catch (error) {
       console.error("Error", "Failed to delete job.");
@@ -72,7 +98,7 @@ const LinkedJobSection: React.FC<LinkedJobSectionProps> = ({
   };
 
   return (
-    <View>
+    <View className="gap-2">
       <Muted>Linked Job:</Muted>
       <View className="flex-row flex-wrap gap-2 bg-secondary p-2 rounded-md items-center justify-between">
         {linkedJob === "" ? (

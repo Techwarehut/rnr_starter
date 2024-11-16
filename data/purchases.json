@@ -2,8 +2,8 @@
   {
     "purchaseOrderNumber": "Purchase-001",
     "vendor": {
-      "id": "VENDOR_001",
-      "name": "ABC Supplies Co."
+      "_id": "VENDOR_001",
+      "companyName": "ABC Supplies Co."
     },
     "items": [
       { "itemId": "1", "itemName": "Item A1", "quantity": 2, "price": 20.0 },
@@ -26,8 +26,8 @@
   {
     "purchaseOrderNumber": "Purchase-002",
     "vendor": {
-      "id": "VENDOR_002",
-      "name": "XYZ Manufacturing"
+      "_id": "VENDOR_002",
+      "companyName": "XYZ Manufacturing"
     },
     "items": [
       { "itemId": "1", "itemName": "Item B1", "quantity": 5, "price": 5.0 },
@@ -54,8 +54,8 @@
   {
     "purchaseOrderNumber": "Purchase-003",
     "vendor": {
-      "id": "VENDOR_003",
-      "name": "Widgets Inc."
+      "_id": "VENDOR_003",
+      "companyName": "Widgets Inc."
     },
     "items": [
       { "itemId": "1", "itemName": "Item C1", "quantity": 1, "price": 100.0 },
@@ -82,8 +82,8 @@
   {
     "purchaseOrderNumber": "Purchase-004",
     "vendor": {
-      "id": "VENDOR_004",
-      "name": "Tech Solutions"
+      "_id": "VENDOR_004",
+      "companyName": "Tech Solutions"
     },
     "items": [
       { "itemId": "1", "itemName": "Item D1", "quantity": 4, "price": 12.0 },
@@ -110,8 +110,8 @@
   {
     "purchaseOrderNumber": "Purchase-005",
     "vendor": {
-      "id": "VENDOR_005",
-      "name": "Gadgets Galore"
+      "_id": "VENDOR_005",
+      "companyName": "Gadgets Galore"
     },
     "items": [
       { "itemId": "1", "itemName": "Item E1", "quantity": 3, "price": 10.0 },
@@ -134,8 +134,8 @@
   {
     "purchaseOrderNumber": "Purchase-006",
     "vendor": {
-      "id": "VENDOR_006",
-      "name": "Creative Designs"
+      "_id": "VENDOR_006",
+      "companyName": "Creative Designs"
     },
     "items": [
       { "itemId": 1, "itemName": "Item F1", "quantity": 6, "price": 15.0 },

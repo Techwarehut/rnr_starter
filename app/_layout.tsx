@@ -45,21 +45,19 @@ export default function RootLayout() {
 
   React.useEffect(() => {
     (async () => {
-      console.log("I am here");
       const theme = await AsyncStorage.getItem("theme");
       if (Platform.OS === "web") {
         // Adds the background color to the html element to prevent white background on overscroll.
         document.documentElement.classList.add("bg-background");
       }
-      console.log(theme);
+
       if (!theme) {
         AsyncStorage.setItem("theme", colorScheme);
         setIsColorSchemeLoaded(true);
         return;
       }
       const colorTheme = theme === "dark" ? "dark" : "light";
-      console.log("color theme", colorTheme);
-      console.log("color scheme", colorScheme);
+
       if (colorTheme !== colorScheme) {
         setColorScheme(colorTheme);
         setAndroidNavigationBar(colorTheme);
@@ -151,18 +149,6 @@ export default function RootLayout() {
               options={{
                 headerShown: true,
                 headerTitle: "Add New Job",
-                presentation: Platform.OS === "ios" ? "card" : "modal",
-                headerTitleAlign: "left",
-                //headerBackVisible: true,
-                headerBackTitleVisible: false,
-              }}
-            />
-
-            <Stack.Screen
-              name="purchases/[purchaseID]"
-              options={{
-                headerShown: true,
-                headerTitle: "",
                 presentation: Platform.OS === "ios" ? "card" : "modal",
                 headerTitleAlign: "left",
                 //headerBackVisible: true,

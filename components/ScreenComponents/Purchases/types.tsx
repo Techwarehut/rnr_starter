@@ -12,8 +12,8 @@ export interface PurchaseOrderItem {
 }
 
 export interface Vendor {
-  id: string; // Unique identifier for the vendor
-  name: string; // Name of the vendor
+  _id: string; // Unique identifier for the vendor
+  companyName: string; // Name of the vendor
 }
 
 export interface PurchaseOrder {

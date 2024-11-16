@@ -1,7 +1,11 @@
 import { useNavigation } from "expo-router";
 import { useEffect } from "react";
 import { View } from "react-native";
+import QuickSnapshot from "~/components/ScreenComponents/Dashboard/QuickSnapshot";
+import Schedule from "~/components/ScreenComponents/Dashboard/Schedule";
+import { Card, CardDescription, CardTitle } from "~/components/ui/card";
 import { Text } from "~/components/ui/text";
+import { Large } from "~/components/ui/typography";
 import { useIsLargeScreen } from "~/lib/utils";
 
 export default function Dashboard() {
@@ -10,15 +14,12 @@ export default function Dashboard() {
 
   return (
     <View
-      className={`flex-1 justify-center items-center gap-5 bg-secondary/30 ${
-        isLargeScreen ? "pl-20" : "pl-4"
+      className={`flex-1  gap-5 bg-secondary/30 ${
+        isLargeScreen ? "pl-20" : "p-2"
       }`}
     >
-      <View className="bg-destructive text-destructive-foreground">
-        <Text className="text-destructive-foreground">
-          I am in Dashboard Screen
-        </Text>
-      </View>
+      <QuickSnapshot />
+      <Schedule />
     </View>
   );
 }
