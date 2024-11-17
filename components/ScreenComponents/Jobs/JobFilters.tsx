@@ -25,6 +25,7 @@ interface FilterProps {
   setSelectedGroupValue: (value: string) => void;
   handleStatusChange: (checkedStates: Record<StatusKeys, boolean>) => void;
   handleJobTypeChange: (checkedStates: Record<JobTypeKeys, boolean>) => void;
+  dashboardView?: boolean;
 }
 
 export const JobFilters: React.FC<FilterProps> = ({
@@ -34,12 +35,14 @@ export const JobFilters: React.FC<FilterProps> = ({
   setSelectedGroupValue,
   handleStatusChange,
   handleJobTypeChange,
+  dashboardView = false,
 }) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const [isOpen, setIsOpen] = useState(false);
   const animatedIndex = useSharedValue<number>(0);
   const animatedPosition = useSharedValue<number>(0);
   const snapPoints = ["70%", "80%"];
+  const dashboardSnapPoints = ["40%", "50%"];
   const { isDarkColorScheme, setColorScheme } = useColorScheme();
 
   const handleSheetChanges = useCallback((index: number) => {
@@ -65,7 +68,7 @@ export const JobFilters: React.FC<FilterProps> = ({
       <BottomSheetModal
         ref={bottomSheetModalRef}
         index={1}
-        snapPoints={snapPoints}
+        snapPoints={dashboardView ? dashboardSnapPoints : snapPoints}
         onChange={handleSheetChanges}
         backgroundStyle={{
           backgroundColor: isDarkColorScheme ? "#000" : "#FFF",
@@ -95,23 +98,28 @@ export const JobFilters: React.FC<FilterProps> = ({
               />
             </View>
 
-            <Text className="text-xl">Status</Text>
+            {/* Conditionally render filters based on the dashboardView flag */}
+            {!dashboardView && (
+              <>
+                <Text className="text-xl">Status</Text>
 
-            <View className="flex flex-1 mb-8 mx-4 mt-2">
-              <StatusFilter
-                initialCheckedStates={initialStatusCheckedStates}
-                onChange={handleStatusChange}
-              />
-            </View>
+                <View className="flex flex-1 mb-8 mx-4 mt-2">
+                  <StatusFilter
+                    initialCheckedStates={initialStatusCheckedStates}
+                    onChange={handleStatusChange}
+                  />
+                </View>
 
-            <Text className="text-xl">Job Type</Text>
+                <Text className="text-xl">Job Type</Text>
 
-            <View className="flex flex-1 m-4 ">
-              <JobTypeFilter
-                initialCheckedStates={initialJobTypeCheckedStates}
-                onChange={handleJobTypeChange}
-              />
-            </View>
+                <View className="flex flex-1 m-4 ">
+                  <JobTypeFilter
+                    initialCheckedStates={initialJobTypeCheckedStates}
+                    onChange={handleJobTypeChange}
+                  />
+                </View>
+              </>
+            )}
           </ScrollView>
         </BottomSheetView>
       </BottomSheetModal>

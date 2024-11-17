@@ -62,8 +62,6 @@ export default function SelectJob({
     Maintenance: false,
   });
 
-  console.log("filter", filterInProgress);
-
   const router = useRouter();
   const fetchJobs = async () => {
     try {
@@ -76,17 +74,6 @@ export default function SelectJob({
   };
   useEffect(() => {
     fetchJobs();
-    if (filterInProgress) {
-      setSelectedStatuses({
-        backlog: false,
-        inprogress: true,
-        onhold: false,
-        approvalpending: false,
-        accountsreceivable: false,
-        invoiced: false,
-        paid: false,
-      });
-    }
   }, []);
 
   useEffect(() => {

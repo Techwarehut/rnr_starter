@@ -31,9 +31,7 @@ const PurchaseCard: React.FC<PurchaseCardProps> = ({
   horizontalView,
 }) => {
   // Determine class names based on horizontalView prop
-  const cardClassName = `p-4 gap-2 mb-4 ${
-    horizontalView ? "w-80 web:w-64" : ""
-  }`;
+  const cardClassName = `p-4 gap-2 mb-4 ${horizontalView ? "w-80 " : ""}`;
   const CardContentClassName = `flex gap-4 ${
     !horizontalView && "md:flex-1 md:flex-row"
   } `;
@@ -51,8 +49,17 @@ const PurchaseCard: React.FC<PurchaseCardProps> = ({
         <View className={CardContentClassName}>
           <ItemList PurchaseOrder={item} />
 
-          {islargeScreen ? <Separator orientation="vertical" /> : <Separator />}
-          <View className="md:flex-1">
+          {islargeScreen ? (
+            horizontalView ? (
+              <Separator />
+            ) : (
+              <Separator orientation="vertical" />
+            )
+          ) : (
+            <Separator />
+          )}
+
+          <View className={horizontalView ? "" : "md:flex-1"}>
             <View className="flex gap-4">
               <UserAvatarSection label="Requested By" user={item.requestedBy} />
               <UserAvatarSection label="Approved By" user={item.approvedBy} />

@@ -2,7 +2,7 @@ import { Platform, View } from "react-native";
 import React from "react";
 import { Text } from "~/components/ui/text";
 
-import { formatPhoneNumber, getInitials } from "~/lib/utils";
+import { formatPhoneNumber, getInitials, useIsLargeScreen } from "~/lib/utils";
 import { Muted } from "~/components/ui/typography";
 import { ScrollView } from "react-native-gesture-handler";
 import { Button } from "~/components/ui/button";
@@ -23,9 +23,10 @@ import { AssignVendor } from "./PurchaseCardElements/AssignVendor";
 
 interface AddJobFormProps {
   onChange: (data: PurchaseOrder) => void;
+  jobId: string;
 }
 
-const AddNewPurchaseForm: React.FC<AddJobFormProps> = ({ onChange }) => {
+const AddNewPurchaseForm: React.FC<AddJobFormProps> = ({ onChange, jobId }) => {
   const [refreshKey, setRefreshKey] = React.useState(0);
   // Initial state for PurchaseOrder
   const [purchase, setPurchase] = React.useState<PurchaseOrder>({
@@ -37,7 +38,7 @@ const AddNewPurchaseForm: React.FC<AddJobFormProps> = ({ onChange }) => {
     items: [],
     status: "Request", // Default status can be "Request"
     total: 0, // Default total
-    jobID: "",
+    jobID: jobId,
     requestedBy: {
       userId: "",
       name: "",
@@ -114,10 +115,13 @@ const AddNewPurchaseForm: React.FC<AddJobFormProps> = ({ onChange }) => {
     setRefreshKey((prev) => prev + 1);
   };
 
+  const isLargeScreen = useIsLargeScreen();
+
   return (
     <ScrollView
       showsVerticalScrollIndicator={Platform.OS === "web"}
-      contentContainerClassName="flex-1 p-4 gap-12 web:mb-12"
+      /* contentContainerClassName="flex-1 p-4 gap-12 web:mb-12" */
+      contentContainerStyle={{ padding: isLargeScreen ? 48 : 12 }}
     >
       <View className="flex gap-2">
         <Muted>Select a vendor</Muted>

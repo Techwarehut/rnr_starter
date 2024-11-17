@@ -43,6 +43,8 @@ const LinkedJobSection: React.FC<LinkedJobSectionProps> = ({
   const [linkedJob, setLinkedJob] = useState<string>(jobID);
   const insets = useSafeAreaInsets();
 
+  console.log(jobID, linkedJob);
+
   const contentInsets = {
     top: insets.top,
     bottom: insets.bottom,

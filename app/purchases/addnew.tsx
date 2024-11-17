@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import React from "react";
 import AddNewJobForm from "~/components/ScreenComponents/Jobs/AddNewJobFrom";
-import { Stack, useRouter } from "expo-router";
+import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { Button } from "~/components/ui/button";
 import { Job } from "~/components/ScreenComponents/Jobs/types";
 import { addJob } from "~/api/jobsApi";
@@ -13,6 +13,11 @@ import { PurchaseOrder } from "~/components/ScreenComponents/Purchases/types";
 import { addPurchaseOrder } from "~/api/purchasesApi";
 
 const addnew = () => {
+  const { jobid } = useLocalSearchParams();
+
+  // Ensure jobID is a string
+  const id = Array.isArray(jobid) ? jobid[0] : jobid;
+
   // Initial state for PurchaseOrder
   const [purchase, setPurchase] = React.useState<PurchaseOrder>({
     purchaseOrderNumber: "",
@@ -23,7 +28,7 @@ const addnew = () => {
     items: [],
     status: "Request", // Default status can be "Request"
     total: 0, // Default total
-    jobID: "",
+    jobID: id,
     requestedBy: {
       userId: "",
       name: "",
@@ -43,7 +48,8 @@ const addnew = () => {
       const addedPurchase = await addPurchaseOrder(purchase);
 
       showSuccessToast("Purchase Added successfully!");
-      router.replace("/(tabs)/purchases");
+      /* router.replace("/(tabs)/purchases"); */
+      if (router.canGoBack()) router.back();
     } catch (error) {
       showErrorToast("Error Adding Purchase!");
     }
@@ -62,7 +68,7 @@ const addnew = () => {
           ),
         }}
       />
-      <AddNewPurchaseForm onChange={setPurchase} />
+      <AddNewPurchaseForm onChange={setPurchase} jobId={purchase.jobID} />
       <Toast />
     </>
   );

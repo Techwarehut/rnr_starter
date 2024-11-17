@@ -11,6 +11,7 @@ import { JobPriorityKeys, JobTypeKeys } from "./Filters/Statustypes";
 import { User } from "../Team/types";
 import { Customer, SiteLocation } from "../Customers/types";
 import { DateType } from "react-native-ui-datepicker";
+
 interface JobDetaiDisplaylProps {
   job: Job;
   handleInputChange: (
@@ -34,7 +35,9 @@ export const JobDetailDisplay: React.FC<JobDetaiDisplaylProps> = ({
 }) => {
   return (
     <ScrollView
-      contentContainerClassName="flex-1 p-4 gap-4"
+      nestedScrollEnabled={true}
+      //contentContainerClassName="flex flex-1 grow p-4 gap-4 overflow-scroll"
+      contentContainerStyle={{ padding: 12 }}
       showsVerticalScrollIndicator={false}
     >
       <JobBasicInfo

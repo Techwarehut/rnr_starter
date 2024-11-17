@@ -25,6 +25,11 @@ import { Textarea } from "~/components/ui/textarea";
 import JobTimesheet from "./JobTimesheet";
 import JobImages from "./JobImages";
 import { User } from "../../Team/types";
+import { addPurchaseOrder } from "~/api/purchasesApi";
+import { useToast } from "../../ToastMessage";
+import { PurchaseOrder } from "../../Purchases/types";
+import AddNewPurchaseForm from "../../Purchases/AddNewPurchaseFrom";
+import { useRouter } from "expo-router";
 
 interface JobBasicInfoProps {
   job: Job;
@@ -44,6 +49,18 @@ const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
   onChangeType,
 }) => {
   const isLargeScreen = useIsLargeScreen();
+  const { showSuccessToast, showErrorToast } = useToast();
+  const router = useRouter();
+
+  const handleAddPurchase = async (purchase: PurchaseOrder) => {
+    try {
+      const addedPurchase = await addPurchaseOrder(purchase);
+
+      showSuccessToast("Purchase Added successfully!");
+    } catch (error) {
+      showErrorToast("Error Adding Purchase!");
+    }
+  };
 
   return (
     <View className="flex gap-8 mb-4">
@@ -119,7 +136,18 @@ const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
           <Text className="text-xl">Purchases</Text>
           <Muted>All Purchases made for this job</Muted>
         </View>
-        <Button variant="default">
+
+        <Button
+          variant="default"
+          onPress={() =>
+            router.push({
+              pathname: "/purchases/addnew",
+              params: {
+                jobid: job._id, // Passing the job._id directly, not wrapped in an object
+              },
+            })
+          }
+        >
           <Plus className="text-primary-foreground" size={18} />
         </Button>
       </View>

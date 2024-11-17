@@ -12,7 +12,7 @@ export function Collapsible({
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <View>
+    <View className="mb-4">
       <Pressable
         accessibilityRole="button"
         accessibilityLabel={isOpen ? "Collapse" : "Expand"}

@@ -2,7 +2,7 @@ import { Platform, View } from "react-native";
 import React from "react";
 import { Text } from "~/components/ui/text";
 
-import { formatPhoneNumber, getInitials } from "~/lib/utils";
+import { formatPhoneNumber, getInitials, useIsLargeScreen } from "~/lib/utils";
 import { Muted } from "~/components/ui/typography";
 import { ScrollView } from "react-native-gesture-handler";
 import { Button } from "~/components/ui/button";
@@ -113,11 +113,13 @@ const AddNewJobForm: React.FC<AddJobFormProps> = ({ onChange }) => {
     setJob(updatedJobData);
     onChange(updatedJobData); // Call onChange with the updated data
   };
+  const isLargeScreen = useIsLargeScreen();
 
   return (
     <ScrollView
       showsVerticalScrollIndicator={Platform.OS === "web"}
-      contentContainerClassName="flex-1 p-4 md:p-12 gap-4"
+      /* contentContainerClassName="flex-1 p-4 md:p-12 gap-4" */
+      contentContainerStyle={{ padding: isLargeScreen ? 48 : 12 }}
     >
       {/* Top Container */}
       <View>

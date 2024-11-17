@@ -305,3 +305,13 @@ export const updateJobDueDate = async (
     }, 1000); // Simulate a delay
   });
 };
+
+// Function to fetch jobs with status "In Progress"
+export const getInProgressJobs = async (): Promise<Job[]> => {
+  const allJobs = await getAllJobs(); // Fetch all jobs
+
+  // Filter jobs with status "In Progress"
+  const inProgressJobs = allJobs.filter((job) => job.status === "In Progress");
+
+  return inProgressJobs;
+};

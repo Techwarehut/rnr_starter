@@ -56,7 +56,8 @@ const addnew = () => {
       const addedJob = await addJob(job);
 
       showSuccessToast("Job Added successfully!");
-      router.replace("/(tabs)/jobs");
+      /*  router.replace("/(tabs)/jobs"); */
+      if (router.canGoBack()) router.back();
     } catch (error) {
       showErrorToast("Error Adding job!");
     }
