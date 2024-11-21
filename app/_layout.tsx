@@ -183,7 +183,7 @@ export default function RootLayout() {
             <Stack.Screen
               name="(tabs)"
               options={{
-                headerShown: true,
+                headerShown: false,
                 headerShadowVisible: true,
                 title: "fast forward",
                 headerTitleAlign: "left",

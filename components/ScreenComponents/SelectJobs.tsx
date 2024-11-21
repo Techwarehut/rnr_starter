@@ -216,7 +216,6 @@ export default function SelectJob({
                 <Button
                   size="sm"
                   variant="default"
-                  className="shadow shadow-foreground/5"
                   onPress={() => router.push("/jobs/addnew")}
                 >
                   <Text>Add New Job</Text>
@@ -227,7 +226,7 @@ export default function SelectJob({
         />
       )}
       <View
-        className={`flex-1 gap-4 bg-secondary/30 px-2 md:mx-2 web:overflow-y-auto ${
+        className={`flex-1 gap-4 bg-secondary px-2 md:mx-2 web:overflow-y-auto ${
           !filterInProgress && !isSelectionRequired ? "md:pl-20" : ""
         }`}
       >

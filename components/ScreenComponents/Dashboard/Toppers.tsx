@@ -48,7 +48,7 @@ const Toppers = () => {
     <View className="flex gap-2">
       <View className="flex gap-2">
         <Card className="flex flex-1 p-4 m-2 gap-4">
-          <CardDescription className="text-brand-primary">
+          <CardDescription className="text-primary">
             Employee of the Month
           </CardDescription>
           <CardContent>
@@ -69,7 +69,7 @@ const Toppers = () => {
       </View>
       <View className="flex gap-2">
         <Card className="flex flex-1 p-4 m-2 gap-4">
-          <CardDescription className="text-brand-secondary">
+          <CardDescription className="text-primary">
             Revenue Stars
           </CardDescription>
 

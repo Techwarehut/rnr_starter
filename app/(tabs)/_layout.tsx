@@ -30,6 +30,7 @@ export default function TabLayout() {
   // Define active and inactive colors based on the color scheme or your preference
   const activeTintColor = isDarkColorScheme ? "#FFD700" : "#1E90FF"; // Example: gold for dark mode, dodger blue for light mode
   const inactiveTintColor = isDarkColorScheme ? "#B0B0B0" : "#696969"; // Example: light gray for dark mode, dark gray for light mode
+  const backgroundColor = isDarkColorScheme ? "#1e2936" : "#e8eef6"; // Example: light gray for dark mode, dark gray for light mode
 
   return (
     <Tabs
@@ -41,7 +42,7 @@ export default function TabLayout() {
         headerShadowVisible: false,
         headerTitleAlign: "left",
         headerStyle: {
-          backgroundColor: cn("bg-brand-primary"),
+          backgroundColor: backgroundColor,
         },
         headerTitleStyle: {
           paddingLeft: isLargeScreen ? 80 : 0, // Corrected conditional syntax
@@ -71,10 +72,34 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "Dashboard",
+          headerRight: () => (
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                marginRight: 10,
+              }}
+            >
+              <ThemeToggle />
+              <Avatar alt="Rick Sanchez's Avatar" className="w-10 h-10">
+                <AvatarImage source={{ uri: AVATAR_URI }} />
+                <AvatarFallback>
+                  <Text>RS</Text>
+                </AvatarFallback>
+              </Avatar>
+            </View>
+          ),
           tabBarIcon: ({ color, focused }) => (
             <LayoutDashboard
               //className={focused ? "fill-primary" : "text-primary fill-none"}
-              className={focused ? "text-primary" : "text-muted-foreground"}
+              className={
+                focused
+                  ? "text-primary"
+                  : isLargeScreen
+                  ? "text-primary-foreground"
+                  : "text-muted-foreground"
+              }
               size={24}
               strokeWidth={1.5}
               //color={color}
@@ -94,7 +119,13 @@ export default function TabLayout() {
                   ? "text-primary-foreground fill-primary"
                   : "text-primary fill-none"
               } */
-              className={focused ? "text-primary" : "text-muted-foreground"}
+              className={
+                focused
+                  ? "text-primary"
+                  : isLargeScreen
+                  ? "text-primary-foreground"
+                  : "text-muted-foreground"
+              }
               size={24}
               strokeWidth={1.5}
             />
@@ -113,7 +144,13 @@ export default function TabLayout() {
                   ? "text-primary-foreground fill-primary"
                   : "text-primary fill-none"
               } */
-              className={focused ? "text-primary" : "text-muted-foreground"}
+              className={
+                focused
+                  ? "text-primary"
+                  : isLargeScreen
+                  ? "text-primary-foreground"
+                  : "text-muted-foreground"
+              }
               size={24}
               strokeWidth={1.5}
             />
@@ -132,7 +169,13 @@ export default function TabLayout() {
                   ? "text-primary-foreground fill-primary"
                   : "text-primary fill-none"
               } */
-              className={focused ? "text-primary" : "text-muted-foreground"}
+              className={
+                focused
+                  ? "text-primary"
+                  : isLargeScreen
+                  ? "text-primary-foreground"
+                  : "text-muted-foreground"
+              }
               size={24}
               strokeWidth={1.5}
             />
@@ -201,7 +244,13 @@ export default function TabLayout() {
               /* className={
                 focused ? "text-primary fill-primary" : "text-primary fill-none"
               } */
-              className={focused ? "text-primary" : "text-muted-foreground"}
+              className={
+                focused
+                  ? "text-primary"
+                  : isLargeScreen
+                  ? "text-primary-foreground"
+                  : "text-muted-foreground"
+              }
               size={24}
               strokeWidth={1.5}
             />
@@ -220,7 +269,13 @@ export default function TabLayout() {
                   ? "text-primary-foreground fill-primary"
                   : "text-primary fill-none"
               } */
-              className={focused ? "text-primary" : "text-muted-foreground"}
+              className={
+                focused
+                  ? "text-primary"
+                  : isLargeScreen
+                  ? "text-primary-foreground"
+                  : "text-muted-foreground"
+              }
               size={24}
               strokeWidth={1.5}
             />

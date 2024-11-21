@@ -7,17 +7,19 @@ import Toppers from "~/components/ScreenComponents/Dashboard/Toppers";
 import { Card, CardDescription, CardTitle } from "~/components/ui/card";
 import { Text } from "~/components/ui/text";
 import { Large } from "~/components/ui/typography";
-import { useColorScheme } from "~/lib/useColorScheme";
 import { cn, useIsLargeScreen } from "~/lib/utils";
 
 export default function Dashboard() {
   const isLargeScreen = useIsLargeScreen();
-  const { isDarkColorScheme, setColorScheme } = useColorScheme();
-  const backgroundColor = isDarkColorScheme ? "#1e2936" : "#e8eef6";
+
   return (
     <ScrollView
-      contentContainerStyle={{ flex: 1, backgroundColor: backgroundColor }}
-      showsVerticalScrollIndicator={false}
+      contentContainerClassName={cn(
+        "flex-1  gap-5 bg-secondary",
+        isLargeScreen ? "pl-20" : "p-2"
+      )}
+      /*  contentContainerStyle={{ paddingLeft: isLargeScreen ? 80 : 8 }} */
+      showsVerticalScrollIndicator={Platform.OS === "web"}
     >
       <QuickSnapshot />
       <View className="flex flex-1 md:flex-row gap-8 md:mr-4">

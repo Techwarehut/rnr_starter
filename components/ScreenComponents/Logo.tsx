@@ -3,12 +3,10 @@ import { FastForward } from "~/lib/icons/FastForward";
 
 export default function Logo() {
   return (
-    /* <View className="flex bg-primary items-center justify-center p-2 px-4 m-2 rounded-2xl "> */
     <FastForward
       className="text-primary items-center justify-center mx-2"
       size={28}
-      strokeWidth={1.5}
+      strokeWidth={2}
     />
-    /* </View> */
   );
 }

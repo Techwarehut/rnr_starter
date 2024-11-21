@@ -37,7 +37,7 @@ export function TabBarButton({
     typeof options.tabBarLabel === "function"
       ? options.tabBarLabel({
           focused: isFocused,
-          color: isFocused ? "text-primary" : "text-primary",
+          color: isFocused ? "text-primary" : "text-primary-foreground",
           position: "below-icon", // Ensure this is a valid position if 'bottom' is not correct
           children: route.name,
         })
@@ -66,13 +66,13 @@ export function TabBarButton({
         isFocused,
         size: isLargeScreen ? "largeScreen" : "default",
       })} ${isLargeScreen && isSpecialRoute ? "mt-auto" : ""} ${
-        isLargeScreen && "web:hover:bg-accent web:hover:text-accent-foreground"
-      } ${isLargeScreen && isFocused && "bg-accent text-accent-foreground"}`}
+        isLargeScreen && "web:hover:bg-accent web:hover:text-primary"
+      } ${isLargeScreen && isFocused && "bg-secondary text-primary"}`}
     >
       <View className="w-full flex items-center justify-center">
         {options.tabBarIcon &&
           options.tabBarIcon({
-            color: isFocused ? "text-primary" : "text-primary",
+            color: isFocused ? "text-primary" : "text-primary-foreground",
             //color: xc  color
             focused: isFocused,
             size: 21,
@@ -80,8 +80,10 @@ export function TabBarButton({
 
         {/* <Text className="text-xs text-primary"> */}
         <Text
-          className={`text-xs mt-1 ${
-            isFocused ? "text-primary" : "text-muted-foreground"
+          className={`text-xs mt-1  ${
+            isFocused
+              ? "text-primary"
+              : "text-primary-foreground web:hover:text-primary"
           }`}
         >
           {typeof label === "string" ? label : label?.toString()}

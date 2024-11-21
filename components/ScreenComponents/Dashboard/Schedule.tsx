@@ -4,18 +4,22 @@ import { Large, Muted } from "~/components/ui/typography";
 import SelectJob from "../SelectJobs";
 import { Job } from "../Jobs/types";
 import { useToast } from "../ToastMessage";
-import { formatDueDate, getInitials, useIsLargeScreen } from "~/lib/utils";
+import { cn, formatDueDate, getInitials, useIsLargeScreen } from "~/lib/utils";
 import { useRouter } from "expo-router";
 import { getAllJobs, getInProgressJobs, updateJobStatus } from "~/api/jobsApi";
 import { Text } from "~/components/ui/text";
 import { SearchInput } from "../SearchInput";
 import { JobFilters } from "../Jobs/JobFilters";
-import { JobTypeKeys } from "../Jobs/Filters/Statustypes";
+import { getJobPriorityIcon, JobTypeKeys } from "../Jobs/Filters/Statustypes";
 import { Collapsible } from "../Collapsible";
+import { User2 } from "~/lib/icons/User";
 
 import { Button } from "~/components/ui/button";
 
 import { JobCard } from "../Jobs/JobCard";
+import { TableCell, TableRow } from "~/components/ui/table";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import JobStatusUpdate from "../Jobs/JobStatusUpdate";
 
 const Schedule = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -145,14 +149,10 @@ const Schedule = () => {
     >
       <View className="flex flex-row items-center justify-between">
         <Large>Today's Schedule</Large>
-        <View className="flex flex-row gap-2">
-          <Button variant="secondary">
-            <Text>Email</Text>
-          </Button>
-          <Button>
-            <Text>Print</Text>
-          </Button>
-        </View>
+
+        <Button>
+          <Text>View All Jobs</Text>
+        </Button>
       </View>
       <View className="flex-row gap-2 items-center">
         <SearchInput
@@ -174,17 +174,53 @@ const Schedule = () => {
       <View className="flex flex-1">
         {groupedJobs.map((group) => (
           <Collapsible key={group.title} title={group.title}>
-            {group.data.map((job) => (
-              <JobCard
+            {group.data.map((job, index) => (
+              <TableRow
+                className={cn(
+                  "active:bg-secondary w-full",
+                  index % 2 && "bg-muted/40 "
+                )}
                 key={job._id}
-                onChangeStatus={handleChangeStatus}
-                job={job}
-                onJobDetail={handleJobDetail}
-                isSelectionRequired={false}
-                checkboxEnabled={false}
-                selectedJobs={[]}
-                onJobSelect={(jobs) => {}}
-              />
+              >
+                <TableCell className="flex w-full items-start">
+                  <View className="flex flex-row gap-2 w-full items-center justify-between">
+                    <View className="flex flex-row gap-2 items-center ">
+                      {getJobPriorityIcon(job.priority)}
+                    </View>
+                    <View className="flex-row flex-wrap gap-2">
+                      {job.assignedTo.map((item) => (
+                        <Avatar
+                          key={item.userId}
+                          alt="Avatar"
+                          className="w-10 h-10"
+                        >
+                          <AvatarImage source={{ uri: item.profileUrl }} />
+                          <AvatarFallback>
+                            <Text>{getInitials(item.name)}</Text>
+                          </AvatarFallback>
+                        </Avatar>
+                      ))}
+                    </View>
+                  </View>
+
+                  <View className="flex-row gap-2 items-center">
+                    <Button variant="link" onPress={() => {}}>
+                      <Text>{job._id}</Text>
+                    </Button>
+                    <Text>{job.jobTitle}</Text>
+                  </View>
+
+                  <Muted>Site Details:</Muted>
+                  <View className="bg-secondary gap-2 w-full rounded-md p-2">
+                    <Text>{`${job.customer?.businessName} - ${job.siteLocation?.siteName}`}</Text>
+                    <View className="flex-row items-center gap-2">
+                      <User2 className="text-primary" size={18} />
+
+                      <Text>{job.siteLocation.siteContactPerson}</Text>
+                    </View>
+                  </View>
+                </TableCell>
+              </TableRow>
             ))}
           </Collapsible>
         ))}

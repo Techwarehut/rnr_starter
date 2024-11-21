@@ -14,6 +14,7 @@ import { TabBarButton } from "./TabBarButton";
 import { TabBarListItem } from "./TabBarListItem";
 import { Button } from "../ui/button";
 import { router } from "expo-router";
+import Logo from "../ScreenComponents/Logo";
 
 interface MyTabBarProps extends BottomTabBarProps {
   isLargeScreen: boolean;
@@ -44,10 +45,19 @@ const MyTabBar: React.FC<MyTabBarProps> = ({
     <View
       className={`${
         isLargeScreen
-          ? "absolute flex-col h-full w-20 border-r pt-4"
+          ? "absolute flex-col h-full w-20 border-r pt-4 bg-primary"
           : "flex-row border-t"
       } ${Platform.OS === "ios" ? "mb-4" : ""}  border-input bg-background`}
     >
+      {isLargeScreen && (
+        <View className="ml-4 mb-4">
+          <FastForward
+            className="text-primary-foreground items-center justify-center mx-2"
+            size={28}
+            strokeWidth={2}
+          />
+        </View>
+      )}
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
@@ -113,13 +123,23 @@ const MyTabBar: React.FC<MyTabBarProps> = ({
               }`}
             >
               <Ellipsis
-                className={isFocused ? "text-primary" : "text-muted-foreground"}
+                className={
+                  isFocused
+                    ? "text-primary"
+                    : isLargeScreen
+                    ? "text-primary-foreground"
+                    : "text-muted-foreground"
+                }
                 size={24}
                 strokeWidth={1}
               />
               <Text
                 className={`text-xs mt-1 ${
-                  isFocused ? "text-primary" : "text-muted-foreground"
+                  isFocused
+                    ? "text-primary"
+                    : isLargeScreen
+                    ? "text-primary-foreground"
+                    : "text-muted-foreground"
                 }`}
               >
                 More
