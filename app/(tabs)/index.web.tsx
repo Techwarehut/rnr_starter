@@ -15,7 +15,7 @@ export default function Dashboard() {
   return (
     <ScrollView
       contentContainerClassName={cn(
-        "flex-1  gap-5 bg-secondary",
+        "flex-1  gap-5",
         isLargeScreen ? "pl-20" : "p-2"
       )}
       /*  contentContainerStyle={{ paddingLeft: isLargeScreen ? 80 : 8 }} */

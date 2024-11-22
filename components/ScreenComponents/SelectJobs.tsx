@@ -226,11 +226,11 @@ export default function SelectJob({
         />
       )}
       <View
-        className={`flex-1 gap-4 bg-secondary px-2 md:mx-2 web:overflow-y-auto ${
+        className={`flex-1 gap-4  px-2 md:mx-2 web:overflow-y-auto ${
           !filterInProgress && !isSelectionRequired ? "md:pl-20" : ""
         }`}
       >
-        <View className="flex-row gap-2 items-center">
+        <View className="flex-row gap-2 items-center web:mt-2">
           <SearchInput
             onChangeText={handleSearch}
             placeholder="Search..."

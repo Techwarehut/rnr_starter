@@ -24,6 +24,7 @@
     --input: 210 30% 50%;
     --ring: 210 45% 31%;
 
+    /* Brand colors */
     --brand-primary: 87 43% 38%; /*#658b38*/
     --brand-primary-foreground: 0 0% 98%;
     --brand-primary-light: 87 50% 60%; /*#9dcc65*/
@@ -38,7 +39,7 @@
     --brand-secondary-dark-foreground: 0 0% 98%;
   }
 
-  .dark:root {
+  .dark {
     --background: 210 50% 10%;
     --foreground: 210 5% 100%;
     --card: 210 50% 10%;

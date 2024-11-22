@@ -61,7 +61,7 @@ export function TabBarButton({
 
       <Text
         className={`text-xs mt-1 ${
-          isFocused ? "text-primary" : "text-muted-foreground"
+          isFocused ? "text-secondary-foreground" : "text-muted-foreground"
         }`}
       >
         {label}

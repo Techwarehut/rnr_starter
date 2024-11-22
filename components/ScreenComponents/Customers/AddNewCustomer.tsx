@@ -64,12 +64,7 @@ export const AddNewCustomer: React.FC<AddNewCustomerProps> = ({
 
   return (
     <>
-      <Button
-        size="sm"
-        variant="default"
-        className="shadow shadow-foreground/5"
-        onPress={handlePresentModalPress}
-      >
+      <Button size="sm" variant="default" onPress={handlePresentModalPress}>
         <Text>Add New Customer</Text>
       </Button>
 

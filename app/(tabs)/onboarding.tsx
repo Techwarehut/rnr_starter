@@ -6,7 +6,7 @@ export default function Onboarding() {
   const isLargeScreen = useIsLargeScreen();
   return (
     <View
-      className={`flex-1 justify-center items-center gap-5 bg-secondary/30 ${
+      className={`flex-1 justify-center items-center gap-5  ${
         isLargeScreen ? "pl-20" : "pl-4"
       }`}
     >

@@ -42,7 +42,7 @@ export default function TabLayout() {
         headerShadowVisible: false,
         headerTitleAlign: "left",
         headerStyle: {
-          backgroundColor: backgroundColor,
+          //backgroundColor: backgroundColor,
         },
         headerTitleStyle: {
           paddingLeft: isLargeScreen ? 80 : 0, // Corrected conditional syntax
@@ -95,7 +95,7 @@ export default function TabLayout() {
               //className={focused ? "fill-primary" : "text-primary fill-none"}
               className={
                 focused
-                  ? "text-primary"
+                  ? "text-secondary-foreground"
                   : isLargeScreen
                   ? "text-primary-foreground"
                   : "text-muted-foreground"
@@ -121,7 +121,7 @@ export default function TabLayout() {
               } */
               className={
                 focused
-                  ? "text-primary"
+                  ? "text-secondary-foreground"
                   : isLargeScreen
                   ? "text-primary-foreground"
                   : "text-muted-foreground"
@@ -146,7 +146,7 @@ export default function TabLayout() {
               } */
               className={
                 focused
-                  ? "text-primary"
+                  ? "text-secondary-foreground"
                   : isLargeScreen
                   ? "text-primary-foreground"
                   : "text-muted-foreground"
@@ -171,7 +171,7 @@ export default function TabLayout() {
               } */
               className={
                 focused
-                  ? "text-primary"
+                  ? "text-secondary-foreground"
                   : isLargeScreen
                   ? "text-primary-foreground"
                   : "text-muted-foreground"
@@ -246,7 +246,7 @@ export default function TabLayout() {
               } */
               className={
                 focused
-                  ? "text-primary"
+                  ? "text-secondary-foreground"
                   : isLargeScreen
                   ? "text-primary-foreground"
                   : "text-muted-foreground"
@@ -271,7 +271,7 @@ export default function TabLayout() {
               } */
               className={
                 focused
-                  ? "text-primary"
+                  ? "text-secondary-foreground"
                   : isLargeScreen
                   ? "text-primary-foreground"
                   : "text-muted-foreground"

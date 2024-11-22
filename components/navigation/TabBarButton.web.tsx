@@ -66,8 +66,8 @@ export function TabBarButton({
         isFocused,
         size: isLargeScreen ? "largeScreen" : "default",
       })} ${isLargeScreen && isSpecialRoute ? "mt-auto" : ""} ${
-        isLargeScreen && "web:hover:bg-accent web:hover:text-primary"
-      } ${isLargeScreen && isFocused && "bg-secondary text-primary"}`}
+        isLargeScreen && isFocused && "bg-secondary text-primary"
+      }`}
     >
       <View className="w-full flex items-center justify-center">
         {options.tabBarIcon &&
@@ -82,8 +82,10 @@ export function TabBarButton({
         <Text
           className={`text-xs mt-1  ${
             isFocused
-              ? "text-primary"
-              : "text-primary-foreground web:hover:text-primary"
+              ? "text-secondary-foreground"
+              : isLargeScreen
+              ? "text-primary-foreground"
+              : "text-muted-foreground"
           }`}
         >
           {typeof label === "string" ? label : label?.toString()}

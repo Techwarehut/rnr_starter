@@ -89,13 +89,13 @@ const CustomerScreen = () => {
         options={{
           headerTitle: "Customers",
           headerRight: () => (
-            <View className="flex-1 flex-row justify-center items-center m-2 gap-1">
+            <View className="flex-1 flex-row justify-center items-center ">
               <AddNewCustomer onNewCustAdd={handleAddCustomer} />
             </View>
           ),
         }}
       />
-      <View className="flex-1 flex-column w-full gap-4 bg-secondary/30 md:flex-row md:flex-nowrap md:pl-20 ">
+      <View className="flex-1 flex-column w-full gap-4  md:flex-row md:flex-nowrap md:pl-20 ">
         <View className="flex-1 md:flex-none md:min-w-96">
           <CustomerTable
             customers={filteredCustomers}

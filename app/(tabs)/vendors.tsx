@@ -92,7 +92,7 @@ const VendorScreen = () => {
           ),
         }}
       />
-      <View className="flex-1 flex-column w-full gap-4 bg-secondary/30 md:flex-row md:flex-nowrap md:pl-20 ">
+      <View className="flex-1 flex-column w-full gap-4  md:flex-row md:flex-nowrap md:pl-20 ">
         <View className="flex-1 md:flex-none md:min-w-96">
           <VendorTable
             vendors={filteredVendors}

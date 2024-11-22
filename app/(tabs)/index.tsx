@@ -15,10 +15,7 @@ export default function Dashboard() {
   const { isDarkColorScheme, setColorScheme } = useColorScheme();
   const backgroundColor = isDarkColorScheme ? "#1e2936" : "#e8eef6";
   return (
-    <ScrollView
-      contentContainerStyle={{ flex: 1, backgroundColor: backgroundColor }}
-      showsVerticalScrollIndicator={false}
-    >
+    <ScrollView showsVerticalScrollIndicator={false}>
       <QuickSnapshot />
       <View className="flex flex-1 md:flex-row gap-8 md:mr-4">
         <Schedule />
