@@ -257,7 +257,8 @@
     "images": [
       "https://via.placeholder.com/300x200?text=Job+004+Image+1",
       "https://via.placeholder.com/300x200?text=Job+004+Image+2"
-    ]
+    ],
+    "checklistIDs": ["hvac_maintenance"]
   },
   {
     "_id": "JN005",

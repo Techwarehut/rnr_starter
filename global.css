@@ -45,8 +45,8 @@
     --card-foreground: 210 5% 90%;
     --popover: 210 50% 5%;
     --popover-foreground: 210 5% 90%;
-    --primary: 210 45.6% 31%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 210 62% 75%;
+    --primary-foreground: 0 0% 0%;
     --secondary: 210 30% 20%;
     --secondary-foreground: 0 0% 100%;
     --muted: 172 30% 25%;
@@ -57,7 +57,7 @@
     --destructive-foreground: 210 5% 90%;
     --border: 210 30% 44%;
     --input: 210 30% 44%;
-    --ring: 210 45.6% 31%;
+    --ring: 210 62% 75%;
 
     /* Brand colors */
     --brand-primary: 87 43% 38%; /*#658b38*/
