@@ -190,8 +190,10 @@ const JobBSecondaryInfo: React.FC<JobSecondaryInfoProps> = ({
                 selectedCustomerId={job.customer._id}
                 onCustomerAssigned={(customer, site) => {
                   if (addNew) {
+                    handleInputChange("customer", customer);
                     handleInputChange("siteLocation", site);
                   } else {
+                    handleAssignCustomer(customer);
                     handleAssignSite(site);
                   }
                 }}

@@ -55,9 +55,9 @@ export const DatePicker: React.FC<DatePicketProps> = ({
             mode="single"
             onChange={(params) => handleDateChange(params.date)}
             calendarTextStyle={{ color: isDarkColorScheme ? "#FFF" : "#000" }}
-            selectedTextStyle={{ color: isDarkColorScheme ? "#000" : "#FFF" }}
+            selectedTextStyle={{ color: isDarkColorScheme ? "#FFF" : "#FFF" }}
             headerTextStyle={{ color: isDarkColorScheme ? "#FFF" : "#000" }}
-            selectedItemColor={isDarkColorScheme ? "#FFF" : "#000"}
+            selectedItemColor={isDarkColorScheme ? "#2b4f73" : "#2b4f73"}
             headerButtonColor={isDarkColorScheme ? "#FFF" : "#000"}
             weekDaysTextStyle={{ color: isDarkColorScheme ? "#FFF" : "#000" }}
           />

@@ -47,7 +47,7 @@ const MyTabBar: React.FC<MyTabBarProps> = ({
         isLargeScreen
           ? "absolute flex-col h-full w-20 border-r pt-4 bg-primary"
           : "flex-row border-t"
-      } ${Platform.OS === "ios" ? "mb-4" : ""}  border-input bg-background`}
+      } ${Platform.OS === "ios" ? "mb-4" : ""}  border-input `}
     >
       {isLargeScreen && (
         <View className="ml-4 mb-4">

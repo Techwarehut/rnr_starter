@@ -21,6 +21,9 @@ import JobBSecondaryInfo from "./JobDetails/JobSecondaryInfo";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { AssignJob } from "./JobActions/AssignJob";
 import { DateType } from "react-native-ui-datepicker";
+import JobSiteContact from "./JobDetails/JobSiteContact";
+import { UpdateReqFreq } from "./UpdateRecFreq";
+import JobReqFreqUpdate from "./JobReqFreqUpdate";
 
 interface AddJobFormProps {
   onChange: (data: Job) => void;
@@ -119,10 +122,10 @@ const AddNewJobForm: React.FC<AddJobFormProps> = ({ onChange }) => {
     <ScrollView
       showsVerticalScrollIndicator={Platform.OS === "web"}
       /* contentContainerClassName="flex-1 p-4 md:p-12 gap-4" */
-      contentContainerStyle={{ padding: isLargeScreen ? 48 : 12 }}
+      contentContainerStyle={{ padding: isLargeScreen ? 48 : 12, gap: 4 }}
     >
       {/* Top Container */}
-      <View>
+      <View className="flex gap-2">
         <InputField
           label="Job Title"
           value={job.jobTitle}
@@ -130,9 +133,7 @@ const AddNewJobForm: React.FC<AddJobFormProps> = ({ onChange }) => {
           editable={true}
           nativeID="Job Title"
         />
-      </View>
 
-      <View>
         <TextField
           label="Job Description"
           value={job.jobDescription}
@@ -141,6 +142,8 @@ const AddNewJobForm: React.FC<AddJobFormProps> = ({ onChange }) => {
           nativeID="Job Description"
         />
       </View>
+
+      <JobSiteContact job={job} />
 
       <View className="flex md:flex-row md:flex-wrap items-start md:items-center gap-2 my-4">
         <Label nativeID="Job Priority">Job Priority</Label>
@@ -160,6 +163,25 @@ const AddNewJobForm: React.FC<AddJobFormProps> = ({ onChange }) => {
           type={job.jobType}
         />
       </View>
+
+      {job.jobType === "Maintenance" && (
+        <View className="flex gap-2">
+          <Label nativeID="Job Priority">Recurring Frequency</Label>
+
+          <JobReqFreqUpdate
+            onChangeType={(newType) => {
+              handleInputChange("jobType", newType);
+            }}
+            type={job.jobType}
+          />
+          <Muted>Select due date to show number of occurrences</Muted>
+          <Muted>You can add a Checklist for Maintainence and Inspection</Muted>
+        </View>
+      )}
+
+      {job.jobType === "Inspection" && (
+        <Muted>You can add a Checklist for Maintainence and Inspection</Muted>
+      )}
 
       <View className="flex md:flex-row gap-8 md:w-full ">
         {/* Contact Details */}

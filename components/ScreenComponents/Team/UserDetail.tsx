@@ -101,7 +101,7 @@ const UserDetail: React.FC<UserDetailProps> = ({ user }) => {
           <View className="flex gap-4 p-4">
             <View className="flex-row items-center gap-2">
               <Link href={`mailto:${user.email}`}>
-                <Pressable className="h-8 w-8 bg-foreground rounded-2xl items-center justify-center p-1">
+                <Pressable className="h-8 w-8 bg-primary rounded-2xl items-center justify-center p-1">
                   <Mail
                     className="text-primary-foreground"
                     size={isLargeScreen ? 18 : 16}
@@ -112,7 +112,7 @@ const UserDetail: React.FC<UserDetailProps> = ({ user }) => {
             </View>
             <View className="flex-row items-center gap-2">
               <Link href={`tel:${user.phone.replace(/\D/g, "")}`}>
-                <Pressable className="h-8 w-8 bg-foreground rounded-2xl items-center justify-center p-1">
+                <Pressable className="h-8 w-8 bg-primary rounded-2xl items-center justify-center p-1">
                   <Phone
                     className="text-primary-foreground"
                     size={isLargeScreen ? 18 : 16}

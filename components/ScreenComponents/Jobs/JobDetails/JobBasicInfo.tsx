@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { Pressable, View } from "react-native";
 import React from "react";
 import { Text } from "~/components/ui/text";
 import { Job } from "../types";
@@ -29,7 +29,8 @@ import { addPurchaseOrder } from "~/api/purchasesApi";
 import { useToast } from "../../ToastMessage";
 import { PurchaseOrder } from "../../Purchases/types";
 import AddNewPurchaseForm from "../../Purchases/AddNewPurchaseFrom";
-import { useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
+import JobSiteContact from "./JobSiteContact";
 
 interface JobBasicInfoProps {
   job: Job;
@@ -65,7 +66,7 @@ const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
   return (
     <View className="flex gap-8 mb-4">
       {editMode ? (
-        <>
+        <View className="flex gap-2">
           <Input
             value={job.jobTitle}
             onChangeText={(value) => handleInputChange("jobTitle", value)}
@@ -78,7 +79,7 @@ const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
             editable={editMode}
             nativeID="Job Description"
           />
-        </>
+        </View>
       ) : (
         <>
           <View>
@@ -96,6 +97,8 @@ const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
           <Text>{job.jobDescription}</Text>
         </>
       )}
+
+      <JobSiteContact job={job} />
 
       <JobTimesheet
         job={job}

@@ -40,24 +40,24 @@
 
   .dark:root {
     --background: 210 50% 10%;
-    --foreground: 210 5% 100%;
+    --foreground: 210 5% 90%;
     --card: 210 50% 10%;
-    --card-foreground: 210 5% 100%;
+    --card-foreground: 210 5% 90%;
     --popover: 210 50% 5%;
-    --popover-foreground: 210 5% 100%;
-    --primary: 210 45% 31%;
+    --popover-foreground: 210 5% 90%;
+    --primary: 210 45.6% 31%;
     --primary-foreground: 0 0% 100%;
     --secondary: 210 30% 20%;
     --secondary-foreground: 0 0% 100%;
     --muted: 172 30% 25%;
-    --muted-foreground: 210 5% 65%;
+    --muted-foreground: 210 5% 60%;
     --accent: 172 30% 25%;
-    --accent-foreground: 210 5% 95%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 210 30% 50%;
-    --input: 210 30% 50%;
-    --ring: 210 45% 31%;
+    --accent-foreground: 210 5% 90%;
+    --destructive: 0 100% 44%;
+    --destructive-foreground: 210 5% 90%;
+    --border: 210 30% 44%;
+    --input: 210 30% 44%;
+    --ring: 210 45.6% 31%;
 
     /* Brand colors */
     --brand-primary: 87 43% 38%; /*#658b38*/

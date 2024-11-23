@@ -27,7 +27,7 @@ const VendorDetailScreen: React.FC = () => {
   return (
     <>
       {vendor ? (
-        <View className="flex-1 items-center bg-secondary/30 justify-center m-2">
+        <View className="flex-1 items-center justify-center m-2">
           <VendorDetail vendor={vendor} />
         </View>
       ) : (
