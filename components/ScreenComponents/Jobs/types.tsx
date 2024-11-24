@@ -68,5 +68,5 @@ export interface Job {
   createdAt: string; // Creation timestamp
   updatedAt: string; // Last update timestamp
   images: string[];
-  checklist?: Checklist;
+  checklistID?: string;
 }
