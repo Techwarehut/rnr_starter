@@ -31,6 +31,7 @@ import { PurchaseOrder } from "../../Purchases/types";
 import AddNewPurchaseForm from "../../Purchases/AddNewPurchaseFrom";
 import { Link, useRouter } from "expo-router";
 import JobSiteContact from "./JobSiteContact";
+import DisplayChecklist from "../../Checklist/CheckList";
 
 interface JobBasicInfoProps {
   job: Job;
@@ -62,6 +63,8 @@ const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
       showErrorToast("Error Adding Purchase!");
     }
   };
+
+  console.log(job.checklistID);
 
   return (
     <View className="flex gap-8 mb-4">
@@ -127,6 +130,10 @@ const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
           status={job.status}
         />
       </View>
+
+      {job.checklistID && (
+        <DisplayChecklist linkedCheckListId={job.checklistID} />
+      )}
 
       <JobImages
         job={job}

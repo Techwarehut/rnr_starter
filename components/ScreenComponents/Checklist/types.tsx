@@ -1,13 +1,13 @@
-// Type for individual task
-export interface Task {
-  task_id: string; // Unique ID for the task
-  task_name: string; // Name of the task
-  status: "pending" | "completed"; // Status of the task
-}
+// Assuming this is your Task type definition
+export type Task = {
+  task_id: string;
+  task_name: string;
+  status: string; // "pending" | "completed"; // status should be a string literal, not a generic string
+};
 
-// Type for the checklist
-export interface Checklist {
-  checklist_id: string; // Unique ID for the checklist
-  checklist_name: string; // Name of the checklist (e.g., HVAC Maintenance)
-  tasks: Task[]; // Array of tasks in this checklist
-}
+// Checklist type definition
+export type Checklist = {
+  checklist_id: string;
+  checklist_name: string;
+  tasks: Task[]; // tasks is an array of Task type
+};

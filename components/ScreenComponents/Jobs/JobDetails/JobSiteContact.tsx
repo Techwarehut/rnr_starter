@@ -17,7 +17,7 @@ const JobSiteContact: React.FC<JobInfoProps> = ({ job }) => {
     <View className="flex gap-2">
       <Text className="text-xl">Site Contact</Text>
       <View className="flex gap-2 md:flex-row">
-        <View className="flex md: flex-1 bg-secondary p-2 rounded-md">
+        <View className="flex md:flex-1 bg-secondary p-2 rounded-md">
           {job.siteLocation.siteContactPerson === "" ? (
             <View className="flex justify-center">
               <Text>No Site Contact</Text>

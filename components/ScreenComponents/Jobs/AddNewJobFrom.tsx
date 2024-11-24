@@ -25,6 +25,8 @@ import JobSiteContact from "./JobDetails/JobSiteContact";
 import { UpdateReqFreq } from "./UpdateRecFreq";
 import JobReqFreqUpdate from "./JobReqFreqUpdate";
 
+import DisplayChecklist from "~/components/ScreenComponents/Checklist/CheckList";
+
 interface AddJobFormProps {
   onChange: (data: Job) => void;
 }
@@ -180,7 +182,12 @@ const AddNewJobForm: React.FC<AddJobFormProps> = ({ onChange }) => {
       )}
 
       {job.jobType === "Inspection" && (
-        <Muted>You can add a Checklist for Maintainence and Inspection</Muted>
+        <>
+          <Muted>You can add a Checklist for Maintainence and Inspection</Muted>
+          {job.checklistID && (
+            <DisplayChecklist linkedCheckListId={job.checklistID} />
+          )}
+        </>
       )}
 
       <View className="flex md:flex-row gap-8 md:w-full ">

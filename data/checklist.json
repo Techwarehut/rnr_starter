@@ -21,7 +21,7 @@
       {
         "task_id": "hvac_004",
         "task_name": "Test heating/cooling operation",
-        "status": "pending"
+        "status": "completed"
       },
       {
         "task_id": "hvac_005",
@@ -78,7 +78,7 @@
       {
         "task_id": "electrical_003",
         "task_name": "Test GFCI outlets",
-        "status": "pending"
+        "status": "completed"
       }
     ]
   }

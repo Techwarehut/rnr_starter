@@ -1,6 +1,7 @@
 import { DateType } from "react-native-ui-datepicker";
 import { SiteLocation } from "../Customers/types";
 import { JobPriorityKeys, JobTypeKeys } from "./Filters/Statustypes";
+import { Checklist } from "~/components/ScreenComponents/Checklist/types"; // Assuming these are correctly defined
 
 export interface CreatedUser {
   userId: string; // Unique identifier for the user
@@ -67,4 +68,5 @@ export interface Job {
   createdAt: string; // Creation timestamp
   updatedAt: string; // Last update timestamp
   images: string[];
+  checklist?: Checklist;
 }
