@@ -55,7 +55,7 @@ export default function DisplayChecklist({
   }
 
   return (
-    <View className="flex-1 bg-secondary rounded-md p-4">
+    <View className="flex  bg-secondary rounded-md p-4 ">
       <View key={selectedChecklist.checklist_id} className="mb-6">
         <Text className="text-2xl font-bold mb-4">
           {selectedChecklist.checklist_name}
