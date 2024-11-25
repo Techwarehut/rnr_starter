@@ -2,20 +2,32 @@ import { useState, useEffect } from "react";
 import { View, Pressable } from "react-native";
 import { Text } from "~/components/ui/text"; // Assuming Text component is custom
 import { Checklist, Task } from "./types"; // Assuming these are correctly defined
-import { fetchChecklistById, toggleTaskStatus } from "~/api/checklistApi"; // Import your API function
+import {
+  deleteChecklist,
+  fetchChecklistById,
+  toggleTaskStatus,
+} from "~/api/checklistApi"; // Import your API function
 import { Checkbox } from "~/components/ui/checkbox"; // Assuming Checkbox is a custom component
+import { Muted } from "~/components/ui/typography";
+import DeleteButton from "../DeleteButton";
+import { deleteChecklistFromJob } from "~/api/jobsApi";
 
 interface InterfaceCheckListProps {
   linkedCheckListId: string; // The linked checklist ID to fetch specific checklist
+  jobId: string;
+  handleDeleteChecklist: () => void;
 }
 
 export default function DisplayChecklist({
   linkedCheckListId,
+  jobId,
+  handleDeleteChecklist,
 }: InterfaceCheckListProps) {
   const [tasks, setTasks] = useState<Task[]>([]); // Using a flat array of tasks
   const [selectedChecklist, setSelectedChecklist] = useState<Checklist | null>(
     null
   ); // Initialize as null
+  const [refreshKey, setRefreshKey] = useState(0);
 
   // useEffect to fetch the checklist based on linkedCheckListId
   useEffect(() => {
@@ -55,17 +67,26 @@ export default function DisplayChecklist({
   }
 
   return (
-    <View className="flex  bg-secondary rounded-md p-4 ">
-      <View key={selectedChecklist.checklist_id} className="mb-6">
-        <Text className="text-2xl font-bold mb-4">
-          {selectedChecklist.checklist_name}
-        </Text>
+    <View className="flex gap-2">
+      <View className="flex-row items-center justify-between">
+        <View>
+          <Text className="text-xl">{selectedChecklist.checklist_name}</Text>
+          <Muted>
+            This can be a safety, inspection or maintainence checklist
+          </Muted>
+        </View>
+        <DeleteButton xIcon={true} onDelete={handleDeleteChecklist} />
+      </View>
 
+      <View
+        key={selectedChecklist.checklist_id}
+        className="flex bg-secondary gap-2 rounded-md p-4 "
+      >
         {/* Render tasks */}
         {tasks.map((item) => (
           <View
             key={item.task_id}
-            className="flex-row items-center justify-between mb-3"
+            className="flex-row items-center justify-between"
           >
             <Text
               className={`text-lg ${

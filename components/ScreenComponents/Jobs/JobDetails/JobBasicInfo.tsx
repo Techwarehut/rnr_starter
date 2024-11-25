@@ -1,5 +1,5 @@
 import { Pressable, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { Text } from "~/components/ui/text";
 import { Job } from "../types";
 import InputField from "../../InputField";
@@ -32,6 +32,8 @@ import AddNewPurchaseForm from "../../Purchases/AddNewPurchaseFrom";
 import { Link, useRouter } from "expo-router";
 import JobSiteContact from "./JobSiteContact";
 import DisplayChecklist from "../../Checklist/CheckList";
+import { AssignChecklist } from "../JobActions/AssignChecklist";
+import { addChecklistToJob, deleteChecklistFromJob } from "~/api/jobsApi";
 
 interface JobBasicInfoProps {
   job: Job;
@@ -52,6 +54,7 @@ const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
 }) => {
   const isLargeScreen = useIsLargeScreen();
   const { showSuccessToast, showErrorToast } = useToast();
+  const [refreshKey, setRefreshKey] = useState(0);
   const router = useRouter();
 
   const handleAddPurchase = async (purchase: PurchaseOrder) => {
@@ -64,7 +67,19 @@ const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
     }
   };
 
-  console.log(job.checklistID);
+  // Function to handle toggling task status using the API
+  const handleDeleteChecklist = async () => {
+    // Call the API function to toggle the task status
+    await deleteChecklistFromJob(job._id);
+    setRefreshKey((prev) => prev + 1);
+  };
+
+  // Function to handle toggling task status using the API
+  const handleAddChecklist = async (selChecklist: string) => {
+    // Call the API function to toggle the task status
+    await addChecklistToJob(job._id, selChecklist);
+    setRefreshKey((prev) => prev + 1);
+  };
 
   return (
     <View className="flex gap-8 mb-4">
@@ -131,8 +146,25 @@ const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
         />
       </View>
 
-      {job.checklistID && (
-        <DisplayChecklist linkedCheckListId={job.checklistID} />
+      {job.checklistID ? (
+        <DisplayChecklist
+          linkedCheckListId={job.checklistID}
+          jobId={job._id}
+          handleDeleteChecklist={handleDeleteChecklist}
+        />
+      ) : (
+        <View className="flex-row items-center justify-between">
+          <View>
+            <Text className="text-xl">Checklist</Text>
+            <Muted>
+              This can be a safety, inspection or maintainence checklist
+            </Muted>
+          </View>
+          <AssignChecklist
+            jobId={job._id}
+            handleAddChecklist={handleAddChecklist}
+          />
+        </View>
       )}
 
       <JobImages

@@ -315,3 +315,40 @@ export const getInProgressJobs = async (): Promise<Job[]> => {
 
   return inProgressJobs;
 };
+
+export const addChecklistToJob = async (
+  jobId: string,
+  checklistID: string
+): Promise<Job | null> => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const jobIndex = jobs.findIndex((job) => job._id === jobId);
+      if (jobIndex !== -1) {
+        // Assign the new customer to the job
+        jobs[jobIndex].checklistID = checklistID;
+        resolve(jobs[jobIndex]); // Resolve with the updated job
+      } else {
+        reject(new Error("Job not found")); // Reject if job is not found
+      }
+    }, 1000); // Simulate a delay
+  });
+};
+
+// Function to delete the customer from a job
+export const deleteChecklistFromJob = async (
+  jobId: string
+): Promise<Job | null> => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const jobIndex = jobs.findIndex((job) => job._id === jobId);
+      if (jobIndex !== -1) {
+        // Clear the customer field
+
+        jobs[jobIndex].checklistID = ""; // Reset or clear site info
+        resolve(jobs[jobIndex]); // Resolve with the updated job
+      } else {
+        reject(new Error("Job not found")); // Reject if job is not found
+      }
+    }, 1000); // Simulate a delay
+  });
+};

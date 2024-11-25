@@ -20,13 +20,13 @@ const CustomerBasicInfo: React.FC<CustomerInfoFieldsProps> = ({
   handlePhoneChange,
 }) => {
   return (
-    <View className="flex flex-col gap-2 w-full md:flex-1">
+    <View className="flex flex-col  gap-2 w-full md:flex-1">
       <View>
         <Text className="text-xl">Basic Information</Text>
         <Muted>Optional. It will appear on invoice.</Muted>
       </View>
 
-      <View className="flex-column items-start justify-start gap-4 p-2 py-5 ">
+      <View className="flex-col  items-start justify-start gap-4 p-2 py-5 ">
         <InputField
           label="Email"
           value={customerData.email}

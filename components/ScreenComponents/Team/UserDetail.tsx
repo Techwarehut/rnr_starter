@@ -98,7 +98,7 @@ const UserDetail: React.FC<UserDetailProps> = ({ user }) => {
 
         <View className="flex-1 gap-4 ">
           <Large>Contact</Large>
-          <View className="flex gap-4 p-4">
+          <View className="flex bg-secondary rounded-md gap-4 p-4">
             <View className="flex-row items-center gap-2">
               <Link href={`mailto:${user.email}`}>
                 <Pressable className="h-8 w-8 bg-primary rounded-2xl items-center justify-center p-1">
