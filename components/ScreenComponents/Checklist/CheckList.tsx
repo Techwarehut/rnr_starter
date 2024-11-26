@@ -2,15 +2,15 @@ import { useState, useEffect } from "react";
 import { View, Pressable } from "react-native";
 import { Text } from "~/components/ui/text"; // Assuming Text component is custom
 import { Checklist, Task } from "./types"; // Assuming these are correctly defined
-import {
-  deleteChecklist,
-  fetchChecklistById,
-  toggleTaskStatus,
-} from "~/api/checklistApi"; // Import your API function
+import { deleteChecklist, fetchChecklistById } from "~/api/checklistApi"; // Import your API function
 import { Checkbox } from "~/components/ui/checkbox"; // Assuming Checkbox is a custom component
 import { Muted } from "~/components/ui/typography";
 import DeleteButton from "../DeleteButton";
-import { deleteChecklistFromJob } from "~/api/jobsApi";
+import {
+  deleteChecklistFromJob,
+  fetchChecklistByJobId,
+  toggleTaskStatus,
+} from "~/api/jobsApi";
 
 interface InterfaceCheckListProps {
   linkedCheckListId: string; // The linked checklist ID to fetch specific checklist
@@ -32,7 +32,7 @@ export default function DisplayChecklist({
   // useEffect to fetch the checklist based on linkedCheckListId
   useEffect(() => {
     const fetchChecklist = async () => {
-      const checklist = await fetchChecklistById(linkedCheckListId);
+      const checklist = await fetchChecklistByJobId(jobId);
       if (checklist) {
         setSelectedChecklist(checklist); // Set the selected checklist
         setTasks(checklist.tasks); // Set tasks directly from the checklist
@@ -45,7 +45,7 @@ export default function DisplayChecklist({
   // Function to handle toggling task status using the API
   const handleToggleTaskStatus = async (taskId: string) => {
     // Call the API function to toggle the task status
-    const updatedTask = await toggleTaskStatus(linkedCheckListId, taskId);
+    const updatedTask = await toggleTaskStatus(jobId, taskId);
 
     // Update the tasks state with the updated task status
     setTasks((prevTasks) => {
@@ -69,7 +69,7 @@ export default function DisplayChecklist({
   return (
     <View className="flex gap-2">
       <View className="flex-row items-center justify-between">
-        <View>
+        <View className="flex flex-1">
           <Text className="text-xl">{selectedChecklist.checklist_name}</Text>
           <Muted>
             This can be a safety, inspection or maintainence checklist

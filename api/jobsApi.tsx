@@ -11,6 +11,16 @@ import { AssignedUser, Job } from "~/components/ScreenComponents/Jobs/types"; //
 import { User } from "~/components/ScreenComponents/Team/types";
 import jobsData from "~/data/jobs.json"; // Your static JSON data
 import { generateUniqueId } from "~/lib/utils"; // Import the unique ID generator
+import checklistsData from "~/data/checklist.json"; // Your static JSON data
+import jobChecklistsData from "~/data/jobchecklist.json"; // Your static JSON data
+import {
+  Checklist,
+  JobChecklist,
+  Task,
+} from "~/components/ScreenComponents/Checklist/types";
+
+let checklists: Checklist[] = checklistsData; // Initialize with JSON data
+let jobchecklists: JobChecklist[] = jobChecklistsData; // Initialize with JSON data
 
 let jobs: Job[] = jobsData as Job[];
 
@@ -321,11 +331,31 @@ export const addChecklistToJob = async (
   checklistID: string
 ): Promise<Job | null> => {
   return new Promise((resolve, reject) => {
+    console.log("Available checklists:", checklists);
     setTimeout(() => {
       const jobIndex = jobs.findIndex((job) => job._id === jobId);
       if (jobIndex !== -1) {
         // Assign the new customer to the job
         jobs[jobIndex].checklistID = checklistID;
+
+        //get the checklist from the template
+        const newChecklist = checklists.find(
+          (checklist) => checklist.checklist_id === checklistID
+        );
+
+        if (newChecklist) {
+          const newJobChecklist: JobChecklist = {
+            job_id: jobId, // Reference the job ID
+            checklist_id: newChecklist.checklist_id, // Checklist ID from the newChecklist
+            checklist_name: newChecklist.checklist_name, // Checklist Name
+            tasks: newChecklist.tasks, // Copy tasks from the checklist
+          };
+
+          jobchecklists.push(newJobChecklist); // Add new checklist
+        } else {
+          reject(new Error("Checklist not found")); // Reject if job is not found
+        }
+
         resolve(jobs[jobIndex]); // Resolve with the updated job
       } else {
         reject(new Error("Job not found")); // Reject if job is not found
@@ -345,10 +375,64 @@ export const deleteChecklistFromJob = async (
         // Clear the customer field
 
         jobs[jobIndex].checklistID = ""; // Reset or clear site info
+
+        jobchecklists = jobchecklists.filter(
+          (checklist) => checklist.job_id !== jobId
+        );
+
         resolve(jobs[jobIndex]); // Resolve with the updated job
       } else {
         reject(new Error("Job not found")); // Reject if job is not found
       }
     }, 1000); // Simulate a delay
+  });
+};
+
+// Fetch a checklist by ID
+export const fetchChecklistByJobId = async (
+  jobId: string
+): Promise<JobChecklist | undefined> => {
+  const checklist = jobchecklists.find(
+    (checklist) => checklist.job_id === jobId
+  );
+
+  return checklist;
+};
+
+// Toggle the status of a task (completed / pending)
+export const toggleTaskStatus = async (
+  jobId: string,
+  taskId: string
+): Promise<Task> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      jobchecklists = jobchecklists.map((checklist) => {
+        if (checklist.job_id === jobId) {
+          const updatedTasks = checklist.tasks.map((task) =>
+            task.task_id === taskId
+              ? {
+                  ...task,
+                  status: task.status === "pending" ? "completed" : "pending",
+                }
+              : task
+          );
+          return {
+            ...checklist,
+            tasks: updatedTasks, // Update the task status
+          };
+        }
+
+        return checklist;
+      });
+      // Find the updated task and return it
+      const updatedChecklist = jobchecklists.find(
+        (checklist) => checklist.job_id === jobId
+      );
+      const updatedTask = updatedChecklist?.tasks.find(
+        (task) => task.task_id === taskId
+      );
+
+      resolve(updatedTask!); // Return the updated task
+    }, 500); // Simulating a delay
   });
 };

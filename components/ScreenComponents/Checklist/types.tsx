@@ -11,3 +11,11 @@ export type Checklist = {
   checklist_name: string;
   tasks: Task[]; // tasks is an array of Task type
 };
+
+// Checklist type definition
+export type JobChecklist = {
+  job_id: string;
+  checklist_id: string;
+  checklist_name: string;
+  tasks: Task[]; // tasks is an array of Task type
+};

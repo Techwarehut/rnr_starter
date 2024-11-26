@@ -21,6 +21,7 @@ import { Checklist } from "../../Checklist/types";
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { Label } from "~/components/ui/label";
 import { Text } from "~/components/ui/text";
+import { Muted } from "~/components/ui/typography";
 
 interface AssignJobProps {
   jobId: string;
@@ -91,7 +92,10 @@ export const AssignChecklist: React.FC<AssignJobProps> = ({
         className="w-auto flex items-start justify-start bg-popover gap-8 p-4"
       >
         <DropdownMenuGroup>
-          <Text className="text-xl mb-4">Select a Checklist</Text>
+          <View className="mb-4">
+            <Text className="text-xl">Select a Checklist</Text>
+            <Muted>Templates are created and maintained by Admin.</Muted>
+          </View>
           <RadioGroup
             value={value}
             onValueChange={setSelChecklist}

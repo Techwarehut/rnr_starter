@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Button } from "~/components/ui/button";
-import { Text } from "~/components/ui/text";
+
 import { router, Stack, useNavigation } from "expo-router";
 import CustomerTable from "~/components/ScreenComponents/Customers/CustomerTable";
-import SearchBar from "~/components/ScreenComponents/SearchBar";
-import customers from "~/data/customer.json"; // Your customer data
+
 import { useIsLargeScreen } from "~/lib/utils";
-import { Plus } from "~/lib/icons/Plus";
+
 import CustomerDetail from "~/components/ScreenComponents/Customers/CustomerDetail";
-import { H2, H3, Muted } from "~/components/ui/typography";
+
 import NothingSelected from "~/components/ScreenComponents/NothingSelected";
 import { Customer } from "~/components/ScreenComponents/Customers/types";
 import { AddNewCustomer } from "~/components/ScreenComponents/Customers/AddNewCustomer";

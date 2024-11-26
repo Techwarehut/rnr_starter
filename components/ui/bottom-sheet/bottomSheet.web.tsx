@@ -45,7 +45,7 @@ const BottomSheetModal = ({
   }, [snapPoints]);
 
   return (
-    <Drawer.Root {...rest} snapPoints={combinedSnapPoints}>
+    <Drawer.Root {...rest} snapPoints={combinedSnapPoints} direction="right">
       {children}
     </Drawer.Root>
   );

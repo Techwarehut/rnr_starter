@@ -1,0 +1,123 @@
+[
+  {
+    "invoice_number": "INV-123456",
+    "date_issued": "2024-11-26",
+    "due_date": "2024-12-10",
+    "bill_to": {
+      "customer_id": "1",
+      "business_name": "Doe Enterprises"
+    },
+    "service_site_id": "1",
+    "linked_job_id": ["JN001", "JN002"],
+    "items": [
+      {
+        "description": "HVAC System Installation",
+        "quantity": 1,
+        "unit_price": 3500.0,
+        "total": 3500.0
+      },
+      {
+        "description": "Electrical Wiring for New Office",
+        "quantity": 1,
+        "unit_price": 1500.0,
+        "total": 1500.0
+      },
+      {
+        "description": "Labor for Site Preparation",
+        "quantity": 2,
+        "unit_price": 250.0,
+        "total": 500.0
+      }
+    ],
+    "sub_total": 5500.0,
+    "discount": 300.0,
+    "discounted_total": 5200.0,
+    "tax_rate": 0.1,
+    "tax_amount": 520.0,
+    "total_amount_due": 5720.0,
+    "notes": "Thank you for your business! Please contact us for any follow-up services.",
+    "payment_terms": "Net 30",
+    "payment_methods": ["Bank Transfer", "Credit Card"]
+  },
+  {
+    "invoice_number": "INV-123457",
+    "date_issued": "2024-11-26",
+    "due_date": "2024-12-10",
+    "bill_to": {
+      "customer_id": "2",
+      "business_name": "Smith Co."
+    },
+    "service_site_id": "1",
+    "linked_job_id": ["JN003", "JN004"],
+    "items": [
+      {
+        "description": "Commercial Office Cleaning",
+        "quantity": 1,
+        "unit_price": 800.0,
+        "total": 800.0
+      },
+      {
+        "description": "Window Cleaning",
+        "quantity": 2,
+        "unit_price": 150.0,
+        "total": 300.0
+      },
+      {
+        "description": "Carpet Shampooing",
+        "quantity": 1,
+        "unit_price": 250.0,
+        "total": 250.0
+      }
+    ],
+    "sub_total": 1350.0,
+    "discount": 100.0,
+    "discounted_total": 1250.0,
+    "tax_rate": 0.1,
+    "tax_amount": 125.0,
+    "total_amount_due": 1375.0,
+    "notes": "Thank you for choosing our cleaning services. Please let us know if you need any further assistance.",
+    "payment_terms": "Net 30",
+    "payment_methods": ["Bank Transfer", "Cheque"]
+  },
+
+  {
+    "invoice_number": "INV-123458",
+    "date_issued": "2024-11-26",
+    "due_date": "2024-12-10",
+    "bill_to": {
+      "customer_id": "3",
+      "business_name": "Johnson Group"
+    },
+    "service_site_id": "1",
+    "linked_job_id": ["JN005", "JN006"],
+    "items": [
+      {
+        "description": "Industrial Machine Repair",
+        "quantity": 1,
+        "unit_price": 5000.0,
+        "total": 5000.0
+      },
+      {
+        "description": "Part Replacement (Bearings, Motors)",
+        "quantity": 3,
+        "unit_price": 450.0,
+        "total": 1350.0
+      },
+      {
+        "description": "Labor for Site Assessment",
+        "quantity": 4,
+        "unit_price": 200.0,
+        "total": 800.0
+      }
+    ],
+    "sub_total": 7150.0,
+    "discount": 500.0,
+    "discounted_total": 6650.0,
+    "tax_rate": 0.1,
+    "tax_amount": 665.0,
+    "total_amount_due": 7315.0,
+    "notes": "Thank you for your business. We appreciate your trust in our industrial repair services.",
+    "payment_terms": "Net 30",
+    "payment_methods": ["Bank Transfer", "Credit Card"]
+  }
+]

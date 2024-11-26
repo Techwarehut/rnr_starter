@@ -80,6 +80,7 @@ const Toppers = () => {
                   "active:bg-secondary w-full",
                   index % 2 && "bg-muted/40 "
                 )}
+                key={item._id}
               >
                 <TableCell className="flex-1">
                   <Text>{item.businessName}</Text>

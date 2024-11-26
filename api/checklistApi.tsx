@@ -1,8 +1,15 @@
-import { Checklist, Task } from "~/components/ScreenComponents/Checklist/types";
+import {
+  Checklist,
+  JobChecklist,
+  Task,
+} from "~/components/ScreenComponents/Checklist/types";
 import checklistsData from "~/data/checklist.json"; // Your static JSON data
+import jobChecklistsData from "~/data/jobchecklist.json"; // Your static JSON data
+
 import { generateUniqueId } from "~/lib/utils";
 
 let checklists: Checklist[] = checklistsData; // Initialize with JSON data
+let jobchecklists: JobChecklist[] = jobChecklistsData; // Initialize with JSON data
 
 // Fetch all checklists
 export const fetchChecklists = async (): Promise<Checklist[]> => {
@@ -111,44 +118,6 @@ export const deleteTaskFromChecklist = async (
         return checklist;
       });
       resolve(); // Return nothing after deletion
-    }, 500); // Simulating a delay
-  });
-};
-
-// Toggle the status of a task (completed / pending)
-export const toggleTaskStatus = async (
-  checklistId: string,
-  taskId: string
-): Promise<Task> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      checklists = checklists.map((checklist) => {
-        if (checklist.checklist_id === checklistId) {
-          const updatedTasks = checklist.tasks.map((task) =>
-            task.task_id === taskId
-              ? {
-                  ...task,
-                  status: task.status === "pending" ? "completed" : "pending",
-                }
-              : task
-          );
-          return {
-            ...checklist,
-            tasks: updatedTasks, // Update the task status
-          };
-        }
-
-        return checklist;
-      });
-      // Find the updated task and return it
-      const updatedChecklist = checklists.find(
-        (checklist) => checklist.checklist_id === checklistId
-      );
-      const updatedTask = updatedChecklist?.tasks.find(
-        (task) => task.task_id === taskId
-      );
-
-      resolve(updatedTask!); // Return the updated task
     }, 500); // Simulating a delay
   });
 };

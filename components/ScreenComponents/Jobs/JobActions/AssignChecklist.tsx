@@ -10,7 +10,7 @@ import { Plus } from "~/lib/icons/Plus";
 import { useSharedValue } from "react-native-reanimated";
 import { useColorScheme } from "~/lib/useColorScheme";
 
-import { H1, H3 } from "~/components/ui/typography";
+import { H1, H3, Muted } from "~/components/ui/typography";
 
 import { User } from "../../Team/types";
 import UserTable from "../../Team/UserTable";
@@ -47,6 +47,7 @@ export const AssignChecklist: React.FC<AssignJobProps> = ({
     const fetchChecklist = async () => {
       try {
         const checklists = await fetchChecklists(); // Call the function to fetch users
+
         setChecklists(checklists); // Set the fetched users to state
       } catch (error) {
         console.error("Error fetching Checklists:", error);
@@ -120,7 +121,10 @@ export const AssignChecklist: React.FC<AssignJobProps> = ({
         )}
       >
         <BottomSheetScrollView contentContainerClassName=" flex flex-1 bg-popover gap-8 p-4">
-          <Text className="text-xl">Select a Checklist</Text>
+          <View>
+            <Text className="text-xl">Select a Checklist</Text>
+            <Muted>Templates are created and maintained by Admin.</Muted>
+          </View>
           <RadioGroup
             value={value}
             onValueChange={setSelChecklist}
