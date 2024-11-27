@@ -86,7 +86,7 @@ export const LinkJobs: React.FC<LinkJobProps> = ({ handleJobSelect }) => {
             </BottomSheetTrigger>
           </>
         )}
-        <BottomSheetView className="flex-1 bg-popover web:overflow-y-auto">
+        <BottomSheetView className="flex flex-1 bg-popover web:overflow-auto">
           {Platform.OS === "web" && (
             <BottomSheetHandle
               className="bg-gray-300 mt-2"

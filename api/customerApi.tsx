@@ -64,6 +64,27 @@ export const fetchCustomerById = async (
   return customersList.find((customer) => customer._id === customerId); // Return the matching customer
 };
 
+// api/customerApi.ts
+export const fetchCustomerSiteById = async (
+  customerId: string,
+  siteId: string
+): Promise<SiteLocation | undefined> => {
+  const customersList = await fetchCustomers(); // Get the full list
+  // Find the customer by customerId
+  const customer = customersList.find(
+    (customer) => customer._id === customerId
+  );
+
+  if (!customer) {
+    // If no customer is found, return undefined
+    return undefined;
+  }
+  // Now, find the site by siteId from the customer’s siteLocations array
+  const site = customer.siteLocations.find((site) => site.site_id === siteId);
+
+  return site; // Return the matching site or undefined if not found
+};
+
 export const addSiteLocation = async (
   customerId: string,
   newSiteLocation: SiteLocation

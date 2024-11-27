@@ -226,7 +226,7 @@ export default function SelectJob({
         />
       )}
       <View
-        className={`flex-1 gap-4  px-2 md:mx-2 web:overflow-y-auto ${
+        className={`flex-1 gap-4  px-2 md:mx-2 web:overflow-auto ${
           !filterInProgress && !isSelectionRequired ? "md:pl-20" : ""
         }`}
       >

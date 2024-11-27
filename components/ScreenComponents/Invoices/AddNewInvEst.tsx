@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from "react";
-import { View, Pressable, StyleSheet } from "react-native";
+import { View, Pressable, StyleSheet, ScrollView } from "react-native";
 import {
   BottomSheetModal,
   BottomSheetView,
@@ -11,43 +11,19 @@ import { useSharedValue } from "react-native-reanimated";
 import { useColorScheme } from "~/lib/useColorScheme";
 
 import { H1, H3 } from "~/components/ui/typography";
-import { Vendor } from "./types";
-import AddNewVendorForm from "./AddNewCustomerForm";
+import { Invoice } from "./types";
+import { ChevronDown } from "~/lib/icons/ChevronDown";
 
-interface AddNewVendorProps {
-  onNewVendorAdd: (data: Vendor) => void;
+interface AddNewInvEstProps {
+  onNewInvAdd: (data: Invoice) => void;
 }
-export const AddNewVendor: React.FC<AddNewVendorProps> = ({
-  onNewVendorAdd,
-}) => {
+export const AddNewInvEst: React.FC<AddNewInvEstProps> = ({ onNewInvAdd }) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const [isOpen, setIsOpen] = useState(false);
   const animatedIndex = useSharedValue<number>(0);
   const animatedPosition = useSharedValue<number>(0);
-  const snapPoints = ["80%", "90%"];
+  const snapPoints = ["10%", "20%"];
   const { isDarkColorScheme, setColorScheme } = useColorScheme();
-  // Initialize with a default Customer object, including _id
-  const [vendorData, setVendorData] = React.useState<Vendor>({
-    _id: "", // Add the required _id property
-    companyName: "",
-    contactPerson: {
-      name: "",
-      title: "",
-      email: "",
-      phone: "",
-    },
-    address: {
-      AddressLine: "",
-      City: "",
-      Province: "",
-      zipcode: "",
-    },
-  });
-
-  const AddNewVendor = () => {
-    onNewVendorAdd(vendorData);
-    handlePresentModalPress();
-  };
 
   const handleSheetChanges = useCallback((index: number) => {
     // handle sheet changes
@@ -67,11 +43,11 @@ export const AddNewVendor: React.FC<AddNewVendorProps> = ({
     <>
       <Button
         size="sm"
-        variant="default"
-        className="shadow shadow-foreground/5"
+        className="flex flex-row gap-2 mr-1"
         onPress={handlePresentModalPress}
       >
-        <Text>Add New Vendor</Text>
+        <Text>Add</Text>
+        <ChevronDown size={18} className="text-primary-foreground" />
       </Button>
 
       <BottomSheetModal
@@ -93,14 +69,13 @@ export const AddNewVendor: React.FC<AddNewVendorProps> = ({
           />
         )}
       >
-        <BottomSheetView className="flex-1 bg-popover">
-          <H3 className="text-center">Add New Vendor</H3>
-          <AddNewVendorForm onChange={setVendorData} />
-          <View className="p-4">
-            <Button onPress={AddNewVendor}>
-              <Text>Save</Text>
-            </Button>
-          </View>
+        <BottomSheetView className="flex flex-1 bg-popover gap-2 ">
+          <Button variant="ghost">
+            <Text>New Invoice</Text>
+          </Button>
+          <Button variant="ghost">
+            <Text>New Estimate</Text>
+          </Button>
         </BottomSheetView>
       </BottomSheetModal>
     </>

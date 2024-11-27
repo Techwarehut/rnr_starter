@@ -3,6 +3,7 @@ import { Platform } from "react-native";
 import { Drawer } from "vaul";
 import { convertSnapPoints } from "./util";
 import { BSHandleProps } from "./types";
+import { useIsLargeScreen } from "~/lib/utils";
 
 const BottomSheet = Fragment;
 
@@ -16,12 +17,24 @@ const BottomSheetView = forwardRef<
 >(({ children, className }, ref) => (
   <Drawer.Portal>
     <Drawer.Overlay className="fixed inset-0 bg-black/40" />
-    <Drawer.Content
-      ref={ref}
-      className={`bg-white shadow-lg flex flex-col rounded-t-[10px] h-full mt-24 fixed bottom-0 left-0 right-0 ${className}`}
-    >
-      {children}
-    </Drawer.Content>
+    {useIsLargeScreen() ? (
+      <Drawer.Content
+        ref={ref}
+        className={`bg-popover flex flex-col rounded-t-[10px] rounded-b-[10px] right-2 top-2 bottom-2 fixed z-10 outline-none w-[310px] ${className}`}
+        style={
+          { "--initial-transform": "calc(100% + 8px)" } as React.CSSProperties
+        }
+      >
+        {children}
+      </Drawer.Content>
+    ) : (
+      <Drawer.Content
+        ref={ref}
+        className={`bg-popover flex flex-col rounded-t-[10px] mt-24 h-[80%] lg:h-[320px] fixed bottom-0 left-0 right-0 outline-none ${className}`}
+      >
+        {children}
+      </Drawer.Content>
+    )}
   </Drawer.Portal>
 ));
 
@@ -39,13 +52,18 @@ const BottomSheetModal = ({
   isOpen?: boolean;
   snapPoints?: string[];
 }) => {
+  const isLargeScreen = useIsLargeScreen();
   const combinedSnapPoints = useMemo(() => {
     // Vaul uses different snap points format
     return convertSnapPoints(snapPoints || []);
   }, [snapPoints]);
 
   return (
-    <Drawer.Root {...rest} snapPoints={combinedSnapPoints}>
+    <Drawer.Root
+      {...rest}
+      snapPoints={combinedSnapPoints}
+      direction={isLargeScreen ? "right" : "bottom"}
+    >
       {children}
     </Drawer.Root>
   );

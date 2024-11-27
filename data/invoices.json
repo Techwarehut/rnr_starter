@@ -7,7 +7,7 @@
       "customer_id": "1",
       "business_name": "Doe Enterprises"
     },
-    "service_site_id": "1",
+    "service_site_id": ["1"],
     "linked_job_id": ["JN001", "JN002"],
     "items": [
       {
@@ -37,7 +37,8 @@
     "total_amount_due": 5720.0,
     "notes": "Thank you for your business! Please contact us for any follow-up services.",
     "payment_terms": "Net 30",
-    "payment_methods": ["Bank Transfer", "Credit Card"]
+    "payment_methods": ["Bank Transfer", "Credit Card"],
+    "status": "Invoiced"
   },
   {
     "invoice_number": "INV-123457",
@@ -47,7 +48,7 @@
       "customer_id": "2",
       "business_name": "Smith Co."
     },
-    "service_site_id": "1",
+    "service_site_id": ["1"],
     "linked_job_id": ["JN003", "JN004"],
     "items": [
       {
@@ -77,9 +78,9 @@
     "total_amount_due": 1375.0,
     "notes": "Thank you for choosing our cleaning services. Please let us know if you need any further assistance.",
     "payment_terms": "Net 30",
-    "payment_methods": ["Bank Transfer", "Cheque"]
+    "payment_methods": ["Bank Transfer", "Cheque"],
+    "status": "Draft"
   },
-
   {
     "invoice_number": "INV-123458",
     "date_issued": "2024-11-26",
@@ -88,7 +89,7 @@
       "customer_id": "3",
       "business_name": "Johnson Group"
     },
-    "service_site_id": "1",
+    "service_site_id": ["1", "2", "3", "4"],
     "linked_job_id": ["JN005", "JN006"],
     "items": [
       {
@@ -118,6 +119,7 @@
     "total_amount_due": 7315.0,
     "notes": "Thank you for your business. We appreciate your trust in our industrial repair services.",
     "payment_terms": "Net 30",
-    "payment_methods": ["Bank Transfer", "Credit Card"]
+    "payment_methods": ["Bank Transfer", "Credit Card"],
+    "status": "Paid"
   }
 ]

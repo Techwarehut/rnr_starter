@@ -73,6 +73,9 @@ export const Popover: React.FC<PopoverProps> = ({
         index={1}
         snapPoints={snapPoints}
         onChange={handleSheetChanges}
+        backgroundStyle={{
+          backgroundColor: isDarkColorScheme ? "#000" : "#FFF",
+        }}
         handleComponent={() => (
           <BottomSheetHandle
             className="bg-popover"

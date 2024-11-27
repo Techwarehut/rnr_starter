@@ -154,7 +154,7 @@ const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
         />
       ) : (
         <View className="flex-row items-center justify-between">
-          <View>
+          <View className="flex flex-1">
             <Text className="text-xl">Checklist</Text>
             <Muted>
               This can be a safety, inspection or maintainence checklist

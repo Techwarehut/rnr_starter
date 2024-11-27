@@ -101,3 +101,16 @@ export const getStatusClassName = (status: string) => {
       return "text-muted-foreground"; // Default class for Pending or other statuses
   }
 };
+
+// Function to format the currency based on locale and currency code
+export const formatCurrency = (
+  amount: number,
+  currencyCode: string,
+  locale: string = "en-US"
+): string => {
+  const formatter = new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency: currencyCode,
+  });
+  return formatter.format(amount);
+};

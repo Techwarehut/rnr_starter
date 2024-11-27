@@ -30,11 +30,7 @@ export const LinkJobs: React.FC<LinkJobProps> = ({
           <Plus size={18} className="text-primary" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent
-        side="bottom"
-        insets={contentInsets}
-        className="flex flex-1 w-full"
-      >
+      <PopoverContent side="bottom" insets={contentInsets}>
         <View className="flex flex-row p-2 self-end">
           <Button
             size="sm"
@@ -45,7 +41,6 @@ export const LinkJobs: React.FC<LinkJobProps> = ({
             <Text>Select</Text>
           </Button>
         </View>
-        <SelectJob isSelectionRequired={true} onJobSelect={handleJobSelect} />
       </PopoverContent>
     </RNPopover>
   );

@@ -1,3 +1,5 @@
+import { StatusKeys } from "../Jobs/Filters/Statustypes";
+
 export type InvoiceItem = {
   description: string; // Description of the service/item
   quantity: number; // Number of items or quantity of service
@@ -13,7 +15,7 @@ export type Invoice = {
     customer_id: string; // Unique customer ID
     business_name: string; // Customer's business name
   };
-  service_site_id: string; // Service site ID (to link with customer site)
+  service_site_id: string[]; // Service site ID (to link with customer site)
   linked_job_id: string[]; // Linked job IDs (array of job IDs)
   items: InvoiceItem[]; // List of invoice items (array of InvoiceItem)
   sub_total: number; // Subtotal amount before discount and tax
@@ -25,4 +27,12 @@ export type Invoice = {
   notes?: string; // Optional field for any additional notes
   payment_terms: string; // Payment terms (e.g., "Net 30")
   payment_methods: string[]; // Array of available payment methods (e.g., ["Bank Transfer", "Credit Card"])
+  status: string;
+};
+
+export const invStatusKeyMapping: Record<string, StatusKeys> = {
+  Draft: "backlog",
+
+  Invoiced: "invoiced",
+  Paid: "paid",
 };

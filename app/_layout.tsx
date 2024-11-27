@@ -180,6 +180,18 @@ export default function RootLayout() {
                 headerBackTitleVisible: false,
               }}
             />
+
+            <Stack.Screen
+              name="sales/[invoiceId]"
+              options={{
+                headerShown: true,
+                headerTitle: "",
+                presentation: Platform.OS === "ios" ? "card" : "modal",
+                headerTitleAlign: "left",
+                //headerBackVisible: true,
+                headerBackTitleVisible: false,
+              }}
+            />
             <Stack.Screen
               name="(tabs)"
               options={{

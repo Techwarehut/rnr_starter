@@ -73,6 +73,9 @@ export const AddNewCustomer: React.FC<AddNewCustomerProps> = ({
         index={1}
         snapPoints={snapPoints}
         onChange={handleSheetChanges}
+        backgroundStyle={{
+          backgroundColor: isDarkColorScheme ? "#000" : "#FFF",
+        }}
         handleComponent={() => (
           <BottomSheetHandle
             className="bg-popover"
@@ -84,7 +87,7 @@ export const AddNewCustomer: React.FC<AddNewCustomerProps> = ({
           />
         )}
       >
-        <BottomSheetView className="flex-1 bg-popover mb-8">
+        <BottomSheetView className="flex-1 bg-popover">
           <H3 className="text-center">Add New Customer</H3>
           <AddNewCustomerForm onChange={setCustomerData} />
           <View className="p-4">
