@@ -31,8 +31,15 @@ export default function DisplayChecklist({
 
   // useEffect to fetch the checklist based on linkedCheckListId
   useEffect(() => {
+    console.log(jobId, linkedCheckListId);
     const fetchChecklist = async () => {
-      const checklist = await fetchChecklistByJobId(jobId);
+      let checklist;
+      if (jobId) {
+        checklist = await fetchChecklistByJobId(jobId);
+      } else {
+        checklist = await fetchChecklistById(linkedCheckListId);
+      }
+
       if (checklist) {
         setSelectedChecklist(checklist); // Set the selected checklist
         setTasks(checklist.tasks); // Set tasks directly from the checklist
@@ -45,16 +52,18 @@ export default function DisplayChecklist({
   // Function to handle toggling task status using the API
   const handleToggleTaskStatus = async (taskId: string) => {
     // Call the API function to toggle the task status
-    const updatedTask = await toggleTaskStatus(jobId, taskId);
+    if (jobId) {
+      const updatedTask = await toggleTaskStatus(jobId, taskId);
 
-    // Update the tasks state with the updated task status
-    setTasks((prevTasks) => {
-      // Update the specific task in the state
-      const updatedTasks = prevTasks.map((task) =>
-        task.task_id === updatedTask.task_id ? updatedTask : task
-      );
-      return updatedTasks; // Return the updated task list
-    });
+      // Update the tasks state with the updated task status
+      setTasks((prevTasks) => {
+        // Update the specific task in the state
+        const updatedTasks = prevTasks.map((task) =>
+          task.task_id === updatedTask.task_id ? updatedTask : task
+        );
+        return updatedTasks; // Return the updated task list
+      });
+    }
   };
 
   // Show loading state if no checklist is selected yet

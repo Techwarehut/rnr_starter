@@ -4,7 +4,7 @@ import AddNewJobForm from "~/components/ScreenComponents/Jobs/AddNewJobFrom";
 import { Stack, useRouter } from "expo-router";
 import { Button } from "~/components/ui/button";
 import { Job } from "~/components/ScreenComponents/Jobs/types";
-import { addJob } from "~/api/jobsApi";
+import { addChecklistToJob, addJob } from "~/api/jobsApi";
 import { useToast } from "~/components/ScreenComponents/ToastMessage";
 import Toast from "react-native-toast-message";
 import { Text } from "~/components/ui/text";
@@ -54,6 +54,8 @@ const addnew = () => {
   const handleAddJob = async () => {
     try {
       const addedJob = await addJob(job);
+      if (addedJob.checklistID)
+        await addChecklistToJob(addedJob._id, addedJob.checklistID);
 
       showSuccessToast("Job Added successfully!");
       /*  router.replace("/(tabs)/jobs"); */

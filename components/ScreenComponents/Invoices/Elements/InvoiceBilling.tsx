@@ -67,10 +67,10 @@ const InvoiceBilling: React.FC<{ invoice: Invoice }> = ({ invoice }) => {
       </View>
       <View className="flex gap-2">
         <Text className="font-semibold">Serviced Sites</Text>
-        <View className="flex bg-secondary p-2 rounded-md flex-row flex-wrap justify-between gap-2">
+        <View className="flex p-2 rounded-md flex-row flex-wrap justify-between gap-2 border border-input ">
           {serviceSites.map((site) => (
             <View key={site.site_id}>
-              <Text>{site.siteName}</Text>
+              <Text className="underline">{site.siteName}</Text>
               <Muted>{site.AddressLine}</Muted>
               <Muted>{site.City}</Muted>
               <View className="flex flex-row gap-2">

@@ -46,7 +46,7 @@ export const AddNewInvEst: React.FC<AddNewInvEstProps> = ({ onNewInvAdd }) => {
         className="flex flex-row gap-2 mr-1"
         onPress={handlePresentModalPress}
       >
-        <Text>Add</Text>
+        <Text>New</Text>
         <ChevronDown size={18} className="text-primary-foreground" />
       </Button>
 
@@ -71,10 +71,10 @@ export const AddNewInvEst: React.FC<AddNewInvEstProps> = ({ onNewInvAdd }) => {
       >
         <BottomSheetView className="flex flex-1 bg-popover gap-2 ">
           <Button variant="ghost">
-            <Text>New Invoice</Text>
+            <Text>Invoice</Text>
           </Button>
           <Button variant="ghost">
-            <Text>New Estimate</Text>
+            <Text>Estimate</Text>
           </Button>
         </BottomSheetView>
       </BottomSheetModal>

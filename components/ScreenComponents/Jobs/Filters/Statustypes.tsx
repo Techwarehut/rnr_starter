@@ -25,6 +25,9 @@ export type JobTypeKeys =
 // Statustypes.ts
 export type JobPriorityKeys = "High" | "Medium" | "Low";
 
+// Statustypes.ts
+export type JobFreqKeys = "Daily" | "Every Week" | "Every Month";
+
 export const jobTypeKeys: JobTypeKeys[] = [
   "Inspection",
   "ServiceVisit",

@@ -29,7 +29,7 @@ export const AddNewInvEst: React.FC<AddNewInvEstProps> = ({ onNewInvAdd }) => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button size="sm" className="flex flex-row gap-2 mr-2">
-          <Text>Add</Text>
+          <Text>New</Text>
           <ChevronDown size={18} className="text-primary-foreground" />
         </Button>
       </DropdownMenuTrigger>
@@ -41,13 +41,13 @@ export const AddNewInvEst: React.FC<AddNewInvEstProps> = ({ onNewInvAdd }) => {
         <DropdownMenuGroup>
           <DropdownMenuItem className="items-center justify-start self-start">
             <Button variant="ghost">
-              <Text>New Invoice</Text>
+              <Text>Invoice</Text>
             </Button>
           </DropdownMenuItem>
 
           <DropdownMenuItem className="items-center justify-start self-start">
             <Button variant="ghost">
-              <Text>New Estimate</Text>
+              <Text>Estimate</Text>
             </Button>
           </DropdownMenuItem>
         </DropdownMenuGroup>

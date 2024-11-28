@@ -1,5 +1,6 @@
 import { StatusKeys } from "../Jobs/Filters/Statustypes";
 
+// Define the InvoiceItem type for services and parts
 export type InvoiceItem = {
   description: string; // Description of the service/item
   quantity: number; // Number of items or quantity of service
@@ -7,6 +8,7 @@ export type InvoiceItem = {
   total: number; // Total cost for this item (quantity * unit_price)
 };
 
+// Define the Invoice type with separated services and parts
 export type Invoice = {
   invoice_number: string; // Unique invoice number
   date_issued: string; // Invoice issue date (e.g., "2024-11-26")
@@ -17,7 +19,11 @@ export type Invoice = {
   };
   service_site_id: string[]; // Service site ID (to link with customer site)
   linked_job_id: string[]; // Linked job IDs (array of job IDs)
-  items: InvoiceItem[]; // List of invoice items (array of InvoiceItem)
+
+  // Separate lists for services and parts
+  services: InvoiceItem[]; // List of service items
+  parts: InvoiceItem[]; // List of parts/items
+
   sub_total: number; // Subtotal amount before discount and tax
   discount: number; // Discount applied to the subtotal
   discounted_total: number; // Subtotal after applying discount
@@ -30,9 +36,9 @@ export type Invoice = {
   status: string;
 };
 
+// Define the mapping for invoice status
 export const invStatusKeyMapping: Record<string, StatusKeys> = {
   Draft: "backlog",
-
   Invoiced: "invoiced",
   Paid: "paid",
 };

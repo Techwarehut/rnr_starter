@@ -26,6 +26,8 @@ import { UpdateReqFreq } from "./UpdateRecFreq";
 import JobReqFreqUpdate from "./JobReqFreqUpdate";
 
 import DisplayChecklist from "~/components/ScreenComponents/Checklist/CheckList";
+import { AssignChecklist } from "./JobActions/AssignChecklist";
+import { addChecklistToJob } from "~/api/jobsApi";
 
 interface AddJobFormProps {
   onChange: (data: Job) => void;
@@ -69,6 +71,7 @@ const AddNewJobForm: React.FC<AddJobFormProps> = ({ onChange }) => {
     createdAt: "", // You might want to handle these as Date objects
     updatedAt: "",
     images: [],
+    checklistID: "",
   });
 
   const handleInputChange = (
@@ -170,22 +173,35 @@ const AddNewJobForm: React.FC<AddJobFormProps> = ({ onChange }) => {
         <View className="flex gap-2">
           <Label nativeID="Job Priority">Recurring Frequency</Label>
 
-          <JobReqFreqUpdate
-            onChangeType={(newType) => {
-              handleInputChange("jobType", newType);
-            }}
-            type={job.jobType}
-          />
-          <Muted>Select due date to show number of occurrences</Muted>
-          <Muted>You can add a Checklist for Maintainence and Inspection</Muted>
+          <JobReqFreqUpdate />
         </View>
       )}
 
-      {job.jobType === "Inspection" && (
+      {(job.jobType === "Inspection" || job.jobType === "Maintenance") && (
         <>
-          <Muted>You can add a Checklist for Maintainence and Inspection</Muted>
-          {job.checklistID && (
-            <DisplayChecklist linkedCheckListId={job.checklistID} />
+          {job.checklistID ? (
+            <DisplayChecklist
+              linkedCheckListId={job.checklistID}
+              jobId={job._id}
+              handleDeleteChecklist={() => {
+                handleInputChange("checklistID", "");
+              }}
+            />
+          ) : (
+            <View className="flex-row items-center justify-between">
+              <View className="flex flex-1">
+                <Text className="text-xl">Checklist</Text>
+                <Muted>
+                  This can be a safety, inspection or maintainence checklist
+                </Muted>
+              </View>
+              <AssignChecklist
+                jobId={job._id}
+                handleAddChecklist={(checklistId) => {
+                  handleInputChange("checklistID", checklistId);
+                }}
+              />
+            </View>
           )}
         </>
       )}

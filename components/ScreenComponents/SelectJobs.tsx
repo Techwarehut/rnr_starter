@@ -218,7 +218,7 @@ export default function SelectJob({
                   variant="default"
                   onPress={() => router.push("/jobs/addnew")}
                 >
-                  <Text>Add New Job</Text>
+                  <Text>New Job</Text>
                 </Button>
               </View>
             ),
