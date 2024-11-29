@@ -36,10 +36,12 @@
     "@rn-primitives/types": "~1.0.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
     "expo": "^51.0.24",
     "expo-image-picker": "~15.0.7",
     "expo-linking": "~6.3.1",
+    "expo-localization": "~15.0.3",
     "expo-navigation-bar": "~3.0.7",
     "expo-router": "~3.5.20",
     "expo-splash-screen": "~0.27.5",
@@ -61,8 +63,7 @@
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^1.1.1",
-    "zustand": "^4.4.7",
-    "expo-localization": "~15.0.3"
+    "zustand": "^4.4.7"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

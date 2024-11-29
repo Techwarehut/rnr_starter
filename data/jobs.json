@@ -67,7 +67,8 @@
     "images": [
       "https://via.placeholder.com/300x200?text=Job+001+Image+1",
       "https://via.placeholder.com/300x200?text=Job+001+Image+2"
-    ]
+    ],
+    "checklistID": "hvac_maintenance_001"
   },
   {
     "_id": "JN002",
@@ -133,8 +134,7 @@
     "images": [
       "https://via.placeholder.com/300x200?text=Job+002+Image+1",
       "https://via.placeholder.com/300x200?text=Job+002+Image+2"
-    ],
-    "checklistID": "hvac_maintenance_001"
+    ]
   },
   {
     "_id": "JN003",
@@ -219,7 +219,7 @@
         "hoursSpent": 3
       }
     ],
-    "status": "Accounts Receivable",
+    "status": "In Progress",
     "purchaseOrderNumber": "PO-002",
     "dueDate": "2024-09-28T12:00:00Z",
     "priority": "Medium",
@@ -259,7 +259,15 @@
       "https://via.placeholder.com/300x200?text=Job+004+Image+1",
       "https://via.placeholder.com/300x200?text=Job+004+Image+2"
     ],
-    "checklistID": "hvac_maintenance"
+    "checklistID": "plumbing_maintenance",
+    "recurrence": {
+      "type": "weekly",
+
+      "daysOfWeek": "mon",
+      "completedIterations": 0,
+      "totalIterations": 1,
+      "dueDates": []
+    }
   },
   {
     "_id": "JN005",

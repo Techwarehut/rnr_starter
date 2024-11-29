@@ -5,13 +5,13 @@ import {
   CardFooter,
   CardTitle,
 } from "~/components/ui/card";
-import { Job } from "./types";
+import { defaultRecurrence, Job } from "./types";
 import { Badge } from "~/components/ui/badge";
 import { Text } from "~/components/ui/text";
 import { Pressable, View } from "react-native";
 import { Button } from "~/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
-import { getInitials } from "~/lib/utils";
+import { generateFrequencyText, getInitials } from "~/lib/utils";
 
 import { User2 } from "~/lib/icons/User";
 
@@ -28,6 +28,7 @@ import { useEffect, useState } from "react";
 import { User } from "../Team/types";
 import { assignJob } from "~/api/jobsApi";
 import { Checkbox } from "~/components/ui/checkbox";
+import { Repeat } from "~/lib/icons/Repeat";
 
 interface JobProps {
   job: Job;
@@ -92,6 +93,17 @@ export const JobCard: React.FC<JobProps> = ({
         {getJobPriorityIcon(job.priority)}
       </View>
       <CardTitle>{job.jobTitle}</CardTitle>
+      {job.jobType === "Maintenance" && (
+        <View className="flex flex-row gap-2 items-center">
+          <Repeat className="text-primary" size={18} />
+          <Text className="text-primary">
+            {generateFrequencyText(
+              job.recurrence || defaultRecurrence,
+              job.dueDate
+            )}
+          </Text>
+        </View>
+      )}
 
       <CardDescription numberOfLines={2}>{job.jobDescription}</CardDescription>
       <View className="flex-row gap-2">

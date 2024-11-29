@@ -44,7 +44,7 @@ const JobBSecondaryInfo: React.FC<JobSecondaryInfoProps> = ({
 }) => {
   const [refreshKey, setRefreshKey] = useState(0);
 
-  const onChangeDate = async (selectedDate: DateType) => {
+  const handleChangeDate = async (selectedDate: string) => {
     // Handle the case where selectedDate might be undefined
     if (selectedDate) {
       if (!addNew) {
@@ -229,7 +229,12 @@ const JobBSecondaryInfo: React.FC<JobSecondaryInfoProps> = ({
                 nativeID="Due Date"
               />
             </View>
-            <DatePicker date={job.dueDate} onChangeDate={onChangeDate} />
+            <DatePicker
+              date={job.dueDate}
+              onChangeDate={(date: DateType) => {
+                if (date) handleChangeDate(date.toLocaleString());
+              }}
+            />
           </View>
         </View>
 

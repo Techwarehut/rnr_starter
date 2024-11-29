@@ -7,7 +7,11 @@ import {
   JobPriorityKeys,
   JobTypeKeys,
 } from "~/components/ScreenComponents/Jobs/Filters/Statustypes";
-import { AssignedUser, Job } from "~/components/ScreenComponents/Jobs/types"; // Import your Job type
+import {
+  AssignedUser,
+  Job,
+  JobRecurrence,
+} from "~/components/ScreenComponents/Jobs/types"; // Import your Job type
 import { User } from "~/components/ScreenComponents/Team/types";
 import jobsData from "~/data/jobs.json"; // Your static JSON data
 import { generateUniqueId } from "~/lib/utils"; // Import the unique ID generator
@@ -434,5 +438,23 @@ export const toggleTaskStatus = async (
 
       resolve(updatedTask!); // Return the updated task
     }, 500); // Simulating a delay
+  });
+};
+
+// Function to update only job Recurrence
+export const updateJobRecurrence = async (
+  jobId: string,
+  newRecrurence: JobRecurrence
+): Promise<Job> => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const index = jobs.findIndex((job) => job._id === jobId);
+      if (index !== -1) {
+        jobs[index].recurrence = newRecrurence; // Update status
+        resolve(jobs[index]);
+      } else {
+        reject(new Error("Job not found"));
+      }
+    }, 1000); // Simulate a delay
   });
 };

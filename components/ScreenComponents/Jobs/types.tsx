@@ -45,6 +45,23 @@ export interface HoursSpent {
   notes: string; // Notes about the work done
 }
 
+// Define the HoursSpent interface
+export interface JobRecurrence {
+  type: string;
+  daysOfWeek: string;
+  completedIterations: number;
+  totalIterations: number;
+  dueDates: DateType[];
+}
+
+// Default values if recurrence is undefined
+export const defaultRecurrence: JobRecurrence = {
+  type: "none", // Default to no recurrence
+  daysOfWeek: "", // No days for "none"
+  completedIterations: 0,
+  totalIterations: 0,
+  dueDates: [new Date()],
+};
 // Define the Job interface
 export interface Job {
   _id: string; // Unique identifier for the job
@@ -69,4 +86,5 @@ export interface Job {
   updatedAt: string; // Last update timestamp
   images: string[];
   checklistID?: string;
+  recurrence?: JobRecurrence;
 }

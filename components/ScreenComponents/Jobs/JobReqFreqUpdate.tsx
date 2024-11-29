@@ -1,35 +1,228 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Pressable } from "react-native";
 import { Button } from "~/components/ui/button";
 import { Text } from "~/components/ui/text";
-import { Large } from "~/components/ui/typography";
-import { cn } from "~/lib/utils";
+import { defaultRecurrence, JobRecurrence } from "./types";
+import {
+  frequencyOptions,
+  generateFrequencyText,
+  WeeklyfrequencyOptions,
+} from "~/lib/utils";
+import { DateType } from "react-native-ui-datepicker";
+import { Repeat } from "~/lib/icons/Repeat";
+import {
+  addWeeks,
+  addMonths,
+  addYears,
+  differenceInCalendarWeeks,
+  differenceInCalendarMonths,
+  differenceInCalendarYears,
+  differenceInDays,
+  startOfWeek,
+} from "date-fns"; // Import date-fns for recurrence logic
+import { Dayjs } from "dayjs";
 
-// Frequency options for recurring events
-const frequencyOptions = [
-  { label: "None", value: "none" },
-  { label: "Daily", value: "daily" },
-  { label: "Weekly", value: "weekly" },
-  { label: "Monthly", value: "monthly" },
-  { label: "Yearly", value: "yearly" },
-];
+interface JobReqFreqUpdateProps {
+  recurrence?: JobRecurrence; // Make recurrence optional
+  onRecurrenceChange: (recurrence: JobRecurrence) => void; // Callback to handle changes
+  dueDate: DateType; // `dueDate` is passed as `DateType`
+}
 
-// Frequency options for recurring events
-const WeeklyfrequencyOptions = [
-  { label: "Mon", value: "mon" },
-  { label: "Tue", value: "tue" },
-  { label: "Wed", value: "wed" },
-  { label: "Thu", value: "thu" },
-  { label: "Fri", value: "fri" },
-  { label: "Sat", value: "sat" },
-  { label: "Sun", value: "sun" },
-];
+const JobReqFreqUpdate: React.FC<JobReqFreqUpdateProps> = ({
+  recurrence,
+  onRecurrenceChange,
+  dueDate,
+}) => {
+  const [localrecurrence, setLocalRecurrence] = useState<JobRecurrence>(
+    recurrence || defaultRecurrence
+  );
 
-const JobReqFreqUpdate = () => {
-  const [selectedFrequency, setSelectedFrequency] = useState<string>("none");
+  // Use recurrence or fallback to defaultRecurrence
+  const { type, daysOfWeek, completedIterations } =
+    localrecurrence || defaultRecurrence;
+
+  const [selectedFrequency, setSelectedFrequency] = useState<string>(type);
   const [selectedWeeklyFrequency, setSelectedWeeklyFrequency] =
-    useState<string>("mon");
-  const [showCustomDays, setShowCustomDays] = useState(false); // For showing custom day selection
+    useState<string>(daysOfWeek || "mon");
+  const [showCustomDays, setShowCustomDays] = useState<boolean>(
+    type === "weekly"
+  );
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  // Convert `dueDate` (DateType) to a JavaScript Date object
+  const getDateFromDateType = (dateType: DateType): Date => {
+    if (dateType === null || dateType === undefined) {
+      throw new Error("Received null or undefined dueDate");
+    }
+
+    if (typeof dateType === "string") {
+      const dateObj = new Date(dateType);
+
+      if (isNaN(dateObj.getTime())) {
+        throw new Error("Invalid date string format");
+      }
+
+      return dateObj;
+    }
+
+    if (typeof dateType === "number") {
+      // Treat number as a Unix timestamp (milliseconds)
+      return new Date(dateType);
+    }
+
+    if (dateType instanceof Date) {
+      return dateType; // If it's already a Date object, return as-is
+    }
+
+    if (dateType instanceof Dayjs) {
+      return dateType.toDate(); // If it's a Dayjs object, convert to Date
+    }
+
+    throw new Error("Invalid date type received");
+  };
+
+  // Function to calculate the next due date based on recurrence type
+  const calculateNextDueDate = (
+    currentDueDate: Date,
+    recurrence: { type: string; daysOfWeek: string }
+  ): Date => {
+    let nextDueDate = currentDueDate;
+
+    switch (recurrence.type) {
+      case "weekly":
+        nextDueDate = addWeeks(currentDueDate, 1); // Add one week for weekly recurrence
+        break;
+      case "monthly":
+        nextDueDate = addMonths(currentDueDate, 1); // Add one month for monthly recurrence
+        break;
+      case "yearly":
+        nextDueDate = addYears(currentDueDate, 1); // Add one year for yearly recurrence
+        break;
+      case "daily":
+        nextDueDate.setDate(currentDueDate.getDate() + 1); // Add one day for daily recurrence
+        break;
+      case "none":
+        break; // No recurrence
+      default:
+        console.warn("Invalid recurrence type");
+        break;
+    }
+
+    return nextDueDate;
+  };
+
+  // Function to get the next day of the week (e.g., next Monday) from a given date
+  const getNextDayOfWeek = (currentDate: Date, dayOfWeek: string): Date => {
+    const daysMap: { [key: string]: number } = {
+      mon: 1,
+      tue: 2,
+      wed: 3,
+      thu: 4,
+      fri: 5,
+      sat: 6,
+      sun: 0,
+    };
+
+    const currentDay = currentDate.getDay();
+    const targetDay = daysMap[dayOfWeek.toLowerCase()];
+    let daysToAdd = targetDay - currentDay;
+
+    // If the target day is today or has already passed this week, move to next week
+    if (daysToAdd <= 0) {
+      daysToAdd += 7;
+    }
+
+    // Add days to current date
+    return new Date(currentDate.setDate(currentDate.getDate() + daysToAdd));
+  };
+
+  // Function to calculate total iterations and generate due dates
+  const generateDueDates = (
+    startDate: Date,
+    recurrence: JobRecurrence,
+    endDate: Date
+  ): Date[] => {
+    const dueDates: Date[] = [];
+    let nextDueDate = startDate;
+    let totalIterations = 0;
+
+    // Calculate total iterations based on recurrence type and difference to dueDate
+
+    switch (recurrence.type) {
+      case "weekly":
+        totalIterations = differenceInCalendarWeeks(endDate, startDate);
+        console.log(recurrence.type, totalIterations);
+        break;
+      case "monthly":
+        totalIterations = differenceInCalendarMonths(endDate, startDate);
+        console.log(recurrence.type, totalIterations);
+        break;
+      case "yearly":
+        totalIterations = differenceInCalendarYears(endDate, startDate);
+        console.log(recurrence.type, totalIterations);
+        break;
+      case "daily":
+        totalIterations = differenceInDays(endDate, startDate);
+        console.log(recurrence.type, totalIterations);
+        break;
+      case "none":
+        totalIterations = 0;
+        break;
+      default:
+        console.warn("Invalid recurrence type");
+        break;
+    }
+
+    // Ensure there is at least one iteration
+    totalIterations = totalIterations > 0 ? totalIterations : 1;
+
+    // Generate due dates based on the calculated total iterations
+    for (let i = 0; i < totalIterations; i++) {
+      if (recurrence.type === "weekly") {
+        // If weekly, find the next specific day (e.g., every Monday)
+        nextDueDate = getNextDayOfWeek(nextDueDate, recurrence.daysOfWeek);
+      } else {
+        // Otherwise, apply the recurrence logic (monthly, yearly, etc.)
+
+        nextDueDate = calculateNextDueDate(nextDueDate, recurrence);
+      }
+      dueDates.push(nextDueDate);
+    }
+
+    return dueDates;
+  };
+
+  // Update the parent component only if there is a real change in recurrence
+  useEffect(() => {
+    try {
+      const dueDateObj = getDateFromDateType(dueDate?.toLocaleString()); // Convert dueDate to Date object
+      //const dueDateObj =  // Convert dueDate to Date object
+      const dueDates = generateDueDates(
+        new Date(),
+        {
+          type: selectedFrequency,
+          daysOfWeek: selectedWeeklyFrequency,
+          completedIterations: completedIterations,
+          totalIterations: 0,
+
+          dueDates: [new Date()],
+        },
+        dueDateObj
+      );
+
+      setLocalRecurrence({
+        type: selectedFrequency,
+        daysOfWeek: selectedWeeklyFrequency,
+        completedIterations: completedIterations,
+        totalIterations: dueDates.length,
+        dueDates,
+      });
+
+      onRecurrenceChange(localrecurrence);
+    } catch (error) {
+      console.error("Error parsing dueDate:", error);
+    }
+  }, [selectedFrequency, selectedWeeklyFrequency, recurrence, dueDate]);
 
   // Toggle custom days visibility based on frequency selection
   const handleFrequencyChange = (frequency: string) => {
@@ -41,14 +234,14 @@ const JobReqFreqUpdate = () => {
     }
   };
 
-  // Toggle custom days visibility based on frequency selection
+  // Handle weekly frequency selection (which days to repeat)
   const handleWeeklyFrequencyChange = (frequency: string) => {
     setSelectedWeeklyFrequency(frequency);
   };
 
   return (
     <View className="flex gap-2 p-4 border border-input rounded-md">
-      <Large>Set Recurring Frequency</Large>
+      <Text>Set Recurring Frequency</Text>
 
       {/* Render frequency options */}
       {frequencyOptions.map((option) => (
@@ -63,8 +256,8 @@ const JobReqFreqUpdate = () => {
 
       {/* Show custom days selection if Weekly is selected */}
       {showCustomDays && (
-        <View className="my-4">
-          <Large>Choose Recurrence Days</Large>
+        <View className="flex gap-2">
+          <Text>Choose Recurrence Days</Text>
           <View className="flex flex-row flex-wrap gap-2">
             {WeeklyfrequencyOptions.map((option) => (
               <Button
@@ -84,12 +277,12 @@ const JobReqFreqUpdate = () => {
       )}
 
       {/* Display selected frequency */}
-
-      <Text>
-        Selected Frequency:{" "}
-        {selectedFrequency === "none" ? "None" : selectedFrequency} until Due
-        Date.
-      </Text>
+      <View className="flex flex-row flex-wrap gap-2 items-center">
+        <Repeat className="text-primary" size={18} />
+        <Text className="text-primary">
+          {generateFrequencyText(localrecurrence || defaultRecurrence, dueDate)}
+        </Text>
+      </View>
     </View>
   );
 };

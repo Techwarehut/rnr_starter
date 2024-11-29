@@ -19,8 +19,9 @@ const JobSiteContact: React.FC<JobInfoProps> = ({ job }) => {
       <View className="flex gap-2 md:flex-row">
         <View className="flex md:flex-1 bg-secondary p-2 rounded-md">
           {job.siteLocation.siteContactPerson === "" ? (
-            <View className="flex justify-center">
-              <Text>No Site Contact</Text>
+            <View className="flex flex-row gap-2 items-center p-4">
+              <User2 className="text-primary" size={isLargeScreen ? 18 : 18} />
+              <Text>Select Customer & Site Location Below</Text>
             </View>
           ) : (
             <>
@@ -53,20 +54,21 @@ const JobSiteContact: React.FC<JobInfoProps> = ({ job }) => {
           )}
         </View>
         <View className="flex flex-row md:flex-1 bg-secondary rounded-md p-2 gap-2">
-          <View className="h-8 w-8  rounded-2xl items-center justify-center p-1">
-            <MapPin className="text-primary" size={isLargeScreen ? 18 : 18} />
-          </View>
           {job.siteLocation.AddressLine === "" ? (
-            <View className="flex justify-center">
-              <Text>No Site Location Selected</Text>
+            <View className="flex flex-row gap-2 items-center p-4">
+              <MapPin className="text-primary" size={isLargeScreen ? 18 : 18} />
+              <Text>Select Site Location Below</Text>
             </View>
           ) : (
-            <View>
-              <Text>{job.siteLocation.AddressLine}</Text>
-              <Text>{job.siteLocation.City}</Text>
-              <View className="flex flex-row gap-2">
-                <Text>{job.siteLocation.Province}</Text>
-                <Text>{job.siteLocation.zipcode}</Text>
+            <View className="flex flex-row gap-2  ">
+              <MapPin className="text-primary" size={isLargeScreen ? 24 : 24} />
+              <View>
+                <Text>{job.siteLocation.AddressLine}</Text>
+                <Text>{job.siteLocation.City}</Text>
+                <View className="flex flex-row gap-2">
+                  <Text>{job.siteLocation.Province}</Text>
+                  <Text>{job.siteLocation.zipcode}</Text>
+                </View>
               </View>
             </View>
           )}

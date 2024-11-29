@@ -1,7 +1,10 @@
 import { clsx, type ClassValue } from "clsx";
+import { addMonths, addWeeks, addYears } from "date-fns";
 import dayjs, { Dayjs } from "dayjs";
 import { useWindowDimensions } from "react-native";
+import { DateType } from "react-native-ui-datepicker";
 import { twMerge } from "tailwind-merge";
+import { JobRecurrence } from "~/components/ScreenComponents/Jobs/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -68,7 +71,9 @@ export const generateUniqueId = () => {
   return `${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 };
 
-export const formatDueDate = (dueDate: string | number | Dayjs | Date) => {
+export const formatDueDate = (
+  dueDate: string | number | Dayjs | Date | DateType
+) => {
   if (dueDate instanceof Date) {
     // If it's a Date object
     return dueDate.toLocaleDateString("en-US", {
@@ -113,4 +118,94 @@ export const formatCurrency = (
     currency: currencyCode,
   });
   return formatter.format(amount);
+};
+
+// Frequency options for recurring events
+export const frequencyOptions = [
+  { label: "None", value: "none" },
+  { label: "Daily", value: "daily" },
+  { label: "Weekly", value: "weekly" },
+  { label: "Monthly", value: "monthly" },
+  { label: "Yearly", value: "yearly" },
+];
+
+// Frequency options for weekly recurring events
+export const WeeklyfrequencyOptions = [
+  { label: "Mon", value: "mon" },
+  { label: "Tue", value: "tue" },
+  { label: "Wed", value: "wed" },
+  { label: "Thu", value: "thu" },
+  { label: "Fri", value: "fri" },
+  { label: "Sat", value: "sat" },
+  { label: "Sun", value: "sun" },
+];
+
+// Function to generate the dynamic text based on recurrence and due date
+export const generateFrequencyText = (
+  recurrence: JobRecurrence,
+  dueDate: DateType
+) => {
+  const { type, daysOfWeek } = recurrence;
+
+  // Format the due date (optional: you can use a library like `date-fns` or `moment` to format the date)
+  const formattedDueDate = formatDueDate(dueDate); // Example format: "MM/DD/YYYY"
+  const upcomingFormattedDueDate = formatDueDate(
+    recurrence.dueDates[recurrence.completedIterations]
+  ); // Example format: "MM/DD/YYYY"
+
+  switch (type) {
+    case "none":
+      return "No recurrence selected.";
+    case "daily":
+      return ` ${recurrence.completedIterations} completed of ${recurrence.totalIterations}. Next Due on ${upcomingFormattedDueDate}, every day until ${formattedDueDate}.`;
+    case "weekly":
+      const selectedDay = WeeklyfrequencyOptions.find(
+        (day) => day.value === daysOfWeek
+      )?.label;
+      return selectedDay
+        ? `${recurrence.completedIterations} completed of ${recurrence.totalIterations}. Next Due on ${upcomingFormattedDueDate}, every ${selectedDay} until ${formattedDueDate}.`
+        : "Weekly recurrence, but no specific day selected.";
+    case "monthly":
+      return `${recurrence.completedIterations} completed of ${recurrence.totalIterations}. Next Due on ${upcomingFormattedDueDate}, every month until ${formattedDueDate}.`;
+    case "yearly":
+      return `${recurrence.completedIterations} completed of ${recurrence.totalIterations}. Next Due on ${upcomingFormattedDueDate}, every year until ${formattedDueDate}.`;
+    default:
+      return "Invalid selection.";
+  }
+};
+
+// Function to calculate the next due date based on recurrence type
+const calculateNextDueDate = (
+  currentDueDate: Date,
+  recurrence: { type: string; daysOfWeek: string }
+) => {
+  let nextDueDate = currentDueDate;
+
+  switch (recurrence.type) {
+    case "weekly":
+      // Add one week to the current due date
+      nextDueDate = addWeeks(currentDueDate, 1);
+      break;
+    case "monthly":
+      // Add one month to the current due date
+      nextDueDate = addMonths(currentDueDate, 1);
+      break;
+    case "yearly":
+      // Add one year to the current due date
+      nextDueDate = addYears(currentDueDate, 1);
+      break;
+    case "daily":
+      // Add one day to the current due date
+      nextDueDate.setDate(currentDueDate.getDate() + 1);
+      break;
+    case "none":
+      // No recurrence, return the same date
+      nextDueDate = currentDueDate;
+      break;
+    default:
+      console.warn("Invalid recurrence type");
+      break;
+  }
+
+  return nextDueDate;
 };

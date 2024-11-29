@@ -6,7 +6,14 @@ import { formatPhoneNumber, getInitials, useIsLargeScreen } from "~/lib/utils";
 import { Muted } from "~/components/ui/typography";
 import { ScrollView } from "react-native-gesture-handler";
 import { Button } from "~/components/ui/button";
-import { AssignedUser, CreatedUser, customer, Job } from "./types";
+import {
+  AssignedUser,
+  CreatedUser,
+  customer,
+  defaultRecurrence,
+  Job,
+  JobRecurrence,
+} from "./types";
 import { Customer, SiteLocation } from "../Customers/types";
 import JobBasicInfo from "./JobDetails/JobBasicInfo";
 import JobTimesheet from "./JobDetails/JobTimesheet";
@@ -72,11 +79,18 @@ const AddNewJobForm: React.FC<AddJobFormProps> = ({ onChange }) => {
     updatedAt: "",
     images: [],
     checklistID: "",
+    recurrence: defaultRecurrence,
   });
 
   const handleInputChange = (
     field: keyof Job,
-    value: string | Customer | SiteLocation | AssignedUser | DateType
+    value:
+      | string
+      | Customer
+      | SiteLocation
+      | AssignedUser
+      | DateType
+      | JobRecurrence
   ) => {
     let updatedJobData = { ...job };
 
@@ -102,6 +116,22 @@ const AddNewJobForm: React.FC<AddJobFormProps> = ({ onChange }) => {
       updatedJobData.assignedTo = updatedJobData.assignedTo || [];
       updatedJobData.assignedTo.push(value as AssignedUser);
     }
+    if (
+      field === "recurrence" &&
+      value &&
+      typeof value === "object" &&
+      "type" in value &&
+      "daysOfWeek" in value
+    ) {
+      // Now TypeScript knows that 'value' is of type JobRecurrence
+      if (
+        updatedJobData.recurrence?.type !== value.type ||
+        updatedJobData.recurrence?.daysOfWeek !== value.daysOfWeek
+      ) {
+        updatedJobData.recurrence = value as JobRecurrence; // Now safe to assign
+      }
+    }
+
     // Check if the field is a top-level key in Job
     else if (field in updatedJobData) {
       updatedJobData = {
@@ -169,42 +199,50 @@ const AddNewJobForm: React.FC<AddJobFormProps> = ({ onChange }) => {
         />
       </View>
 
-      {job.jobType === "Maintenance" && (
-        <View className="flex gap-2">
-          <Label nativeID="Job Priority">Recurring Frequency</Label>
+      <View className="flex md:flex-1 md:flex-row gap-8 mb-4">
+        {job.jobType === "Maintenance" && (
+          <View className="flex md:flex-1 gap-2">
+            <Text className="text-xl">Recurring Frequency</Text>
 
-          <JobReqFreqUpdate />
-        </View>
-      )}
-
-      {(job.jobType === "Inspection" || job.jobType === "Maintenance") && (
-        <>
-          {job.checklistID ? (
-            <DisplayChecklist
-              linkedCheckListId={job.checklistID}
-              jobId={job._id}
-              handleDeleteChecklist={() => {
-                handleInputChange("checklistID", "");
+            <JobReqFreqUpdate
+              recurrence={job.recurrence}
+              dueDate={job.dueDate}
+              onRecurrenceChange={(recurrence) => {
+                handleInputChange("recurrence", recurrence);
               }}
             />
-          ) : (
-            <View className="flex-row items-center justify-between">
-              <View className="flex flex-1">
-                <Text className="text-xl">Checklist</Text>
-                <Muted>
-                  This can be a safety, inspection or maintainence checklist
-                </Muted>
-              </View>
-              <AssignChecklist
+          </View>
+        )}
+
+        {(job.jobType === "Inspection" || job.jobType === "Maintenance") && (
+          <>
+            {job.checklistID ? (
+              <DisplayChecklist
+                linkedCheckListId={job.checklistID}
                 jobId={job._id}
-                handleAddChecklist={(checklistId) => {
-                  handleInputChange("checklistID", checklistId);
+                handleDeleteChecklist={() => {
+                  handleInputChange("checklistID", "");
                 }}
               />
-            </View>
-          )}
-        </>
-      )}
+            ) : (
+              <View className="flex-row md:flex-1  justify-between">
+                <View className="flex flex-1">
+                  <Text className="text-xl">Checklist</Text>
+                  <Muted>
+                    This can be a safety, inspection or maintainence checklist
+                  </Muted>
+                </View>
+                <AssignChecklist
+                  jobId={job._id}
+                  handleAddChecklist={(checklistId) => {
+                    handleInputChange("checklistID", checklistId);
+                  }}
+                />
+              </View>
+            )}
+          </>
+        )}
+      </View>
 
       <View className="flex md:flex-row gap-8 md:w-full ">
         {/* Contact Details */}
