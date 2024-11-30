@@ -9,7 +9,7 @@ import {
 } from "react-native";
 
 import { Text } from "~/components/ui/text";
-import { Job } from "./types";
+import { defaultRecurrence, Job } from "./types";
 import { JobCard } from "./JobCard";
 import { Collapsible } from "../Collapsible";
 import {
@@ -21,7 +21,7 @@ import {
   TableRow,
 } from "~/components/ui/table";
 import { Button } from "~/components/ui/button";
-import { cn, getInitials } from "~/lib/utils";
+import { cn, generateFrequencyText, getInitials } from "~/lib/utils";
 import { User2 } from "~/lib/icons/User";
 import { H3, Large, Muted } from "~/components/ui/typography";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
@@ -38,6 +38,7 @@ import JobStatusUpdate from "./JobStatusUpdate";
 import { AssignJob } from "./JobActions/AssignJob";
 import { User } from "../Team/types";
 import { assignJob } from "~/api/jobsApi";
+import { Repeat } from "~/lib/icons/Repeat";
 
 interface JobSectionListProps {
   sections: { title: string; data: Job[] }[];
@@ -170,6 +171,17 @@ const JobSectionListWeb: React.FC<JobSectionListProps> = ({
                     <TableCell style={{ width: columnWidths[2] }}>
                       <View>
                         <Text className="text-xl">{job.jobTitle}</Text>
+                        {job.jobType === "Maintenance" && (
+                          <View className="flex flex-row gap-2 items-center">
+                            <Repeat className="text-primary" size={18} />
+                            <Text className="text-primary">
+                              {generateFrequencyText(
+                                job.recurrence || defaultRecurrence,
+                                job.dueDate
+                              )}
+                            </Text>
+                          </View>
+                        )}
 
                         <Muted numberOfLines={2}>{job.jobDescription}</Muted>
                       </View>

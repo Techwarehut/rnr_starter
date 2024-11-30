@@ -150,7 +150,7 @@ const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
           status={job.status}
         />
       </View>
-      <View className="flex md:flex-row  gap-8 mb-4">
+      {/* <View className="flex md:flex-row  gap-8 mb-4">
         {job.jobType === "Maintenance" && (
           <View className="flex md:w-1/2 gap-2">
             <Text className="text-xl">Recurring Frequency</Text>
@@ -164,33 +164,32 @@ const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
               }}
             />
           </View>
-        )}
+        )} */}
 
-        {(job.jobType === "Inspection" || job.jobType === "Maintenance") && (
-          <>
-            {job.checklistID ? (
-              <DisplayChecklist
-                linkedCheckListId={job.checklistID}
-                jobId={job._id}
-                handleDeleteChecklist={handleDeleteChecklist}
-              />
-            ) : (
-              <View className="flex-row md:flex-1  justify-between">
-                <View className="flex flex-1">
-                  <Text className="text-xl">Checklist</Text>
-                  <Muted>
-                    This can be a safety, inspection or maintainence checklist
-                  </Muted>
-                </View>
-                <AssignChecklist
-                  jobId={job._id}
-                  handleAddChecklist={handleAddChecklist}
-                />
+      {(job.jobType === "Inspection" || job.jobType === "Maintenance") && (
+        <>
+          {job.checklistID ? (
+            <DisplayChecklist
+              linkedCheckListId={job.checklistID}
+              jobId={job._id}
+              handleDeleteChecklist={handleDeleteChecklist}
+            />
+          ) : (
+            <View className="flex-row md:flex-1  justify-between">
+              <View className="flex flex-1">
+                <Text className="text-xl">Checklist</Text>
+                <Muted>
+                  This can be a safety, inspection or maintainence checklist
+                </Muted>
               </View>
-            )}
-          </>
-        )}
-      </View>
+              <AssignChecklist
+                jobId={job._id}
+                handleAddChecklist={handleAddChecklist}
+              />
+            </View>
+          )}
+        </>
+      )}
 
       <JobImages
         job={job}

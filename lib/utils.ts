@@ -157,18 +157,52 @@ export const generateFrequencyText = (
     case "none":
       return "No recurrence selected.";
     case "daily":
-      return ` ${recurrence.completedIterations} completed of ${recurrence.totalIterations}. Next Due on ${upcomingFormattedDueDate}, every day until ${formattedDueDate}.`;
+      return ` ${recurrence.completedIterations} of ${recurrence.totalIterations}.`;
     case "weekly":
       const selectedDay = WeeklyfrequencyOptions.find(
         (day) => day.value === daysOfWeek
       )?.label;
       return selectedDay
-        ? `${recurrence.completedIterations} completed of ${recurrence.totalIterations}. Next Due on ${upcomingFormattedDueDate}, every ${selectedDay} until ${formattedDueDate}.`
+        ? `${recurrence.completedIterations} of ${recurrence.totalIterations}.`
         : "Weekly recurrence, but no specific day selected.";
     case "monthly":
-      return `${recurrence.completedIterations} completed of ${recurrence.totalIterations}. Next Due on ${upcomingFormattedDueDate}, every month until ${formattedDueDate}.`;
+      return `${recurrence.completedIterations} of ${recurrence.totalIterations}.`;
     case "yearly":
-      return `${recurrence.completedIterations} completed of ${recurrence.totalIterations}. Next Due on ${upcomingFormattedDueDate}, every year until ${formattedDueDate}.`;
+      return `${recurrence.completedIterations} of ${recurrence.totalIterations}.`;
+    default:
+      return "Invalid selection.";
+  }
+};
+
+// Function to generate the dynamic text based on recurrence and due date
+export const generateFrequencyText2 = (
+  recurrence: JobRecurrence,
+  dueDate: DateType
+) => {
+  const { type, daysOfWeek } = recurrence;
+
+  // Format the due date (optional: you can use a library like `date-fns` or `moment` to format the date)
+  const formattedDueDate = formatDueDate(dueDate); // Example format: "MM/DD/YYYY"
+  const upcomingFormattedDueDate = formatDueDate(
+    recurrence.dueDates[recurrence.completedIterations]
+  ); // Example format: "MM/DD/YYYY"
+
+  switch (type) {
+    case "none":
+      return "No recurrence selected.";
+    case "daily":
+      return `This action will create ${recurrence.totalIterations} Jobs. Every day until ${formattedDueDate}.`;
+    case "weekly":
+      const selectedDay = WeeklyfrequencyOptions.find(
+        (day) => day.value === daysOfWeek
+      )?.label;
+      return selectedDay
+        ? `This action will create ${recurrence.totalIterations} Jobs. Every ${selectedDay} until ${formattedDueDate}.`
+        : "Weekly recurrence, but no specific day selected.";
+    case "monthly":
+      return `This action will create ${recurrence.totalIterations} Jobs. Every month until ${formattedDueDate}.`;
+    case "yearly":
+      return `This action will create ${recurrence.totalIterations} Jobs. Every year until ${formattedDueDate}.`;
     default:
       return "Invalid selection.";
   }

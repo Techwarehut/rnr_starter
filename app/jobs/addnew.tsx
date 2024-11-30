@@ -53,15 +53,27 @@ const addnew = () => {
   const { showSuccessToast, showErrorToast } = useToast();
   const handleAddJob = async () => {
     try {
-      const addedJob = await addJob(job);
-      if (addedJob.checklistID)
-        await addChecklistToJob(addedJob._id, addedJob.checklistID);
+      const addedJobs = await addJob(job); // Now addedJobs is an array of jobs
+      if (addedJobs && addedJobs.length > 0) {
+        // Loop through all the added jobs and add the checklist where applicable
+        for (const addedJob of addedJobs) {
+          if (addedJob.checklistID) {
+            // Add the checklist to the job
+            await addChecklistToJob(addedJob._id, addedJob.checklistID);
+          }
+        }
 
-      showSuccessToast("Job Added successfully!");
-      /*  router.replace("/(tabs)/jobs"); */
-      if (router.canGoBack()) router.back();
+        showSuccessToast("Job(s) Added successfully!");
+
+        // Go back to the previous page after successfully adding the job(s)
+        if (router.canGoBack()) {
+          router.back();
+        }
+      } else {
+        showErrorToast("No jobs were added.");
+      }
     } catch (error) {
-      showErrorToast("Error Adding job!");
+      showErrorToast("Error Adding job(s)!");
     }
   };
 

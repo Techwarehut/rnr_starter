@@ -40,13 +40,57 @@ export const getAllJobs = async (): Promise<Job[]> => {
   });
 };
 
-export const addJob = async (newJob: Job): Promise<Job> => {
+export const addJob = async (newJob: Job): Promise<Job[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      newJob._id = generateUniqueId();
+      newJob._id = generateUniqueId(); // Generate ID for the first job
 
-      jobs.push(newJob);
-      resolve(newJob);
+      const createdJobs: Job[] = [];
+
+      console.log(newJob.recurrence);
+
+      // If recurrence is defined, create jobs based on the dueDates
+      if (newJob.recurrence && newJob.recurrence.totalIterations > 1) {
+        const { totalIterations, dueDates } = newJob.recurrence;
+
+        for (let i = 0; i < totalIterations; i++) {
+          // Create a new job for each recurrence iteration
+          const jobCopy = { ...newJob };
+
+          // Set the new due date based on the recurrence
+          jobCopy.dueDate = dueDates[i] || newJob.dueDate; // Default to original dueDate if no recurrence due date
+
+          // Modify job details to reflect the iteration (e.g., "Iteration #")
+          // jobCopy.jobTitle = `${newJob.jobTitle} - Iteration ${i + 1}`;
+          jobCopy.dueDate = newJob.recurrence.dueDates[i];
+          jobCopy.recurrence = newJob.recurrence;
+
+          /*  if (jobCopy.recurrence)
+            jobCopy.recurrence.completedIterations = i + 1; // Update the completed iterations */
+
+          // Create a fresh copy of the recurrence object for this iteration
+          jobCopy.recurrence = {
+            ...newJob.recurrence, // Shallow copy of the recurrence object
+            completedIterations: i + 1, // Update the completed iterations for this job copy
+          };
+
+          jobCopy._id = generateUniqueId(); // Generate a new unique ID for each job
+
+          console.log(jobCopy.recurrence.completedIterations);
+
+          createdJobs.push(jobCopy);
+        }
+      } else {
+        // No recurrence, just add the job as is
+        createdJobs.push(newJob);
+      }
+
+      console.log(createdJobs);
+
+      // Push the jobs (recurring or single) into the jobs array
+      jobs.push(...createdJobs);
+
+      resolve(createdJobs);
     }, 1000); // Simulate a delay
   });
 };

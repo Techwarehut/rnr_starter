@@ -6,6 +6,7 @@ import { defaultRecurrence, JobRecurrence } from "./types";
 import {
   frequencyOptions,
   generateFrequencyText,
+  generateFrequencyText2,
   WeeklyfrequencyOptions,
 } from "~/lib/utils";
 import { DateType } from "react-native-ui-datepicker";
@@ -21,6 +22,7 @@ import {
   startOfWeek,
 } from "date-fns"; // Import date-fns for recurrence logic
 import { Dayjs } from "dayjs";
+import { Muted } from "~/components/ui/typography";
 
 interface JobReqFreqUpdateProps {
   recurrence?: JobRecurrence; // Make recurrence optional
@@ -43,7 +45,7 @@ const JobReqFreqUpdate: React.FC<JobReqFreqUpdateProps> = ({
 
   const [selectedFrequency, setSelectedFrequency] = useState<string>(type);
   const [selectedWeeklyFrequency, setSelectedWeeklyFrequency] =
-    useState<string>(daysOfWeek || "mon");
+    useState<string>(daysOfWeek);
   const [showCustomDays, setShowCustomDays] = useState<boolean>(
     type === "weekly"
   );
@@ -151,19 +153,19 @@ const JobReqFreqUpdate: React.FC<JobReqFreqUpdateProps> = ({
     switch (recurrence.type) {
       case "weekly":
         totalIterations = differenceInCalendarWeeks(endDate, startDate);
-        console.log(recurrence.type, totalIterations);
+
         break;
       case "monthly":
         totalIterations = differenceInCalendarMonths(endDate, startDate);
-        console.log(recurrence.type, totalIterations);
+
         break;
       case "yearly":
         totalIterations = differenceInCalendarYears(endDate, startDate);
-        console.log(recurrence.type, totalIterations);
+
         break;
       case "daily":
         totalIterations = differenceInDays(endDate, startDate);
-        console.log(recurrence.type, totalIterations);
+
         break;
       case "none":
         totalIterations = 0;
@@ -183,10 +185,11 @@ const JobReqFreqUpdate: React.FC<JobReqFreqUpdateProps> = ({
         nextDueDate = getNextDayOfWeek(nextDueDate, recurrence.daysOfWeek);
       } else {
         // Otherwise, apply the recurrence logic (monthly, yearly, etc.)
-
         nextDueDate = calculateNextDueDate(nextDueDate, recurrence);
       }
-      dueDates.push(nextDueDate);
+
+      // Corrected: Push the current nextDueDate into dueDates before updating for the next iteration
+      if (nextDueDate < endDate) dueDates.push(new Date(nextDueDate)); // <-- This line now comes before the nextDueDate is updated in the loop
     }
 
     return dueDates;
@@ -195,8 +198,15 @@ const JobReqFreqUpdate: React.FC<JobReqFreqUpdateProps> = ({
   // Update the parent component only if there is a real change in recurrence
   useEffect(() => {
     try {
-      const dueDateObj = getDateFromDateType(dueDate?.toLocaleString()); // Convert dueDate to Date object
+      // Log the type of the dueDateObj
+      let dueDateObj;
+
+      if (typeof dueDate === "object")
+        dueDateObj = getDateFromDateType(dueDate);
+      // Convert dueDate to Date object
+      else dueDateObj = getDateFromDateType(dueDate?.toLocaleString()); // Convert dueDate to Date object
       //const dueDateObj =  // Convert dueDate to Date object
+
       const dueDates = generateDueDates(
         new Date(),
         {
@@ -210,15 +220,17 @@ const JobReqFreqUpdate: React.FC<JobReqFreqUpdateProps> = ({
         dueDateObj
       );
 
-      setLocalRecurrence({
+      const newRecurrence = {
         type: selectedFrequency,
         daysOfWeek: selectedWeeklyFrequency,
         completedIterations: completedIterations,
         totalIterations: dueDates.length,
         dueDates,
-      });
+      };
 
-      onRecurrenceChange(localrecurrence);
+      setLocalRecurrence(newRecurrence); // Update state
+
+      onRecurrenceChange(newRecurrence); // Use newRecurrence directly
     } catch (error) {
       console.error("Error parsing dueDate:", error);
     }
@@ -229,6 +241,7 @@ const JobReqFreqUpdate: React.FC<JobReqFreqUpdateProps> = ({
     setSelectedFrequency(frequency);
     if (frequency === "weekly") {
       setShowCustomDays(true); // Show custom days option for "weekly"
+      setSelectedWeeklyFrequency("mon");
     } else {
       setShowCustomDays(false);
     }
@@ -241,7 +254,10 @@ const JobReqFreqUpdate: React.FC<JobReqFreqUpdateProps> = ({
 
   return (
     <View className="flex gap-2 p-4 border border-input rounded-md">
-      <Text>Set Recurring Frequency</Text>
+      <View className="flex flex-row gap-2 items-center">
+        <Repeat className="text-primary" size={18} />
+        <Text className="text-xl">Set Recurring Frequency</Text>
+      </View>
 
       {/* Render frequency options */}
       {frequencyOptions.map((option) => (
@@ -278,9 +294,11 @@ const JobReqFreqUpdate: React.FC<JobReqFreqUpdateProps> = ({
 
       {/* Display selected frequency */}
       <View className="flex flex-row flex-wrap gap-2 items-center">
-        <Repeat className="text-primary" size={18} />
         <Text className="text-primary">
-          {generateFrequencyText(localrecurrence || defaultRecurrence, dueDate)}
+          {generateFrequencyText2(
+            localrecurrence || defaultRecurrence,
+            dueDate
+          )}
         </Text>
       </View>
     </View>

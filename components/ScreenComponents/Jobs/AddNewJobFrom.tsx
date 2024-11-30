@@ -14,6 +14,7 @@ import {
   Job,
   JobRecurrence,
 } from "./types";
+
 import { Customer, SiteLocation } from "../Customers/types";
 import JobBasicInfo from "./JobDetails/JobBasicInfo";
 import JobTimesheet from "./JobDetails/JobTimesheet";
@@ -107,16 +108,19 @@ const AddNewJobForm: React.FC<AddJobFormProps> = ({ onChange }) => {
       value !== null &&
       "businessName" in value // Adjust as necessary for your Customer type
     ) {
-      console.log(field, value);
       updatedJobData.customer._id = value._id;
       updatedJobData.customer.businessName = value.businessName;
     }
     // Handle addition of new user
     else if (field === "assignedTo") {
-      updatedJobData.assignedTo = updatedJobData.assignedTo || [];
-      updatedJobData.assignedTo.push(value as AssignedUser);
-    }
-    if (
+      /* updatedJobData.assignedTo = updatedJobData.assignedTo || [];
+      updatedJobData.assignedTo.push(value as AssignedUser); */
+      if (Array.isArray(updatedJobData.assignedTo)) {
+        updatedJobData.assignedTo.push(value as AssignedUser);
+      } else {
+        updatedJobData.assignedTo = [value as AssignedUser];
+      }
+    } else if (
       field === "recurrence" &&
       value &&
       typeof value === "object" &&
@@ -149,6 +153,7 @@ const AddNewJobForm: React.FC<AddJobFormProps> = ({ onChange }) => {
     // Update state with the new job data
 
     setJob(updatedJobData);
+
     onChange(updatedJobData); // Call onChange with the updated data
   };
   const isLargeScreen = useIsLargeScreen();
@@ -203,6 +208,11 @@ const AddNewJobForm: React.FC<AddJobFormProps> = ({ onChange }) => {
         {job.jobType === "Maintenance" && (
           <View className="flex md:flex-1 gap-2">
             <Text className="text-xl">Recurring Frequency</Text>
+            <Muted>
+              Select frequency and create jobs in batch. Start date is tomorrow,
+              select the end date in due date field.
+            </Muted>
+            <View></View>
 
             <JobReqFreqUpdate
               recurrence={job.recurrence}
@@ -258,14 +268,23 @@ const AddNewJobForm: React.FC<AddJobFormProps> = ({ onChange }) => {
 
             <View className="flex-row flex-wrap gap-2 bg-secondary p-2 rounded-md items-center justify-between">
               <View className="flex-row flex-wrap gap-2">
-                {job.assignedTo.map((item) => (
-                  <Avatar key={item.userId} alt="Avatar" className="w-10 h-10">
-                    <AvatarImage source={{ uri: item.profileUrl }} />
-                    <AvatarFallback>
-                      <Text>{getInitials(item.name)}</Text>
-                    </AvatarFallback>
-                  </Avatar>
-                ))}
+                {/* Safe check for array and its contents */}
+                {Array.isArray(job.assignedTo) && job.assignedTo.length > 0 ? (
+                  job.assignedTo.map((item) => (
+                    <Avatar
+                      key={item.userId}
+                      alt="Avatar"
+                      className="w-10 h-10"
+                    >
+                      <AvatarImage source={{ uri: item.profileUrl }} />
+                      <AvatarFallback>
+                        <Text>{getInitials(item.name)}</Text>
+                      </AvatarFallback>
+                    </Avatar>
+                  ))
+                ) : (
+                  <Text>No users assigned</Text> // Fallback if no users are assigned
+                )}
               </View>
               <AssignJob
                 onJobAssigned={(user) =>

@@ -2,9 +2,15 @@ import { Platform, ScrollView, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Large, Muted } from "~/components/ui/typography";
 import SelectJob from "../SelectJobs";
-import { Job } from "../Jobs/types";
+import { defaultRecurrence, Job } from "../Jobs/types";
 import { useToast } from "../ToastMessage";
-import { cn, formatDueDate, getInitials, useIsLargeScreen } from "~/lib/utils";
+import {
+  cn,
+  formatDueDate,
+  generateFrequencyText,
+  getInitials,
+  useIsLargeScreen,
+} from "~/lib/utils";
 import { useRouter } from "expo-router";
 import { getAllJobs, getInProgressJobs, updateJobStatus } from "~/api/jobsApi";
 import { Text } from "~/components/ui/text";
@@ -19,7 +25,7 @@ import { Button } from "~/components/ui/button";
 import { JobCard } from "../Jobs/JobCard";
 import { Table, TableCell, TableRow } from "~/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
-import JobStatusUpdate from "../Jobs/JobStatusUpdate";
+import { Repeat } from "~/lib/icons/Repeat";
 
 const Schedule = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -215,6 +221,17 @@ const Schedule = () => {
                       </Button>
                       <Text>{job.jobTitle}</Text>
                     </View>
+                    {job.jobType === "Maintenance" && (
+                      <View className="flex flex-row gap-2 items-center">
+                        <Repeat className="text-primary" size={18} />
+                        <Text className="text-primary">
+                          {generateFrequencyText(
+                            job.recurrence || defaultRecurrence,
+                            job.dueDate
+                          )}
+                        </Text>
+                      </View>
+                    )}
 
                     <Muted>Site Details:</Muted>
                     <View className="bg-secondary gap-2 w-full rounded-md p-2">
