@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { View, Image } from "react-native";
-import { Invoice, invStatusKeyMapping } from "./types"; // Assuming you've imported the types
+import { Invoice, InvoiceItem, invStatusKeyMapping } from "./types"; // Assuming you've imported the types
 import { Text } from "~/components/ui/text";
 import { Large, Muted } from "~/components/ui/typography";
 import { Customer, SiteLocation } from "../Customers/types";
@@ -15,7 +15,15 @@ import { Button } from "~/components/ui/button";
 import { Badge } from "~/components/ui/badge";
 import InvoiceStatusActions from "./Actions/InvoiceStatusActions";
 
-const InvoiceComponent: React.FC<{ invoice: Invoice }> = ({ invoice }) => {
+const InvoiceComponent: React.FC<{
+  invoice: Invoice;
+  editMode: boolean;
+  handleInputChange: (
+    field: keyof Invoice | keyof InvoiceItem, // field can be from Invoice or InvoiceItem
+    value: string | InvoiceItem, // The value to update
+    index?: number
+  ) => void;
+}> = ({ invoice, editMode, handleInputChange }) => {
   return (
     <>
       <View className="flex flex-row gap-2">
@@ -33,15 +41,27 @@ const InvoiceComponent: React.FC<{ invoice: Invoice }> = ({ invoice }) => {
         <InvoiceHeader invoice={invoice} />
 
         {/* Bill To Section */}
-        <InvoiceBilling invoice={invoice} />
+        <InvoiceBilling
+          invoice={invoice}
+          editMode={editMode}
+          handleInputChange={handleInputChange}
+        />
 
         {/* Invoice Items Table */}
-        <InvoiceItems invoice={invoice} />
+        <InvoiceItems
+          invoice={invoice}
+          editMode={editMode}
+          handleInputChange={handleInputChange}
+        />
 
         {/* Invoice Summary */}
         <InvoiceSummary invoice={invoice} />
 
-        <InvoiceFooter invoice={invoice} />
+        <InvoiceFooter
+          invoice={invoice}
+          editMode={editMode}
+          handleInputChange={handleInputChange}
+        />
       </View>
     </>
   );

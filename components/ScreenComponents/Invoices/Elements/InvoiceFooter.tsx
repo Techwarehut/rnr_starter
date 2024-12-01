@@ -2,27 +2,56 @@ import { Image, View } from "react-native";
 import React from "react";
 import { Text } from "~/components/ui/text";
 import { Large, Muted } from "~/components/ui/typography";
-import { Invoice } from "../types";
+import { Invoice, InvoiceItem } from "../types";
+import InputField from "../../InputField";
+import TextField from "../../TextField";
 
-const InvoiceFooter: React.FC<{ invoice: Invoice }> = ({ invoice }) => {
+const InvoiceFooter: React.FC<{
+  invoice: Invoice;
+  editMode: boolean;
+  handleInputChange: (
+    field: keyof Invoice | keyof InvoiceItem, // field can be from Invoice or InvoiceItem
+    value: string | InvoiceItem, // The value to update
+    index?: number
+  ) => void;
+}> = ({ invoice, editMode, handleInputChange }) => {
   // Dummy company logo URL
   const companyLogoUrl = "https://via.placeholder.com/300x200?text=Your+Logo";
   return (
     <>
       {/* Payment Terms */}
       <View className="flex p-2 gap-2 bg-secondary rounded-md">
-        <View>
-          <Text className="font-semibold">Payment Terms:</Text>
-          <Text>{invoice.payment_terms}</Text>
-        </View>
-
-        {/* Optional Notes */}
-        {invoice.notes && (
+        {editMode ? (
+          <TextField
+            label="Payment Terms"
+            value={invoice.payment_terms}
+            onChangeText={(value) => handleInputChange("payment_terms", value)}
+            editable={true}
+            nativeID="Job Description"
+          />
+        ) : (
           <View>
-            <Text className="font-semibold">Notes:</Text>
-            <Text>{invoice.notes}</Text>
+            <Text className="font-semibold">Payment Terms:</Text>
+            <Text>{invoice.payment_terms}</Text>
           </View>
         )}
+
+        {/* Optional Notes */}
+        {invoice.notes &&
+          (editMode ? (
+            <TextField
+              label="Notes"
+              value={invoice.notes}
+              onChangeText={(value) => handleInputChange("notes", value)} // Ensure you're updating notes
+              editable={true}
+              nativeID="Notes"
+            />
+          ) : (
+            <View>
+              <Text className="font-semibold">Notes:</Text>
+              <Text>{invoice.notes}</Text>
+            </View>
+          ))}
       </View>
 
       {/* Footer */}

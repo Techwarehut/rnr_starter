@@ -2,11 +2,19 @@ import { Image, View } from "react-native";
 import React, { useEffect } from "react";
 import { Text } from "~/components/ui/text";
 import { Large, Muted } from "~/components/ui/typography";
-import { Invoice } from "../types";
+import { Invoice, InvoiceItem } from "../types";
 import { Customer, SiteLocation } from "../../Customers/types";
 import { fetchCustomerById, fetchCustomerSiteById } from "~/api/customerApi";
 
-const InvoiceBilling: React.FC<{ invoice: Invoice }> = ({ invoice }) => {
+const InvoiceBilling: React.FC<{
+  invoice: Invoice;
+  editMode: boolean;
+  handleInputChange: (
+    field: keyof Invoice | keyof InvoiceItem, // field can be from Invoice or InvoiceItem
+    value: string | InvoiceItem, // The value to update
+    index?: number
+  ) => void;
+}> = ({ invoice, editMode, handleInputChange }) => {
   const [customerData, setCustomerData] = React.useState<Customer>();
   const [serviceSites, setServiceSites] = React.useState<SiteLocation[]>([]);
   const loadCustomerData = async () => {

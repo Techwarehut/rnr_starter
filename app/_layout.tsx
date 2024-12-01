@@ -192,6 +192,18 @@ export default function RootLayout() {
                 headerBackTitleVisible: false,
               }}
             />
+
+            <Stack.Screen
+              name="sales/addnewinvoice"
+              options={{
+                headerShown: true,
+                headerTitle: "New Invoice",
+                presentation: Platform.OS === "ios" ? "card" : "modal",
+                headerTitleAlign: "left",
+                //headerBackVisible: true,
+                headerBackTitleVisible: false,
+              }}
+            />
             <Stack.Screen
               name="(tabs)"
               options={{

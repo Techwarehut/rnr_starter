@@ -35,12 +35,16 @@ import InvoiceComponent from "./Invoice";
 
 interface InvoiceDetailProps {
   invoice: Invoice;
+  edit?: boolean;
 }
 
-const InvoiceDetail: React.FC<InvoiceDetailProps> = ({ invoice }) => {
+const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
+  invoice,
+  edit = false,
+}) => {
   const isLargeScreen = useIsLargeScreen();
   const [value, setValue] = React.useState("active");
-  const [editMode, setEditMode] = React.useState(false);
+  const [editMode, setEditMode] = React.useState(edit);
   const [invoiceData, setInvoiceData] = React.useState<Invoice>(invoice);
   const { showSuccessToast, showErrorToast } = useToast();
 
@@ -105,24 +109,41 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({ invoice }) => {
     }
   };
 
-  const handleInputChange = (field: string, value: string) => {
+  const handleInputChange = (
+    field: keyof Invoice | keyof InvoiceItem, // field can be from Invoice or InvoiceItem
+    value: string | InvoiceItem, // The value to update
+    index?: number // Optional index if we're updating a specific InvoiceItem in services or parts
+  ) => {
     setInvoiceData((prevData) => {
-      if (field in prevData.bill_to) {
-        // Update the billing address if the field is in billingAddress
-        return {
-          ...prevData,
-          billingAddress: {
-            ...prevData.bill_to,
-            [field]: value,
-          },
-        };
-      } else {
-        // Otherwise, update the customer field directly
-        return {
-          ...prevData,
-          [field]: value,
-        };
+      // Handle case for updating an InvoiceItem in 'services' or 'parts'
+      if (field === "services" || field === "parts") {
+        const items = prevData[field as "services" | "parts"]; // Access either services or parts
+
+        // Ensure value is of type InvoiceItem before spreading
+        if (typeof value === "object" && value !== null) {
+          const updatedItems = items.map((item, idx) => {
+            if (idx === index) {
+              // If index matches, update the specific InvoiceItem
+              return { ...item, ...value }; // Merge the changes into the item
+            }
+            return item;
+          });
+
+          return {
+            ...prevData,
+            [field]: updatedItems, // Update the respective field (services or parts)
+          };
+        }
+
+        // If value is not an object (unexpected case), return prevData unchanged
+        return prevData;
       }
+
+      // For other fields in the Invoice, update them directly
+      return {
+        ...prevData,
+        [field]: value, // Update the field directly in the invoice
+      };
     });
   };
 
@@ -169,7 +190,11 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({ invoice }) => {
             />
           </View>
         )}
-        <InvoiceComponent invoice={invoiceData} />
+        <InvoiceComponent
+          invoice={invoiceData}
+          editMode={editMode}
+          handleInputChange={handleInputChange}
+        />
       </ScrollView>
       <Toast />
     </>

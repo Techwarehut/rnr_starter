@@ -13,6 +13,7 @@ import { useColorScheme } from "~/lib/useColorScheme";
 import { H1, H3 } from "~/components/ui/typography";
 import { Invoice } from "./types";
 import { ChevronDown } from "~/lib/icons/ChevronDown";
+import { useRouter } from "expo-router";
 
 interface AddNewInvEstProps {
   onNewInvAdd: (data: Invoice) => void;
@@ -24,6 +25,7 @@ export const AddNewInvEst: React.FC<AddNewInvEstProps> = ({ onNewInvAdd }) => {
   const animatedPosition = useSharedValue<number>(0);
   const snapPoints = ["10%", "20%"];
   const { isDarkColorScheme, setColorScheme } = useColorScheme();
+  const router = useRouter();
 
   const handleSheetChanges = useCallback((index: number) => {
     // handle sheet changes
@@ -70,7 +72,10 @@ export const AddNewInvEst: React.FC<AddNewInvEstProps> = ({ onNewInvAdd }) => {
         )}
       >
         <BottomSheetView className="flex flex-1 bg-popover gap-2 ">
-          <Button variant="ghost">
+          <Button
+            variant="ghost"
+            onPress={() => router.push("/sales/addnewinvoice")}
+          >
             <Text>Invoice</Text>
           </Button>
           <Button variant="ghost">

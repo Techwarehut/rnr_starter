@@ -15,6 +15,7 @@ import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { Text } from "~/components/ui/text";
 import { ChevronDown } from "~/lib/icons/ChevronDown";
 import { Invoice } from "./types";
+import { useRouter } from "expo-router";
 
 interface AddNewInvEstProps {
   onNewInvAdd: (data: Invoice) => void;
@@ -24,6 +25,7 @@ export const AddNewInvEst: React.FC<AddNewInvEstProps> = ({ onNewInvAdd }) => {
     left: 12,
     right: 12,
   };
+  const router = useRouter();
 
   return (
     <DropdownMenu>
@@ -40,7 +42,10 @@ export const AddNewInvEst: React.FC<AddNewInvEstProps> = ({ onNewInvAdd }) => {
       >
         <DropdownMenuGroup>
           <DropdownMenuItem className="items-center justify-start self-start">
-            <Button variant="ghost">
+            <Button
+              variant="ghost"
+              onPress={() => router.push("/sales/addnewinvoice")}
+            >
               <Text>Invoice</Text>
             </Button>
           </DropdownMenuItem>
