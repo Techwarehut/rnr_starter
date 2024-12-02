@@ -20,10 +20,24 @@ const InvoiceComponent: React.FC<{
   editMode: boolean;
   handleInputChange: (
     field: keyof Invoice | keyof InvoiceItem, // field can be from Invoice or InvoiceItem
-    value: string | InvoiceItem, // The value to update
-    index?: number
+    value: string | number, // The value to update
+    index?: number,
+    array?: "services" | "parts"
   ) => void;
-}> = ({ invoice, editMode, handleInputChange }) => {
+
+  onAddItemServices: (data: InvoiceItem) => void;
+  handleDeleteItemServices: (itemId: string) => void;
+  onAddItemParts: (data: InvoiceItem) => void;
+  handleDeleteItemParts: (itemId: string) => void;
+}> = ({
+  invoice,
+  editMode,
+  handleInputChange,
+  onAddItemServices,
+  handleDeleteItemServices,
+  onAddItemParts,
+  handleDeleteItemParts,
+}) => {
   return (
     <>
       <View className="flex flex-row gap-2">
@@ -52,6 +66,10 @@ const InvoiceComponent: React.FC<{
           invoice={invoice}
           editMode={editMode}
           handleInputChange={handleInputChange}
+          onAddItemServices={onAddItemServices}
+          handleDeleteItemServices={handleDeleteItemServices}
+          onAddItemParts={onAddItemParts}
+          handleDeleteItemParts={handleDeleteItemParts}
         />
 
         {/* Invoice Summary */}

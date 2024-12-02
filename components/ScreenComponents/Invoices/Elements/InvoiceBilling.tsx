@@ -11,8 +11,9 @@ const InvoiceBilling: React.FC<{
   editMode: boolean;
   handleInputChange: (
     field: keyof Invoice | keyof InvoiceItem, // field can be from Invoice or InvoiceItem
-    value: string | InvoiceItem, // The value to update
-    index?: number
+    value: string | number, // The value to update
+    index?: number,
+    array?: "services" | "parts"
   ) => void;
 }> = ({ invoice, editMode, handleInputChange }) => {
   const [customerData, setCustomerData] = React.useState<Customer>();

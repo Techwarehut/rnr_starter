@@ -66,7 +66,7 @@ export const deleteInvoice = async (invoiceId: string): Promise<void> => {
 };
 
 // Add an item to an invoice
-export const addItemToInvoice = async (
+export const addItemToInvoiceServices = async (
   invoiceId: string,
   newItem: InvoiceItem
 ): Promise<InvoiceItem> => {
@@ -86,7 +86,7 @@ export const addItemToInvoice = async (
         if (invoice.invoice_number === invoiceId) {
           return {
             ...invoice,
-            items: [...invoice.items, newItem], // Add the new item
+            items: [...invoice.services, newItem], // Add the new item
             sub_total: invoice.sub_total + newItem.total, // Update subtotal
             discounted_total: invoice.discounted_total + newItem.total, // Update discounted total
             tax_amount:
@@ -105,7 +105,7 @@ export const addItemToInvoice = async (
 };
 
 // Remove an item from an invoice
-export const deleteItemFromInvoice = async (
+export const deleteItemFromInvoiceServices = async (
   invoiceId: string,
   itemId: string
 ): Promise<void> => {
@@ -113,10 +113,85 @@ export const deleteItemFromInvoice = async (
     setTimeout(() => {
       invoices = invoices.map((invoice) => {
         if (invoice.invoice_number === invoiceId) {
-          const updatedItems = invoice.items.filter(
+          const updatedItems = invoice.services.filter(
             (item) => item.description !== itemId // Assume itemId corresponds to the item's description or unique field
           );
-          const itemToRemove = invoice.items.find(
+          const itemToRemove = invoice.services.find(
+            (item) => item.description === itemId
+          );
+          const itemTotal = itemToRemove ? itemToRemove.total : 0;
+          return {
+            ...invoice,
+            items: updatedItems, // Remove the item from the invoice
+            sub_total: invoice.sub_total - itemTotal, // Update subtotal
+            discounted_total: invoice.discounted_total - itemTotal, // Update discounted total
+            tax_amount:
+              (invoice.discounted_total - itemTotal) * invoice.tax_rate, // Update tax amount
+            total_amount_due:
+              invoice.discounted_total -
+              itemTotal +
+              (invoice.discounted_total - itemTotal) * invoice.tax_rate, // Update total amount due
+          };
+        }
+        return invoice;
+      });
+      resolve(); // Return nothing after deletion
+    }, 500); // Simulating a delay
+  });
+};
+
+// Add an item to an invoice
+export const addItemToInvoiceParts = async (
+  invoiceId: string,
+  newItem: InvoiceItem
+): Promise<InvoiceItem> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      // Ensure item has description, quantity, unit_price, and total
+      if (
+        !newItem.description ||
+        newItem.quantity <= 0 ||
+        newItem.unit_price <= 0
+      ) {
+        throw new Error("Invalid invoice item details");
+      }
+
+      newItem.total = newItem.quantity * newItem.unit_price; // Calculate total for the item
+      invoices = invoices.map((invoice) => {
+        if (invoice.invoice_number === invoiceId) {
+          return {
+            ...invoice,
+            items: [...invoice.parts, newItem], // Add the new item
+            sub_total: invoice.sub_total + newItem.total, // Update subtotal
+            discounted_total: invoice.discounted_total + newItem.total, // Update discounted total
+            tax_amount:
+              (invoice.discounted_total + newItem.total) * invoice.tax_rate, // Update tax amount
+            total_amount_due:
+              invoice.discounted_total +
+              newItem.total +
+              (invoice.discounted_total + newItem.total) * invoice.tax_rate, // Update total amount due
+          };
+        }
+        return invoice;
+      });
+      resolve(newItem); // Return the newly added item
+    }, 500); // Simulating a delay
+  });
+};
+
+// Remove an item from an invoice
+export const deleteItemFromInvoiceParts = async (
+  invoiceId: string,
+  itemId: string
+): Promise<void> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      invoices = invoices.map((invoice) => {
+        if (invoice.invoice_number === invoiceId) {
+          const updatedItems = invoice.parts.filter(
+            (item) => item.description !== itemId // Assume itemId corresponds to the item's description or unique field
+          );
+          const itemToRemove = invoice.parts.find(
             (item) => item.description === itemId
           );
           const itemTotal = itemToRemove ? itemToRemove.total : 0;

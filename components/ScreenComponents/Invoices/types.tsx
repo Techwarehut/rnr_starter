@@ -2,6 +2,7 @@ import { StatusKeys } from "../Jobs/Filters/Statustypes";
 
 // Define the InvoiceItem type for services and parts
 export type InvoiceItem = {
+  _id: string;
   description: string; // Description of the service/item
   quantity: number; // Number of items or quantity of service
   unit_price: number; // Unit price of the item or service

@@ -13,10 +13,23 @@ const InvoiceItems: React.FC<{
   editMode: boolean;
   handleInputChange: (
     field: keyof Invoice | keyof InvoiceItem, // field can be from Invoice or InvoiceItem
-    value: string | InvoiceItem, // The value to update
-    index?: number
+    value: string | number, // The value to update
+    index?: number,
+    array?: "services" | "parts"
   ) => void;
-}> = ({ invoice, editMode, handleInputChange }) => {
+  onAddItemServices: (data: InvoiceItem) => void;
+  handleDeleteItemServices: (itemId: string) => void;
+  onAddItemParts: (data: InvoiceItem) => void;
+  handleDeleteItemParts: (itemId: string) => void;
+}> = ({
+  invoice,
+  editMode,
+  handleInputChange,
+  onAddItemServices,
+  handleDeleteItemServices,
+  onAddItemParts,
+  handleDeleteItemParts,
+}) => {
   return (
     <View className="flex gap-2">
       <View className="md:flex-row justify-between font-semibold border-b border-input pb-2">
@@ -42,7 +55,7 @@ const InvoiceItems: React.FC<{
                 <Input
                   value={item.description}
                   onChangeText={(value) =>
-                    handleInputChange("description", value, index)
+                    handleInputChange("description", value, index, "services")
                   }
                   editable={true}
                   nativeID="Item Description"
@@ -62,7 +75,7 @@ const InvoiceItems: React.FC<{
                   <Input
                     value={item.quantity.toString()}
                     onChangeText={(value) =>
-                      handleInputChange("quantity", value, index)
+                      handleInputChange("quantity", value, index, "services")
                     }
                     editable={true}
                     nativeID="Item Quantity"
@@ -80,7 +93,7 @@ const InvoiceItems: React.FC<{
                   <Input
                     value={item.unit_price.toFixed(2)}
                     onChangeText={(value) =>
-                      handleInputChange("unit_price", value, index)
+                      handleInputChange("unit_price", value, index, "services")
                     }
                     editable={true}
                     nativeID="Item Unit Price"
@@ -100,7 +113,7 @@ const InvoiceItems: React.FC<{
                   <Input
                     value={item.total.toFixed(2)}
                     onChangeText={(value) =>
-                      handleInputChange("total", value, index)
+                      handleInputChange("total", value, index, "services")
                     }
                     editable={true}
                     nativeID="Item Total"
@@ -113,7 +126,10 @@ const InvoiceItems: React.FC<{
                   ${item.total.toFixed(2)}
                 </Text>
               )}
-              <DeleteButton xIcon={true} onDelete={() => {}} />
+              <DeleteButton
+                xIcon={true}
+                onDelete={() => handleDeleteItemServices(item._id)}
+              />
             </View>
           </View>
         ))}
@@ -137,7 +153,7 @@ const InvoiceItems: React.FC<{
                 <Input
                   value={item.description}
                   onChangeText={(value) =>
-                    handleInputChange("description", value, index)
+                    handleInputChange("description", value, index, "parts")
                   }
                   editable={true}
                   nativeID="Item Description"
@@ -154,7 +170,7 @@ const InvoiceItems: React.FC<{
                   <Input
                     value={item.quantity.toString()}
                     onChangeText={(value) =>
-                      handleInputChange("quantity", value, index)
+                      handleInputChange("quantity", value, index, "parts")
                     }
                     editable={true}
                     nativeID="Item Quantity"
@@ -172,7 +188,7 @@ const InvoiceItems: React.FC<{
                   <Input
                     value={item.unit_price.toFixed(2)}
                     onChangeText={(value) =>
-                      handleInputChange("unit_price", value, index)
+                      handleInputChange("unit_price", value, index, "parts")
                     }
                     editable={true}
                     nativeID="Item Unit Price"
@@ -192,7 +208,7 @@ const InvoiceItems: React.FC<{
                   <Input
                     value={item.total.toFixed(2)}
                     onChangeText={(value) =>
-                      handleInputChange("total", value, index)
+                      handleInputChange("total", value, index, "parts")
                     }
                     editable={true}
                     nativeID="Item Total"
@@ -205,7 +221,10 @@ const InvoiceItems: React.FC<{
                   ${item.total.toFixed(2)}
                 </Text>
               )}
-              <DeleteButton xIcon={true} onDelete={() => {}} />
+              <DeleteButton
+                xIcon={true}
+                onDelete={() => handleDeleteItemParts(item._id)}
+              />
             </View>
           </View>
         ))}

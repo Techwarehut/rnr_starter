@@ -264,7 +264,7 @@
       "type": "weekly",
 
       "daysOfWeek": "mon",
-      "completedIterations": 0,
+      "completedIterations": 1,
       "totalIterations": 1,
       "dueDates": []
     }

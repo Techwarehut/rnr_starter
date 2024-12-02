@@ -11,12 +11,13 @@ const InvoiceFooter: React.FC<{
   editMode: boolean;
   handleInputChange: (
     field: keyof Invoice | keyof InvoiceItem, // field can be from Invoice or InvoiceItem
-    value: string | InvoiceItem, // The value to update
-    index?: number
+    value: string | number, // The value to update
+    index?: number,
+    array?: "services" | "parts"
   ) => void;
 }> = ({ invoice, editMode, handleInputChange }) => {
   // Dummy company logo URL
-  const companyLogoUrl = "https://via.placeholder.com/300x200?text=Your+Logo";
+
   return (
     <>
       {/* Payment Terms */}

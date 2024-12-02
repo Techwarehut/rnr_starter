@@ -25,9 +25,11 @@ import {
 } from "~/api/customerApi";
 import { Invoice, InvoiceItem } from "./types";
 import {
-  addItemToInvoice,
+  addItemToInvoiceParts,
+  addItemToInvoiceServices,
   deleteInvoice,
-  deleteItemFromInvoice,
+  deleteItemFromInvoiceParts,
+  deleteItemFromInvoiceServices,
   editInvoice,
   fetchInvoiceById,
 } from "~/api/invoicesApi";
@@ -77,9 +79,9 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
     }
   };
 
-  const onAddItem = async (data: InvoiceItem) => {
+  const onAddItemServices = async (data: InvoiceItem) => {
     try {
-      await addItemToInvoice(invoiceData.invoice_number, data);
+      await addItemToInvoiceServices(invoiceData.invoice_number, data);
 
       // Fetch the specific customer by ID after adding the site
       const updatedInvoice = await fetchInvoiceById(invoiceData.invoice_number);
@@ -94,9 +96,41 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
     }
   };
 
-  const handleDeleteItem = async (itemId: string) => {
+  const handleDeleteItemServices = async (itemId: string) => {
     try {
-      await deleteItemFromInvoice(invoiceData.invoice_number, itemId); // Call your API to delete the site
+      await deleteItemFromInvoiceServices(invoiceData.invoice_number, itemId); // Call your API to delete the site
+      // Fetch the specific customer by ID after adding the site
+      const updatedInvoice = await fetchInvoiceById(invoiceData.invoice_number);
+      if (updatedInvoice) {
+        setInvoiceData(updatedInvoice); // Update customer state with the fetched data
+      }
+      showSuccessToast("Item deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting Item:", error);
+      showErrorToast("Failed to delete Item. Please try again.");
+    }
+  };
+
+  const onAddItemParts = async (data: InvoiceItem) => {
+    try {
+      await addItemToInvoiceParts(invoiceData.invoice_number, data);
+
+      // Fetch the specific customer by ID after adding the site
+      const updatedInvoice = await fetchInvoiceById(invoiceData.invoice_number);
+      if (updatedInvoice) {
+        setInvoiceData(updatedInvoice); // Update customer state with the fetched data
+      }
+
+      showSuccessToast("Item added successfully!");
+    } catch (error) {
+      console.error("Error adding Item:", error);
+      showErrorToast("Failed to add Item. Please try again.");
+    }
+  };
+
+  const handleDeleteItemParts = async (itemId: string) => {
+    try {
+      await deleteItemFromInvoiceParts(invoiceData.invoice_number, itemId); // Call your API to delete the site
       // Fetch the specific customer by ID after adding the site
       const updatedInvoice = await fetchInvoiceById(invoiceData.invoice_number);
       if (updatedInvoice) {
@@ -110,40 +144,72 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
   };
 
   const handleInputChange = (
-    field: keyof Invoice | keyof InvoiceItem, // field can be from Invoice or InvoiceItem
-    value: string | InvoiceItem, // The value to update
-    index?: number // Optional index if we're updating a specific InvoiceItem in services or parts
+    field: keyof Invoice | keyof InvoiceItem, // Can be from Invoice or InvoiceItem
+    value: string | number, // The value to update (can be string or number)
+    index?: number, // Optional index, used for updating individual items in services/parts
+    array?: "services" | "parts" // Optional array, used when updating an item in services/parts
   ) => {
     setInvoiceData((prevData) => {
-      // Handle case for updating an InvoiceItem in 'services' or 'parts'
-      if (field === "services" || field === "parts") {
-        const items = prevData[field as "services" | "parts"]; // Access either services or parts
-
-        // Ensure value is of type InvoiceItem before spreading
-        if (typeof value === "object" && value !== null) {
-          const updatedItems = items.map((item, idx) => {
-            if (idx === index) {
-              // If index matches, update the specific InvoiceItem
-              return { ...item, ...value }; // Merge the changes into the item
-            }
-            return item;
-          });
-
-          return {
-            ...prevData,
-            [field]: updatedItems, // Update the respective field (services or parts)
-          };
-        }
-
-        // If value is not an object (unexpected case), return prevData unchanged
-        return prevData;
+      // Case 1: Updating a property on the Invoice object (e.g., invoice_number, notes)
+      if (!array) {
+        return {
+          ...prevData,
+          [field]: value, // Update the field directly on the Invoice object
+        };
       }
 
-      // For other fields in the Invoice, update them directly
-      return {
-        ...prevData,
-        [field]: value, // Update the field directly in the invoice
-      };
+      // Case 2: Updating an item inside the services or parts array
+      if (array && prevData[array]) {
+        const items = prevData[array];
+
+        // Ensure value is valid based on the field type (e.g., number for quantity, string for description)
+        if (
+          (field === "quantity" ||
+            field === "unit_price" ||
+            field === "total") &&
+          typeof value === "string"
+        ) {
+          value = parseFloat(value);
+        }
+
+        // Update the specific item at the provided index
+        const updatedItems = items.map((item, idx) => {
+          if (idx === index) {
+            const updatedItem = { ...item, [field]: value };
+
+            // Recalculate total if quantity or unit_price changes
+            if (field === "quantity" || field === "unit_price") {
+              updatedItem.total = updatedItem.quantity * updatedItem.unit_price; // Recalculate total
+            }
+
+            return updatedItem;
+          }
+          return item;
+        });
+
+        // Now, we need to recalculate the totals at the Invoice level:
+        const newSubTotal = [...prevData.services, ...prevData.parts].reduce(
+          (sum, item) => sum + item.total,
+          0
+        );
+
+        // Calculate other fields based on the new sub_total
+        const discountedTotal = newSubTotal - prevData.discount;
+        const taxAmount = discountedTotal * prevData.tax_rate;
+        const totalAmountDue = discountedTotal + taxAmount;
+
+        return {
+          ...prevData,
+          [array]: updatedItems, // Update the services/parts array
+          sub_total: newSubTotal, // Update the sub_total
+          discounted_total: discountedTotal, // Update discounted_total
+          tax_amount: taxAmount, // Update tax_amount
+          total_amount_due: totalAmountDue, // Update total_amount_due
+        };
+      }
+
+      // If we reach here, it means the field is not recognized for updating
+      return prevData;
     });
   };
 
@@ -194,6 +260,10 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
           invoice={invoiceData}
           editMode={editMode}
           handleInputChange={handleInputChange}
+          onAddItemServices={onAddItemServices}
+          handleDeleteItemServices={handleDeleteItemServices}
+          onAddItemParts={onAddItemParts}
+          handleDeleteItemParts={handleDeleteItemParts}
         />
       </ScrollView>
       <Toast />
