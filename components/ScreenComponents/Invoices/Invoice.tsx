@@ -14,13 +14,16 @@ import InvoiceItems from "./Elements/InvoiceItems";
 import { Button } from "~/components/ui/button";
 import { Badge } from "~/components/ui/badge";
 import InvoiceStatusActions from "./Actions/InvoiceStatusActions";
+import { AssignCustomer } from "./Actions/AssignCustomer";
+import DeleteButton from "../DeleteButton";
+import { UpdateInvoiceCustomer } from "~/api/invoicesApi";
 
 const InvoiceComponent: React.FC<{
   invoice: Invoice;
   editMode: boolean;
   handleInputChange: (
     field: keyof Invoice | keyof InvoiceItem, // field can be from Invoice or InvoiceItem
-    value: string | number, // The value to update
+    value: string | number | { customer_id: string; business_name: string }, // The value to update
     index?: number,
     array?: "services" | "parts"
   ) => void;
@@ -29,6 +32,8 @@ const InvoiceComponent: React.FC<{
   handleDeleteItemServices: (itemId: string) => void;
   onAddItemParts: (data: InvoiceItem) => void;
   handleDeleteItemParts: (itemId: string) => void;
+  handleDeleteCustomer: () => void;
+  handleAddCustomer: (customer: Customer) => void;
 }> = ({
   invoice,
   editMode,
@@ -37,6 +42,8 @@ const InvoiceComponent: React.FC<{
   handleDeleteItemServices,
   onAddItemParts,
   handleDeleteItemParts,
+  handleDeleteCustomer,
+  handleAddCustomer,
 }) => {
   return (
     <>
@@ -47,6 +54,30 @@ const InvoiceComponent: React.FC<{
         >
           <Text>{invoice.status}</Text>
         </Badge>
+      </View>
+      <View className="flex md:flex-row md:flex-wrap gap-2 m-2">
+        <View className="flex md:flex-1">
+          <Text>Customer</Text>
+          <View className="flex flex-row justify-between items-center bg-secondary p-2 rounded-md">
+            {invoice.bill_to.customer_id === "" ? (
+              <>
+                <Text>No Customer Selected</Text>
+                <AssignCustomer onCustomerAssigned={handleAddCustomer} />
+              </>
+            ) : (
+              <>
+                <Text>{invoice.bill_to.business_name}</Text>
+                <DeleteButton xIcon={true} onDelete={handleDeleteCustomer} />
+              </>
+            )}
+          </View>
+        </View>
+        <View className="flex md:flex-1">
+          <Text>Linked Jobs</Text>
+          <View className="flex flex-row justify-between items-center bg-secondary p-2 rounded-md">
+            <Text>No Jobs Selected</Text>
+          </View>
+        </View>
       </View>
       <InvoiceStatusActions invoice={invoice} />
 

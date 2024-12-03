@@ -1,8 +1,8 @@
 [
   {
     "invoice_number": "INV-123456",
-    "date_issued": "2024-11-26",
-    "due_date": "2024-12-10",
+    "date_issued": "2024-09-15T12:00:00Z",
+    "due_date": "2024-09-15T12:00:00Z",
     "bill_to": {
       "customer_id": "1",
       "business_name": "Doe Enterprises"
@@ -61,8 +61,8 @@
   },
   {
     "invoice_number": "INV-123457",
-    "date_issued": "2024-11-26",
-    "due_date": "2024-12-10",
+    "date_issued": "2024-09-15T12:00:00Z",
+    "due_date": "2024-09-15T12:00:00Z",
     "bill_to": {
       "customer_id": "2",
       "business_name": "Smith Co."
@@ -114,8 +114,8 @@
   },
   {
     "invoice_number": "INV-123458",
-    "date_issued": "2024-11-26",
-    "due_date": "2024-12-10",
+    "date_issued": "2024-09-15T12:00:00Z",
+    "due_date": "2024-09-15T12:00:00Z",
     "bill_to": {
       "customer_id": "3",
       "business_name": "Johnson Group"

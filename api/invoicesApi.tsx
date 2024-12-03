@@ -1,3 +1,4 @@
+import { Customer } from "~/components/ScreenComponents/Customers/types";
 import {
   Invoice,
   InvoiceItem,
@@ -86,7 +87,7 @@ export const addItemToInvoiceServices = async (
         if (invoice.invoice_number === invoiceId) {
           return {
             ...invoice,
-            items: [...invoice.services, newItem], // Add the new item
+            services: [...invoice.services, newItem], // Add the new item
             sub_total: invoice.sub_total + newItem.total, // Update subtotal
             discounted_total: invoice.discounted_total + newItem.total, // Update discounted total
             tax_amount:
@@ -113,16 +114,21 @@ export const deleteItemFromInvoiceServices = async (
     setTimeout(() => {
       invoices = invoices.map((invoice) => {
         if (invoice.invoice_number === invoiceId) {
+          console.log(invoiceId, itemId);
           const updatedItems = invoice.services.filter(
-            (item) => item.description !== itemId // Assume itemId corresponds to the item's description or unique field
+            (item) => item._id !== itemId
           );
           const itemToRemove = invoice.services.find(
-            (item) => item.description === itemId
+            (item) => item._id === itemId
           );
+
+          console.log("itemToRemove", itemToRemove);
+          console.log("updatedItems", updatedItems);
+
           const itemTotal = itemToRemove ? itemToRemove.total : 0;
           return {
             ...invoice,
-            items: updatedItems, // Remove the item from the invoice
+            services: updatedItems, // Remove the item from the invoice
             sub_total: invoice.sub_total - itemTotal, // Update subtotal
             discounted_total: invoice.discounted_total - itemTotal, // Update discounted total
             tax_amount:
@@ -161,7 +167,7 @@ export const addItemToInvoiceParts = async (
         if (invoice.invoice_number === invoiceId) {
           return {
             ...invoice,
-            items: [...invoice.parts, newItem], // Add the new item
+            parts: [...invoice.parts, newItem], // Add the new item
             sub_total: invoice.sub_total + newItem.total, // Update subtotal
             discounted_total: invoice.discounted_total + newItem.total, // Update discounted total
             tax_amount:
@@ -189,15 +195,15 @@ export const deleteItemFromInvoiceParts = async (
       invoices = invoices.map((invoice) => {
         if (invoice.invoice_number === invoiceId) {
           const updatedItems = invoice.parts.filter(
-            (item) => item.description !== itemId // Assume itemId corresponds to the item's description or unique field
+            (item) => item._id !== itemId
           );
           const itemToRemove = invoice.parts.find(
-            (item) => item.description === itemId
+            (item) => item._id === itemId
           );
           const itemTotal = itemToRemove ? itemToRemove.total : 0;
           return {
             ...invoice,
-            items: updatedItems, // Remove the item from the invoice
+            parts: updatedItems, // Remove the item from the invoice
             sub_total: invoice.sub_total - itemTotal, // Update subtotal
             discounted_total: invoice.discounted_total - itemTotal, // Update discounted total
             tax_amount:
@@ -253,6 +259,61 @@ export const applyTaxToInvoice = async (
           invoice.tax_amount = invoice.discounted_total * invoice.tax_rate; // Recalculate tax amount
           invoice.total_amount_due =
             invoice.discounted_total + invoice.tax_amount; // Recalculate total amount due
+        }
+        return invoice;
+      });
+      const updatedInvoice = invoices.find(
+        (invoice) => invoice.invoice_number === invoiceId
+      );
+      resolve(updatedInvoice!); // Return the updated invoice
+    }, 500); // Simulating a delay
+  });
+};
+
+// Apply tax rate to an invoice (recalculate tax based on discounted total)
+export const UpdateInvoiceCustomer = async (
+  invoiceId: string,
+  customer: Customer
+): Promise<Invoice> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      invoices = invoices.map((invoice) => {
+        if (invoice.invoice_number === invoiceId) {
+          invoice.bill_to.customer_id = customer._id;
+          invoice.bill_to.business_name = customer.businessName;
+        }
+        return invoice;
+      });
+      const updatedInvoice = invoices.find(
+        (invoice) => invoice.invoice_number === invoiceId
+      );
+      resolve(updatedInvoice!); // Return the updated invoice
+    }, 500); // Simulating a delay
+  });
+};
+
+// Apply tax rate to an invoice (recalculate tax based on discounted total)
+export const DeleteInvoiceCustomer = async (
+  invoiceId: string
+): Promise<Invoice> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      invoices = invoices.map((invoice) => {
+        if (invoice.invoice_number === invoiceId) {
+          invoice.bill_to.customer_id = "";
+          invoice.bill_to.business_name = "";
+          invoice.service_site_id = [];
+          invoice.parts = [];
+          invoice.services = [];
+          invoice.sub_total = 0;
+          invoice.discount = 0;
+          invoice.discounted_total = 0;
+          invoice.status = "Draft";
+          invoice.date_issued = new Date().toISOString();
+          invoice.due_date = "";
+          invoice.linked_job_id = [];
+          invoice.tax_amount = 0;
+          invoice.total_amount_due = 0;
         }
         return invoice;
       });

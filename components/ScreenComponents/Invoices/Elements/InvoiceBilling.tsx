@@ -5,6 +5,7 @@ import { Large, Muted } from "~/components/ui/typography";
 import { Invoice, InvoiceItem } from "../types";
 import { Customer, SiteLocation } from "../../Customers/types";
 import { fetchCustomerById, fetchCustomerSiteById } from "~/api/customerApi";
+import { formatDueDate } from "~/lib/utils";
 
 const InvoiceBilling: React.FC<{
   invoice: Invoice;
@@ -20,8 +21,29 @@ const InvoiceBilling: React.FC<{
   const [serviceSites, setServiceSites] = React.useState<SiteLocation[]>([]);
   const loadCustomerData = async () => {
     try {
-      const data = await fetchCustomerById(invoice.bill_to.customer_id); // Call the API
-      if (data) setCustomerData(data);
+      if (invoice.bill_to.customer_id == "") {
+        setCustomerData({
+          _id: "", // Add the required _id property
+          businessName: "",
+          customerName: "",
+          email: "",
+          phone: "",
+          website: "",
+          billingAddress: {
+            AddressLine: "",
+            City: "",
+            Province: "",
+            zipcode: "",
+          },
+          siteLocations: [],
+        });
+
+        setServiceSites([]);
+      } else {
+        const data = await fetchCustomerById(invoice.bill_to.customer_id); // Call the API
+        if (data) setCustomerData(data);
+        loadSites();
+      }
     } catch (error) {
       console.error("Failed to fetch customers!");
     }
@@ -53,15 +75,18 @@ const InvoiceBilling: React.FC<{
   // Optional: Update state when prop changes
   useEffect(() => {
     loadCustomerData();
-    loadSites();
-  }, []);
+  }, [invoice.bill_to.customer_id]);
+
+  console.log("rendering Invoice Billing", invoice.bill_to.business_name);
   return (
     <>
       <View className="flex-row justify-between">
         <View className="flex gap-2">
           <Text className="font-bold">Invoice #: {invoice.invoice_number}</Text>
-          <Muted>Date Issued: {invoice.date_issued}</Muted>
-          <Muted>Due Date: {invoice.due_date}</Muted>
+          <Muted>Date Issued: {formatDueDate(invoice.date_issued)}</Muted>
+          <Muted>
+            Due Date: {invoice.due_date && formatDueDate(invoice.due_date)}
+          </Muted>
         </View>
         <View>
           <Text className="font-semibold">Bill To:</Text>

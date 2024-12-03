@@ -51,7 +51,7 @@ const InvoiceItems: React.FC<{
           >
             {/* Item Description */}
             {editMode ? (
-              <View className="flex-1 mr-2">
+              <View className="flex-1 m-2">
                 <Input
                   value={item.description}
                   onChangeText={(value) =>
@@ -63,7 +63,9 @@ const InvoiceItems: React.FC<{
                 />
               </View>
             ) : (
-              <Text className="md:flex-1">{item.description}</Text>
+              <Text className="md:flex-1 md:justify-center md:m-2">
+                {item.description}
+              </Text>
             )}
             <View
               key={index}
@@ -71,7 +73,7 @@ const InvoiceItems: React.FC<{
             >
               {/* Item Quantity */}
               {editMode ? (
-                <View className="w-28 text-right mr-2">
+                <View className="flex w-28 text-right m-2 items-end ">
                   <Input
                     value={item.quantity.toString()}
                     onChangeText={(value) =>
@@ -80,7 +82,7 @@ const InvoiceItems: React.FC<{
                     editable={true}
                     nativeID="Item Quantity"
                     keyboardType="numeric"
-                    className="w-20 text-right" // Match the header width
+                    className="w-12 text-right" // Match the header width
                   />
                 </View>
               ) : (
@@ -89,7 +91,7 @@ const InvoiceItems: React.FC<{
 
               {/* Item Unit Price */}
               {editMode ? (
-                <View className="w-28 text-right mr-2">
+                <View className="flex w-24 text-right m-2 items-end ">
                   <Input
                     value={item.unit_price.toFixed(2)}
                     onChangeText={(value) =>
@@ -98,7 +100,7 @@ const InvoiceItems: React.FC<{
                     editable={true}
                     nativeID="Item Unit Price"
                     keyboardType="numeric"
-                    className="w-28 text-right" // Match the header width
+                    className="w-20 text-right" // Match the header width
                   />
                 </View>
               ) : (
@@ -109,7 +111,7 @@ const InvoiceItems: React.FC<{
 
               {/* Item Total */}
               {editMode ? (
-                <View className="w-28 text-right">
+                <View className="flex w-24 text-right m-2 items-end ">
                   <Input
                     value={item.total.toFixed(2)}
                     onChangeText={(value) =>
@@ -118,7 +120,7 @@ const InvoiceItems: React.FC<{
                     editable={true}
                     nativeID="Item Total"
                     keyboardType="numeric"
-                    className="w-28 text-right" // Match the header width
+                    className="w-20 text-right" // Match the header width
                   />
                 </View>
               ) : (
@@ -149,7 +151,7 @@ const InvoiceItems: React.FC<{
           >
             {/* Item Description */}
             {editMode ? (
-              <View className="flex-1 mr-2">
+              <View className="flex-1 m-2">
                 <Input
                   value={item.description}
                   onChangeText={(value) =>
@@ -161,12 +163,14 @@ const InvoiceItems: React.FC<{
                 />
               </View>
             ) : (
-              <Text className="md:flex-1">{item.description}</Text>
+              <Text className="md:flex-1 md:justify-center md:m-2">
+                {item.description}
+              </Text>
             )}
             <View key={index} className="flex-row justify-between items-center">
               {/* Item Quantity */}
               {editMode ? (
-                <View className="w-28 text-right mr-2">
+                <View className="flex w-28 text-right m-2 items-end ">
                   <Input
                     value={item.quantity.toString()}
                     onChangeText={(value) =>
@@ -175,7 +179,7 @@ const InvoiceItems: React.FC<{
                     editable={true}
                     nativeID="Item Quantity"
                     keyboardType="numeric"
-                    className="w-20 text-right" // Match the header width
+                    className="w-12 text-right" // Match the header width
                   />
                 </View>
               ) : (
@@ -184,7 +188,7 @@ const InvoiceItems: React.FC<{
 
               {/* Item Unit Price */}
               {editMode ? (
-                <View className="w-28 text-right mr-2">
+                <View className="flex w-24 text-right m-2 items-end ">
                   <Input
                     value={item.unit_price.toFixed(2)}
                     onChangeText={(value) =>
@@ -193,7 +197,7 @@ const InvoiceItems: React.FC<{
                     editable={true}
                     nativeID="Item Unit Price"
                     keyboardType="numeric"
-                    className="w-28 text-right" // Match the header width
+                    className="w-20 text-right" // Match the header width
                   />
                 </View>
               ) : (
@@ -204,7 +208,7 @@ const InvoiceItems: React.FC<{
 
               {/* Item Total */}
               {editMode ? (
-                <View className="w-28 text-right">
+                <View className="flex w-24 text-right m-2 items-end ">
                   <Input
                     value={item.total.toFixed(2)}
                     onChangeText={(value) =>
@@ -213,7 +217,7 @@ const InvoiceItems: React.FC<{
                     editable={true}
                     nativeID="Item Total"
                     keyboardType="numeric"
-                    className="w-28 text-right" // Match the header width
+                    className="w-20 text-right" // Match the header width
                   />
                 </View>
               ) : (

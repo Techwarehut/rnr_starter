@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Platform, View } from "react-native";
 import { Button } from "~/components/ui/button";
 import { H1, H2, H3, H4, Large, Muted } from "~/components/ui/typography";
@@ -12,28 +12,21 @@ import { router, Stack } from "expo-router";
 
 import { useToast } from "../ToastMessage";
 import Toast from "react-native-toast-message";
-import InputField from "../InputField";
 
-import toastConfig from "../CustomToast";
-import {
-  addSiteLocation,
-  deleteCustomer,
-  deleteSiteLocation,
-  editCustomer,
-  fetchCustomerById,
-  fetchCustomers,
-} from "~/api/customerApi";
 import { Invoice, InvoiceItem } from "./types";
 import {
   addItemToInvoiceParts,
   addItemToInvoiceServices,
   deleteInvoice,
+  DeleteInvoiceCustomer,
   deleteItemFromInvoiceParts,
   deleteItemFromInvoiceServices,
   editInvoice,
   fetchInvoiceById,
+  UpdateInvoiceCustomer,
 } from "~/api/invoicesApi";
 import InvoiceComponent from "./Invoice";
+import { Customer } from "../Customers/types";
 
 interface InvoiceDetailProps {
   invoice: Invoice;
@@ -49,6 +42,7 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
   const [editMode, setEditMode] = React.useState(edit);
   const [invoiceData, setInvoiceData] = React.useState<Invoice>(invoice);
   const { showSuccessToast, showErrorToast } = useToast();
+  const [refreshKey, setRefreshKey] = useState(0);
 
   // Optional: Update state when prop changes
   useEffect(() => {
@@ -101,6 +95,8 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
       await deleteItemFromInvoiceServices(invoiceData.invoice_number, itemId); // Call your API to delete the site
       // Fetch the specific customer by ID after adding the site
       const updatedInvoice = await fetchInvoiceById(invoiceData.invoice_number);
+
+      console.log(updatedInvoice?.services);
       if (updatedInvoice) {
         setInvoiceData(updatedInvoice); // Update customer state with the fetched data
       }
@@ -143,15 +139,58 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
     }
   };
 
+  const handleDeleteCustomer = async () => {
+    try {
+      const updatedInvoice = await DeleteInvoiceCustomer(
+        invoiceData.invoice_number
+      );
+      if (updatedInvoice) {
+        setInvoiceData(updatedInvoice); // Update customer state with the fetched data
+        setRefreshKey((prev) => prev + 1);
+      }
+      showSuccessToast("Customer updated successfully!");
+    } catch (error) {
+      console.error("Error deleting Customer:", error);
+      showErrorToast("Failed to update Customer. Please try again.");
+    }
+  };
+
+  const handleAddCustomer = async (customer: Customer) => {
+    try {
+      const updatedInvoice = await UpdateInvoiceCustomer(
+        invoiceData.invoice_number,
+        customer
+      );
+      if (updatedInvoice) {
+        setInvoiceData(updatedInvoice); // Update customer state with the fetched data
+        setRefreshKey((prev) => prev + 1);
+      }
+      showSuccessToast("Customer updated successfully!");
+    } catch (error) {
+      console.error("Error updating Customer:", error);
+      showErrorToast("Failed to update Customer. Please try again.");
+    }
+  };
+
   const handleInputChange = (
     field: keyof Invoice | keyof InvoiceItem, // Can be from Invoice or InvoiceItem
-    value: string | number, // The value to update (can be string or number)
+    value: string | number | { customer_id: string; business_name: string }, // The value to update (can be string or number)
     index?: number, // Optional index, used for updating individual items in services/parts
     array?: "services" | "parts" // Optional array, used when updating an item in services/parts
   ) => {
     setInvoiceData((prevData) => {
       // Case 1: Updating a property on the Invoice object (e.g., invoice_number, notes)
       if (!array) {
+        // Special case for 'bill_to' field
+        if (field === "bill_to" && typeof value === "object") {
+          return {
+            ...prevData,
+            [field]: {
+              customer_id: value.customer_id,
+              business_name: value.business_name,
+            },
+          };
+        }
         return {
           ...prevData,
           [field]: value, // Update the field directly on the Invoice object
@@ -213,6 +252,8 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
     });
   };
 
+  console.log("rendering again", invoiceData.bill_to.business_name);
+
   return (
     <>
       {!isLargeScreen && (
@@ -264,6 +305,8 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
           handleDeleteItemServices={handleDeleteItemServices}
           onAddItemParts={onAddItemParts}
           handleDeleteItemParts={handleDeleteItemParts}
+          handleAddCustomer={handleAddCustomer}
+          handleDeleteCustomer={handleDeleteCustomer}
         />
       </ScrollView>
       <Toast />
