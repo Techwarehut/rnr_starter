@@ -27,9 +27,17 @@ import { Plus } from "~/lib/icons/Plus";
 
 interface LinkJobProps {
   handleJobSelect: (selectedJobs: Job[]) => void; // Callback to handle job selection
+  canSelectMultiple?: boolean;
+  filterForInvoice?: boolean;
+  filterForCustomerId?: string;
 }
 
-export const LinkJobs: React.FC<LinkJobProps> = ({ handleJobSelect }) => {
+export const LinkJobs: React.FC<LinkJobProps> = ({
+  handleJobSelect,
+  canSelectMultiple = false,
+  filterForInvoice = false,
+  filterForCustomerId = "",
+}) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const [isOpen, setIsOpen] = useState(false);
   const animatedIndex = useSharedValue<number>(0);
@@ -112,7 +120,10 @@ export const LinkJobs: React.FC<LinkJobProps> = ({ handleJobSelect }) => {
           <SelectJob
             selectedJobs={localSelectedJobs}
             isSelectionRequired={true}
+            canSelectMultiple={canSelectMultiple}
             onJobSelect={setLocalSelectedJobs}
+            filterForInvoice={filterForInvoice}
+            filterForCustomerId={filterForCustomerId}
           />
         </BottomSheetView>
       </BottomSheetModal>

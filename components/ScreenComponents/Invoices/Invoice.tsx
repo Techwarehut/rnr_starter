@@ -17,6 +17,8 @@ import InvoiceStatusActions from "./Actions/InvoiceStatusActions";
 import { AssignCustomer } from "./Actions/AssignCustomer";
 import DeleteButton from "../DeleteButton";
 import { UpdateInvoiceCustomer } from "~/api/invoicesApi";
+import SelectJob from "../SelectJobs";
+import { LinkJobs } from "../LinkJobs";
 
 const InvoiceComponent: React.FC<{
   invoice: Invoice;
@@ -55,9 +57,10 @@ const InvoiceComponent: React.FC<{
           <Text>{invoice.status}</Text>
         </Badge>
       </View>
-      <View className="flex md:flex-row md:flex-wrap gap-2 m-2">
+      <View className="flex  gap-2 m-2">
         <View className="flex md:flex-1">
           <Text>Customer</Text>
+
           <View className="flex flex-row justify-between items-center bg-secondary p-2 rounded-md">
             {invoice.bill_to.customer_id === "" ? (
               <>
@@ -71,12 +74,53 @@ const InvoiceComponent: React.FC<{
               </>
             )}
           </View>
+          <Muted>
+            Select a Customer to get started. If you remove the customer,
+            invoicing will startover.
+          </Muted>
         </View>
         <View className="flex md:flex-1">
           <Text>Linked Jobs</Text>
-          <View className="flex flex-row justify-between items-center bg-secondary p-2 rounded-md">
-            <Text>No Jobs Selected</Text>
+
+          <View className="flex flex-row items-center justify-between bg-secondary p-2 rounded-md gap-2">
+            <View className="flex flex-row items-center gap-2">
+              {invoice.linked_job_id.length === 0 ? (
+                <Text>No Jobs Selected</Text>
+              ) : (
+                invoice.linked_job_id.map((item, index) => (
+                  <View
+                    key={index}
+                    className="flex flex-row items-center rounded-md bg-accent justify-between gap-2 pl-2"
+                  >
+                    <Text>{item}</Text>
+                    <DeleteButton
+                      xIcon={true}
+                      onDelete={() => {
+                        console.log("Delete", item);
+                      }}
+                    />
+                  </View>
+                ))
+              )}
+            </View>
+            <LinkJobs
+              handleJobSelect={(jobs) => {
+                // Check if the array is not empty
+                if (jobs.length > 0) {
+                  console.log(jobs); // Pass the first job to handleAddLinkedJob
+                } else {
+                  console.log("No jobs selected");
+                }
+              }}
+              canSelectMultiple={true}
+              filterForInvoice={true}
+              filterForCustomerId={invoice.bill_to.customer_id}
+            />
           </View>
+          <Muted>
+            This will only show Jobs that are in "Accounts Receivable" for the
+            selected customer.
+          </Muted>
         </View>
       </View>
       <InvoiceStatusActions invoice={invoice} />

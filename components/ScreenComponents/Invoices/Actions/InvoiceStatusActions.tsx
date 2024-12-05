@@ -6,7 +6,7 @@ import { Button } from "~/components/ui/button";
 
 const InvoiceStatusActions: React.FC<{ invoice: Invoice }> = ({ invoice }) => {
   return (
-    <View className="flex gap-2 mt-2 ">
+    <View className="flex gap-2 mt-4 ">
       {/* Conditionally render content based on invoice status */}
       {invoice.status === "Draft" && (
         <>
@@ -16,7 +16,7 @@ const InvoiceStatusActions: React.FC<{ invoice: Invoice }> = ({ invoice }) => {
             </Text>
           </View>
           <View className="flex flex-row gap-2 self-end justify-between">
-            <Button variant="outline">
+            <Button variant="default">
               <Text>Download</Text>
             </Button>
             <Button variant="outline">
@@ -32,7 +32,7 @@ const InvoiceStatusActions: React.FC<{ invoice: Invoice }> = ({ invoice }) => {
             <Text>Invoice can be previewed as below.</Text>
           </View>
           <View className="flex flex-row gap-2 self-end justify-between">
-            <Button variant="outline">
+            <Button variant="default">
               <Text>Mark as Paid</Text>
             </Button>
             <Button variant="outline">

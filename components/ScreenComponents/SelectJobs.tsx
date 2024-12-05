@@ -10,7 +10,11 @@ import JobSectionList from "~/components/ScreenComponents/Jobs/JobList";
 import { SearchInput } from "~/components/ScreenComponents/SearchInput";
 import { JobFilters } from "~/components/ScreenComponents/Jobs/JobFilters";
 import { JobTypeKeys } from "~/components/ScreenComponents/Jobs/Filters/Statustypes";
-import { getAllJobs, updateJobStatus } from "~/api/jobsApi";
+import {
+  fetchReadyForInvoiceJobs,
+  getAllJobs,
+  updateJobStatus,
+} from "~/api/jobsApi";
 
 import { Button } from "~/components/ui/button";
 import { Text } from "~/components/ui/text";
@@ -23,6 +27,8 @@ interface interfaceJobProps {
   canSelectMultiple?: boolean; // Boolean to allow single or multiple selection
   onJobSelect?: (selectedJobs: Job[]) => void; // Callback to handle job selection
   filterInProgress?: boolean;
+  filterForInvoice?: boolean;
+  filterForCustomerId?: string;
 }
 
 export default function SelectJob({
@@ -31,6 +37,8 @@ export default function SelectJob({
   canSelectMultiple = false,
   onJobSelect,
   filterInProgress = false,
+  filterForInvoice = false,
+  filterForCustomerId = "",
 }: interfaceJobProps) {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [filteredjobs, setFilteredJobs] = useState<Job[]>([]);
@@ -48,7 +56,7 @@ export default function SelectJob({
     inprogress: false,
     onhold: false,
     approvalpending: false,
-    accountsreceivable: false,
+    accountsreceivable: filterForInvoice,
     invoiced: false,
     paid: false,
   });
@@ -65,7 +73,12 @@ export default function SelectJob({
   const router = useRouter();
   const fetchJobs = async () => {
     try {
-      const data = await getAllJobs(); // Call the API
+      let data;
+      if (filterForInvoice) {
+        data = await fetchReadyForInvoiceJobs(filterForCustomerId); // Call the API
+      } else {
+        data = await getAllJobs(); // Call the API
+      }
       setJobs(data);
       setFilteredJobs(data);
     } catch (error) {
@@ -76,7 +89,7 @@ export default function SelectJob({
     fetchJobs();
   }, []);
 
-  useEffect(() => {
+  const filterJobs = () => {
     const filtered = jobs.filter((job) => {
       const statusKey = job.status.toLowerCase().replace(/ /g, ""); // Normalize the status
       const jobTypeKey = job.jobType as JobTypeKeys; // Type assertion here
@@ -92,6 +105,9 @@ export default function SelectJob({
     });
 
     setFilteredJobs(filtered);
+  };
+  useEffect(() => {
+    filterJobs();
   }, [selectedStatuses, selectedJobType]);
 
   const handleStatusFilter = (newStates: Record<string, boolean>) => {
@@ -245,6 +261,7 @@ export default function SelectJob({
             setSelectedGroupValue={setGroup}
             handleStatusChange={handleStatusFilter}
             handleJobTypeChange={handleJobTypeFilter}
+            dashboardView={filterForInvoice}
           />
         </View>
 

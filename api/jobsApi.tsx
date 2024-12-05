@@ -502,3 +502,20 @@ export const updateJobRecurrence = async (
     }, 1000); // Simulate a delay
   });
 };
+
+// Function to fetch jobs that are ready for Invoice and for a specific customer (job.status = "Accounts Receivable" and job.customer._id === customerId)
+export const fetchReadyForInvoiceJobs = async (
+  customerId: string
+): Promise<Job[]> => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      // Filter jobs that are in "Accounts Receivable" status and match the customerId
+      const readyForInvoiceJobs = jobs.filter(
+        (job) =>
+          job.status === "Accounts Receivable" &&
+          job.customer._id === customerId
+      );
+      resolve(readyForInvoiceJobs);
+    }, 1000); // Simulate a delay
+  });
+};
