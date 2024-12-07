@@ -7,6 +7,7 @@ import InputField from "../../InputField";
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import DeleteButton from "../../DeleteButton";
+import { AddNewInvItem } from "../Actions/AddNewItem";
 
 const InvoiceItems: React.FC<{
   invoice: Invoice;
@@ -136,9 +137,7 @@ const InvoiceItems: React.FC<{
           </View>
         ))}
         <View className="flex flex-row self-end my-4">
-          <Button variant="link">
-            <Text>Add Items</Text>
-          </Button>
+          <AddNewInvItem onNewItemAdd={onAddItemServices} />
         </View>
       </View>
 
@@ -233,9 +232,7 @@ const InvoiceItems: React.FC<{
           </View>
         ))}
         <View className="flex flex-row self-end my-4">
-          <Button variant="link">
-            <Text>Add Items</Text>
-          </Button>
+          <AddNewInvItem onNewItemAdd={onAddItemParts} />
         </View>
       </View>
     </View>

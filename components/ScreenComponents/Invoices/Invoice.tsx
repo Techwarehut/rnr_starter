@@ -16,9 +16,10 @@ import { Badge } from "~/components/ui/badge";
 import InvoiceStatusActions from "./Actions/InvoiceStatusActions";
 import { AssignCustomer } from "./Actions/AssignCustomer";
 import DeleteButton from "../DeleteButton";
-import { UpdateInvoiceCustomer } from "~/api/invoicesApi";
+
 import SelectJob from "../SelectJobs";
 import { LinkJobs } from "../LinkJobs";
+import { Job } from "../Jobs/types";
 
 const InvoiceComponent: React.FC<{
   invoice: Invoice;
@@ -36,6 +37,7 @@ const InvoiceComponent: React.FC<{
   handleDeleteItemParts: (itemId: string) => void;
   handleDeleteCustomer: () => void;
   handleAddCustomer: (customer: Customer) => void;
+  UpdateInvoiceLinkedJobs: (invoiceId: string, jobs: Job[]) => void;
 }> = ({
   invoice,
   editMode,
@@ -46,6 +48,7 @@ const InvoiceComponent: React.FC<{
   handleDeleteItemParts,
   handleDeleteCustomer,
   handleAddCustomer,
+  UpdateInvoiceLinkedJobs,
 }) => {
   return (
     <>
@@ -107,7 +110,7 @@ const InvoiceComponent: React.FC<{
               handleJobSelect={(jobs) => {
                 // Check if the array is not empty
                 if (jobs.length > 0) {
-                  console.log(jobs); // Pass the first job to handleAddLinkedJob
+                  UpdateInvoiceLinkedJobs(invoice.invoice_number, jobs);
                 } else {
                   console.log("No jobs selected");
                 }

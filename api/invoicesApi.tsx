@@ -3,8 +3,10 @@ import {
   Invoice,
   InvoiceItem,
 } from "~/components/ScreenComponents/Invoices/types";
+import { Job } from "~/components/ScreenComponents/Jobs/types";
 import invoicesData from "~/data/invoices.json"; // Your static JSON data
 import { generateUniqueId } from "~/lib/utils";
+import { getPurchaseOrdersByJobID } from "./purchasesApi";
 
 let invoices: Invoice[] = invoicesData; // Initialize with JSON data
 
@@ -321,6 +323,91 @@ export const DeleteInvoiceCustomer = async (
         (invoice) => invoice.invoice_number === invoiceId
       );
       resolve(updatedInvoice!); // Return the updated invoice
+    }, 500); // Simulating a delay
+  });
+};
+
+export const UpdateInvoiceLinkedJobs = async (
+  invoiceId: string,
+  jobs: Job[]
+): Promise<Invoice> => {
+  return new Promise(async (resolve) => {
+    setTimeout(async () => {
+      invoices = await Promise.all(
+        invoices.map(async (invoice) => {
+          if (invoice.invoice_number === invoiceId) {
+            // Collect all job IDs
+            invoice.linked_job_id = jobs.map((job) => job._id);
+
+            // Add all job titles to the services array in the invoice
+            invoice.services = jobs.map((job) => {
+              // Calculate the total hours worked on the job by summing hours from all assigned users
+              const totalHours = job.assignedTo.reduce(
+                (sum, assignedUser) => sum + (assignedUser.hoursSpent || 0),
+                0
+              );
+
+              // Create an InvoiceItem for this job
+              const newItem: InvoiceItem = {
+                _id: job._id,
+                description: job.jobTitle,
+                quantity: totalHours,
+                unit_price: 100, // Assume unit price is 100
+                total: totalHours * 100,
+              };
+
+              // Update the invoice totals for services
+              invoice.sub_total += newItem.total; // Update subtotal for services
+              invoice.discounted_total += newItem.total; // Update discounted total for services
+              invoice.tax_amount = invoice.discounted_total * invoice.tax_rate; // Update tax amount
+              invoice.total_amount_due =
+                invoice.discounted_total + invoice.tax_amount; // Update total amount due
+
+              return newItem;
+            });
+
+            // Fetch purchase orders linked to the jobs
+            const purchaseOrders = await Promise.all(
+              jobs.map(async (job) => await getPurchaseOrdersByJobID(job._id)) // Await purchase orders for each job
+            );
+
+            // Add all purchase order items to the parts array in the invoice and update totals
+            invoice.parts = purchaseOrders.flatMap((purchaseOrder) =>
+              purchaseOrder.flatMap((po) =>
+                po.items.map((item) => {
+                  const partTotal = item.quantity * item.price; // Total for the part
+
+                  // Update the invoice totals for parts
+                  invoice.sub_total += partTotal; // Update subtotal for parts
+                  invoice.discounted_total += partTotal; // Update discounted total for parts
+                  invoice.tax_amount =
+                    invoice.discounted_total * invoice.tax_rate; // Update tax amount for parts
+                  invoice.total_amount_due =
+                    invoice.discounted_total + invoice.tax_amount; // Update total amount due for parts
+
+                  // Return the part item as an InvoiceItem
+                  return {
+                    _id: item.itemId,
+                    description: item.itemName,
+                    quantity: item.quantity,
+                    unit_price: item.price,
+                    total: partTotal,
+                  };
+                })
+              )
+            );
+          }
+          return invoice;
+        })
+      );
+
+      // Find the updated invoice
+      const updatedInvoice = invoices.find(
+        (invoice) => invoice.invoice_number === invoiceId
+      );
+
+      // Resolve with the updated invoice
+      resolve(updatedInvoice!); // `!` is used here because we assume it will exist, but you might want to handle the case where it doesn't
     }, 500); // Simulating a delay
   });
 };

@@ -24,9 +24,11 @@ import {
   editInvoice,
   fetchInvoiceById,
   UpdateInvoiceCustomer,
+  UpdateInvoiceLinkedJobs,
 } from "~/api/invoicesApi";
 import InvoiceComponent from "./Invoice";
 import { Customer } from "../Customers/types";
+import { Job } from "../Jobs/types";
 
 interface InvoiceDetailProps {
   invoice: Invoice;
@@ -172,6 +174,20 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
     }
   };
 
+  const handleAddLinkedJobs = async (invoiceId: string, jobs: Job[]) => {
+    try {
+      const updatedInvoice = await UpdateInvoiceLinkedJobs(invoiceId, jobs);
+      if (updatedInvoice) {
+        setInvoiceData(updatedInvoice); // Update customer state with the fetched data
+        setRefreshKey((prev) => prev + 1);
+      }
+      showSuccessToast("Invoice updated successfully!");
+    } catch (error) {
+      console.error("Error updating Invoice:", error);
+      showErrorToast("Failed to update Invoice. Please try again.");
+    }
+  };
+
   const handleInputChange = (
     field: keyof Invoice | keyof InvoiceItem, // Can be from Invoice or InvoiceItem
     value: string | number | { customer_id: string; business_name: string }, // The value to update (can be string or number)
@@ -307,6 +323,7 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
           handleDeleteItemParts={handleDeleteItemParts}
           handleAddCustomer={handleAddCustomer}
           handleDeleteCustomer={handleDeleteCustomer}
+          UpdateInvoiceLinkedJobs={handleAddLinkedJobs}
         />
       </ScrollView>
       <Toast />
