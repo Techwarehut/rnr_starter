@@ -6,6 +6,8 @@ import { Invoice, InvoiceItem } from "../types";
 import { Customer, SiteLocation } from "../../Customers/types";
 import { fetchCustomerById, fetchCustomerSiteById } from "~/api/customerApi";
 import { formatDueDate } from "~/lib/utils";
+import { DatePicker } from "../../Jobs/JobDetails/DatePicker";
+import { DateType } from "react-native-ui-datepicker";
 
 const InvoiceBilling: React.FC<{
   invoice: Invoice;
@@ -19,6 +21,7 @@ const InvoiceBilling: React.FC<{
 }> = ({ invoice, editMode, handleInputChange }) => {
   const [customerData, setCustomerData] = React.useState<Customer>();
   const [serviceSites, setServiceSites] = React.useState<SiteLocation[]>([]);
+
   const loadCustomerData = async () => {
     try {
       if (invoice.bill_to.customer_id == "") {
@@ -46,6 +49,19 @@ const InvoiceBilling: React.FC<{
       }
     } catch (error) {
       console.error("Failed to fetch customers!");
+    }
+  };
+
+  const handleChangeDate = async (selectedDate: string) => {
+    // Handle the case where selectedDate might be undefined
+    if (selectedDate) {
+      /*  if (!addNew) {
+        const updatedJob = await updateJobDueDate(job._id, selectedDate);
+      } else {
+        handleInputChange("dueDate", selectedDate);
+      }
+      setRefreshKey((prev) => prev + 1); */
+      handleInputChange("due_date", selectedDate);
     }
   };
 
@@ -84,9 +100,19 @@ const InvoiceBilling: React.FC<{
         <View className="flex gap-2">
           <Text className="font-bold">Invoice #: {invoice.invoice_number}</Text>
           <Muted>Date Issued: {formatDueDate(invoice.date_issued)}</Muted>
-          <Muted>
-            Due Date: {invoice.due_date && formatDueDate(invoice.due_date)}
-          </Muted>
+          <View className="flex flex-row gap-2">
+            <Muted>
+              Due Date: {invoice.due_date && formatDueDate(invoice.due_date)}
+            </Muted>
+            {editMode && (
+              <DatePicker
+                date={invoice.due_date || new Date()} // Use today's date if due_date is empty
+                onChangeDate={(date: DateType) => {
+                  if (date) handleChangeDate(date.toLocaleString());
+                }}
+              />
+            )}
+          </View>
         </View>
         <View>
           <Text className="font-semibold">Bill To:</Text>

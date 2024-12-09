@@ -101,7 +101,7 @@ const InvoiceItems: React.FC<{
                     editable={true}
                     nativeID="Item Unit Price"
                     keyboardType="numeric"
-                    className="w-20 text-right" // Match the header width
+                    className="w-24 text-right" // Match the header width
                   />
                 </View>
               ) : (
@@ -121,7 +121,7 @@ const InvoiceItems: React.FC<{
                     editable={true}
                     nativeID="Item Total"
                     keyboardType="numeric"
-                    className="w-20 text-right" // Match the header width
+                    className="w-24 text-right" // Match the header width
                   />
                 </View>
               ) : (
@@ -196,7 +196,7 @@ const InvoiceItems: React.FC<{
                     editable={true}
                     nativeID="Item Unit Price"
                     keyboardType="numeric"
-                    className="w-20 text-right" // Match the header width
+                    className="w-24 text-right" // Match the header width
                   />
                 </View>
               ) : (
@@ -216,7 +216,7 @@ const InvoiceItems: React.FC<{
                     editable={true}
                     nativeID="Item Total"
                     keyboardType="numeric"
-                    className="w-20 text-right" // Match the header width
+                    className="w-24 text-right" // Match the header width
                   />
                 </View>
               ) : (

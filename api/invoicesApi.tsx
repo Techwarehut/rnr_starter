@@ -331,83 +331,184 @@ export const UpdateInvoiceLinkedJobs = async (
   invoiceId: string,
   jobs: Job[]
 ): Promise<Invoice> => {
+  console.log(invoiceId);
+
   return new Promise(async (resolve) => {
     setTimeout(async () => {
-      invoices = await Promise.all(
-        invoices.map(async (invoice) => {
-          if (invoice.invoice_number === invoiceId) {
-            // Collect all job IDs
-            invoice.linked_job_id = jobs.map((job) => job._id);
+      if (invoiceId === "") {
+        // Case for creating a new invoice (no invoiceId provided)
+        const newInvoice: Invoice = {
+          invoice_number: generateUniqueId(), // Assuming you have a function to generate invoice numbers
+          linked_job_id: jobs.map((job) => job._id),
+          date_issued: "", // Empty string for date issued
+          due_date: "", // Empty string for due date
+          bill_to: {
+            customer_id: "", // Empty string for customer ID
+            business_name: "", // Empty string for business name
+          },
+          service_site_id: [], // Empty array for service site IDs
 
-            // Add all job titles to the services array in the invoice
-            invoice.services = jobs.map((job) => {
-              // Calculate the total hours worked on the job by summing hours from all assigned users
-              const totalHours = job.assignedTo.reduce(
-                (sum, assignedUser) => sum + (assignedUser.hoursSpent || 0),
-                0
+          services: [], // Empty array for services
+          parts: [], // Empty array for parts
+
+          sub_total: 0, // 0 for subtotal
+          discount: 0, // 0 for discount
+          discounted_total: 0, // 0 for discounted total
+          tax_rate: 0.1, // 0 tax rate
+          tax_amount: 0, // 0 tax amount
+          total_amount_due: 0, // 0 total amount due
+          notes: "Net 30", // Empty string for notes
+          payment_terms: "", // Empty string for payment terms
+          payment_methods: [], // Empty array for payment methods
+          status: "Draft", // Default status as "Draft"
+        };
+
+        // Add all job titles and details to the new invoice
+        jobs.forEach((job) => {
+          const totalHours = job.assignedTo.reduce(
+            (sum, assignedUser) => sum + (assignedUser.hoursSpent || 0),
+            0
+          );
+
+          // Add job item to services array
+          const newItem: InvoiceItem = {
+            _id: job._id,
+            description: job.jobTitle,
+            quantity: totalHours,
+            unit_price: 100, // Assume unit price is 100
+            total: totalHours * 100,
+          };
+
+          newInvoice.sub_total += newItem.total;
+          newInvoice.discounted_total += newItem.total;
+          newInvoice.tax_amount =
+            newInvoice.discounted_total * newInvoice.tax_rate;
+          newInvoice.total_amount_due =
+            newInvoice.discounted_total + newInvoice.tax_amount;
+
+          newInvoice.services.push(newItem);
+
+          // Add site location to service_site_id
+          if (!newInvoice.service_site_id.includes(job.siteLocation.site_id)) {
+            newInvoice.service_site_id.push(job.siteLocation.site_id);
+          }
+        });
+
+        // Fetch and add purchase orders linked to the jobs
+        const purchaseOrders = await Promise.all(
+          jobs.map(async (job) => await getPurchaseOrdersByJobID(job._id))
+        );
+
+        // Add purchase order items to parts array and update totals
+        for (const purchaseOrder of purchaseOrders.flat()) {
+          for (const po of purchaseOrder.items) {
+            const partTotal = po.quantity * po.price;
+
+            newInvoice.sub_total += partTotal;
+            newInvoice.discounted_total += partTotal;
+            newInvoice.tax_amount =
+              newInvoice.discounted_total * newInvoice.tax_rate;
+            newInvoice.total_amount_due =
+              newInvoice.discounted_total + newInvoice.tax_amount;
+
+            const newPart: InvoiceItem = {
+              _id: po.itemId,
+              description: po.itemName,
+              quantity: po.quantity,
+              unit_price: po.price,
+              total: partTotal,
+            };
+
+            newInvoice.parts.push(newPart);
+          }
+        }
+
+        // Return the newly created invoice
+        resolve(newInvoice);
+      } else {
+        // Case for updating an existing invoice (invoiceId is provided)
+        invoices = await Promise.all(
+          invoices.map(async (invoice) => {
+            if (invoice.invoice_number === invoiceId) {
+              // Collect all job IDs and push them to the linked_job_id array
+              jobs.forEach((job) => {
+                if (!invoice.linked_job_id.includes(job._id)) {
+                  invoice.linked_job_id.push(job._id);
+                }
+              });
+
+              // Add all job titles and details to the services array
+              for (const job of jobs) {
+                const totalHours = job.assignedTo.reduce(
+                  (sum, assignedUser) => sum + (assignedUser.hoursSpent || 0),
+                  0
+                );
+
+                const newItem: InvoiceItem = {
+                  _id: job._id,
+                  description: job.jobTitle,
+                  quantity: totalHours,
+                  unit_price: 100,
+                  total: totalHours * 100,
+                };
+
+                invoice.sub_total += newItem.total;
+                invoice.discounted_total += newItem.total;
+                invoice.tax_amount =
+                  invoice.discounted_total * invoice.tax_rate;
+                invoice.total_amount_due =
+                  invoice.discounted_total + invoice.tax_amount;
+
+                invoice.services.push(newItem);
+
+                // Update service_site_id with job's site location
+                if (
+                  !invoice.service_site_id.includes(job.siteLocation.site_id)
+                ) {
+                  invoice.service_site_id.push(job.siteLocation.site_id);
+                }
+              }
+
+              // Fetch and add purchase orders linked to the jobs
+              const purchaseOrders = await Promise.all(
+                jobs.map(async (job) => await getPurchaseOrdersByJobID(job._id))
               );
 
-              // Create an InvoiceItem for this job
-              const newItem: InvoiceItem = {
-                _id: job._id,
-                description: job.jobTitle,
-                quantity: totalHours,
-                unit_price: 100, // Assume unit price is 100
-                total: totalHours * 100,
-              };
+              // Add purchase order items to the parts array and update totals
+              for (const purchaseOrder of purchaseOrders.flat()) {
+                for (const po of purchaseOrder.items) {
+                  const partTotal = po.quantity * po.price;
 
-              // Update the invoice totals for services
-              invoice.sub_total += newItem.total; // Update subtotal for services
-              invoice.discounted_total += newItem.total; // Update discounted total for services
-              invoice.tax_amount = invoice.discounted_total * invoice.tax_rate; // Update tax amount
-              invoice.total_amount_due =
-                invoice.discounted_total + invoice.tax_amount; // Update total amount due
-
-              return newItem;
-            });
-
-            // Fetch purchase orders linked to the jobs
-            const purchaseOrders = await Promise.all(
-              jobs.map(async (job) => await getPurchaseOrdersByJobID(job._id)) // Await purchase orders for each job
-            );
-
-            // Add all purchase order items to the parts array in the invoice and update totals
-            invoice.parts = purchaseOrders.flatMap((purchaseOrder) =>
-              purchaseOrder.flatMap((po) =>
-                po.items.map((item) => {
-                  const partTotal = item.quantity * item.price; // Total for the part
-
-                  // Update the invoice totals for parts
-                  invoice.sub_total += partTotal; // Update subtotal for parts
-                  invoice.discounted_total += partTotal; // Update discounted total for parts
+                  invoice.sub_total += partTotal;
+                  invoice.discounted_total += partTotal;
                   invoice.tax_amount =
-                    invoice.discounted_total * invoice.tax_rate; // Update tax amount for parts
+                    invoice.discounted_total * invoice.tax_rate;
                   invoice.total_amount_due =
-                    invoice.discounted_total + invoice.tax_amount; // Update total amount due for parts
+                    invoice.discounted_total + invoice.tax_amount;
 
-                  // Return the part item as an InvoiceItem
-                  return {
-                    _id: item.itemId,
-                    description: item.itemName,
-                    quantity: item.quantity,
-                    unit_price: item.price,
+                  const newPart: InvoiceItem = {
+                    _id: po.itemId,
+                    description: po.itemName,
+                    quantity: po.quantity,
+                    unit_price: po.price,
                     total: partTotal,
                   };
-                })
-              )
-            );
-          }
-          return invoice;
-        })
-      );
 
-      // Find the updated invoice
-      const updatedInvoice = invoices.find(
-        (invoice) => invoice.invoice_number === invoiceId
-      );
+                  invoice.parts.push(newPart);
+                }
+              }
+            }
+            return invoice;
+          })
+        );
 
-      // Resolve with the updated invoice
-      resolve(updatedInvoice!); // `!` is used here because we assume it will exist, but you might want to handle the case where it doesn't
+        // Find the updated invoice
+        const updatedInvoice = invoices.find(
+          (invoice) => invoice.invoice_number === invoiceId
+        );
+
+        resolve(updatedInvoice!); // Assuming the invoice will exist
+      }
     }, 500); // Simulating a delay
   });
 };

@@ -151,7 +151,11 @@ const InvoiceComponent: React.FC<{
         />
 
         {/* Invoice Summary */}
-        <InvoiceSummary invoice={invoice} />
+        <InvoiceSummary
+          invoice={invoice}
+          editMode={editMode}
+          handleInputChange={handleInputChange}
+        />
 
         <InvoiceFooter
           invoice={invoice}

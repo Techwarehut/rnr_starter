@@ -159,15 +159,22 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
 
   const handleAddCustomer = async (customer: Customer) => {
     try {
-      const updatedInvoice = await UpdateInvoiceCustomer(
-        invoiceData.invoice_number,
-        customer
-      );
-      if (updatedInvoice) {
-        setInvoiceData(updatedInvoice); // Update customer state with the fetched data
-        setRefreshKey((prev) => prev + 1);
+      if (invoiceData.invoice_number) {
+        const updatedInvoice = await UpdateInvoiceCustomer(
+          invoiceData.invoice_number,
+          customer
+        );
+        if (updatedInvoice) {
+          setInvoiceData(updatedInvoice); // Update customer state with the fetched data
+          setRefreshKey((prev) => prev + 1);
+        }
+        showSuccessToast("Customer updated successfully!");
+      } else {
+        handleInputChange("bill_to", {
+          customer_id: customer._id,
+          business_name: customer.businessName,
+        });
       }
-      showSuccessToast("Customer updated successfully!");
     } catch (error) {
       console.error("Error updating Customer:", error);
       showErrorToast("Failed to update Customer. Please try again.");
@@ -190,14 +197,14 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
 
   const handleInputChange = (
     field: keyof Invoice | keyof InvoiceItem, // Can be from Invoice or InvoiceItem
-    value: string | number | { customer_id: string; business_name: string }, // The value to update (can be string or number)
+    value: string | number | { customer_id: string; business_name: string }, // The value to update (can be string, number, or object)
     index?: number, // Optional index, used for updating individual items in services/parts
     array?: "services" | "parts" // Optional array, used when updating an item in services/parts
   ) => {
     setInvoiceData((prevData) => {
-      // Case 1: Updating a property on the Invoice object (e.g., invoice_number, notes)
+      // Case 1: Updating a property on the Invoice object (e.g., invoice_number, notes, discount)
       if (!array) {
-        // Special case for 'bill_to' field
+        // Special case for 'bill_to' field (object type)
         if (field === "bill_to" && typeof value === "object") {
           return {
             ...prevData,
@@ -207,6 +214,35 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
             },
           };
         }
+
+        // If updating the discount, ensure it's a valid number
+        if (field === "discount") {
+          // Ensure the discount value is a valid number
+          let discount = parseFloat(value.toString());
+
+          // If the discount is NaN (invalid), default to 0
+          if (isNaN(discount)) {
+            discount = 0;
+          }
+
+          // Recalculate the discounted total
+          const discountedTotal = prevData.sub_total - discount;
+
+          // Recalculate tax and total based on the new discounted total
+          const taxAmount = discountedTotal * prevData.tax_rate;
+          const totalAmountDue = discountedTotal + taxAmount;
+
+          // Update the invoice data with the new values
+          return {
+            ...prevData,
+            [field]: discount, // Update the discount
+            discounted_total: discountedTotal, // Update discounted_total
+            tax_amount: taxAmount, // Update tax_amount
+            total_amount_due: totalAmountDue, // Update total_amount_due
+          };
+        }
+
+        // Update the field directly if it's not related to services/parts or discount
         return {
           ...prevData,
           [field]: value, // Update the field directly on the Invoice object
@@ -244,12 +280,13 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
 
         // Now, we need to recalculate the totals at the Invoice level:
         const newSubTotal = [...prevData.services, ...prevData.parts].reduce(
-          (sum, item) => sum + item.total,
+          (sum, item) => sum + (item.total || 0), // Ensure the item has a total value
           0
         );
 
         // Calculate other fields based on the new sub_total
-        const discountedTotal = newSubTotal - prevData.discount;
+        const discount = prevData.discount || 0; // Default to 0 if discount is undefined
+        const discountedTotal = newSubTotal - discount;
         const taxAmount = discountedTotal * prevData.tax_rate;
         const totalAmountDue = discountedTotal + taxAmount;
 
@@ -267,8 +304,6 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
       return prevData;
     });
   };
-
-  console.log("rendering again", invoiceData.bill_to.business_name);
 
   return (
     <>
