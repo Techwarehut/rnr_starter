@@ -38,21 +38,20 @@ const InvoiceFooter: React.FC<{
         )}
 
         {/* Optional Notes */}
-        {invoice.notes &&
-          (editMode ? (
-            <TextField
-              label="Notes"
-              value={invoice.notes}
-              onChangeText={(value) => handleInputChange("notes", value)} // Ensure you're updating notes
-              editable={true}
-              nativeID="Notes"
-            />
-          ) : (
-            <View>
-              <Text className="font-semibold">Notes:</Text>
-              <Text>{invoice.notes}</Text>
-            </View>
-          ))}
+        {editMode ? (
+          <TextField
+            label="Notes"
+            value={invoice.notes || ""}
+            onChangeText={(value) => handleInputChange("notes", value)} // Ensure you're updating notes
+            editable={true}
+            nativeID="Notes"
+          />
+        ) : (
+          <View>
+            <Text className="font-semibold">Notes:</Text>
+            <Text>{invoice.notes}</Text>
+          </View>
+        )}
       </View>
 
       {/* Footer */}

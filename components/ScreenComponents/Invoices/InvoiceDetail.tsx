@@ -33,11 +33,15 @@ import { Job } from "../Jobs/types";
 interface InvoiceDetailProps {
   invoice: Invoice;
   edit?: boolean;
+  addNew?: boolean;
+  onChangeInvoice?: (data: Invoice) => void;
 }
 
 const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
   invoice,
   edit = false,
+  addNew = false,
+  onChangeInvoice,
 }) => {
   const isLargeScreen = useIsLargeScreen();
   const [value, setValue] = React.useState("active");
@@ -183,7 +187,11 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
 
   const handleAddLinkedJobs = async (invoiceId: string, jobs: Job[]) => {
     try {
-      const updatedInvoice = await UpdateInvoiceLinkedJobs(invoiceId, jobs);
+      const updatedInvoice = await UpdateInvoiceLinkedJobs(
+        invoiceId,
+        jobs,
+        invoiceData
+      );
       if (updatedInvoice) {
         setInvoiceData(updatedInvoice); // Update customer state with the fetched data
         setRefreshKey((prev) => prev + 1);
@@ -305,9 +313,14 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
     });
   };
 
+  useEffect(() => {
+    // Code to run on component mount or when dependencies change
+    if (addNew && onChangeInvoice) onChangeInvoice(invoiceData);
+  }, [invoiceData]);
+
   return (
     <>
-      {!isLargeScreen && (
+      {!isLargeScreen && !addNew && (
         <Stack.Screen
           // Replace with your actual component
           options={{
@@ -334,7 +347,7 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({
         className="flex-1 w-full gap-10 p-2"
       >
         {/* Header with Edit and Delete buttton */}
-        {isLargeScreen && (
+        {isLargeScreen && !addNew && (
           <View className="w-full flex-row gap-1 items-center justify-between gap-2 mb-4">
             <View>
               <H3>{invoiceData.bill_to.business_name}</H3>

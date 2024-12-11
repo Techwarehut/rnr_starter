@@ -15,6 +15,7 @@ import { TabBarListItem } from "./TabBarListItem";
 import { Button } from "../ui/button";
 import { router } from "expo-router";
 import Logo from "../ScreenComponents/Logo";
+import { useAuth } from "~/ctx/AuthContext";
 
 interface MyTabBarProps extends BottomTabBarProps {
   isLargeScreen: boolean;
@@ -36,8 +37,10 @@ const MyTabBar: React.FC<MyTabBarProps> = ({
   };
   let screenContent: React.ReactNode[] = [];
   let triggerContent: React.ReactNode;
+  const { logout } = useAuth();
 
-  const logout = () => {
+  const handlelogout = () => {
+    logout();
     router.replace("/createaccount");
   };
 
@@ -164,7 +167,7 @@ const MyTabBar: React.FC<MyTabBarProps> = ({
                 key={`button-logout-${route.key}`}
                 className="shadow shadow-foreground/5 m-5"
                 size="lg"
-                onPress={logout}
+                onPress={handlelogout}
               >
                 <Text>Logout</Text>
               </Button>

@@ -3,8 +3,13 @@
   "compilerOptions": {
     "strict": true,
     "baseUrl": ".",
+    "typeRoots": [
+      "node_modules/@types",
+      "types" // Add this line if the declaration file is inside a custom 'types' folder
+    ],
     "paths": {
-      "~/*": ["*"]
+      "~/*": ["*"],
+      "@firebase/auth": ["./node_modules/@firebase/auth/dist/index.rn.d.ts"]
     }
   },
   "include": [
@@ -12,7 +17,10 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
+
     "nativewind-env.d.ts",
-    "components/ScreenComponents/ToastMessage.tsx"
+    "react-native-dotenv.d.ts",
+    "components/ScreenComponents/ToastMessage.tsx",
+    ".env"
   ]
 }

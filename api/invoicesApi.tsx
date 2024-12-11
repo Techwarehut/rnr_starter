@@ -329,7 +329,8 @@ export const DeleteInvoiceCustomer = async (
 
 export const UpdateInvoiceLinkedJobs = async (
   invoiceId: string,
-  jobs: Job[]
+  jobs: Job[],
+  existingInvoice?: Invoice // Optional parameter for existing invoice
 ): Promise<Invoice> => {
   console.log(invoiceId);
 
@@ -337,32 +338,40 @@ export const UpdateInvoiceLinkedJobs = async (
     setTimeout(async () => {
       if (invoiceId === "") {
         // Case for creating a new invoice (no invoiceId provided)
-        const newInvoice: Invoice = {
-          invoice_number: generateUniqueId(), // Assuming you have a function to generate invoice numbers
-          linked_job_id: jobs.map((job) => job._id),
-          date_issued: "", // Empty string for date issued
-          due_date: "", // Empty string for due date
-          bill_to: {
-            customer_id: "", // Empty string for customer ID
-            business_name: "", // Empty string for business name
-          },
-          service_site_id: [], // Empty array for service site IDs
+        const newInvoice: Invoice = existingInvoice
+          ? existingInvoice
+          : {
+              // Optional parameter for existing invoice // Optional parameter for existing invoice{
+              invoice_number: generateUniqueId(), // Assuming you have a function to generate invoice numbers
+              linked_job_id: jobs.map((job) => job._id),
+              date_issued: "", // Empty string for date issued
+              due_date: "", // Empty string for due date
+              bill_to: {
+                customer_id: "", // Empty string for customer ID
+                business_name: "", // Empty string for business name
+              },
+              service_site_id: [], // Empty array for service site IDs
 
-          services: [], // Empty array for services
-          parts: [], // Empty array for parts
+              services: [], // Empty array for services
+              parts: [], // Empty array for parts
 
-          sub_total: 0, // 0 for subtotal
-          discount: 0, // 0 for discount
-          discounted_total: 0, // 0 for discounted total
-          tax_rate: 0.1, // 0 tax rate
-          tax_amount: 0, // 0 tax amount
-          total_amount_due: 0, // 0 total amount due
-          notes: "Net 30", // Empty string for notes
-          payment_terms: "", // Empty string for payment terms
-          payment_methods: [], // Empty array for payment methods
-          status: "Draft", // Default status as "Draft"
-        };
-
+              sub_total: 0, // 0 for subtotal
+              discount: 0, // 0 for discount
+              discounted_total: 0, // 0 for discounted total
+              tax_rate: 0.1, // 0 tax rate
+              tax_amount: 0, // 0 tax amount
+              total_amount_due: 0, // 0 total amount due
+              notes: "Net 30", // Empty string for notes
+              payment_terms: "", // Empty string for payment terms
+              payment_methods: [], // Empty array for payment methods
+              status: "Draft", // Default status as "Draft"
+            };
+        // Collect all job IDs and push them to the linked_job_id array
+        jobs.forEach((job) => {
+          if (!newInvoice.linked_job_id.includes(job._id)) {
+            newInvoice.linked_job_id.push(job._id);
+          }
+        });
         // Add all job titles and details to the new invoice
         jobs.forEach((job) => {
           const totalHours = job.assignedTo.reduce(

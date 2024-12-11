@@ -20,6 +20,7 @@ import { BottomSheetModalProvider } from "~/components/ui/bottom-sheet/bottomShe
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Separator } from "~/components/ui/separator";
 import Logo from "~/components/ScreenComponents/Logo";
+import { AuthContextProvider, useAuth } from "~/ctx/AuthContext";
 
 const LIGHT_THEME: Theme = {
   dark: false,
@@ -38,10 +39,21 @@ export {
 // Prevent the splash screen from auto-hiding before getting the color scheme.
 SplashScreen.preventAutoHideAsync();
 
-export default function RootLayout() {
+function LayoutContent() {
   const { colorScheme, setColorScheme, isDarkColorScheme } = useColorScheme();
   const [isColorSchemeLoaded, setIsColorSchemeLoaded] = React.useState(false);
   const AVATAR_URI = "https://randomuser.me/api/portraits/men/32.jpg";
+  const { isAuthenticated, user } = useAuth();
+  const router = useRouter();
+
+  React.useEffect(() => {
+    if (isAuthenticated) {
+      router.replace("/(tabs)");
+      console.log("User is authenticated:", user?.role);
+    } else {
+      console.log("User is not authenticated");
+    }
+  }, [isAuthenticated, user]);
 
   React.useEffect(() => {
     (async () => {
@@ -76,165 +88,174 @@ export default function RootLayout() {
   }
 
   return (
+    <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
+      <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
+      <Stack
+        screenOptions={{
+          headerShadowVisible: false,
+          headerTitleAlign: "left",
+        }}
+      >
+        <Stack.Screen
+          name="index"
+          options={{
+            title: "fast forward",
+            headerLeft: () => <Logo />,
+          }}
+        />
+        <Stack.Screen
+          name="createaccount"
+          options={{
+            title: "fast forward",
+            headerLeft: () => <Logo />,
+          }}
+        />
+
+        <Stack.Screen
+          name="(customer)/[customerName]"
+          options={{
+            headerShown: true,
+            headerTitle: "Customer Detail",
+            presentation: Platform.OS === "ios" ? "card" : "modal",
+            headerTitleAlign: "left",
+            //headerBackVisible: true,
+            headerBackTitleVisible: false,
+          }}
+        />
+        <Stack.Screen
+          name="(vendor)/[vendorName]"
+          options={{
+            headerShown: true,
+            headerTitle: "Vendor Detail",
+            presentation: Platform.OS === "ios" ? "card" : "modal",
+            headerTitleAlign: "left",
+            //headerBackVisible: true,
+            headerBackTitleVisible: false,
+          }}
+        />
+        <Stack.Screen
+          name="(user)/[username]"
+          options={{
+            headerTitle: "",
+            presentation: Platform.OS === "ios" ? "card" : "modal",
+            headerTitleAlign: "left",
+            //headerBackVisible: true,
+            headerBackTitleVisible: false,
+          }}
+        />
+        <Stack.Screen
+          name="jobs/[jobID]"
+          options={{
+            headerShown: true,
+            headerTitle: "",
+            presentation: Platform.OS === "ios" ? "card" : "modal",
+            headerTitleAlign: "left",
+            //headerBackVisible: true,
+            headerBackTitleVisible: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="jobs/addnew"
+          options={{
+            headerShown: true,
+            headerTitle: "Add New Job",
+            presentation: Platform.OS === "ios" ? "card" : "modal",
+            headerTitleAlign: "left",
+            //headerBackVisible: true,
+            headerBackTitleVisible: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="purchases/addnew"
+          options={{
+            headerShown: true,
+            headerTitle: "New Purchase",
+            presentation: Platform.OS === "ios" ? "card" : "modal",
+            headerTitleAlign: "left",
+            //headerBackVisible: true,
+            headerBackTitleVisible: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="jobs/linkjob"
+          options={{
+            headerShown: true,
+            headerTitle: "Select Job(s)",
+
+            presentation: Platform.OS === "ios" ? "card" : "modal",
+            headerTitleAlign: "left",
+            //headerBackVisible: true,
+            headerBackTitleVisible: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="sales/[invoiceId]"
+          options={{
+            headerShown: true,
+            headerTitle: "",
+            presentation: Platform.OS === "ios" ? "card" : "modal",
+            headerTitleAlign: "left",
+            //headerBackVisible: true,
+            headerBackTitleVisible: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="sales/addnewinvoice"
+          options={{
+            headerShown: true,
+            headerTitle: "New Invoice",
+            presentation: Platform.OS === "ios" ? "card" : "modal",
+            headerTitleAlign: "left",
+            //headerBackVisible: true,
+            headerBackTitleVisible: false,
+          }}
+        />
+        <Stack.Screen
+          name="(tabs)"
+          options={{
+            headerShown: false,
+            headerShadowVisible: true,
+            title: "fast forward",
+            headerTitleAlign: "left",
+            headerRight: () => (
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginRight: 10,
+                }}
+              >
+                <ThemeToggle />
+                <Avatar alt="Rick Sanchez's Avatar" className="w-10 h-10">
+                  <AvatarImage source={{ uri: AVATAR_URI }} />
+                  <AvatarFallback>
+                    <Text>RS</Text>
+                  </AvatarFallback>
+                </Avatar>
+              </View>
+            ),
+            headerLeft: () => <Logo />,
+          }}
+        />
+      </Stack>
+      <PortalHost />
+    </ThemeProvider>
+  );
+}
+
+export default function RootLayout() {
+  return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
-        <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-          <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
-          <Stack
-            screenOptions={{
-              headerShadowVisible: false,
-              headerTitleAlign: "left",
-            }}
-          >
-            <Stack.Screen
-              name="index"
-              options={{
-                title: "fast forward",
-                headerLeft: () => <Logo />,
-              }}
-            />
-            <Stack.Screen
-              name="createaccount"
-              options={{
-                title: "fast forward",
-                headerLeft: () => <Logo />,
-              }}
-            />
-            <Stack.Screen
-              name="(customer)/[customerName]"
-              options={{
-                headerShown: true,
-                headerTitle: "Customer Detail",
-                presentation: Platform.OS === "ios" ? "card" : "modal",
-                headerTitleAlign: "left",
-                //headerBackVisible: true,
-                headerBackTitleVisible: false,
-              }}
-            />
-            <Stack.Screen
-              name="(vendor)/[vendorName]"
-              options={{
-                headerShown: true,
-                headerTitle: "Vendor Detail",
-                presentation: Platform.OS === "ios" ? "card" : "modal",
-                headerTitleAlign: "left",
-                //headerBackVisible: true,
-                headerBackTitleVisible: false,
-              }}
-            />
-            <Stack.Screen
-              name="(user)/[username]"
-              options={{
-                headerTitle: "",
-                presentation: Platform.OS === "ios" ? "card" : "modal",
-                headerTitleAlign: "left",
-                //headerBackVisible: true,
-                headerBackTitleVisible: false,
-              }}
-            />
-            <Stack.Screen
-              name="jobs/[jobID]"
-              options={{
-                headerShown: true,
-                headerTitle: "",
-                presentation: Platform.OS === "ios" ? "card" : "modal",
-                headerTitleAlign: "left",
-                //headerBackVisible: true,
-                headerBackTitleVisible: false,
-              }}
-            />
-
-            <Stack.Screen
-              name="jobs/addnew"
-              options={{
-                headerShown: true,
-                headerTitle: "Add New Job",
-                presentation: Platform.OS === "ios" ? "card" : "modal",
-                headerTitleAlign: "left",
-                //headerBackVisible: true,
-                headerBackTitleVisible: false,
-              }}
-            />
-
-            <Stack.Screen
-              name="purchases/addnew"
-              options={{
-                headerShown: true,
-                headerTitle: "New Purchase",
-                presentation: Platform.OS === "ios" ? "card" : "modal",
-                headerTitleAlign: "left",
-                //headerBackVisible: true,
-                headerBackTitleVisible: false,
-              }}
-            />
-
-            <Stack.Screen
-              name="jobs/linkjob"
-              options={{
-                headerShown: true,
-                headerTitle: "Select Job(s)",
-
-                presentation: Platform.OS === "ios" ? "card" : "modal",
-                headerTitleAlign: "left",
-                //headerBackVisible: true,
-                headerBackTitleVisible: false,
-              }}
-            />
-
-            <Stack.Screen
-              name="sales/[invoiceId]"
-              options={{
-                headerShown: true,
-                headerTitle: "",
-                presentation: Platform.OS === "ios" ? "card" : "modal",
-                headerTitleAlign: "left",
-                //headerBackVisible: true,
-                headerBackTitleVisible: false,
-              }}
-            />
-
-            <Stack.Screen
-              name="sales/addnewinvoice"
-              options={{
-                headerShown: true,
-                headerTitle: "New Invoice",
-                presentation: Platform.OS === "ios" ? "card" : "modal",
-                headerTitleAlign: "left",
-                //headerBackVisible: true,
-                headerBackTitleVisible: false,
-              }}
-            />
-            <Stack.Screen
-              name="(tabs)"
-              options={{
-                headerShown: false,
-                headerShadowVisible: true,
-                title: "fast forward",
-                headerTitleAlign: "left",
-                headerRight: () => (
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginRight: 10,
-                    }}
-                  >
-                    <ThemeToggle />
-                    <Avatar alt="Rick Sanchez's Avatar" className="w-10 h-10">
-                      <AvatarImage source={{ uri: AVATAR_URI }} />
-                      <AvatarFallback>
-                        <Text>RS</Text>
-                      </AvatarFallback>
-                    </Avatar>
-                  </View>
-                ),
-                headerLeft: () => <Logo />,
-              }}
-            />
-          </Stack>
-          <PortalHost />
-        </ThemeProvider>
+        <AuthContextProvider>
+          <LayoutContent />
+        </AuthContextProvider>
       </BottomSheetModalProvider>
     </GestureHandlerRootView>
   );

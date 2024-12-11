@@ -16,7 +16,7 @@ import InvoiceDetail from "~/components/ScreenComponents/Invoices/InvoiceDetail"
 const addnewInvoice = () => {
   const [invoice, setInvoice] = React.useState<Invoice>({
     invoice_number: "", // Empty string for invoice number
-    date_issued: "", // Empty string for date issued
+    date_issued: Date(), // Empty string for date issued
     due_date: "", // Empty string for due date
     bill_to: {
       customer_id: "", // Empty string for customer ID
@@ -70,7 +70,14 @@ const addnewInvoice = () => {
           ),
         }}
       />
-      <InvoiceDetail invoice={invoice} edit={true} />
+      <View className="flex-1 items-center  justify-center m-2 web:p-8">
+        <InvoiceDetail
+          invoice={invoice}
+          edit={true}
+          addNew={true}
+          onChangeInvoice={setInvoice}
+        />
+      </View>
       <Toast />
     </>
   );

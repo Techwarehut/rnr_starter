@@ -21,11 +21,13 @@ import { ThemeToggle } from "~/components/ThemeToggle";
 import { H1, H2, H3, Muted, P } from "~/components/ui/typography";
 import { useIsLargeScreen } from "~/lib/utils";
 import { ScrollView, View } from "react-native";
+import { useAuth } from "~/ctx/AuthContext";
 
 export default function Screen() {
   const [userName, setUserName] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
+  const { isAuthenticated, user } = useAuth();
 
   const router = useRouter();
 

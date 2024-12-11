@@ -74,7 +74,10 @@ export const AddNewInvEst: React.FC<AddNewInvEstProps> = ({ onNewInvAdd }) => {
         <BottomSheetView className="flex flex-1 bg-popover gap-2 ">
           <Button
             variant="ghost"
-            onPress={() => router.push("/sales/addnewinvoice")}
+            onPress={() => {
+              handlePresentModalPress();
+              router.push("/sales/addnewinvoice");
+            }}
           >
             <Text>Invoice</Text>
           </Button>

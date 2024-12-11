@@ -23,10 +23,12 @@ import { Stack } from "expo-router";
 import { ThemeToggle } from "~/components/ThemeToggle";
 import { H1, H2, H3, Muted, P } from "~/components/ui/typography";
 import { useIsLargeScreen } from "~/lib/utils";
+import { useAuth } from "~/ctx/AuthContext";
 
 export default function Screen() {
   const [userName, setUserName] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const { login } = useAuth();
 
   const router = useRouter();
 
@@ -42,8 +44,9 @@ export default function Screen() {
     router.push("/createaccount");
   };
 
-  const login = () => {
-    router.replace("/(tabs)");
+  const handlelogin = () => {
+    login(userName, password);
+    // router.replace("/(tabs)");
   };
 
   // Shared value to control the visibility of each item
@@ -187,7 +190,7 @@ export default function Screen() {
                   secureTextEntry={true}
                 />
                 <View style={{ alignSelf: "flex-end" }}>
-                  <Button variant="link" onPress={login}>
+                  <Button variant="link" onPress={handlelogin}>
                     <Text className="text-primary text-right">
                       Forgot Password
                     </Text>
@@ -199,7 +202,7 @@ export default function Screen() {
               // variant="outline"
               size="lg"
               className="shadow shadow-foreground/5 w-full"
-              onPress={login}
+              onPress={handlelogin}
             >
               <Text>Login</Text>
             </Button>
