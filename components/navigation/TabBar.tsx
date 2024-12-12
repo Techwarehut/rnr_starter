@@ -37,12 +37,7 @@ const MyTabBar: React.FC<MyTabBarProps> = ({
   };
   let screenContent: React.ReactNode[] = [];
   let triggerContent: React.ReactNode;
-  const { logout } = useAuth();
-
-  const handlelogout = () => {
-    logout();
-    router.replace("/createaccount");
-  };
+  const { user } = useAuth();
 
   return (
     <View
@@ -72,12 +67,15 @@ const MyTabBar: React.FC<MyTabBarProps> = ({
 
         const isFocused = state.index === index;
 
-        const isSpecialRoute = route.name === "onboarding";
+        let isSpecialRoute = false;
+        if (user?.role === "Owner")
+          isSpecialRoute = route.name === "onboarding";
+        else isSpecialRoute = route.name === "settings";
 
         const isPopoverRoute =
           (!isLargeScreen && route.name === "onboarding") ||
           (!isLargeScreen && route.name === "settings") ||
-          route.name === "team" ||
+          (user?.role !== "Team Member" && route.name === "team") ||
           route.name === "customers" ||
           route.name === "vendors";
         const isLastPopoverRoute =
@@ -162,15 +160,6 @@ const MyTabBar: React.FC<MyTabBarProps> = ({
                 onLongPress={onLongPress}
                 options={options}
               />
-              <Button
-                variant="outline"
-                key={`button-logout-${route.key}`}
-                className="shadow shadow-foreground/5 m-5"
-                size="lg"
-                onPress={handlelogout}
-              >
-                <Text>Logout</Text>
-              </Button>
             </>
           );
           return (

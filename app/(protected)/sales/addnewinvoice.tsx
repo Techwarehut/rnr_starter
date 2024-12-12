@@ -70,7 +70,7 @@ const addnewInvoice = () => {
           ),
         }}
       />
-      <View className="flex-1 items-center  justify-center m-2 web:p-8">
+      <View className="flex-1 items-center  justify-center m-2 md:p-8">
         <InvoiceDetail
           invoice={invoice}
           edit={true}

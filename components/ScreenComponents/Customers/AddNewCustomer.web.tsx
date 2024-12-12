@@ -46,11 +46,7 @@ export const AddNewCustomer: React.FC<AddNewCustomerProps> = ({
     <ScrollView contentContainerClassName="flex-1 justify-center items-center p-6 ">
       <Dialog>
         <DialogTrigger asChild>
-          <Button
-            size="sm"
-            variant="default"
-            className="shadow shadow-foreground/5"
-          >
+          <Button size="sm" variant="default">
             <Text>Add New Customer</Text>
           </Button>
         </DialogTrigger>

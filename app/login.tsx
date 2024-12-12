@@ -1,5 +1,8 @@
 import * as React from "react";
+import { View, Image, useWindowDimensions, ScrollView } from "react-native";
 
+import { Info } from "~/lib/icons/Info";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
 import Animated, {
   FadeInUp,
@@ -18,16 +21,14 @@ import { useRouter } from "expo-router";
 import { FastForward } from "~/lib/icons/FastForward";
 import { Stack } from "expo-router";
 import { ThemeToggle } from "~/components/ThemeToggle";
-import { H1, H2, H3, Muted, P } from "~/components/ui/typography";
+import { H1, H2, H3, Muted, P, Small } from "~/components/ui/typography";
 import { useIsLargeScreen } from "~/lib/utils";
-import { ScrollView, View } from "react-native";
 import { useAuth } from "~/ctx/AuthContext";
 
-export default function Screen() {
+export default function Login() {
   const [userName, setUserName] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [confirmPassword, setConfirmPassword] = React.useState("");
-  const { isAuthenticated, user } = useAuth();
+  const { login } = useAuth();
 
   const router = useRouter();
 
@@ -38,21 +39,21 @@ export default function Screen() {
   const onChangePassword = (text: string) => {
     setPassword(text);
   };
-  const onChangeConfirmPassword = (text: string) => {
-    setConfirmPassword(text);
+
+  const signUp = () => {
+    router.push("/createaccount");
   };
 
-  const SignUp = () => {
+  const handlelogin = () => {
+    login(userName, password);
     // router.replace("/(tabs)");
   };
 
-  const login = () => {
-    router.replace("/login");
-  };
   // Shared value to control the visibility of each item
   const animations = Array(4)
     .fill(null)
     .map((_, index) => useSharedValue(0));
+
   const isLargeScreen = useIsLargeScreen();
 
   return (
@@ -69,8 +70,8 @@ export default function Screen() {
               }}
             >
               <ThemeToggle />
-              <Button className="shadow shadow-foreground/5" onPress={login}>
-                <Text>Login</Text>
+              <Button className="shadow shadow-foreground/5" onPress={signUp}>
+                <Text>Sign Up</Text>
               </Button>
             </View>
           ),
@@ -87,11 +88,10 @@ export default function Screen() {
           }   flex p-4 gap-4`}
         >
           <H1 className="text-foreground text-left">
-            Start by creating your free account
+            Run your business from anywhere
           </H1>
-          <H2>No Credit Card Required.</H2>
+          <H2>Sign into your account</H2>
         </View>
-
         <View /* className="flex-1 justify-between items-center p-4"> */
           className={`${
             isLargeScreen
@@ -101,7 +101,7 @@ export default function Screen() {
         >
           <View className="gap-8">
             {isLargeScreen && (
-              <H3 className="text-wrap">Run your business from anywhere!</H3>
+              <H3>Everything you need and nothing you don't!</H3>
             )}
             {[
               "Send Professional Estimates",
@@ -128,6 +128,8 @@ export default function Screen() {
                   withTiming(1, { duration: 2500 })
                 );
               }, []);
+
+              // Move the return statement outside the curly braces
               return (
                 isLargeScreen && (
                   <Animated.View key={index} style={animatedStyle}>
@@ -175,6 +177,9 @@ export default function Screen() {
                   aria-labelledby="email"
                   aria-errormessage="inputError"
                 />
+                <Small className="text-destructive">
+                  Use 'owner', 'lead' or 'member' to check out different roles.
+                </Small>
               </View>
 
               <View className="gap-2">
@@ -187,27 +192,25 @@ export default function Screen() {
                   aria-errormessage="inputError"
                   secureTextEntry={true}
                 />
-              </View>
-
-              <View className="gap-2">
-                <Label nativeID="password">Password</Label>
-                <Input
-                  placeholder="Confirm Password"
-                  value={confirmPassword}
-                  onChangeText={onChangeConfirmPassword}
-                  aria-labelledby="password"
-                  aria-errormessage="inputError"
-                  secureTextEntry={true}
-                />
+                <Small className="text-destructive">
+                  Leave Password blank.
+                </Small>
+                <View style={{ alignSelf: "flex-end" }}>
+                  <Button variant="link" onPress={handlelogin}>
+                    <Text className="text-primary text-right">
+                      Forgot Password
+                    </Text>
+                  </Button>
+                </View>
               </View>
             </View>
             <Button
               // variant="outline"
               size="lg"
               className="shadow shadow-foreground/5 w-full"
-              onPress={SignUp}
+              onPress={handlelogin}
             >
-              <Text>Sign Up</Text>
+              <Text>Login</Text>
             </Button>
             <View>
               <Muted className="text-center">

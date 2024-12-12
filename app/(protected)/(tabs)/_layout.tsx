@@ -20,18 +20,21 @@ import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Text } from "~/components/ui/text";
 import { Button } from "~/components/ui/button";
 import { cn, useIsLargeScreen } from "~/lib/utils";
+import { useAuth } from "~/ctx/AuthContext";
+import { ShowUserProfile } from "~/components/ScreenComponents/UserProfile/UserProfile";
 
 const AVATAR_URI = "https://randomuser.me/api/portraits/men/32.jpg";
 
 export default function TabLayout() {
   const isLargeScreen = useIsLargeScreen();
   const { isDarkColorScheme, setColorScheme } = useColorScheme();
+  const { user } = useAuth();
 
   // Define active and inactive colors based on the color scheme or your preference
   const activeTintColor = isDarkColorScheme ? "#FFD700" : "#1E90FF"; // Example: gold for dark mode, dodger blue for light mode
   const inactiveTintColor = isDarkColorScheme ? "#B0B0B0" : "#696969"; // Example: light gray for dark mode, dark gray for light mode
   const backgroundColor = isDarkColorScheme ? "#1e2936" : "#e8eef6"; // Example: light gray for dark mode, dark gray for light mode
-
+  console.log("I am in tabs");
   return (
     <Tabs
       tabBar={(props) => <MyTabBar {...props} isLargeScreen={isLargeScreen} />}
@@ -82,12 +85,7 @@ export default function TabLayout() {
               }}
             >
               <ThemeToggle />
-              <Avatar alt="Rick Sanchez's Avatar" className="w-10 h-10">
-                <AvatarImage source={{ uri: AVATAR_URI }} />
-                <AvatarFallback>
-                  <Text>RS</Text>
-                </AvatarFallback>
-              </Avatar>
+              <ShowUserProfile />
             </View>
           ),
           tabBarIcon: ({ color, focused }) => (
@@ -160,6 +158,7 @@ export default function TabLayout() {
       />
       <Tabs.Screen
         name="sales"
+        redirect={user?.role === "Team Member"}
         options={{
           title: "Sales",
           tabBarIcon: ({ color, focused }) => (
@@ -190,10 +189,17 @@ export default function TabLayout() {
           title: "Team",
           tabBarIcon: ({ color, focused }) => (
             <Users
-              /* className={
-                focused ? "fill-primary text-primary" : "text-primary fill-none"
-              } */
-              className={focused ? "text-primary" : "text-muted-foreground"}
+              className={
+                user?.role === "Team Member"
+                  ? focused
+                    ? "text-secondary-foreground"
+                    : isLargeScreen
+                    ? "text-primary-foreground"
+                    : "text-muted-foreground"
+                  : focused
+                  ? "text-primary"
+                  : "text-muted-foreground"
+              }
               size={24}
               strokeWidth={1.5}
             />
@@ -203,6 +209,7 @@ export default function TabLayout() {
       />
       <Tabs.Screen
         name="customers"
+        redirect={user?.role === "Team Member"}
         options={{
           title: "Customers",
           tabBarIcon: ({ color, focused }) => (
@@ -220,6 +227,7 @@ export default function TabLayout() {
       />
       <Tabs.Screen
         name="vendors"
+        redirect={user?.role === "Team Member"}
         options={{
           title: "Vendors",
           tabBarIcon: ({ color, focused }) => (
@@ -237,6 +245,7 @@ export default function TabLayout() {
       />
       <Tabs.Screen
         name="onboarding"
+        redirect={user?.role !== "Owner"}
         options={{
           title: "OnBoard",
           tabBarIcon: ({ color, focused }) => (
@@ -260,6 +269,7 @@ export default function TabLayout() {
       />
       <Tabs.Screen
         name="settings"
+        redirect={user?.role === "Team Member"}
         options={{
           title: "Settings",
           tabBarIcon: ({ color, focused }) => (

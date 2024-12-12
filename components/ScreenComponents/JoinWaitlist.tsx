@@ -17,12 +17,14 @@ import React, { useState } from "react";
 import { storeWaitlistInfo } from "~/api/waitlistApi";
 import InputField from "./InputField";
 import { Muted, Small } from "../ui/typography";
+import TextField from "./TextField";
 
 // Define a type for the waitlist data
-interface WaitlistInfo {
+export interface WaitlistInfo {
   name: string;
   email: string;
   phoneNumber: string;
+  feedback: string;
 }
 
 interface JoinWaitlistProps {}
@@ -35,6 +37,7 @@ export const JoinWaitlist: React.FC<JoinWaitlistProps> = ({}) => {
     name: "",
     email: "",
     phoneNumber: "",
+    feedback: "",
   });
 
   // Step 2: Handle input changes
@@ -90,11 +93,7 @@ export const JoinWaitlist: React.FC<JoinWaitlistProps> = ({}) => {
     <ScrollView contentContainerClassName="flex justify-center items-center p-6 ">
       <Dialog>
         <DialogTrigger asChild>
-          <Button
-            size="sm"
-            variant="default"
-            className="shadow shadow-foreground/5"
-          >
+          <Button size="sm" variant="default">
             <Text>Join Waitlist</Text>
           </Button>
         </DialogTrigger>
@@ -139,6 +138,14 @@ export const JoinWaitlist: React.FC<JoinWaitlistProps> = ({}) => {
                   onChangeText={(text) =>
                     handleInputChange("phoneNumber", text)
                   }
+                />
+                <TextField
+                  label="Feedback"
+                  editable={true}
+                  nativeID="feedback"
+                  placeholder="What you love and what you don't"
+                  value={formData.feedback}
+                  onChangeText={(text) => handleInputChange("feedback", text)}
                 />
               </View>
             </DialogDescription>

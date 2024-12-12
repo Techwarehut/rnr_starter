@@ -13,20 +13,18 @@ import { useColorScheme } from "~/lib/useColorScheme";
 import { ChevronDown } from "~/lib/icons/ChevronDown";
 import DateTimePicker, { DateType } from "react-native-ui-datepicker";
 import { Calendar } from "~/lib/icons/Calendar";
+import { useAuth } from "~/ctx/AuthContext";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import { getInitials } from "~/lib/utils";
+import UserDetail from "../Team/UserDetail";
 
-interface DatePicketProps {
-  date: DateType;
-  onChangeDate: (date: DateType) => void; // Add this prop
-}
-export const DatePicker: React.FC<DatePicketProps> = ({
-  date,
-  onChangeDate,
-}) => {
+interface ShowUserProfileProps {}
+export const ShowUserProfile: React.FC<ShowUserProfileProps> = ({}) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const [isOpen, setIsOpen] = useState(false);
   const animatedIndex = useSharedValue<number>(0);
   const animatedPosition = useSharedValue<number>(0);
-  const snapPoints = ["40%", "50%"];
+  const snapPoints = ["80%", "90%"];
   const { isDarkColorScheme, setColorScheme } = useColorScheme();
 
   const handleSheetChanges = useCallback((index: number) => {
@@ -43,10 +41,24 @@ export const DatePicker: React.FC<DatePicketProps> = ({
     }
   }, [isOpen]);
 
+  const { logout, user } = useAuth();
+
+  const handlelogout = () => {
+    handlePresentModalPress();
+    logout();
+
+    //router.replace("/createaccount");
+  };
+
   return (
     <>
-      <Pressable className=" mr-4" onPress={handlePresentModalPress}>
-        <Calendar className="text-primary" size={21} />
+      <Pressable onPress={handlePresentModalPress}>
+        <Avatar alt="Rick Sanchez's Avatar" className="w-10 h-10">
+          <AvatarImage source={{ uri: user?.profileUrl }} />
+          <AvatarFallback>
+            <Text>{getInitials(user?.name || "")}</Text>
+          </AvatarFallback>
+        </Avatar>
       </Pressable>
 
       <BottomSheetModal
@@ -69,20 +81,19 @@ export const DatePicker: React.FC<DatePicketProps> = ({
         )}
       >
         <BottomSheetView className="flex-1 bg-popover gap-2 items-center justify-center p-4 ">
-          <DateTimePicker
-            date={date}
-            mode="single"
-            onChange={(params) => {
-              handlePresentModalPress();
-              onChangeDate(params.date);
-            }}
-            calendarTextStyle={{ color: isDarkColorScheme ? "#FFF" : "#000" }}
-            selectedTextStyle={{ color: isDarkColorScheme ? "#000" : "#FFF" }}
-            headerTextStyle={{ color: isDarkColorScheme ? "#FFF" : "#000" }}
-            selectedItemColor={isDarkColorScheme ? "#FFF" : "#000"}
-            headerButtonColor={isDarkColorScheme ? "#FFF" : "#000"}
-            weekDaysTextStyle={{ color: isDarkColorScheme ? "#FFF" : "#000" }}
-          />
+          <View className="flex flex-row gap-2 self-end mb-2">
+            <Button variant="outline">
+              <Text>Edit Profile</Text>
+            </Button>
+            <Button onPress={handlelogout}>
+              <Text>Log Out</Text>
+            </Button>
+          </View>
+          {user ? (
+            <UserDetail user={user} />
+          ) : (
+            <Text>No user data available</Text>
+          )}
         </BottomSheetView>
       </BottomSheetModal>
     </>

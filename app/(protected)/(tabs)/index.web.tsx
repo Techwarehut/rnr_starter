@@ -13,6 +13,7 @@ import { Stack } from "expo-router";
 import { JoinWaitlist } from "~/components/ScreenComponents/JoinWaitlist";
 import { ThemeToggle } from "~/components/ThemeToggle";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import { ShowUserProfile } from "~/components/ScreenComponents/UserProfile/UserProfile";
 
 const AVATAR_URI = "https://randomuser.me/api/portraits/men/32.jpg";
 
@@ -23,7 +24,6 @@ export default function Dashboard() {
     <>
       <Stack.Screen
         options={{
-          headerTitle: "Vendors",
           headerRight: () => (
             <View
               style={{
@@ -36,12 +36,7 @@ export default function Dashboard() {
               <JoinWaitlist />
 
               <ThemeToggle />
-              <Avatar alt="Rick Sanchez's Avatar" className="w-10 h-10">
-                <AvatarImage source={{ uri: AVATAR_URI }} />
-                <AvatarFallback>
-                  <Text>RS</Text>
-                </AvatarFallback>
-              </Avatar>
+              <ShowUserProfile />
             </View>
           ),
         }}

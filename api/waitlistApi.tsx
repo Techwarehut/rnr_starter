@@ -1,11 +1,6 @@
 import { addDoc, collection } from "firebase/firestore";
 import { firestore } from "./firebaseConfig";
-
-interface WaitlistInfo {
-  name: string;
-  email: string;
-  phoneNumber: string;
-}
+import { WaitlistInfo } from "~/components/ScreenComponents/JoinWaitlist";
 
 // Function to store waitlist data in Firestore
 export const storeWaitlistInfo = async (waitlistData: WaitlistInfo) => {

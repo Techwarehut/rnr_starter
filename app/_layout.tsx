@@ -2,7 +2,7 @@ import "~/global.css";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Theme, ThemeProvider } from "@react-navigation/native";
-import { SplashScreen, Stack, useRouter } from "expo-router";
+import { Slot, SplashScreen, Stack, useRouter, useSegments } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { Platform } from "react-native";
@@ -45,12 +45,17 @@ function LayoutContent() {
   const AVATAR_URI = "https://randomuser.me/api/portraits/men/32.jpg";
   const { isAuthenticated, user } = useAuth();
   const router = useRouter();
+  const segments = useSegments();
 
   React.useEffect(() => {
+    const inAuthGroup = segments[0] === "(protected)";
+
+    console.log("I am here", inAuthGroup, isAuthenticated);
     if (isAuthenticated) {
-      router.replace("/(tabs)");
+      router.replace("(protected)/(tabs)/");
       console.log("User is authenticated:", user?.role);
-    } else {
+    } else if (!isAuthenticated && inAuthGroup) {
+      router.replace("/");
       console.log("User is not authenticated");
     }
   }, [isAuthenticated, user]);
@@ -96,13 +101,15 @@ function LayoutContent() {
           headerTitleAlign: "left",
         }}
       >
+        <Stack.Screen name="index" />
         <Stack.Screen
-          name="index"
+          name="login"
           options={{
             title: "fast forward",
             headerLeft: () => <Logo />,
           }}
         />
+
         <Stack.Screen
           name="createaccount"
           options={{
@@ -112,7 +119,8 @@ function LayoutContent() {
         />
 
         <Stack.Screen
-          name="(customer)/[customerName]"
+          name="(protected)/(customer)/[customerName]"
+          //redirect={user?.role === "Team Member"}
           options={{
             headerShown: true,
             headerTitle: "Customer Detail",
@@ -123,7 +131,8 @@ function LayoutContent() {
           }}
         />
         <Stack.Screen
-          name="(vendor)/[vendorName]"
+          name="(protected)/(vendor)/[vendorName]"
+          //redirect={user?.role === "Team Member"}
           options={{
             headerShown: true,
             headerTitle: "Vendor Detail",
@@ -134,7 +143,7 @@ function LayoutContent() {
           }}
         />
         <Stack.Screen
-          name="(user)/[username]"
+          name="(protected)/(user)/[username]"
           options={{
             headerTitle: "",
             presentation: Platform.OS === "ios" ? "card" : "modal",
@@ -144,7 +153,7 @@ function LayoutContent() {
           }}
         />
         <Stack.Screen
-          name="jobs/[jobID]"
+          name="(protected)/jobs/[jobID]"
           options={{
             headerShown: true,
             headerTitle: "",
@@ -156,7 +165,8 @@ function LayoutContent() {
         />
 
         <Stack.Screen
-          name="jobs/addnew"
+          name="(protected)/jobs/addnew"
+          //redirect={user?.role === "Team Member"}
           options={{
             headerShown: true,
             headerTitle: "Add New Job",
@@ -168,7 +178,7 @@ function LayoutContent() {
         />
 
         <Stack.Screen
-          name="purchases/addnew"
+          name="(protected)/purchases/addnew"
           options={{
             headerShown: true,
             headerTitle: "New Purchase",
@@ -180,7 +190,7 @@ function LayoutContent() {
         />
 
         <Stack.Screen
-          name="jobs/linkjob"
+          name="(protected)/jobs/linkjob"
           options={{
             headerShown: true,
             headerTitle: "Select Job(s)",
@@ -193,7 +203,8 @@ function LayoutContent() {
         />
 
         <Stack.Screen
-          name="sales/[invoiceId]"
+          name="(protected)/sales/[invoiceId]"
+          //redirect={user?.role === "Team Member"}
           options={{
             headerShown: true,
             headerTitle: "",
@@ -205,7 +216,8 @@ function LayoutContent() {
         />
 
         <Stack.Screen
-          name="sales/addnewinvoice"
+          name="(protected)/sales/addnewinvoice"
+          // redirect={user?.role === "Team Member"}
           options={{
             headerShown: true,
             headerTitle: "New Invoice",
@@ -216,7 +228,7 @@ function LayoutContent() {
           }}
         />
         <Stack.Screen
-          name="(tabs)"
+          name="(protected)/(tabs)"
           options={{
             headerShown: false,
             headerShadowVisible: true,

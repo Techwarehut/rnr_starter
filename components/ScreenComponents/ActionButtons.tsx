@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { Button } from "../ui/button";
 
 import DeleteButton from "./DeleteButton";
+import RoleWrapper from "./RoleWrapper";
 
 interface ActionButtonsProps {
   onEdit: () => void;
@@ -28,8 +29,9 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
           <Text className="text-secondary-foreground">Edit</Text>
         </Button>
       )}
-
-      <DeleteButton onDelete={onDelete} />
+      <RoleWrapper role="Owner">
+        <DeleteButton onDelete={onDelete} />
+      </RoleWrapper>
     </View>
   );
 };
