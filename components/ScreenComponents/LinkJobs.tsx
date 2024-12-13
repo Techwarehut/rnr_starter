@@ -24,6 +24,7 @@ import { Button } from "~/components/ui/button";
 import SelectJob from "./SelectJobs";
 import { Job } from "./Jobs/types";
 import { Plus } from "~/lib/icons/Plus";
+import { useAuth } from "~/ctx/AuthContext";
 
 interface LinkJobProps {
   handleJobSelect: (selectedJobs: Job[]) => void; // Callback to handle job selection
@@ -45,6 +46,8 @@ export const LinkJobs: React.FC<LinkJobProps> = ({
   const snapPoints = ["80%", "90%"];
   const { isDarkColorScheme, setColorScheme } = useColorScheme();
   const [localSelectedJobs, setLocalSelectedJobs] = useState<Job[]>([]);
+
+  const { user } = useAuth();
 
   const handleSheetChanges = useCallback((index: number) => {
     // handle sheet changes
@@ -122,6 +125,7 @@ export const LinkJobs: React.FC<LinkJobProps> = ({
             isSelectionRequired={true}
             canSelectMultiple={canSelectMultiple}
             onJobSelect={setLocalSelectedJobs}
+            user={user}
             filterForInvoice={filterForInvoice}
             filterForCustomerId={filterForCustomerId}
           />

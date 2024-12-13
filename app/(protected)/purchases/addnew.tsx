@@ -18,6 +18,8 @@ const addnew = () => {
   // Ensure jobID is a string
   const id = Array.isArray(jobid) ? jobid[0] : jobid;
 
+  console.log(id);
+
   // Initial state for PurchaseOrder
   const [purchase, setPurchase] = React.useState<PurchaseOrder>({
     purchaseOrderNumber: "",

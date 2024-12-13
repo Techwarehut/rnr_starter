@@ -29,7 +29,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
           <Text className="text-secondary-foreground">Edit</Text>
         </Button>
       )}
-      <RoleWrapper role="Owner">
+      <RoleWrapper roles={["Owner"]}>
         <DeleteButton onDelete={onDelete} />
       </RoleWrapper>
     </View>

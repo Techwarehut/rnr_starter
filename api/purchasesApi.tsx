@@ -5,14 +5,29 @@ import {
   PurchaseOrderItem,
   StatusKeys,
 } from "~/components/ScreenComponents/Purchases/types";
+import { User } from "~/components/ScreenComponents/Team/types";
 
 let purchaseOrders: PurchaseOrder[] = purchaseOrdersData as PurchaseOrder[];
 
 // Function to fetch all purchase orders
-export const getAllPurchaseOrders = async (): Promise<PurchaseOrder[]> => {
+export const getAllPurchaseOrders = async (
+  user: User
+): Promise<PurchaseOrder[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(purchaseOrders);
+      // Check if user is "Owner" or "Team Lead", in which case fetch all jobs
+      if (user.role === "Owner" || user.role === "Team Lead") {
+        resolve(purchaseOrders); // Resolve with all jobs
+      } else if (user.role === "Team Member") {
+        // If user is "Team Member", filter jobs based on their assigned userId and exclude certain statuses
+        const requestedPurchases = purchaseOrders.filter(
+          (purchaseOrder) => purchaseOrder.requestedBy.userId === user._id
+        );
+
+        resolve(requestedPurchases); // Resolve with the filtered list of jobs
+      } else {
+        resolve([]); // No jobs if the role is unknown
+      }
     }, 1000); // Simulate a delay
   });
 };

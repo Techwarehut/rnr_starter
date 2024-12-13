@@ -93,13 +93,13 @@ const UserDetail: React.FC<UserDetailProps> = ({ user }) => {
       </View>
 
       {/* User Details Section */}
-      <View className="flex flex-col md:flex-row w-full gap-12  mt-8 md:ml-auto md:mr-auto">
+      <View className="flex flex-col md:flex-row w-full gap-4 mt-8 ">
         {/*  Mail and Phone */}
 
-        <View className="flex-1 gap-4 ">
+        <View className="flex flex-1 gap-4 ">
           <Large>Contact</Large>
-          <View className="flex bg-secondary rounded-md gap-4 p-4">
-            <View className="flex-row items-center gap-2">
+          <View className="flex md:flex-1 bg-secondary rounded-md gap-4 p-4">
+            <View className="flex flex-row items-center gap-2">
               <Link href={`mailto:${user.email}`}>
                 <Pressable className="h-8 w-8 bg-primary rounded-2xl items-center justify-center p-1">
                   <Mail
@@ -108,7 +108,7 @@ const UserDetail: React.FC<UserDetailProps> = ({ user }) => {
                   />
                 </Pressable>
               </Link>
-              <Text>{user.email}</Text>
+              <Text className="text-wrap break-all">{user.email}</Text>
             </View>
             <View className="flex-row items-center gap-2">
               <Link href={`tel:${user.phone.replace(/\D/g, "")}`}>
@@ -125,9 +125,9 @@ const UserDetail: React.FC<UserDetailProps> = ({ user }) => {
         </View>
 
         {/* Emergency Contact */}
-        <View className="flex-1 gap-4">
+        <View className="flex flex-1 gap-4">
           <Large className="text-destructive">Emergeny Contact</Large>
-          <View className="flex border border-destructive rounded-md gap-4 p-4">
+          <View className="flex md:flex-1 border border-destructive rounded-md gap-4 p-4">
             <View className="flex-row items-center gap-2">
               <View className="h-8 w-8 bg-primary-foreground rounded-2xl items-center justify-center p-1">
                 <User2

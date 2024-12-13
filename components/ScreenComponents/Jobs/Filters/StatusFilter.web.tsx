@@ -30,6 +30,8 @@ const StatusFilter: React.FC<StatusFilterProps> = ({
   const [checkedStates, setCheckedStates] =
     useState<Record<StatusKeys, boolean>>(initialCheckedStates);
 
+  console.log(checkedStates);
+
   const contentInsets = {
     left: 12,
     right: 12,

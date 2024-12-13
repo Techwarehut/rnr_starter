@@ -22,6 +22,7 @@ import {
   JobChecklist,
   Task,
 } from "~/components/ScreenComponents/Checklist/types";
+import { useAuth } from "~/ctx/AuthContext";
 
 let checklists: Checklist[] = checklistsData; // Initialize with JSON data
 let jobchecklists: JobChecklist[] = jobChecklistsData; // Initialize with JSON data
@@ -31,11 +32,33 @@ let jobs: Job[] = jobsData as Job[];
 // Initialize an array to store users (this can be replaced with a more permanent storage)
 let assignedUsers: AssignedUser[] = [];
 
-// Function to fetch all jobs
-export const getAllJobs = async (): Promise<Job[]> => {
+export const getAllJobs = async (user: User): Promise<Job[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(jobs);
+      // Check if user is "Owner" or "Team Lead", in which case fetch all jobs
+      if (user.role === "Owner" || user.role === "Team Lead") {
+        resolve(jobs); // Resolve with all jobs
+      } else if (user.role === "Team Member") {
+        // If user is "Team Member", filter jobs based on their assigned userId and exclude certain statuses
+        const assignedJobs = jobs
+          .filter((job) =>
+            job.assignedTo.some((assignee) => assignee.userId === user._id)
+          )
+          .filter((job) => {
+            // Filter out jobs with statuses like "Accounts Receivable", "Invoiced", "Paid", "Cancelled"
+            return ![
+              "approval pending",
+              "accounts receivable",
+              "invoiced",
+              "paid",
+              "cancelled",
+            ].includes(job.status.toLowerCase());
+          });
+
+        resolve(assignedJobs); // Resolve with the filtered list of jobs
+      } else {
+        resolve([]); // No jobs if the role is unknown
+      }
     }, 1000); // Simulate a delay
   });
 };
@@ -365,8 +388,8 @@ export const updateJobDueDate = async (
 };
 
 // Function to fetch jobs with status "In Progress"
-export const getInProgressJobs = async (): Promise<Job[]> => {
-  const allJobs = await getAllJobs(); // Fetch all jobs
+export const getInProgressJobs = async (user: User): Promise<Job[]> => {
+  const allJobs = await getAllJobs(user); // Fetch all jobs
 
   // Filter jobs with status "In Progress"
   const inProgressJobs = allJobs.filter((job) => job.status === "In Progress");

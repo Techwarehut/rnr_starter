@@ -3,6 +3,7 @@ import React from "react";
 import { Checkbox } from "~/components/ui/checkbox";
 import { Label } from "~/components/ui/label";
 import { StatusKeys, statusLabelMapping } from "./Statustypes";
+import { useAuth } from "~/ctx/AuthContext";
 
 interface StatusFilterProps {
   initialCheckedStates: Record<StatusKeys, boolean>; // Accept initial checked states as prop
@@ -15,6 +16,7 @@ const StatusFilter: React.FC<StatusFilterProps> = ({
 }) => {
   const [checkedStates, setCheckedStates] =
     React.useState<Record<StatusKeys, boolean>>(initialCheckedStates);
+
   const handleCheckboxChange = (status: StatusKeys) => {
     setCheckedStates((prev) => {
       const newCheckedStates = { ...prev, [status]: !prev[status] };

@@ -13,6 +13,7 @@ import { SearchInput } from "~/components/ScreenComponents/SearchInput";
 import { useToast } from "~/components/ScreenComponents/ToastMessage";
 import { Button } from "~/components/ui/button";
 import { Text } from "~/components/ui/text";
+import { useAuth } from "~/ctx/AuthContext";
 import { useIsLargeScreen } from "~/lib/utils";
 
 export default function Purchases() {
@@ -33,11 +34,14 @@ export default function Purchases() {
   });
   const router = useRouter();
 
+  const { user } = useAuth();
   const fetchPurchases = async () => {
     try {
-      const data = await getAllPurchaseOrders(); // Call the API
-      setPurchases(data);
-      setfilteredPurchases(data);
+      if (user) {
+        const data = await getAllPurchaseOrders(user); // Call the API
+        setPurchases(data);
+        setfilteredPurchases(data);
+      }
     } catch (error) {
       showErrorToast("Failed to fetch Purchases!");
     }

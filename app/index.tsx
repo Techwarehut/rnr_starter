@@ -11,6 +11,8 @@ export default function Screen() {
   const { isAuthenticated } = useAuth();
   const [hasMounted, setHasMounted] = React.useState(false);
 
+  console.log("Iam here in index");
+
   const login = () => {
     router.replace("/login");
   };

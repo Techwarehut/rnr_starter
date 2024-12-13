@@ -20,12 +20,16 @@ import { Button } from "~/components/ui/button";
 import { Text } from "~/components/ui/text";
 import { useIsLargeScreen } from "~/lib/utils";
 import JobSectionListWeb from "~/components/ScreenComponents/Jobs/JobListWeb";
+import { useAuth } from "~/ctx/AuthContext";
+import RoleWrapper from "./RoleWrapper";
+import { User } from "./Team/types";
 
 interface interfaceJobProps {
   selectedJobs?: Job[]; // Array of selected jobs
   isSelectionRequired?: boolean; // Boolean to indicate if selection is required
   canSelectMultiple?: boolean; // Boolean to allow single or multiple selection
   onJobSelect?: (selectedJobs: Job[]) => void; // Callback to handle job selection
+  user: User | null;
   filterInProgress?: boolean;
   filterForInvoice?: boolean;
   filterForCustomerId?: string;
@@ -36,6 +40,7 @@ export default function SelectJob({
   isSelectionRequired = false,
   canSelectMultiple = false,
   onJobSelect,
+  user,
   filterInProgress = false,
   filterForInvoice = false,
   filterForCustomerId = "",
@@ -71,13 +76,14 @@ export default function SelectJob({
   });
 
   const router = useRouter();
+
   const fetchJobs = async () => {
     try {
-      let data;
+      let data: Job[] = [];
       if (filterForInvoice) {
         data = await fetchReadyForInvoiceJobs(filterForCustomerId); // Call the API
       } else {
-        data = await getAllJobs(); // Call the API
+        if (user) data = await getAllJobs(user); // Call the API
       }
       setJobs(data);
       setFilteredJobs(data);
@@ -88,6 +94,31 @@ export default function SelectJob({
   useEffect(() => {
     fetchJobs();
   }, []);
+
+  // Adjust the selected statuses based on the user's role
+  useEffect(() => {
+    console.log(user?.role);
+    if (user?.role === "Team Member") {
+      setSelectedStatuses({
+        inprogress: false,
+        onhold: false, // You can limit the statuses visible to Team Members
+      });
+    } else if (user?.role === "Team Lead" || user?.role === "Owner") {
+      // For Team Lead or Owner, show all statuses
+      setSelectedStatuses({
+        backlog: false,
+        inprogress: false,
+        onhold: false,
+        approvalpending: false,
+        accountsreceivable: filterForInvoice,
+        invoiced: false,
+        paid: false,
+      });
+    }
+
+    // Log to verify that the state is being set correctly
+    console.log("Selected Statuses Updated", selectedStatuses);
+  }, [user]);
 
   const filterJobs = () => {
     const filtered = jobs.filter((job) => {
@@ -120,8 +151,30 @@ export default function SelectJob({
 
   const handleChangeStatus = async (jobId: string, newStatus: string) => {
     try {
+      // Update the job status using your API
       const updatedJob = await updateJobStatus(jobId, newStatus);
 
+      // Check if the updated status is one of the excluded statuses
+      const excludedStatuses = [
+        "approval pending",
+        "accounts receivable",
+        "invoiced",
+        "paid",
+        "cancelled",
+      ];
+
+      // If the user is a Team Member and the job status is in the excluded list
+      if (
+        user?.role === "Team Member" &&
+        excludedStatuses.includes(updatedJob.status.toLowerCase())
+      ) {
+        // Filter out the job from filteredJobs
+        setFilteredJobs((prevFilteredJobs) =>
+          prevFilteredJobs.filter((job) => job._id !== jobId)
+        );
+      }
+
+      // Trigger refresh if needed
       setRefreshKey((prev) => prev + 1);
     } catch (error) {
       console.error(error);
@@ -228,14 +281,15 @@ export default function SelectJob({
                 >
                   <Text>Select</Text>
                 </Button> */}
-
-                <Button
-                  size="sm"
-                  variant="default"
-                  onPress={() => router.push("/jobs/addnew")}
-                >
-                  <Text>New Job</Text>
-                </Button>
+                <RoleWrapper roles={["Owner", "Team Lead"]}>
+                  <Button
+                    size="sm"
+                    variant="default"
+                    onPress={() => router.push("/jobs/addnew")}
+                  >
+                    <Text>New Job</Text>
+                  </Button>
+                </RoleWrapper>
               </View>
             ),
           }}
@@ -264,9 +318,26 @@ export default function SelectJob({
             dashboardView={filterForInvoice}
           />
         </View>
-
-        {islargeScreen ? (
-          isSelectionRequired ? (
+        {groupedJobs && groupedJobs.length > 0 ? (
+          islargeScreen ? (
+            isSelectionRequired ? (
+              <JobSectionList
+                onChangeStatus={handleChangeStatus}
+                sections={groupedJobs}
+                onJobDetail={handleJobDetail}
+                isSelectionRequired={isSelectionRequired}
+                canSelectMultiple={checkboxEnabled}
+                selectedJobs={selectedJobs || []}
+                onJobSelect={handleJobSelect}
+              />
+            ) : (
+              <JobSectionListWeb
+                onChangeStatus={handleChangeStatus}
+                sections={groupedJobs}
+                onJobDetail={handleJobDetail}
+              />
+            )
+          ) : (
             <JobSectionList
               onChangeStatus={handleChangeStatus}
               sections={groupedJobs}
@@ -276,23 +347,11 @@ export default function SelectJob({
               selectedJobs={selectedJobs || []}
               onJobSelect={handleJobSelect}
             />
-          ) : (
-            <JobSectionListWeb
-              onChangeStatus={handleChangeStatus}
-              sections={groupedJobs}
-              onJobDetail={handleJobDetail}
-            />
           )
         ) : (
-          <JobSectionList
-            onChangeStatus={handleChangeStatus}
-            sections={groupedJobs}
-            onJobDetail={handleJobDetail}
-            isSelectionRequired={isSelectionRequired}
-            canSelectMultiple={checkboxEnabled}
-            selectedJobs={selectedJobs || []}
-            onJobSelect={handleJobSelect}
-          />
+          <View className="flex items-center justify-center">
+            <Text>No Jobs to show</Text>
+          </View>
         )}
       </View>
       <Toast />

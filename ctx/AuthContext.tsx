@@ -49,9 +49,9 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
       // const userCredential = await signInWithEmailAndPassword(auth, email, password);
       let userId: string = "";
 
-      if (email === "owner") userId = "1";
-      else if (email === "lead") userId = "2";
-      else if (email === "member") userId = "3";
+      if (email.toLowerCase() === "owner") userId = "1";
+      else if (email.toLowerCase() === "lead") userId = "2";
+      else if (email.toLowerCase() === "member") userId = "3";
       if (userId) {
         const retUser = await getUserById(userId);
         if (retUser) {

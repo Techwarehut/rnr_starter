@@ -17,7 +17,9 @@ import { Text } from "~/components/ui/text";
 import { useIsLargeScreen } from "~/lib/utils";
 import JobSectionListWeb from "~/components/ScreenComponents/Jobs/JobListWeb";
 import SelectJob from "~/components/ScreenComponents/SelectJobs";
+import { useAuth } from "~/ctx/AuthContext";
 
 export default function JobScreen() {
-  return <SelectJob />;
+  const { user } = useAuth();
+  return <SelectJob user={user} />;
 }

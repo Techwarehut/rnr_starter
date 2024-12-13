@@ -42,23 +42,31 @@ SplashScreen.preventAutoHideAsync();
 function LayoutContent() {
   const { colorScheme, setColorScheme, isDarkColorScheme } = useColorScheme();
   const [isColorSchemeLoaded, setIsColorSchemeLoaded] = React.useState(false);
+  const [hasMounted, setHasMounted] = React.useState(false);
   const AVATAR_URI = "https://randomuser.me/api/portraits/men/32.jpg";
   const { isAuthenticated, user } = useAuth();
   const router = useRouter();
   const segments = useSegments();
 
+  // Ensure that the navigation happens after the component has mounted
+  React.useEffect(() => {
+    setHasMounted(true); // Mark component as mounted
+  }, []);
+
   React.useEffect(() => {
     const inAuthGroup = segments[0] === "(protected)";
 
-    console.log("I am here", inAuthGroup, isAuthenticated);
-    if (isAuthenticated) {
-      router.replace("(protected)/(tabs)/");
-      console.log("User is authenticated:", user?.role);
-    } else if (!isAuthenticated && inAuthGroup) {
-      router.replace("/");
-      console.log("User is not authenticated");
+    if (hasMounted && isColorSchemeLoaded) {
+      console.log("I am here", inAuthGroup, isAuthenticated);
+      if (isAuthenticated) {
+        router.replace("/(protected)/(tabs)/dashboard");
+        console.log("User is authenticated:", user?.role);
+      } else if (!isAuthenticated && inAuthGroup) {
+        router.replace("/");
+        console.log("User is not authenticated");
+      }
     }
-  }, [isAuthenticated, user]);
+  }, [isAuthenticated, user, hasMounted, isColorSchemeLoaded]);
 
   React.useEffect(() => {
     (async () => {
@@ -101,7 +109,13 @@ function LayoutContent() {
           headerTitleAlign: "left",
         }}
       >
-        <Stack.Screen name="index" />
+        <Stack.Screen
+          name="index"
+          options={{
+            title: "fast forward",
+            headerLeft: () => <Logo />,
+          }}
+        />
         <Stack.Screen
           name="login"
           options={{
@@ -117,118 +131,8 @@ function LayoutContent() {
             headerLeft: () => <Logo />,
           }}
         />
-
         <Stack.Screen
-          name="(protected)/(customer)/[customerName]"
-          //redirect={user?.role === "Team Member"}
-          options={{
-            headerShown: true,
-            headerTitle: "Customer Detail",
-            presentation: Platform.OS === "ios" ? "card" : "modal",
-            headerTitleAlign: "left",
-            //headerBackVisible: true,
-            headerBackTitleVisible: false,
-          }}
-        />
-        <Stack.Screen
-          name="(protected)/(vendor)/[vendorName]"
-          //redirect={user?.role === "Team Member"}
-          options={{
-            headerShown: true,
-            headerTitle: "Vendor Detail",
-            presentation: Platform.OS === "ios" ? "card" : "modal",
-            headerTitleAlign: "left",
-            //headerBackVisible: true,
-            headerBackTitleVisible: false,
-          }}
-        />
-        <Stack.Screen
-          name="(protected)/(user)/[username]"
-          options={{
-            headerTitle: "",
-            presentation: Platform.OS === "ios" ? "card" : "modal",
-            headerTitleAlign: "left",
-            //headerBackVisible: true,
-            headerBackTitleVisible: false,
-          }}
-        />
-        <Stack.Screen
-          name="(protected)/jobs/[jobID]"
-          options={{
-            headerShown: true,
-            headerTitle: "",
-            presentation: Platform.OS === "ios" ? "card" : "modal",
-            headerTitleAlign: "left",
-            //headerBackVisible: true,
-            headerBackTitleVisible: false,
-          }}
-        />
-
-        <Stack.Screen
-          name="(protected)/jobs/addnew"
-          //redirect={user?.role === "Team Member"}
-          options={{
-            headerShown: true,
-            headerTitle: "Add New Job",
-            presentation: Platform.OS === "ios" ? "card" : "modal",
-            headerTitleAlign: "left",
-            //headerBackVisible: true,
-            headerBackTitleVisible: false,
-          }}
-        />
-
-        <Stack.Screen
-          name="(protected)/purchases/addnew"
-          options={{
-            headerShown: true,
-            headerTitle: "New Purchase",
-            presentation: Platform.OS === "ios" ? "card" : "modal",
-            headerTitleAlign: "left",
-            //headerBackVisible: true,
-            headerBackTitleVisible: false,
-          }}
-        />
-
-        <Stack.Screen
-          name="(protected)/jobs/linkjob"
-          options={{
-            headerShown: true,
-            headerTitle: "Select Job(s)",
-
-            presentation: Platform.OS === "ios" ? "card" : "modal",
-            headerTitleAlign: "left",
-            //headerBackVisible: true,
-            headerBackTitleVisible: false,
-          }}
-        />
-
-        <Stack.Screen
-          name="(protected)/sales/[invoiceId]"
-          //redirect={user?.role === "Team Member"}
-          options={{
-            headerShown: true,
-            headerTitle: "",
-            presentation: Platform.OS === "ios" ? "card" : "modal",
-            headerTitleAlign: "left",
-            //headerBackVisible: true,
-            headerBackTitleVisible: false,
-          }}
-        />
-
-        <Stack.Screen
-          name="(protected)/sales/addnewinvoice"
-          // redirect={user?.role === "Team Member"}
-          options={{
-            headerShown: true,
-            headerTitle: "New Invoice",
-            presentation: Platform.OS === "ios" ? "card" : "modal",
-            headerTitleAlign: "left",
-            //headerBackVisible: true,
-            headerBackTitleVisible: false,
-          }}
-        />
-        <Stack.Screen
-          name="(protected)/(tabs)"
+          name="(protected)"
           options={{
             headerShown: false,
             headerShadowVisible: true,
@@ -256,6 +160,7 @@ function LayoutContent() {
           }}
         />
       </Stack>
+
       <PortalHost />
     </ThemeProvider>
   );

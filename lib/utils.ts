@@ -4,6 +4,7 @@ import dayjs, { Dayjs } from "dayjs";
 import { useWindowDimensions } from "react-native";
 import { DateType } from "react-native-ui-datepicker";
 import { twMerge } from "tailwind-merge";
+import { StatusKeys } from "~/components/ScreenComponents/Jobs/Filters/Statustypes";
 import { JobRecurrence } from "~/components/ScreenComponents/Jobs/types";
 
 export function cn(...inputs: ClassValue[]) {
@@ -242,4 +243,39 @@ const calculateNextDueDate = (
   }
 
   return nextDueDate;
+};
+
+// Define the role-based status mapping (can be expanded)
+const roleStatusMapping = {
+  "Team Member": ["backlog", "inprogress", "onhold", "approvalpending"], // Top 4 statuses for "Team Member"
+  "Team Lead": [
+    "backlog",
+    "inprogress",
+    "onhold",
+    "approvalpending",
+    "accountsreceivable",
+    "invoiced",
+  ],
+  Owner: [
+    "backlog",
+    "inprogress",
+    "onhold",
+    "approvalpending",
+    "accountsreceivable",
+    "invoiced",
+    "paid",
+    "baddebt",
+    "cancelled",
+  ],
+  // Add more roles as needed
+};
+
+// Function to get allowed status keys based on user role
+export const getAllowedStatusKeys = (userRole: string): StatusKeys[] => {
+  // Type assertion: Assert the type of the result to StatusKeys[]
+  return (
+    (roleStatusMapping[
+      userRole as keyof typeof roleStatusMapping
+    ] as StatusKeys[]) || []
+  );
 };

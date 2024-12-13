@@ -38,7 +38,7 @@ const AddNewPurchaseForm: React.FC<AddJobFormProps> = ({ onChange, jobId }) => {
     items: [],
     status: "Request", // Default status can be "Request"
     total: 0, // Default total
-    jobID: jobId,
+    jobID: jobId ? jobId : "",
     requestedBy: {
       userId: "",
       name: "",

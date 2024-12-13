@@ -26,6 +26,7 @@ import { JobCard } from "../Jobs/JobCard";
 import { Table, TableCell, TableRow } from "~/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Repeat } from "~/lib/icons/Repeat";
+import { useAuth } from "~/ctx/AuthContext";
 
 const Schedule = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -57,13 +58,16 @@ const Schedule = () => {
 
   const islargeScreen = useIsLargeScreen();
   const router = useRouter();
+  const { user } = useAuth();
 
   const fetchJobs = async () => {
     try {
-      const data = await getInProgressJobs(); // Call the API
-      // const data = await getAllJobs(); // Call the API
-      setJobs(data);
-      setFilteredJobs(data);
+      if (user) {
+        const data = await getInProgressJobs(user); // Call the API
+        // const data = await getAllJobs(); // Call the API
+        setJobs(data);
+        setFilteredJobs(data);
+      }
     } catch (error) {
       showErrorToast("Failed to fetch Jobs!");
     }
@@ -156,7 +160,7 @@ const Schedule = () => {
       <View className="flex flex-row items-center justify-between">
         <Large>Today's Schedule</Large>
 
-        <Button>
+        <Button onPress={() => router.push("/(protected)/(tabs)/jobs")}>
           <Text>View All Jobs</Text>
         </Button>
       </View>
@@ -178,76 +182,82 @@ const Schedule = () => {
         />
       </View>
       <View className="flex flex-1">
-        {groupedJobs.map((group) => (
-          <Collapsible key={group.title} title={group.title}>
-            <Table className="border border-input rounded-md p-2">
-              {group.data.map((job, index) => (
-                <TableRow
-                  className={cn(
-                    "active:bg-secondary w-full ",
-                    index % 2 && "bg-muted/40 "
-                  )}
-                  key={job._id}
-                >
-                  <TableCell className="flex w-full items-start">
-                    <View className="flex flex-row gap-2 w-full items-center justify-between">
-                      <View className="flex flex-row gap-2 items-center ">
-                        {getJobPriorityIcon(job.priority)}
-                      </View>
-                      <View className="flex-row flex-wrap gap-2">
-                        {job.assignedTo.map((item) => (
-                          <Avatar
-                            key={item.userId}
-                            alt="Avatar"
-                            className="w-10 h-10"
-                          >
-                            <AvatarImage source={{ uri: item.profileUrl }} />
-                            <AvatarFallback>
-                              <Text>{getInitials(item.name)}</Text>
-                            </AvatarFallback>
-                          </Avatar>
-                        ))}
-                      </View>
-                    </View>
-
-                    <View className="flex-row gap-2 items-center">
-                      <Button
-                        variant="link"
-                        onPress={() => {
-                          handleJobDetail(job._id);
-                        }}
-                      >
-                        <Text>{job._id}</Text>
-                      </Button>
-                      <Text>{job.jobTitle}</Text>
-                    </View>
-                    {job.jobType === "Maintenance" && (
-                      <View className="flex flex-row gap-2 items-center">
-                        <Repeat className="text-primary" size={18} />
-                        <Text className="text-primary">
-                          {generateFrequencyText(
-                            job.recurrence || defaultRecurrence,
-                            job.dueDate
-                          )}
-                        </Text>
-                      </View>
+        {groupedJobs && groupedJobs.length > 0 ? (
+          groupedJobs.map((group) => (
+            <Collapsible key={group.title} title={group.title}>
+              <Table className="border border-input rounded-md p-2">
+                {group.data.map((job, index) => (
+                  <TableRow
+                    className={cn(
+                      "active:bg-secondary w-full ",
+                      index % 2 && "bg-muted/40 "
                     )}
-
-                    <Muted>Site Details:</Muted>
-                    <View className="bg-secondary gap-2 w-full rounded-md p-2">
-                      <Text>{`${job.customer?.businessName} - ${job.siteLocation?.siteName}`}</Text>
-                      <View className="flex-row items-center gap-2">
-                        <User2 className="text-primary" size={18} />
-
-                        <Text>{job.siteLocation.siteContactPerson}</Text>
+                    key={job._id}
+                  >
+                    <TableCell className="flex w-full items-start">
+                      <View className="flex flex-row gap-2 w-full items-center justify-between">
+                        <View className="flex flex-row gap-2 items-center ">
+                          {getJobPriorityIcon(job.priority)}
+                        </View>
+                        <View className="flex-row flex-wrap gap-2">
+                          {job.assignedTo.map((item) => (
+                            <Avatar
+                              key={item.userId}
+                              alt="Avatar"
+                              className="w-10 h-10"
+                            >
+                              <AvatarImage source={{ uri: item.profileUrl }} />
+                              <AvatarFallback>
+                                <Text>{getInitials(item.name)}</Text>
+                              </AvatarFallback>
+                            </Avatar>
+                          ))}
+                        </View>
                       </View>
-                    </View>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </Table>
-          </Collapsible>
-        ))}
+
+                      <View className="flex-row gap-2 items-center">
+                        <Button
+                          variant="link"
+                          onPress={() => {
+                            handleJobDetail(job._id);
+                          }}
+                        >
+                          <Text>{job._id}</Text>
+                        </Button>
+                        <Text>{job.jobTitle}</Text>
+                      </View>
+                      {job.jobType === "Maintenance" && (
+                        <View className="flex flex-row gap-2 items-center">
+                          <Repeat className="text-primary" size={18} />
+                          <Text className="text-primary">
+                            {generateFrequencyText(
+                              job.recurrence || defaultRecurrence,
+                              job.dueDate
+                            )}
+                          </Text>
+                        </View>
+                      )}
+
+                      <Muted>Site Details:</Muted>
+                      <View className="bg-secondary gap-2 w-full rounded-md p-2">
+                        <Text>{`${job.customer?.businessName} - ${job.siteLocation?.siteName}`}</Text>
+                        <View className="flex-row items-center gap-2">
+                          <User2 className="text-primary" size={18} />
+
+                          <Text>{job.siteLocation.siteContactPerson}</Text>
+                        </View>
+                      </View>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </Table>
+            </Collapsible>
+          ))
+        ) : (
+          <View className="flex items-center justify-center">
+            <Text>No Jobs to show</Text>
+          </View>
+        )}
       </View>
     </ScrollView>
   );
