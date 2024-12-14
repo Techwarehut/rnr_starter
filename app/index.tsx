@@ -5,6 +5,7 @@ import { Text } from "~/components/ui/text"; // Assuming you have a Text compone
 import { ThemeToggle } from "~/components/ThemeToggle";
 import { Button } from "~/components/ui/button";
 import { useAuth } from "~/ctx/AuthContext";
+import HomePage from "~/components/ScreenComponents/Public/HomePage";
 
 export default function Screen() {
   const router = useRouter();
@@ -40,9 +41,7 @@ export default function Screen() {
             ),
           }}
         />
-        <View>
-          <Text>I am in Home screen</Text>
-        </View>
+        <HomePage />
       </>
     );
   }

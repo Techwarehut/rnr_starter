@@ -37,7 +37,7 @@ export function TabBarButton({
     typeof options.tabBarLabel === "function"
       ? options.tabBarLabel({
           focused: isFocused,
-          color: isFocused ? "text-primary" : "text-primary-foreground",
+          color: isFocused ? "text-primary" : "text-muted-foreground",
           position: "below-icon", // Ensure this is a valid position if 'bottom' is not correct
           children: route.name,
         })
@@ -82,9 +82,9 @@ export function TabBarButton({
         <Text
           className={`text-xs mt-1  ${
             isFocused
-              ? "text-secondary-foreground"
+              ? "text-primary"
               : isLargeScreen
-              ? "text-primary-foreground"
+              ? "text-muted-foreground"
               : "text-muted-foreground"
           }`}
         >

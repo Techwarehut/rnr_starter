@@ -93,9 +93,9 @@ export default function TabLayout() {
               //className={focused ? "fill-primary" : "text-primary fill-none"}
               className={
                 focused
-                  ? "text-secondary-foreground"
+                  ? "text-primary"
                   : isLargeScreen
-                  ? "text-primary-foreground"
+                  ? "text-muted-foreground"
                   : "text-muted-foreground"
               }
               size={24}
@@ -119,9 +119,9 @@ export default function TabLayout() {
               } */
               className={
                 focused
-                  ? "text-secondary-foreground"
+                  ? "text-primary"
                   : isLargeScreen
-                  ? "text-primary-foreground"
+                  ? "text-muted-foreground"
                   : "text-muted-foreground"
               }
               size={24}
@@ -144,9 +144,9 @@ export default function TabLayout() {
               } */
               className={
                 focused
-                  ? "text-secondary-foreground"
+                  ? "text-primary"
                   : isLargeScreen
-                  ? "text-primary-foreground"
+                  ? "text-muted-foreground"
                   : "text-muted-foreground"
               }
               size={24}
@@ -170,9 +170,9 @@ export default function TabLayout() {
               } */
               className={
                 focused
-                  ? "text-secondary-foreground"
+                  ? "text-primary"
                   : isLargeScreen
-                  ? "text-primary-foreground"
+                  ? "text-muted-foreground"
                   : "text-muted-foreground"
               }
               size={24}
@@ -192,9 +192,9 @@ export default function TabLayout() {
               className={
                 user?.role === "Team Member"
                   ? focused
-                    ? "text-secondary-foreground"
+                    ? "text-primary"
                     : isLargeScreen
-                    ? "text-primary-foreground"
+                    ? "text-muted-foreground"
                     : "text-muted-foreground"
                   : focused
                   ? "text-primary"
@@ -255,9 +255,9 @@ export default function TabLayout() {
               } */
               className={
                 focused
-                  ? "text-secondary-foreground"
+                  ? "text-primary"
                   : isLargeScreen
-                  ? "text-primary-foreground"
+                  ? "text-muted-foreground"
                   : "text-muted-foreground"
               }
               size={24}
@@ -281,9 +281,9 @@ export default function TabLayout() {
               } */
               className={
                 focused
-                  ? "text-secondary-foreground"
+                  ? "text-primary"
                   : isLargeScreen
-                  ? "text-primary-foreground"
+                  ? "text-muted-foreground"
                   : "text-muted-foreground"
               }
               size={24}
