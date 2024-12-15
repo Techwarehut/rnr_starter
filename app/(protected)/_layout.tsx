@@ -166,7 +166,7 @@ export default function RootLayout() {
         options={{
           headerShown: false,
           headerShadowVisible: true,
-          title: "fast forward",
+          title: "Veylo",
           headerTitleAlign: "left",
           headerRight: () => (
             <View

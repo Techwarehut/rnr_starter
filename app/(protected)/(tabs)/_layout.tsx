@@ -31,16 +31,16 @@ export default function TabLayout() {
   const { user } = useAuth();
 
   // Define active and inactive colors based on the color scheme or your preference
-  const activeTintColor = isDarkColorScheme ? "#FFD700" : "#1E90FF"; // Example: gold for dark mode, dodger blue for light mode
-  const inactiveTintColor = isDarkColorScheme ? "#B0B0B0" : "#696969"; // Example: light gray for dark mode, dark gray for light mode
-  const backgroundColor = isDarkColorScheme ? "#1e2936" : "#e8eef6"; // Example: light gray for dark mode, dark gray for light mode
-  console.log("I am in tabs");
+  //onst activeTintColor = isDarkColorScheme ? "#FFD700" : "#1E90FF"; // Example: gold for dark mode, dodger blue for light mode
+  //const inactiveTintColor = isDarkColorScheme ? "#B0B0B0" : "#696969"; // Example: light gray for dark mode, dark gray for light mode
+  // const backgroundColor = isDarkColorScheme ? "#1e2936" : "#e8eef6"; // Example: light gray for dark mode, dark gray for light mode
+  //console.log("I am in tabs");
   return (
     <Tabs
       tabBar={(props) => <MyTabBar {...props} isLargeScreen={isLargeScreen} />}
       screenOptions={{
-        tabBarActiveTintColor: activeTintColor,
-        tabBarInactiveTintColor: inactiveTintColor, // Optional: Set the color for inactive tabs
+        //tabBarActiveTintColor: activeTintColor,
+        // tabBarInactiveTintColor: inactiveTintColor, // Optional: Set the color for inactive tabs
         headerShown: true,
         headerShadowVisible: false,
         headerTitleAlign: "left",

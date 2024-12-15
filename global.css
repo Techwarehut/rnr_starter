@@ -39,7 +39,7 @@
   }
 
   .dark:root {
-    --background: 210 50% 10%;
+    --background: 210 50% 5%;
     --foreground: 210 5% 90%;
     --card: 210 50% 10%;
     --card-foreground: 210 5% 90%;

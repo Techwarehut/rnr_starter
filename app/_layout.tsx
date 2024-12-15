@@ -112,14 +112,14 @@ function LayoutContent() {
         <Stack.Screen
           name="index"
           options={{
-            title: "fast forward",
+            title: "Veylo",
             headerLeft: () => <Logo />,
           }}
         />
         <Stack.Screen
           name="login"
           options={{
-            title: "fast forward",
+            title: "Veylo",
             headerLeft: () => <Logo />,
           }}
         />
@@ -127,7 +127,7 @@ function LayoutContent() {
         <Stack.Screen
           name="createaccount"
           options={{
-            title: "fast forward",
+            title: "Veylo",
             headerLeft: () => <Logo />,
           }}
         />
@@ -136,7 +136,7 @@ function LayoutContent() {
           options={{
             headerShown: false,
             headerShadowVisible: true,
-            title: "fast forward",
+            title: "Veylo",
             headerTitleAlign: "left",
             headerRight: () => (
               <View
