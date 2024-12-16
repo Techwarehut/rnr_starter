@@ -6,6 +6,7 @@ import { ThemeToggle } from "~/components/ThemeToggle";
 import { Button } from "~/components/ui/button";
 import { useAuth } from "~/ctx/AuthContext";
 import HomePage from "~/components/ScreenComponents/Public/HomePage";
+import { JoinWaitlist } from "~/components/ScreenComponents/JoinWaitlist";
 
 export default function Screen() {
   const router = useRouter();
@@ -34,9 +35,10 @@ export default function Screen() {
                 }}
               >
                 <ThemeToggle />
-                <Button className="shadow shadow-foreground/5" onPress={login}>
+                {/* <Button className="shadow shadow-foreground/5" onPress={login}>
                   <Text>Login</Text>
-                </Button>
+                </Button> */}
+                <JoinWaitlist />
               </View>
             ),
           }}
