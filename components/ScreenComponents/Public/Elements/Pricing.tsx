@@ -10,45 +10,71 @@ import {
   CardTitle,
 } from "~/components/ui/card";
 import { JoinWaitlist } from "../../JoinWaitlist";
+import PricingFeatures from "./PricingFeatures";
 
 const Pricing = () => {
   return (
     <View className="flex w-full p-8 gap-8 items-center justify-around mt-12 ">
       <H2>Pricing</H2>
 
-      <View className="flex w-full md:flex-row gap-4 items-center justify-evenly">
+      <View className="flex w-full md:flex-row gap-4 items-center justify-evenly flex-wrap">
         <Card className="p-4 max-w-sm gap-4 ring-2">
           <CardTitle>Starter</CardTitle>
           <CardDescription>
             Ideal for businesses that are starting out and have less than 4
             employees
           </CardDescription>
-          <CardContent></CardContent>
+          <CardContent>
+            <PricingFeatures />
+          </CardContent>
           <CardFooter>
-            <JoinWaitlist />
+            <View className="flex flex-row items-center justify-between gap-2 w-full">
+              <View>
+                <Text className="text-primary line-through">$9.99</Text>
+                <Text className="text-destructive text-xl">FREE</Text>
+              </View>
+              <JoinWaitlist />
+            </View>
           </CardFooter>
         </Card>
 
-        <Card className="p-4 max-w-sm gap-4 bg-secondary ring-2">
+        <Card className="p-4 max-w-sm gap-4 bg-accent/40 ">
           <CardTitle>Core</CardTitle>
           <CardDescription>
             Ideal for businesses that are growing and have more than 4 but less
             than 15 employees
           </CardDescription>
-          <CardContent></CardContent>
+          <CardContent>
+            <PricingFeatures />
+          </CardContent>
           <CardFooter>
-            <JoinWaitlist />
+            <View className="flex flex-row items-center justify-between gap-2 w-full">
+              <View>
+                <Text className="text-primary line-through">$29.99</Text>
+                <Text className="text-destructive text-xl">FREE</Text>
+              </View>
+              <JoinWaitlist />
+            </View>
           </CardFooter>
         </Card>
 
-        <Card className="p-4 max-w-sm gap-4 bg-accent ring-2 shadow-2xl">
+        <Card className="p-4 max-w-sm gap-4 bg-secondary ring-2 shadow-2xl">
           <CardTitle>Grow</CardTitle>
           <CardDescription>
-            Ideal for businesses than need unlimited employee support.
+            Ideal for businesses than need unlimited employee access and
+            premimum dedicated servers.
           </CardDescription>
-          <CardContent></CardContent>
+          <CardContent>
+            <PricingFeatures />
+          </CardContent>
           <CardFooter>
-            <JoinWaitlist />
+            <View className="flex flex-row items-center justify-between gap-2 w-full">
+              <View>
+                <Text className="text-primary line-through">$149.99</Text>
+                <Text className="text-destructive text-xl">FREE</Text>
+              </View>
+              <JoinWaitlist />
+            </View>
           </CardFooter>
         </Card>
       </View>

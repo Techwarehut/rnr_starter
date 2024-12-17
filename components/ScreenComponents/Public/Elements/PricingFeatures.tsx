@@ -1,20 +1,10 @@
 import { View } from "react-native";
 import React from "react";
-import { Button } from "~/components/ui/button";
 import { Text } from "~/components/ui/text";
-import { H2, H3, P } from "~/components/ui/typography";
-import { JoinWaitlist } from "../../JoinWaitlist";
-import { useRouter } from "expo-router";
 
-const FeatureSummary = () => {
-  const router = useRouter();
+const PricingFeatures = () => {
   return (
-    <View className="flex flex-col p-8 bg-accent/40 rounded-md gap-4 m-4 max-w-xl">
-      <H3>Veylo brings you the solution</H3>
-      <P>
-        Imagine starting your day knowing exactly who is doing what, where
-        they’re working, and all the details at their fingertips.
-      </P>
+    <View>
       <ul className="list-inside space-y-2 text-lg text-foreground">
         <li className="flex items-center">
           <svg
@@ -102,13 +92,8 @@ const FeatureSummary = () => {
           Batch Invoice for completed Jobs
         </li>
       </ul>
-      <View className="flex flex-row mt-8 self-end gap-2">
-        <Button onPress={() => router.push("/login")}>
-          <Text>Take a Demo tour</Text>
-        </Button>
-      </View>
     </View>
   );
 };
 
-export default FeatureSummary;
+export default PricingFeatures;

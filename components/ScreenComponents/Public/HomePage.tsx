@@ -19,6 +19,8 @@ import FeatureSummary from "./Elements/FeatureSummary";
 import CTA from "./Elements/CTA";
 import Pricing from "./Elements/Pricing";
 import Footer from "./Elements/Footer";
+import Faq from "./Elements/faq";
+import Vision from "./Elements/Vision";
 
 const HomePage = () => {
   return (
@@ -27,8 +29,10 @@ const HomePage = () => {
         <TitleSection />
 
         <ProblemStatement />
+        <Vision />
         <CTA />
         <Pricing />
+        <Faq />
         <Footer />
       </View>
     </ScrollView>
