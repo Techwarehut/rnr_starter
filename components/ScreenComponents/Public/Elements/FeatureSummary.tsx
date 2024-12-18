@@ -12,8 +12,9 @@ const FeatureSummary = () => {
     <View className="flex flex-col p-8 bg-accent/40 rounded-md gap-4 m-4 max-w-xl">
       <H3>Veylo brings you the solution</H3>
       <P>
-        Imagine starting your day knowing exactly who is doing what, where
-        they’re working, and all the details at their fingertips.
+        Start your day with clarity—know exactly who’s doing what, where they’re
+        working, and ensure they have all the details they need at their
+        fingertips. With Veylo, you can:
       </P>
       <ul className="list-inside space-y-2 text-lg text-foreground">
         <li className="flex items-center">

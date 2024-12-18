@@ -29,8 +29,9 @@ const HomePage = () => {
         <TitleSection />
 
         <ProblemStatement />
-        <Vision />
+
         <CTA />
+        <Vision />
         <Pricing />
         <Faq />
         <Footer />

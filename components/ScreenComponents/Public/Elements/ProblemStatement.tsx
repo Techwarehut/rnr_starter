@@ -7,7 +7,7 @@ import { JoinWaitlist } from "../../JoinWaitlist";
 
 const ProblemStatement = () => {
   return (
-    <View className="flex flex-col p-2 py-12 my-12  bg-secondary/40 rounded-md gap-8 items-center justify-around">
+    <View className="flex flex-col p-2 p-4 py-12 md:p-12 my-12  bg-secondary/40 rounded-md gap-8 items-center justify-around">
       <View className="flex md:flex-row gap-4 flex-wrap items-center justify-center w-full">
         <View className="flex gap-4 max-w-2xl">
           <H2>Tired of the daily grind in your business?</H2>
