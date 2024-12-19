@@ -82,7 +82,9 @@ export const JoinWaitlist: React.FC<JoinWaitlistProps> = ({}) => {
       // Call the storeWaitlistInfo function to store data in Firestore
       const result = await storeWaitlistInfo(data);
       if (result.success) {
-        setSuccessMessage("You have been added to the waitlist!");
+        setSuccessMessage(
+          "Thank you for your interest! We will get back to you with Product updates."
+        );
       } else {
         setErrorMessage("Failed to join the waitlist. Please try again.");
       }
@@ -102,10 +104,7 @@ export const JoinWaitlist: React.FC<JoinWaitlistProps> = ({}) => {
             <DialogTitle>Join Waitlist</DialogTitle>
             <DialogDescription>
               <View className="flex justify-center gap-4">
-                <Muted>
-                  Be one of the first to join the waitlist for our highly
-                  anticipated business app.
-                </Muted>
+                <Muted>No Spam! Only Product Updates.</Muted>
                 {/* Name input */}
                 <InputField
                   label="Name"

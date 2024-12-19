@@ -17,13 +17,14 @@ import { Text } from "~/components/ui/text";
 
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { FastForward } from "~/lib/icons/FastForward";
 import { Stack } from "expo-router";
 import { ThemeToggle } from "~/components/ThemeToggle";
 import { H1, H2, H3, Muted, P, Small } from "~/components/ui/typography";
 import { useIsLargeScreen } from "~/lib/utils";
 import { useAuth } from "~/ctx/AuthContext";
+import Head from "expo-router/head";
 
 export default function Login() {
   const [userName, setUserName] = React.useState("");
@@ -215,8 +216,13 @@ export default function Login() {
             <View>
               <Muted className="text-center">
                 By continuing, you agree to our{" "}
-                <Muted className="underline">Terms of Service</Muted> and{" "}
-                <Muted className="underline">Privacy Policy</Muted>
+                <Link href="/termsofservice">
+                  <Muted className="underline">Terms of Service</Muted>
+                </Link>{" "}
+                and{" "}
+                <Link href="/privacypolicy">
+                  <Muted className="underline">Privacy Policy</Muted>
+                </Link>
               </Muted>
             </View>
           </View>

@@ -11,7 +11,7 @@ import {
 
 const Vision = () => {
   return (
-    <View className="flex flex-col bg-accent/40 p-4 md:p-12 rounded-md gap-2 items-center justify-center my-12">
+    <View className="flex flex-col  p-4 md:p-12 rounded-md gap-2 items-center justify-center my-12">
       <View className="flex gap-8 max-w-3xl p-2 my-8">
         <H2>Veylo is a platform designed for all B2X transactions.</H2>
         <Text>
@@ -20,22 +20,35 @@ const Vision = () => {
           and estimates with customers—all in one seamless solution.
         </Text>
       </View>
-      <View className="flex py-8 self-start">
+      {/*  <View className="flex py-8 self-start">
         <H3>Customized solutions for Field Service Business</H3>
       </View>
       <View className="flex md:flex-row gap-4 items-center justify-around flex-wrap w-full">
         <Card className="p-4 max-w-sm gap-4 bg-accent/40">
-          <CardTitle>HVAC Business</CardTitle>
-          <CardDescription>
-            Assign tasks, access job details, and log hours with ease.
-          </CardDescription>
+          <CardTitle>HVAC</CardTitle>
+
           <CardContent>
-            <Text>
-              Use checklists for quality assurance, upload site photos, and
-              batch invoice completed jobs to keep your team efficient and
-              customers satisfied.
-            </Text>
+            <View className="flex items-center justify-center w-full md:w-auto">
+              <Image
+                source={require("~/assets/images/industries/air-conditioning.png")}
+                alt="Mobile preview"
+                resizeMode="contain"
+                className="w-[80%] h-auto md:w-[300px] md:h-[300px] max-w-full"
+                style={{
+                  width: 300, // Fixed width
+                  height: 300, // Fixed height
+                }}
+              />
+            </View>
           </CardContent>
+          <CardDescription>
+            <Text>
+              Assign tasks, access job details, and log hours with ease. Use
+              checklists for quality assurance, upload site photos, and batch
+              invoice completed jobs to keep your team efficient and customers
+              satisfied.
+            </Text>
+          </CardDescription>
         </Card>
         <Card className="p-4 max-w-sm gap-4 bg-accent/40">
           <CardTitle>Plumbing</CardTitle>
@@ -103,7 +116,7 @@ const Vision = () => {
             </Text>
           </CardContent>
         </Card>
-      </View>
+      </View> */}
     </View>
   );
 };

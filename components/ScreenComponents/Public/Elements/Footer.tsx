@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Linking } from "react-native";
+import { View, Linking, Platform } from "react-native";
 import { Button } from "~/components/ui/button";
 import { Facebook } from "~/lib/icons/Facebook";
 import { Linkedin } from "~/lib/icons/Linkedin";
@@ -7,28 +7,29 @@ import { Youtube } from "~/lib/icons/Youtube";
 import { Instagram } from "~/lib/icons/Instagram";
 import { Twitter } from "~/lib/icons/Twitter";
 import { Text } from "~/components/ui/text";
+import { useRouter } from "expo-router";
 
 const Footer = () => {
   const openLink = (url: string) => {
-    Linking.openURL(url).catch((err) =>
-      console.error("Failed to open link", err)
-    );
+    if (Platform.OS === "web") {
+      window.open(url, "_blank"); // Open in a new tab for the web
+    } else {
+      Linking.openURL(url).catch((err) =>
+        console.error("Failed to open link", err)
+      );
+    }
   };
+
+  const router = useRouter();
 
   return (
     <View className="flex md:flex-row bg-secondary p-4 border-t border-input items-center justify-around gap-2">
       <Text className="bg-accent-secondary">© 2025 Veylo</Text>
       <View className="flex flex-row gap-2">
-        <Button
-          variant="link"
-          onPress={() => openLink("https://example.com/terms")}
-        >
-          <Text className="bg-accent-secondary">Terms and Conditions</Text>
+        <Button variant="link" onPress={() => router.push("/termsofservice")}>
+          <Text className="bg-accent-secondary">Terms of Service</Text>
         </Button>
-        <Button
-          variant="link"
-          onPress={() => openLink("https://example.com/privacy")}
-        >
+        <Button variant="link" onPress={() => router.push("/privacypolicy")}>
           <Text className="bg-accent-secondary">Privacy Policy</Text>
         </Button>
       </View>
@@ -39,9 +40,7 @@ const Footer = () => {
         >
           <Facebook className="text-primary" size={18} />
         </Button>
-        <Button variant="link" onPress={() => openLink("https://twitter.com")}>
-          <Youtube className="text-primary" size={18} />
-        </Button>
+
         <Button
           variant="link"
           onPress={() => openLink("https://www.instagram.com/veyloapp")}

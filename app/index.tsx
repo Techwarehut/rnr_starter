@@ -24,58 +24,6 @@ export default function Screen() {
   if (Platform.OS === "web") {
     return (
       <>
-        <Head>
-          <title>Veylo - Streamline Job Scheduling & Business Management</title>
-
-          <meta
-            name="description"
-            content="Veylo helps small businesses manage clients, schedule jobs, and streamline operations with ease. Discover the ultimate tool to boost productivity and grow your business today."
-          />
-
-          <meta
-            property="og:title"
-            content="Veylo - Streamline Job Scheduling & Business Management"
-          />
-          <meta
-            property="og:description"
-            content="Streamline your business operations with Veylo. Manage clients, schedules, invoices, and more with ease."
-          />
-          <meta
-            property="og:image"
-            content="https://veylo.app/assets/assets/images/AppScreens/Light/DashboardTilted.png"
-          />
-          <meta property="og:url" content="https://yourdomain.com" />
-          <meta property="og:type" content="website" />
-
-          <meta name="twitter:card" content="summary_large_image" />
-          <meta
-            name="twitter:title"
-            content="Veylo - Streamline Job Scheduling & Business Management"
-          />
-          <meta
-            name="twitter:description"
-            content="Veylo empowers small businesses to grow efficiently. Manage clients, jobs, and schedules with ease."
-          />
-          <meta
-            name="twitter:image"
-            content="https://veylo.app/assets/assets/images/AppScreens/Light/DashboardTilted.png"
-          />
-
-          <meta
-            name="keywords"
-            content="Veylo, job scheduling software, business management, small business tools, client management, invoicing, Jobber alternative, field service management"
-          />
-
-          <meta name="robots" content="index, follow" />
-
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0"
-          />
-
-          <link rel="canonical" href="https://veylo.app" />
-        </Head>
-
         <Stack.Screen
           options={{
             headerRight: () => (
@@ -88,9 +36,9 @@ export default function Screen() {
                 }}
               >
                 <ThemeToggle />
-                {/* <Button className="shadow shadow-foreground/5" onPress={login}>
-                  <Text>Login</Text>
-                </Button> */}
+                <Button variant="outline" onPress={login}>
+                  <Text>UI Demo</Text>
+                </Button>
                 <JoinWaitlist />
               </View>
             ),

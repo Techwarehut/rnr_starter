@@ -51,13 +51,12 @@ const Faq = () => {
             </Text>
           </AccordionTrigger>
           <AccordionContent>
-            <Text>
-              Joining the waitlist early gives you: - **Free access** to Veylo
-              for the entire **first year**. - Access to the **Grow Plan**,
-              which allows you to add **unlimited employees**. - A chance to
-              participate in a **professional photo shoot** to showcase your
-              business in our marketing campaigns, giving you added visibility.
-            </Text>
+            <Text>Joining the waitlist early gives you:</Text>
+            <ul className="list-disc pl-12 mt-2 space-y-2 text-foreground">
+              <li>Free Lifetime access to Veylo for 5 Canadian business.</li>
+              <li>Discounted access to Veylo for the entire first year.</li>
+              <li>A chance to participate in a **professional photo shoot**</li>
+            </ul>
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-4">
@@ -66,9 +65,9 @@ const Faq = () => {
           </AccordionTrigger>
           <AccordionContent>
             <Text>
-              Simply visit [insert website link], enter your email, and secure
-              your spot. We’ll keep you updated with the latest news and let you
-              know as soon as Veylo is live.
+              Click Join Waitlist, enter your email, and secure your spot. We’ll
+              keep you updated with the latest news and let you know as soon as
+              Veylo is live.
             </Text>
           </AccordionContent>
         </AccordionItem>

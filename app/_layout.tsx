@@ -132,6 +132,20 @@ function LayoutContent() {
           }}
         />
         <Stack.Screen
+          name="termsofservice"
+          options={{
+            title: "Veylo",
+            headerLeft: () => <Logo />,
+          }}
+        />
+        <Stack.Screen
+          name="privacypolicy"
+          options={{
+            title: "Veylo",
+            headerLeft: () => <Logo />,
+          }}
+        />
+        <Stack.Screen
           name="(protected)"
           options={{
             headerShown: false,

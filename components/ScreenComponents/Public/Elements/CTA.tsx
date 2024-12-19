@@ -6,7 +6,7 @@ import ComingSoon from "./ComingSoon";
 
 const CTA = () => {
   return (
-    <View className="flex flex-col p-2 p-4 py-12 md:p-12 my-12 gap-8 items-center justify-around">
+    <View className="flex flex-col p-4 py-12 md:p-8 my-12 gap-8 items-center justify-around bg-accent/40">
       <View className="flex md:flex-row-reverse gap-4 flex-wrap items-center justify-center w-full">
         <View className="flex gap-4 max-w-2xl">
           <H2>Managing Jobs is a Headache—We Get It.</H2>
@@ -31,7 +31,7 @@ const CTA = () => {
             source={require("~/assets/images/AppScreens/Light/JobsLaptop.png")}
             alt="Mobile preview"
             resizeMode="contain"
-            className="w-[80%] h-[auto] md:w-[447px] md:h-[558px] max-w-full"
+            className="w-[80%] h-[auto] md:w-[636px] md:h-[393px] max-w-full"
             style={{
               width: 636, // Fixed width
               height: 393, // Fixed height
