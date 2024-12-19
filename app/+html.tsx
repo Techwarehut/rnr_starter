@@ -7,8 +7,14 @@ import { type PropsWithChildren } from "react";
 // do not have access to the DOM or browser APIs.
 export default function Root({ children }: PropsWithChildren) {
   return (
-    <html lang="fr">
+    <html lang="en">
       <head>
+        <title>Veylo - Streamline Job Scheduling & Business Management</title>
+
+        <meta
+          name="description"
+          content="Veylo helps small businesses manage clients, schedule jobs, and streamline operations with ease. Discover the ultimate tool to boost productivity and grow your business today."
+        />
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta
