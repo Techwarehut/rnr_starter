@@ -2,11 +2,12 @@ import { ScrollView, View } from "react-native";
 import React from "react";
 import { H1, H2, H3, Muted, Small } from "~/components/ui/typography";
 import { Text } from "~/components/ui/text";
+import Footer from "~/components/ScreenComponents/Public/Elements/Footer";
 
 const termsofservice = () => {
   return (
     <ScrollView>
-      <View className="flex bg-secondary justify-center p-12 rounded-md gap-4">
+      <View className="flex bg-secondary justify-center p-6 md:p-12 rounded-md gap-4">
         <H1>Terms of Service</H1>
         <Small className="text-primary">
           Effective Date: December 24, 2024
@@ -20,7 +21,7 @@ const termsofservice = () => {
         </Text>
       </View>
 
-      <View className="flex justify-center p-12 mx-8 gap-4">
+      <View className="flex justify-center p-6 md:p-12  mx-2 md:mx-8 gap-4">
         <H2>Acceptance of Terms</H2>
         <Text>
           By creating an account, accessing, or using Veylo’s Service, you
@@ -32,7 +33,7 @@ const termsofservice = () => {
         </Text>
       </View>
 
-      <View className="flex justify-center p-12 mx-8 gap-4">
+      <View className="flex justify-center p-6 md:p-12  mx-2 md:mx-8  gap-4">
         <H2>Account Registration</H2>
         <Text>
           To use certain features of the Service, you must create a Veylo
@@ -44,7 +45,7 @@ const termsofservice = () => {
         <Text>
           <strong>Account Types:</strong>
         </Text>
-        <View className="flex justify-center p-12 gap-4">
+        <View className="flex justify-center p-4 md:p-12 gap-4">
           <H3>Service Providers (Account Owners):</H3>
           <Text>
             Individuals or businesses using Veylo to manage service-related
@@ -58,7 +59,7 @@ const termsofservice = () => {
         </View>
       </View>
 
-      <View className="flex justify-center p-12 mx-8 gap-4">
+      <View className="flex justify-center p-6 md:p-12  mx-2 md:mx-8 gap-4">
         <H2>Services Provided</H2>
         <Text>
           Veylo provides a platform for service management, including but not
@@ -70,7 +71,7 @@ const termsofservice = () => {
         </Text>
       </View>
 
-      <View className="flex justify-center p-12 mx-8 gap-4">
+      <View className="flex justify-center p-6 md:p-12  mx-2 md:mx-8  gap-4">
         <H2>Payment Terms</H2>
         <Text>
           Veylo may charge fees for certain features, such as subscription
@@ -87,7 +88,7 @@ const termsofservice = () => {
         </Text>
       </View>
 
-      <View className="flex justify-center p-12 mx-8 gap-4">
+      <View className="flex justify-center p-6 md:p-12  mx-2 md:mx-8  gap-4">
         <H2>Privacy Policy</H2>
         <Text>
           Veylo’s use and collection of your Personal Information are governed
@@ -97,7 +98,7 @@ const termsofservice = () => {
         </Text>
       </View>
 
-      <View className="flex justify-center p-12 mx-8 gap-4">
+      <View className="flex justify-center p-6 md:p-12  mx-2 md:mx-8  gap-4">
         <H2>Termination of Account</H2>
         <Text>
           You may terminate your account at any time by following the account
@@ -112,7 +113,7 @@ const termsofservice = () => {
         </Text>
       </View>
 
-      <View className="flex justify-center p-12 mx-8 gap-4">
+      <View className="flex justify-center p-6 md:p-12  mx-2 md:mx-8  gap-4">
         <H2>Intellectual Property</H2>
         <Text>
           The Service, including its software, features, content, and
@@ -124,7 +125,7 @@ const termsofservice = () => {
         </Text>
       </View>
 
-      <View className="flex justify-center p-12 mx-8 gap-4">
+      <View className="flex justify-center p-6 md:p-12  mx-2 md:mx-8  gap-4">
         <H2>Limitation of Liability</H2>
         <Text>
           To the fullest extent permitted by law, Veylo and its affiliates,
@@ -136,7 +137,7 @@ const termsofservice = () => {
         </Text>
       </View>
 
-      <View className="flex justify-center p-12 mx-8 gap-4">
+      <View className="flex justify-center p-6 md:p-12  mx-2 md:mx-8  gap-4">
         <H2>Indemnification</H2>
         <Text>
           You agree to indemnify and hold harmless Veylo, its affiliates,
@@ -147,7 +148,7 @@ const termsofservice = () => {
         </Text>
       </View>
 
-      <View className="flex justify-center p-12 mx-8 gap-4">
+      <View className="flex justify-center p-6 md:p-12  mx-2 md:mx-8  gap-4">
         <H2>Governing Law and Dispute Resolution</H2>
         <Text>
           These Terms shall be governed by and construed in accordance with the
@@ -158,7 +159,7 @@ const termsofservice = () => {
         </Text>
       </View>
 
-      <View className="flex justify-center p-12 mx-8 gap-4">
+      <View className="flex justify-center p-6 md:p-12  mx-2 md:mx-8  gap-4">
         <H2>Changes to Terms</H2>
         <Text>
           Veylo reserves the right to modify these Terms at any time. You will
@@ -169,13 +170,13 @@ const termsofservice = () => {
         </Text>
       </View>
 
-      <View className="flex justify-center p-12 mx-8 gap-4">
+      <View className="flex justify-center p-6 md:p-12  mx-2 md:mx-8  gap-4">
         <H2>Contact Us</H2>
         <Text>
           If you have any questions or concerns about these Terms, please
           contact us at:
         </Text>
-        <View className="pl-12">
+        <View className="pl-4 md:pl-12">
           <Text>
             Email: <strong>VeyloApp@gmail.com</strong>
           </Text>
@@ -187,6 +188,7 @@ const termsofservice = () => {
           </Text>
         </View>
       </View>
+      <Footer />
     </ScrollView>
   );
 };

@@ -28,7 +28,7 @@ const ProblemStatement = () => {
           <Image
             //source={require("~/assets/images/AppScreens/Light/DashboardTilted.png")}
             source={{ uri: ImageURL }} // Dynamic URI
-            alt="Mobile preview"
+            alt="Mobile preview of Veylo Dashboard Screen showing statistics around open jobs and today's schedule"
             resizeMode="contain"
             className="w-[80%] h-[auto] md:w-[447px] md:h-[558px] max-w-full"
             style={{

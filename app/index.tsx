@@ -24,13 +24,13 @@ export default function Screen() {
   if (Platform.OS === "web") {
     return (
       <>
-        <Head>
+        {/*  <Head>
           <title>Veylo - Streamline Job Scheduling & Business Management</title>
           <meta
             name="description"
             content="Veylo helps small businesses manage clients, schedule jobs, and streamline operations with ease. Discover the ultimate tool to boost productivity and grow your business today."
           />
-        </Head>
+        </Head> */}
         <Stack.Screen
           options={{
             headerRight: () => (
@@ -39,11 +39,11 @@ export default function Screen() {
                   flexDirection: "row",
                   justifyContent: "center",
                   alignItems: "center",
-                  marginRight: 10,
+                  marginRight: 2,
                 }}
               >
                 <ThemeToggle />
-                <Button variant="outline" onPress={login}>
+                <Button variant="outline" size="sm" onPress={login}>
                   <Text>UI Demo</Text>
                 </Button>
                 <JoinWaitlist />

@@ -107,7 +107,7 @@ export default function Screen() {
               "Send Professional Estimates",
               "Schedule Jobs",
               "Track Purchases",
-              "Invoice and get paid",
+              "Batch Invoice",
             ].map((text, index) => {
               const animatedStyle = useAnimatedStyle(() => {
                 return {

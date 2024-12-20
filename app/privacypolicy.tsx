@@ -2,11 +2,12 @@ import { ScrollView, View } from "react-native";
 import React from "react";
 import { H1, H2, H3, Muted, Small } from "~/components/ui/typography";
 import { Text } from "~/components/ui/text";
+import Footer from "~/components/ScreenComponents/Public/Elements/Footer";
 
 const privacypolicy = () => {
   return (
     <ScrollView>
-      <View className="flex bg-secondary justify-center p-12 rounded-md gap-4">
+      <View className="flex bg-secondary justify-center p-6 md:p-12 rounded-md gap-4">
         <H1>Privacy Policy</H1>
         <Small className="text-primary">
           Effective Date: December 24, 2024
@@ -22,13 +23,13 @@ const privacypolicy = () => {
         </Text>
       </View>
 
-      <View className="flex justify-center p-12 mx-8 gap-4">
+      <View className="flex justify-center p-6 md:p-12  mx-2 md:mx-8  gap-4">
         <H2>Information We Collect</H2>
 
         <Text>
           We collect the following types of information when you use the App:
         </Text>
-        <View className="flex justify-center p-12 gap-4">
+        <View className="flex justify-center p-6 md:p-12 gap-4">
           <H3>Personal Information</H3>
           <Text>
             When you register or log into the App, we may ask for personal
@@ -72,7 +73,7 @@ const privacypolicy = () => {
         </View>
       </View>
 
-      <View className="flex justify-center p-12 mx-8 gap-4">
+      <View className="flex justify-center p-6 md:p-12  mx-2 md:mx-8  gap-4">
         <H2>How We Use Your Information</H2>
         <Text>
           We use the information we collect for various purposes, including:
@@ -95,7 +96,7 @@ const privacypolicy = () => {
         </ul>
       </View>
 
-      <View className="flex justify-center p-12 mx-8 gap-4">
+      <View className="flex justify-center p-6 md:p-12  mx-2 md:mx-8  gap-4">
         <H2>Data Sharing and Disclosure</H2>
         <Text>
           We do not sell, trade, or rent your personal information to third
@@ -116,7 +117,7 @@ const privacypolicy = () => {
         </ul>
       </View>
 
-      <View className="flex justify-center p-12 mx-8 gap-4">
+      <View className="flex justify-center p-6 md:p-12  mx-2 md:mx-8  gap-4">
         <H2>Cookies and Tracking Technologies</H2>
         <Text>
           We use cookies and similar tracking technologies to monitor activity
@@ -134,7 +135,7 @@ const privacypolicy = () => {
         </Text>
       </View>
 
-      <View className="flex justify-center p-12 mx-8 gap-4">
+      <View className="flex justify-center p-6 md:p-12  mx-2 md:mx-8  gap-4">
         <H2>Data Security</H2>
         <Text>
           We take the security of your data seriously and implement
@@ -145,7 +146,7 @@ const privacypolicy = () => {
         </Text>
       </View>
 
-      <View className="flex justify-center p-12 mx-8 gap-4">
+      <View className="flex justify-center p-6 md:p-12  mx-2 md:mx-8  gap-4">
         <H2>Your Data Protection Rights</H2>
         <Text>
           Depending on your location, you may have the right to request access
@@ -155,7 +156,7 @@ const privacypolicy = () => {
         </Text>
       </View>
 
-      <View className="flex justify-center p-12 mx-8 gap-4">
+      <View className="flex justify-center p-6 md:p-12  mx-2 md:mx-8 gap-4">
         <H2>Third-Party Links</H2>
         <Text>
           The App may contain links to third-party websites or services that are
@@ -166,7 +167,7 @@ const privacypolicy = () => {
         </Text>
       </View>
 
-      <View className="flex justify-center p-12 mx-8 gap-4">
+      <View className="flex justify-center p-6 md:p-12  mx-2 md:mx-8  gap-4">
         <H2>Children's Privacy</H2>
         <Text>
           The App is not intended for use by children under the age of 13. We do
@@ -176,7 +177,7 @@ const privacypolicy = () => {
         </Text>
       </View>
 
-      <View className="flex justify-center p-12 mx-8 gap-4">
+      <View className="flex justify-center p-6 md:p-12  mx-2 md:mx-8  gap-4">
         <H2>Changes to This Privacy Policy</H2>
         <Text>
           We may update this Privacy Policy from time to time. Any changes will
@@ -187,7 +188,7 @@ const privacypolicy = () => {
         </Text>
       </View>
 
-      <View className="flex justify-center p-12 mx-8 gap-4">
+      <View className="flex justify-center p-6 md:p-12  mx-2 md:mx-8  gap-4">
         <H2>Contact Us</H2>
 
         <Text>
@@ -195,7 +196,7 @@ const privacypolicy = () => {
           exercise your rights regarding your personal data, please contact us
           at:
         </Text>
-        <View className="pl-12">
+        <View className="pl-4 md:pl-12">
           <Text>
             Email: <strong>VeyloApp@gmail.com</strong>
           </Text>
@@ -207,6 +208,7 @@ const privacypolicy = () => {
           </Text>
         </View>
       </View>
+      <Footer />
     </ScrollView>
   );
 };

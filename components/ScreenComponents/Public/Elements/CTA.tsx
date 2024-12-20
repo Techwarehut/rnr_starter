@@ -18,7 +18,8 @@ const CTA = () => {
           <H2>Managing Jobs is a Headache—We Get It.</H2>
           <P>
             Imagine having all your jobs, purchase orders, estimates, and
-            invoices organized in one place! Easily group and filter
+            invoices neatly organized in one place! Effortlessly group, filter,
+            and update job statuses with ease.
           </P>
           <View className="flex flex-col p-8 bg-secondary/40 rounded-md gap-4 m-4">
             <H3>Don’t wait—shape the tool that’s built for you.</H3>
@@ -36,7 +37,7 @@ const CTA = () => {
           <Image
             //source={require("~/assets/images/AppScreens/Light/JobsLaptop.png")}
             source={{ uri: ImageURL }} // Dynamic URI
-            alt="Mobile preview"
+            alt="Mobile preview of Job Detail showing job description, logged hours, site contact and Checklist. Also a Laptop preview showing the list of Jobs to easily group and filter."
             resizeMode="contain"
             className="w-[80%] h-[auto] md:w-[636px] md:h-[393px] max-w-full"
             style={{

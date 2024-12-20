@@ -25,6 +25,7 @@ import { H1, H2, H3, Muted, P, Small } from "~/components/ui/typography";
 import { useIsLargeScreen } from "~/lib/utils";
 import { useAuth } from "~/ctx/AuthContext";
 import Head from "expo-router/head";
+import Footer from "~/components/ScreenComponents/Public/Elements/Footer";
 
 export default function Login() {
   const [userName, setUserName] = React.useState("");
@@ -108,7 +109,7 @@ export default function Login() {
               "Send Professional Estimates",
               "Schedule Jobs",
               "Track Purchases",
-              "Invoice and get paid",
+              "Batch Invoice",
             ].map((text, index) => {
               const animatedStyle = useAnimatedStyle(() => {
                 return {

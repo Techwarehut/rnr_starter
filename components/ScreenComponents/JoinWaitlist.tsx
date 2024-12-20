@@ -92,7 +92,7 @@ export const JoinWaitlist: React.FC<JoinWaitlistProps> = ({}) => {
   };
 
   return (
-    <ScrollView contentContainerClassName="flex justify-center items-center p-6 ">
+    <ScrollView contentContainerClassName="flex justify-center items-center p-4 ">
       <Dialog>
         <DialogTrigger asChild>
           <Button size="sm" variant="default">
