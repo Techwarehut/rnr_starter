@@ -24,6 +24,13 @@ export default function Screen() {
   if (Platform.OS === "web") {
     return (
       <>
+        <Head>
+          <title>Veylo - Streamline Job Scheduling & Business Management</title>
+          <meta
+            name="description"
+            content="Veylo helps small businesses manage clients, schedule jobs, and streamline operations with ease. Discover the ultimate tool to boost productivity and grow your business today."
+          />
+        </Head>
         <Stack.Screen
           options={{
             headerRight: () => (

@@ -18,13 +18,13 @@ export default function Dashboard() {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       {/* A warning or maintainence Mode will show up here from backend */}
-      <View className="flex flex-row bg-accent p-2 m-2 rounded-md items-center gap-2">
+      {/* <View className="flex flex-row bg-accent p-2 m-2 rounded-md items-center gap-2">
         <ShieldAlert className="text-accent-foreground" size={24} />
         <Text>
           This is a demo UI with no connected backend. All data is stored
           locally and lost on refresh.
         </Text>
-      </View>
+      </View> */}
       <QuickSnapshot />
       <View className="flex flex-1 md:flex-row gap-8 md:mr-4">
         <Schedule />

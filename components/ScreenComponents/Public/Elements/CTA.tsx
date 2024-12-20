@@ -3,8 +3,14 @@ import React from "react";
 import { JoinWaitlist } from "../../JoinWaitlist";
 import { H2, H3, P } from "~/components/ui/typography";
 import ComingSoon from "./ComingSoon";
+import { useColorScheme } from "~/lib/useColorScheme";
 
 const CTA = () => {
+  const { isDarkColorScheme } = useColorScheme();
+
+  const ImageURL = isDarkColorScheme
+    ? "/assets/images/AppScreens/Dark/JobsLaptop.png"
+    : "/assets/images/AppScreens/Light/JobsLaptop.png";
   return (
     <View className="flex flex-col p-4 py-12 md:p-8 my-12 gap-8 items-center justify-around bg-accent/40">
       <View className="flex md:flex-row-reverse gap-4 flex-wrap items-center justify-center w-full">
@@ -28,7 +34,8 @@ const CTA = () => {
         </View>
         <View className="flex items-center justify-center w-full md:w-auto">
           <Image
-            source={require("~/assets/images/AppScreens/Light/JobsLaptop.png")}
+            //source={require("~/assets/images/AppScreens/Light/JobsLaptop.png")}
+            source={{ uri: ImageURL }} // Dynamic URI
             alt="Mobile preview"
             resizeMode="contain"
             className="w-[80%] h-[auto] md:w-[636px] md:h-[393px] max-w-full"

@@ -73,7 +73,7 @@
   {
     "_id": "JN002",
     "jobTitle": "HVAC System Installation",
-    "jobDescription": "Install the HVAC system at the client location, ensuring all components are fitted correctly and comply with local codes. Responsibilities include assessing client needs, preparing the installation site, connecting ductwork and refrigeration lines, testing the system for efficiency, and providing user training on operation and maintenance. Collaborate with other contractors as needed, troubleshoot any issues during installation, and maintain a clean and safe work environment.",
+    "jobDescription": "Install the HVAC system at the client location, ensuring all components are fitted correctly and comply with local codes.",
     "jobType": "ServiceVisit",
     "reportedBy": {
       "userId": "1",
@@ -129,6 +129,7 @@
         "createdAt": "2024-09-15T10:00:00Z"
       }
     ],
+    "checklistID": "hvac_maintenance",
     "createdAt": "2024-09-15T12:00:00Z",
     "updatedAt": "2024-09-16T12:00:00Z",
     "images": [
