@@ -21,6 +21,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Separator } from "~/components/ui/separator";
 import Logo from "~/components/ScreenComponents/Logo";
 import { AuthContextProvider, useAuth } from "~/ctx/AuthContext";
+import { Helmet } from "react-helmet";
 
 const LIGHT_THEME: Theme = {
   dark: false,
@@ -46,149 +47,158 @@ export default function RootLayout() {
   const { user } = useAuth();
 
   return (
-    <Stack
-      screenOptions={{
-        headerShadowVisible: false,
-        headerTitleAlign: "left",
-      }}
-    >
-      <Stack.Screen
-        name="(customer)/[customerName]"
-        redirect={user?.role === "Team Member"}
-        options={{
-          headerShown: true,
-          headerTitle: "Customer Detail",
-          presentation: Platform.OS === "ios" ? "card" : "modal",
-          headerTitleAlign: "left",
-          //headerBackVisible: true,
-          headerBackTitleVisible: false,
-        }}
-      />
-      <Stack.Screen
-        name="(vendor)/[vendorName]"
-        redirect={user?.role === "Team Member"}
-        options={{
-          headerShown: true,
-          headerTitle: "Vendor Detail",
-          presentation: Platform.OS === "ios" ? "card" : "modal",
-          headerTitleAlign: "left",
-          //headerBackVisible: true,
-          headerBackTitleVisible: false,
-        }}
-      />
-      <Stack.Screen
-        name="(user)/[username]"
-        options={{
-          headerTitle: "",
-          presentation: Platform.OS === "ios" ? "card" : "modal",
-          headerTitleAlign: "left",
-          //headerBackVisible: true,
-          headerBackTitleVisible: false,
-        }}
-      />
-      <Stack.Screen
-        name="jobs/[jobID]"
-        options={{
-          headerShown: true,
-          headerTitle: "",
-          presentation: Platform.OS === "ios" ? "card" : "modal",
-          headerTitleAlign: "left",
-          //headerBackVisible: true,
-          headerBackTitleVisible: false,
-        }}
-      />
+    <>
+      <Helmet>
+        <title>Veylo App</title>
 
-      <Stack.Screen
-        name="jobs/addnew"
-        redirect={user?.role === "Team Member"}
-        options={{
-          headerShown: true,
-          headerTitle: "Add New Job",
-          presentation: Platform.OS === "ios" ? "card" : "modal",
-          headerTitleAlign: "left",
-          //headerBackVisible: true,
-          headerBackTitleVisible: false,
-        }}
-      />
+        <meta name="robots" content="noindex, nofollow" />
 
-      <Stack.Screen
-        name="purchases/addnew"
-        options={{
-          headerShown: true,
-          headerTitle: "New Purchase",
-          presentation: Platform.OS === "ios" ? "card" : "modal",
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Helmet>
+      <Stack
+        screenOptions={{
+          headerShadowVisible: false,
           headerTitleAlign: "left",
-          //headerBackVisible: true,
-          headerBackTitleVisible: false,
         }}
-      />
+      >
+        <Stack.Screen
+          name="(customer)/[customerName]"
+          redirect={user?.role === "Team Member"}
+          options={{
+            headerShown: true,
+            headerTitle: "Customer Detail",
+            presentation: Platform.OS === "ios" ? "card" : "modal",
+            headerTitleAlign: "left",
+            //headerBackVisible: true,
+            headerBackTitleVisible: false,
+          }}
+        />
+        <Stack.Screen
+          name="(vendor)/[vendorName]"
+          redirect={user?.role === "Team Member"}
+          options={{
+            headerShown: true,
+            headerTitle: "Vendor Detail",
+            presentation: Platform.OS === "ios" ? "card" : "modal",
+            headerTitleAlign: "left",
+            //headerBackVisible: true,
+            headerBackTitleVisible: false,
+          }}
+        />
+        <Stack.Screen
+          name="(user)/[username]"
+          options={{
+            headerTitle: "",
+            presentation: Platform.OS === "ios" ? "card" : "modal",
+            headerTitleAlign: "left",
+            //headerBackVisible: true,
+            headerBackTitleVisible: false,
+          }}
+        />
+        <Stack.Screen
+          name="jobs/[jobID]"
+          options={{
+            headerShown: true,
+            headerTitle: "",
+            presentation: Platform.OS === "ios" ? "card" : "modal",
+            headerTitleAlign: "left",
+            //headerBackVisible: true,
+            headerBackTitleVisible: false,
+          }}
+        />
 
-      <Stack.Screen
-        name="jobs/linkjob"
-        options={{
-          headerShown: true,
-          headerTitle: "Select Job(s)",
+        <Stack.Screen
+          name="jobs/addnew"
+          redirect={user?.role === "Team Member"}
+          options={{
+            headerShown: true,
+            headerTitle: "Add New Job",
+            presentation: Platform.OS === "ios" ? "card" : "modal",
+            headerTitleAlign: "left",
+            //headerBackVisible: true,
+            headerBackTitleVisible: false,
+          }}
+        />
 
-          presentation: Platform.OS === "ios" ? "card" : "modal",
-          headerTitleAlign: "left",
-          //headerBackVisible: true,
-          headerBackTitleVisible: false,
-        }}
-      />
+        <Stack.Screen
+          name="purchases/addnew"
+          options={{
+            headerShown: true,
+            headerTitle: "New Purchase",
+            presentation: Platform.OS === "ios" ? "card" : "modal",
+            headerTitleAlign: "left",
+            //headerBackVisible: true,
+            headerBackTitleVisible: false,
+          }}
+        />
 
-      <Stack.Screen
-        name="sales/[invoiceId]"
-        redirect={user?.role === "Team Member"}
-        options={{
-          headerShown: true,
-          headerTitle: "",
-          presentation: Platform.OS === "ios" ? "card" : "modal",
-          headerTitleAlign: "left",
-          //headerBackVisible: true,
-          headerBackTitleVisible: false,
-        }}
-      />
+        <Stack.Screen
+          name="jobs/linkjob"
+          options={{
+            headerShown: true,
+            headerTitle: "Select Job(s)",
 
-      <Stack.Screen
-        name="sales/addnewinvoice"
-        redirect={user?.role === "Team Member"}
-        options={{
-          headerShown: true,
-          headerTitle: "New Invoice",
-          presentation: Platform.OS === "ios" ? "card" : "modal",
-          headerTitleAlign: "left",
-          //headerBackVisible: true,
-          headerBackTitleVisible: false,
-        }}
-      />
-      <Stack.Screen
-        name="(tabs)"
-        options={{
-          headerShown: false,
-          headerShadowVisible: true,
-          title: "Veylo",
-          headerTitleAlign: "left",
-          headerRight: () => (
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-                marginRight: 10,
-              }}
-            >
-              <ThemeToggle />
-              <Avatar alt="Rick Sanchez's Avatar" className="w-10 h-10">
-                <AvatarImage source={{ uri: AVATAR_URI }} />
-                <AvatarFallback>
-                  <Text>RS</Text>
-                </AvatarFallback>
-              </Avatar>
-            </View>
-          ),
-          headerLeft: () => <Logo />,
-        }}
-      />
-    </Stack>
+            presentation: Platform.OS === "ios" ? "card" : "modal",
+            headerTitleAlign: "left",
+            //headerBackVisible: true,
+            headerBackTitleVisible: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="sales/[invoiceId]"
+          redirect={user?.role === "Team Member"}
+          options={{
+            headerShown: true,
+            headerTitle: "",
+            presentation: Platform.OS === "ios" ? "card" : "modal",
+            headerTitleAlign: "left",
+            //headerBackVisible: true,
+            headerBackTitleVisible: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="sales/addnewinvoice"
+          redirect={user?.role === "Team Member"}
+          options={{
+            headerShown: true,
+            headerTitle: "New Invoice",
+            presentation: Platform.OS === "ios" ? "card" : "modal",
+            headerTitleAlign: "left",
+            //headerBackVisible: true,
+            headerBackTitleVisible: false,
+          }}
+        />
+        <Stack.Screen
+          name="(tabs)"
+          options={{
+            headerShown: false,
+            headerShadowVisible: true,
+            title: "Veylo",
+            headerTitleAlign: "left",
+            headerRight: () => (
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginRight: 10,
+                }}
+              >
+                <ThemeToggle />
+                <Avatar alt="Rick Sanchez's Avatar" className="w-10 h-10">
+                  <AvatarImage source={{ uri: AVATAR_URI }} />
+                  <AvatarFallback>
+                    <Text>RS</Text>
+                  </AvatarFallback>
+                </Avatar>
+              </View>
+            ),
+            headerLeft: () => <Logo />,
+          }}
+        />
+      </Stack>
+    </>
   );
 }

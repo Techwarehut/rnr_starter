@@ -1,9 +1,9 @@
 import { Image, View } from "react-native";
-import React from "react";
-import { H2, Large, P } from "~/components/ui/typography";
-import { Text } from "~/components/ui/text";
+
+import { H2, P } from "~/components/ui/typography";
+
 import FeatureSummary from "./FeatureSummary";
-import { JoinWaitlist } from "../../JoinWaitlist";
+
 import { useColorScheme } from "~/lib/useColorScheme";
 
 const ProblemStatement = () => {
@@ -32,7 +32,7 @@ const ProblemStatement = () => {
                 : require("~/assets/images/AppScreens/Light/DashboardTilted.png")
             }
             //source={{ uri: ImageURL }} // Dynamic URI
-            alt="Mobile preview of Veylo Dashboard Screen showing statistics around open jobs and today's schedule"
+            accessibilityLabel="Mobile preview of Veylo Dashboard Screen showing statistics around open jobs and today's schedule"
             resizeMode="contain"
             className="w-[80%] h-[auto] md:w-[447px] md:h-[558px] max-w-full"
             style={{

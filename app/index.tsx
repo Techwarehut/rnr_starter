@@ -7,7 +7,7 @@ import { Button } from "~/components/ui/button";
 import { useAuth } from "~/ctx/AuthContext";
 import HomePage from "~/components/ScreenComponents/Public/HomePage";
 import { JoinWaitlist } from "~/components/ScreenComponents/JoinWaitlist";
-import Head from "expo-router/head";
+import { Helmet } from "react-helmet";
 
 export default function Screen() {
   const router = useRouter();
@@ -24,13 +24,75 @@ export default function Screen() {
   if (Platform.OS === "web") {
     return (
       <>
-        {/*  <Head>
-          <title>Veylo - Streamline Job Scheduling & Business Management</title>
+        <Helmet>
+          <title>Veylo - Job Scheduling & Business Management</title>
+
+          <script type="application/ld+json">
+            {`
+            {
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              "name": "Veylo",
+              "url": "https://veylo.app",
+              "description": "Veylo is a field service platform for managing purchase orders, jobs, and schedules.",
+              "operatingSystem": "Cross-platform",
+              "applicationCategory": "BusinessApplication",
+              "offers": {
+                "@type": "Offer",
+                "price": 4.99,
+                "priceCurrency": "USD"
+              }
+            }
+          `}
+          </script>
+
           <meta
             name="description"
-            content="Veylo helps small businesses manage clients, schedule jobs, and streamline operations with ease. Discover the ultimate tool to boost productivity and grow your business today."
+            content="Veylo is a field service platform for managing purchase orders with vendors, tracking jobs and hours with employees, and handling invoices and estimates with customers—all in one seamless solution."
           />
-        </Head> */}
+          <meta
+            property="og:title"
+            content="Veylo - Job Scheduling & Business Management"
+          />
+          <meta
+            property="og:description"
+            content="Veylo is a field service platform for managing purchase orders with vendors, tracking jobs and hours with employees, and handling invoices and estimates with customers—all in one seamless solution."
+          />
+          <meta
+            property="og:image"
+            content="https://veylo.app/assets/assets/images/AppScreens/Dark/DashboardTilted.png"
+          />
+          <meta property="og:url" content="https://veylo.app" />
+          <meta property="og:type" content="website" />
+
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta
+            name="twitter:title"
+            content="Veylo - Job Scheduling & Business Management"
+          />
+          <meta
+            name="twitter:description"
+            content="Veylo empowers small businesses to grow efficiently. Manage clients, jobs, and schedules with ease."
+          />
+          <meta
+            name="twitter:image"
+            content="https://veylo.app/VeyloFacebookCover.png"
+          />
+
+          <meta
+            name="keywords"
+            content="Veylo, job scheduling software, business management, small business tools, client management, invoicing, Jobber alternative, field service management"
+          />
+
+          <meta name="robots" content="index, follow" />
+
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
+
+          <link rel="canonical" href="https://veylo.app" />
+        </Helmet>
         <Stack.Screen
           options={{
             headerRight: () => (
@@ -43,7 +105,13 @@ export default function Screen() {
                 }}
               >
                 <ThemeToggle />
-                <Button variant="outline" size="sm" onPress={login}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  accessibilityRole="button"
+                  aria-label="UI Demo"
+                  onPress={login}
+                >
                   <Text>UI Demo</Text>
                 </Button>
                 <JoinWaitlist />

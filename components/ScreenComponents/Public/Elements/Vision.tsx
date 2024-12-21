@@ -1,13 +1,7 @@
-import { Image, View } from "react-native";
-import React from "react";
+import { View } from "react-native";
+
 import { Text } from "~/components/ui/text";
-import { H2, H3 } from "~/components/ui/typography";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardTitle,
-} from "~/components/ui/card";
+import { H2 } from "~/components/ui/typography";
 
 const Vision = () => {
   return (

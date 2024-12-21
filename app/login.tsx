@@ -1,13 +1,8 @@
 import * as React from "react";
-import { View, Image, useWindowDimensions, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
 
-import { Info } from "~/lib/icons/Info";
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
 import Animated, {
-  FadeInUp,
-  FadeOutDown,
-  Layout,
   withTiming,
   useSharedValue,
   useAnimatedStyle,
@@ -18,14 +13,14 @@ import { Text } from "~/components/ui/text";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Link, useRouter } from "expo-router";
-import { FastForward } from "~/lib/icons/FastForward";
+
 import { Stack } from "expo-router";
 import { ThemeToggle } from "~/components/ThemeToggle";
 import { H1, H2, H3, Muted, P, Small } from "~/components/ui/typography";
 import { useIsLargeScreen } from "~/lib/utils";
 import { useAuth } from "~/ctx/AuthContext";
-import Head from "expo-router/head";
-import Footer from "~/components/ScreenComponents/Public/Elements/Footer";
+
+import { Helmet } from "react-helmet";
 
 export default function Login() {
   const [userName, setUserName] = React.useState("");
@@ -60,6 +55,41 @@ export default function Login() {
 
   return (
     <>
+      <Helmet>
+        <title>Login - Veylo</title>
+
+        <meta
+          name="description"
+          content="Log in to your Veylo account to manage jobs, clients, invoices, and schedules with ease. Secure and efficient access to your business management tools."
+        />
+        <meta property="og:title" content="Login - Veylo" />
+        <meta
+          property="og:description"
+          content="Log in to your Veylo account to manage jobs, clients, invoices, and schedules with ease."
+        />
+        <meta
+          property="og:image"
+          content="https://veylo.app/VeyloFacebookCover.png"
+        />
+        <meta property="og:url" content="https://veylo.app/login" />
+        <meta property="og:type" content="website" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Login - Veylo" />
+        <meta
+          name="twitter:description"
+          content="Log in to your Veylo account to manage jobs, clients, and schedules seamlessly."
+        />
+        <meta
+          name="twitter:image"
+          content="https://veylo.app/VeyloFacebookCover.png"
+        />
+
+        <meta name="robots" content="noindex, follow" />
+
+        <link rel="canonical" href="https://veylo.app/login" />
+      </Helmet>
+
       <Stack.Screen
         options={{
           headerRight: () => (

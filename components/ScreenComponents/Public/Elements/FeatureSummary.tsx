@@ -1,9 +1,9 @@
 import { View } from "react-native";
-import React from "react";
+
 import { Button } from "~/components/ui/button";
 import { Text } from "~/components/ui/text";
-import { H2, H3, P } from "~/components/ui/typography";
-import { JoinWaitlist } from "../../JoinWaitlist";
+import { H3, P } from "~/components/ui/typography";
+
 import { useRouter } from "expo-router";
 
 const FeatureSummary = () => {
@@ -104,7 +104,11 @@ const FeatureSummary = () => {
         </li>
       </ul>
       <View className="flex flex-row mt-8 self-end gap-2">
-        <Button onPress={() => router.push("/login")}>
+        <Button
+          accessibilityRole="button"
+          aria-label="Take a Demo tour"
+          onPress={() => router.push("/login")}
+        >
           <Text>Take a Demo tour</Text>
         </Button>
       </View>

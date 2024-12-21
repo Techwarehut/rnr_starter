@@ -1,4 +1,3 @@
-import React from "react";
 import { View, Linking, Platform } from "react-native";
 import { Button } from "~/components/ui/button";
 import { Facebook } from "~/lib/icons/Facebook";

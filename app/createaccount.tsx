@@ -2,9 +2,6 @@ import * as React from "react";
 
 import { Button } from "~/components/ui/button";
 import Animated, {
-  FadeInUp,
-  FadeOutDown,
-  Layout,
   withTiming,
   useSharedValue,
   useAnimatedStyle,
@@ -15,13 +12,14 @@ import { Text } from "~/components/ui/text";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { useRouter } from "expo-router";
-import { FastForward } from "~/lib/icons/FastForward";
+
 import { Stack } from "expo-router";
 import { ThemeToggle } from "~/components/ThemeToggle";
 import { H1, H2, H3, Muted, P } from "~/components/ui/typography";
 import { useIsLargeScreen } from "~/lib/utils";
 import { ScrollView, View } from "react-native";
 import { useAuth } from "~/ctx/AuthContext";
+import { Helmet } from "react-helmet";
 
 export default function Screen() {
   const [userName, setUserName] = React.useState("");
@@ -57,6 +55,41 @@ export default function Screen() {
 
   return (
     <>
+      <Helmet>
+        <title>Create Account - Veylo</title>
+
+        <meta
+          name="description"
+          content="Sign up for Veylo and take control of your business operations. Manage jobs, clients, invoices, and schedules with a streamlined and efficient platform."
+        />
+        <meta property="og:title" content="Create Account - Veylo" />
+        <meta
+          property="og:description"
+          content="Sign up for Veylo and take control of your business operations with a streamlined platform."
+        />
+        <meta
+          property="og:image"
+          content="https://veylo.app/VeyloFacebookCover.png"
+        />
+        <meta property="og:url" content="https://veylo.app/create-account" />
+        <meta property="og:type" content="website" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Create Account - Veylo" />
+        <meta
+          name="twitter:description"
+          content="Sign up for Veylo and take control of your business operations."
+        />
+        <meta
+          name="twitter:image"
+          content="https://veylo.app/VeyloFacebookCover.png"
+        />
+
+        <meta name="robots" content="index, follow" />
+
+        <link rel="canonical" href="https://veylo.app/create-account" />
+      </Helmet>
+
       <Stack.Screen
         options={{
           headerRight: () => (

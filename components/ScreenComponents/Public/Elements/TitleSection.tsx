@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import React from "react";
+
 import { H1, P } from "~/components/ui/typography";
 
 const TitleSection = () => {

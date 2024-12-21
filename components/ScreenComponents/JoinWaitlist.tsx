@@ -95,7 +95,12 @@ export const JoinWaitlist: React.FC<JoinWaitlistProps> = ({}) => {
     <ScrollView contentContainerClassName="flex justify-center items-center p-4 ">
       <Dialog>
         <DialogTrigger asChild>
-          <Button size="sm" variant="default">
+          <Button
+            size="sm"
+            variant="default"
+            accessibilityRole="button"
+            aria-label="Join Waitlist"
+          >
             <Text>Join Waitlist</Text>
           </Button>
         </DialogTrigger>

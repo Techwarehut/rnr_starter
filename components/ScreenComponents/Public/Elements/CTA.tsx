@@ -1,5 +1,5 @@
-import { View, Text, Image } from "react-native";
-import React from "react";
+import { View, Image } from "react-native";
+
 import { JoinWaitlist } from "../../JoinWaitlist";
 import { H2, H3, P } from "~/components/ui/typography";
 import ComingSoon from "./ComingSoon";
@@ -41,7 +41,7 @@ const CTA = () => {
                 : require("~/assets/images/AppScreens/Light/JobsLaptop.png")
             }
             // source={{ uri: ImageURL }} // Dynamic URI
-            alt="Mobile preview of Job Detail showing job description, logged hours, site contact and Checklist. Also a Laptop preview showing the list of Jobs to easily group and filter."
+            accessibilityLabel="Mobile preview of Job Detail showing job description, logged hours, site contact and Checklist. Also a Laptop preview showing the list of Jobs to easily group and filter."
             resizeMode="contain"
             className="w-[80%] h-[auto] md:w-[636px] md:h-[393px] max-w-full"
             style={{
