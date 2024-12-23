@@ -243,33 +243,10 @@ export default function TabLayout() {
           tabBarLabel: "Vendors",
         }}
       />
-      <Tabs.Screen
-        name="onboarding"
-        redirect={user?.role !== "Owner"}
-        options={{
-          title: "OnBoard",
-          tabBarIcon: ({ color, focused }) => (
-            <UserPlus
-              /* className={
-                focused ? "text-primary fill-primary" : "text-primary fill-none"
-              } */
-              className={
-                focused
-                  ? "text-primary"
-                  : isLargeScreen
-                  ? "text-muted-foreground"
-                  : "text-muted-foreground"
-              }
-              size={24}
-              strokeWidth={1.5}
-            />
-          ),
-          tabBarLabel: "OnBoard",
-        }}
-      />
+
       <Tabs.Screen
         name="settings"
-        redirect={user?.role === "Team Member"}
+        redirect={user?.role !== "Owner"}
         options={{
           title: "Settings",
           tabBarIcon: ({ color, focused }) => (

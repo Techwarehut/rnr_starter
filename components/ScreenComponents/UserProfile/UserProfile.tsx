@@ -26,6 +26,7 @@ export const ShowUserProfile: React.FC<ShowUserProfileProps> = ({}) => {
   const animatedPosition = useSharedValue<number>(0);
   const snapPoints = ["80%", "90%"];
   const { isDarkColorScheme, setColorScheme } = useColorScheme();
+  const [editMode, setEditMode] = useState(false);
 
   const handleSheetChanges = useCallback((index: number) => {
     // handle sheet changes
@@ -49,6 +50,8 @@ export const ShowUserProfile: React.FC<ShowUserProfileProps> = ({}) => {
 
     //router.replace("/createaccount");
   };
+
+  console.log("rendering again", editMode);
 
   return (
     <>
@@ -82,15 +85,25 @@ export const ShowUserProfile: React.FC<ShowUserProfileProps> = ({}) => {
       >
         <BottomSheetView className="flex-1 bg-popover gap-2 items-center justify-center p-4 ">
           <View className="flex flex-row gap-2 self-end mb-2">
-            <Button variant="outline">
-              <Text>Edit Profile</Text>
-            </Button>
+            {editMode ? (
+              <Button variant="outline" onPress={() => setEditMode(false)}>
+                <Text>Save</Text>
+              </Button>
+            ) : (
+              <Button variant="outline" onPress={() => setEditMode(true)}>
+                <Text>Edit Profile</Text>
+              </Button>
+            )}
             <Button onPress={handlelogout}>
               <Text>Log Out</Text>
             </Button>
           </View>
           {user ? (
-            <UserDetail user={user} />
+            <UserDetail
+              user={user}
+              userProfile={true}
+              editUserMode={editMode}
+            />
           ) : (
             <Text>No user data available</Text>
           )}

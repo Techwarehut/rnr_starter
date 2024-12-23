@@ -71,20 +71,24 @@ const MyTabBar: React.FC<MyTabBarProps> = ({
 
         const isFocused = state.index === index;
 
-        let isSpecialRoute = false;
-        if (user?.role === "Owner")
-          isSpecialRoute = route.name === "onboarding";
-        else isSpecialRoute = route.name === "settings";
+        let isSpecialRoute = route.name === "settings";
 
         const isPopoverRoute =
-          (!isLargeScreen && route.name === "onboarding") ||
-          (!isLargeScreen && route.name === "settings") ||
+          (!isLargeScreen &&
+            user?.role === "Owner" &&
+            route.name === "settings") ||
           (user?.role !== "Team Member" && route.name === "team") ||
           route.name === "customers" ||
           route.name === "vendors";
-        const isLastPopoverRoute =
-          (!isLargeScreen && route.name === "settings") ||
-          (isLargeScreen && route.name === "vendors");
+
+        const isLastPopoverRoute = route.name === "vendors";
+        /*  const isLastPopoverRoute =
+          (!isLargeScreen &&
+            user?.role === "Owner" &&
+            route.name === "settings") ||
+          (isLargeScreen &&
+            user?.role === "Team Lead" &&
+            route.name === "vendors"); */
 
         const onPress = () => {
           const event = navigation.emit({
@@ -104,6 +108,13 @@ const MyTabBar: React.FC<MyTabBarProps> = ({
             target: route.key,
           });
         };
+
+        console.log(
+          "popover Route",
+          route.name,
+          isPopoverRoute,
+          isLastPopoverRoute
+        );
 
         if (isPopoverRoute && !isLastPopoverRoute) {
           screenContent.push(

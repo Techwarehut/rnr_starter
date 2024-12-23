@@ -23,6 +23,7 @@ export const ShowUserProfile: React.FC<ShowUserProfileProps> = ({}) => {
   };
 
   const { logout, user } = useAuth();
+  const [editMode, setEditMode] = useState(false);
 
   const handlelogout = () => {
     logout();
@@ -45,18 +46,28 @@ export const ShowUserProfile: React.FC<ShowUserProfileProps> = ({}) => {
         <PopoverContent
           side={"bottom"}
           insets={contentInsets}
-          className="flex gap-4 w-fit"
+          className="flex gap-4 w-fit "
         >
           <View className="flex flex-row gap-2 self-end mb-2">
-            <Button variant="outline">
-              <Text>Edit Profile</Text>
-            </Button>
+            {editMode ? (
+              <Button variant="outline" onPress={() => setEditMode(false)}>
+                <Text>Save</Text>
+              </Button>
+            ) : (
+              <Button variant="outline" onPress={() => setEditMode(true)}>
+                <Text>Edit Profile</Text>
+              </Button>
+            )}
             <Button onPress={handlelogout}>
               <Text>Log Out</Text>
             </Button>
           </View>
           {user ? (
-            <UserDetail user={user} />
+            <UserDetail
+              user={user}
+              userProfile={true}
+              editUserMode={editMode}
+            />
           ) : (
             <Text>No user data available</Text>
           )}

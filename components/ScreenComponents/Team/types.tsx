@@ -1,7 +1,7 @@
 // Define the EmergencyContact interface
 export interface EmergencyContact {
-  name: string; // Name of the emergency contact
-  phone: string; // Phone number of the emergency contact
+  ename: string; // Name of the emergency contact
+  ephone: string; // Phone number of the emergency contact
 }
 
 // Define the User interface

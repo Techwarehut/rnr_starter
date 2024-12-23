@@ -6,8 +6,8 @@
     "email": "alice.johnson@example.com",
     "phone": "(357) 924-680",
     "emergencyContact": {
-      "name": "Bob Johnson",
-      "phone": "(234) 567-890"
+      "ename": "Bob Johnson",
+      "ephone": "(234) 567-890"
     },
     "profileUrl": "https://randomuser.me/api/portraits/women/1.jpg",
     "role": "Owner",
@@ -21,8 +21,8 @@
     "email": "charlie.brown@example.com",
     "phone": "(468) 135-790",
     "emergencyContact": {
-      "name": "Samantha Brown",
-      "phone": "(098) 765-4321"
+      "ename": "Samantha Brown",
+      "ephone": "(098) 765-4321"
     },
     "profileUrl": "https://randomuser.me/api/portraits/men/1.jpg",
     "role": "Team Lead",
@@ -36,8 +36,8 @@
     "email": "david.smith@example.com",
     "phone": "(122) 334-455",
     "emergencyContact": {
-      "name": "Maria Smith",
-      "phone": "(554) 433-2211"
+      "ename": "Maria Smith",
+      "ephone": "(554) 433-2211"
     },
     "profileUrl": "",
     "role": "Team Member",
@@ -51,8 +51,8 @@
     "email": "eve.davis@example.com",
     "phone": "(667) 889-900",
     "emergencyContact": {
-      "name": "John Davis",
-      "phone": "(998) 877-6655"
+      "ename": "John Davis",
+      "ephone": "(998) 877-6655"
     },
     "profileUrl": "https://randomuser.me/api/portraits/women/2.jpg",
     "role": "Team Member",
@@ -66,8 +66,8 @@
     "email": "frank.wilson@example.com",
     "phone": "(123) 123-1234",
     "emergencyContact": {
-      "name": "Lily Wilson",
-      "phone": "(432) 143-2143"
+      "ename": "Lily Wilson",
+      "ephone": "(432) 143-2143"
     },
     "profileUrl": "https://randomuser.me/api/portraits/men/3.jpg",
     "role": "Team Member",
@@ -81,8 +81,8 @@
     "email": "grace.lee@example.com",
     "phone": "(321) 321-4321",
     "emergencyContact": {
-      "name": "Tom Lee",
-      "phone": "(654) 567-4321"
+      "ename": "Tom Lee",
+      "ephone": "(654) 567-4321"
     },
     "profileUrl": "https://randomuser.me/api/portraits/women/3.jpg",
     "role": "Team Member",
@@ -96,8 +96,8 @@
     "email": "henry.thomas@example.com",
     "phone": "(987) 654-3210",
     "emergencyContact": {
-      "name": "Sarah Thomas",
-      "phone": "(098) 765-4321"
+      "ename": "Sarah Thomas",
+      "ephone": "(098) 765-4321"
     },
     "profileUrl": "https://randomuser.me/api/portraits/men/4.jpg",
     "role": "Team Member",
@@ -111,8 +111,8 @@
     "email": "ivy.green@example.com",
     "phone": "(876) 543-2109",
     "emergencyContact": {
-      "name": "Daniel Green",
-      "phone": "(210) 987-6543"
+      "ename": "Daniel Green",
+      "ephone": "(210) 987-6543"
     },
     "profileUrl": "https://randomuser.me/api/portraits/women/4.jpg",
     "role": "Team Member",
@@ -126,8 +126,8 @@
     "email": "jack.white@example.com",
     "phone": "(928) 374-650",
     "emergencyContact": {
-      "name": "Emily White",
-      "phone": "(564) 738-2910"
+      "ename": "Emily White",
+      "ephone": "(564) 738-2910"
     },
     "profileUrl": "https://randomuser.me/api/portraits/men/5.jpg",
     "role": "Team Member",
@@ -141,8 +141,8 @@
     "email": "kathy.brown@example.com",
     "phone": "(564) 738-2910",
     "emergencyContact": {
-      "name": "Richard Brown",
-      "phone": "(987) 654-3210"
+      "ename": "Richard Brown",
+      "ephone": "(987) 654-3210"
     },
     "profileUrl": "https://randomuser.me/api/portraits/women/5.jpg",
     "role": "Team Member",
