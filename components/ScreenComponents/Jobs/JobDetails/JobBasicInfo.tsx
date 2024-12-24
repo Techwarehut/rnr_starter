@@ -166,29 +166,25 @@ const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
           </View>
         )} */}
 
-      {(job.jobType === "Inspection" || job.jobType === "Maintenance") && (
-        <>
-          {job.checklistID ? (
-            <DisplayChecklist
-              linkedCheckListId={job.checklistID}
-              jobId={job._id}
-              handleDeleteChecklist={handleDeleteChecklist}
-            />
-          ) : (
-            <View className="flex-row md:flex-1  justify-between">
-              <View className="flex flex-1">
-                <Text className="text-xl">Checklist</Text>
-                <Muted>
-                  This can be a safety, inspection or maintainence checklist
-                </Muted>
-              </View>
-              <AssignChecklist
-                jobId={job._id}
-                handleAddChecklist={handleAddChecklist}
-              />
-            </View>
-          )}
-        </>
+      {job.checklistID ? (
+        <DisplayChecklist
+          linkedCheckListId={job.checklistID}
+          jobId={job._id}
+          handleDeleteChecklist={handleDeleteChecklist}
+        />
+      ) : (
+        <View className="flex-row md:flex-1  justify-between">
+          <View className="flex flex-1">
+            <Text className="text-xl">Checklist</Text>
+            <Muted>
+              This can be a safety, inspection or maintainence checklist
+            </Muted>
+          </View>
+          <AssignChecklist
+            jobId={job._id}
+            handleAddChecklist={handleAddChecklist}
+          />
+        </View>
       )}
 
       <JobImages
@@ -205,6 +201,7 @@ const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
 
         <Button
           variant="default"
+          size="icon"
           onPress={() =>
             router.push({
               pathname: "/purchases/addnew",
@@ -229,7 +226,7 @@ const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
           <Text className="text-xl">Notes</Text>
           <Muted>Quick Notes for anyone to add</Muted>
         </View>
-        <Button variant="default">
+        <Button variant="default" size="icon">
           <Plus className="text-primary-foreground" size={18} />
         </Button>
       </View>

@@ -542,3 +542,52 @@ export const fetchReadyForInvoiceJobs = async (
     }, 1000); // Simulate a delay
   });
 };
+
+// Function to add an image to a job
+export const addImageToJob = async (
+  jobId: string,
+  newImage: string
+): Promise<Job | null> => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const jobIndex = jobs.findIndex((job) => job._id === jobId);
+      if (jobIndex !== -1) {
+        // Ensure the new image is not already in the images array
+        if (!jobs[jobIndex].images.includes(newImage)) {
+          // Add the new image to the job's images array
+          jobs[jobIndex].images.push(newImage);
+          resolve(jobs[jobIndex]); // Resolve with the updated job
+        } else {
+          reject(new Error("Image already exists in the job"));
+        }
+      } else {
+        reject(new Error("Job not found")); // Reject if job is not found
+      }
+    }, 1000); // Simulate a delay
+  });
+};
+
+// Function to delete an image from a job
+export const deleteImageFromJob = async (
+  jobId: string,
+  imageToDelete: string
+): Promise<Job | null> => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const jobIndex = jobs.findIndex((job) => job._id === jobId);
+      if (jobIndex !== -1) {
+        // Find the index of the image to delete
+        const imageIndex = jobs[jobIndex].images.indexOf(imageToDelete);
+        if (imageIndex !== -1) {
+          // Remove the image from the images array
+          jobs[jobIndex].images.splice(imageIndex, 1);
+          resolve(jobs[jobIndex]); // Resolve with the updated job
+        } else {
+          reject(new Error("Image not found in the job"));
+        }
+      } else {
+        reject(new Error("Job not found")); // Reject if job is not found
+      }
+    }, 1000); // Simulate a delay
+  });
+};

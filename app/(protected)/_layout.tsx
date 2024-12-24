@@ -170,6 +170,18 @@ export default function RootLayout() {
             headerBackTitleVisible: false,
           }}
         />
+
+        <Stack.Screen
+          name="(user)/addnewuser"
+          options={{
+            headerShown: true,
+            headerTitle: "New User",
+            presentation: Platform.OS === "ios" ? "card" : "modal",
+            headerTitleAlign: "left",
+            //headerBackVisible: true,
+            headerBackTitleVisible: false,
+          }}
+        />
         <Stack.Screen
           name="(tabs)"
           options={{

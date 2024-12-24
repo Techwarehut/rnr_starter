@@ -70,7 +70,7 @@ export const AddNewCustomer: React.FC<AddNewCustomerProps> = ({
         className="mr-2"
         onPress={handlePresentModalPress}
       >
-        <Text>Add New Customer</Text>
+        <Text>New Customer</Text>
       </Button>
 
       <BottomSheetModal

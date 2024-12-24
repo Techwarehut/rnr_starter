@@ -34,12 +34,16 @@ interface UserDetailProps {
   user: User;
   editUserMode?: boolean;
   userProfile?: boolean;
+  onNewUserAdd?: (data: User) => void;
+  addNew?: boolean;
 }
 
 const UserDetail: React.FC<UserDetailProps> = ({
   user,
   editUserMode = false,
   userProfile = false,
+  onNewUserAdd,
+  addNew = false,
 }) => {
   const isLargeScreen = useIsLargeScreen();
 
@@ -94,7 +98,6 @@ const UserDetail: React.FC<UserDetailProps> = ({
   };
 
   const handleInputChange = (field: string, value: string) => {
-    console.log(field, value);
     setUserData((prevData) => {
       // If siteIndex is defined, update a site location
 
@@ -116,6 +119,12 @@ const UserDetail: React.FC<UserDetailProps> = ({
     });
   };
 
+  useEffect(() => {
+    if (onNewUserAdd && userData) {
+      onNewUserAdd(userData);
+    }
+  }, [onNewUserAdd, userData]);
+
   // Phone number formatting
   const handlePhoneChange = (field: string, phone: string) => {
     const formattedPhone = formatPhoneNumber(phone);
@@ -136,8 +145,6 @@ const UserDetail: React.FC<UserDetailProps> = ({
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.canceled) {
       setImage(result.assets[0].uri);
       handleInputChange("profileUrl", result.assets[0].uri);
@@ -146,7 +153,7 @@ const UserDetail: React.FC<UserDetailProps> = ({
 
   return (
     <>
-      {!isLargeScreen && !userProfile && (
+      {!isLargeScreen && !userProfile && !addNew && (
         <Stack.Screen
           // Replace with your actual component
           options={{
@@ -170,7 +177,7 @@ const UserDetail: React.FC<UserDetailProps> = ({
         className="flex-1 w-full gap-12 p-2"
       >
         {/* Header with Edit and Delete buttton */}
-        {isLargeScreen && !userProfile && (
+        {isLargeScreen && !userProfile && !addNew && (
           <View className="w-full flex-row gap-1 items-center justify-end self-end gap-2 mb-4">
             <RoleWrapper roles={["Owner"]}>
               <ActionButtons
@@ -222,7 +229,7 @@ const UserDetail: React.FC<UserDetailProps> = ({
           )}
         </View>
 
-        {!userProfile && (
+        {!userProfile && !addNew && (
           <View className="flex-1 flex-row gap-4 items-center justify-center mt-8">
             <Card className="flex-1">
               <CardHeader>

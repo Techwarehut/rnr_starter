@@ -71,7 +71,7 @@ export const AddNewVendor: React.FC<AddNewVendorProps> = ({
         className="shadow shadow-foreground/5"
         onPress={handlePresentModalPress}
       >
-        <Text>Add New Vendor</Text>
+        <Text>New Vendor</Text>
       </Button>
 
       <BottomSheetModal

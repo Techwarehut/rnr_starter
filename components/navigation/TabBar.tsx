@@ -109,13 +109,6 @@ const MyTabBar: React.FC<MyTabBarProps> = ({
           });
         };
 
-        console.log(
-          "popover Route",
-          route.name,
-          isPopoverRoute,
-          isLastPopoverRoute
-        );
-
         if (isPopoverRoute && !isLastPopoverRoute) {
           screenContent.push(
             <TabBarListItem

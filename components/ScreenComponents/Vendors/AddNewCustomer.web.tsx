@@ -56,7 +56,7 @@ export const AddNewVendor: React.FC<AddNewVendorProps> = ({
         </DialogTrigger>
         <DialogContent className="max-w-[300px] md:max-w-full">
           <DialogHeader>
-            <DialogTitle>Add New Vendor</DialogTitle>
+            <DialogTitle>New Vendor</DialogTitle>
             <DialogDescription>
               <AddNewVendorForm onChange={setVendorData} />
             </DialogDescription>

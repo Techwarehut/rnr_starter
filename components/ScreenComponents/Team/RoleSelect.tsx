@@ -41,6 +41,7 @@ export const RoleSelect: React.FC<RoleSelectProps> = ({
       onValueChange(label);
     };
   };
+  console.log(value);
 
   function RadioGroupItemWithLabel({
     value,
@@ -63,7 +64,7 @@ export const RoleSelect: React.FC<RoleSelectProps> = ({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline">
-          <Text>Select Role</Text>
+          <Text>{value || "Select Role"}</Text>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent insets={contentInsets} className="w-64 native:w-72">

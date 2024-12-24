@@ -39,6 +39,7 @@ const DeleteButton: React.FC<ActionButtonsProps> = ({
         <Button
           variant={xIcon ? "link" : "destructive"}
           onPress={() => setAlertDialogOpen(true)}
+          size={xIcon ? "icon" : "default"}
         >
           {xIcon ? (
             <X className="text-destructive" size={18} />

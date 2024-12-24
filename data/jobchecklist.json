@@ -37,6 +37,43 @@
     ]
   },
   {
+    "job_id": "JN001",
+    "checklist_id": "hvac_maintenance_002",
+    "checklist_name": "HVAC Maintenance Checklist",
+    "tasks": [
+      {
+        "task_id": "hvac_001",
+        "task_name": "Inspect air filter",
+        "status": "pending"
+      },
+      {
+        "task_id": "hvac_002",
+        "task_name": "Check refrigerant levels",
+        "status": "pending"
+      },
+      {
+        "task_id": "hvac_003",
+        "task_name": "Clean condenser coils",
+        "status": "pending"
+      },
+      {
+        "task_id": "hvac_004",
+        "task_name": "Test heating/cooling operation",
+        "status": "completed"
+      },
+      {
+        "task_id": "hvac_005",
+        "task_name": "Check thermostat calibration",
+        "status": "pending"
+      },
+      {
+        "task_id": "hvac_006",
+        "task_name": "Clean and lubricate blower motor",
+        "status": "pending"
+      }
+    ]
+  },
+  {
     "job_id": "JN004",
     "checklist_id": "plumbing_maintenance_001",
     "checklist_name": "Plumbing Maintenance Checklist",

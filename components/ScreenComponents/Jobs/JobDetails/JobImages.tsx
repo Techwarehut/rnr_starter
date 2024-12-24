@@ -8,6 +8,8 @@ import { Muted } from "~/components/ui/typography";
 import { Button } from "~/components/ui/button";
 import { Plus } from "~/lib/icons/Plus";
 import * as ImagePicker from "expo-image-picker";
+import DeleteButton from "../../DeleteButton";
+import { addImageToJob, deleteImageFromJob } from "~/api/jobsApi";
 
 interface JobImagesProps {
   job: Job;
@@ -23,6 +25,7 @@ const JobImages: React.FC<JobImagesProps> = ({
   const cardWidth = 300;
 
   const [image, setImage] = useState<string | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
   const [status, requestPermission] = ImagePicker.useCameraPermissions();
   const [mediaStatus, requestMediaPermission] =
     ImagePicker.useMediaLibraryPermissions();
@@ -36,11 +39,17 @@ const JobImages: React.FC<JobImagesProps> = ({
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      await addImageToJob(job._id, result.assets[0].uri);
+      setRefreshKey((prev) => prev + 1);
     }
+  };
+
+  // Function to handle toggling task status using the API
+  const handleDeleteImage = async (imageURL: string) => {
+    // Call the API function to toggle the task status
+    await deleteImageFromJob(job._id, imageURL);
+    setRefreshKey((prev) => prev + 1);
   };
 
   return (
@@ -50,7 +59,7 @@ const JobImages: React.FC<JobImagesProps> = ({
           <Text className="text-xl">Images</Text>
           <Muted>Add before or after images</Muted>
         </View>
-        <Button onPress={pickImage} variant="default">
+        <Button onPress={pickImage} variant="default" size="icon">
           <Plus className="text-primary-foreground" size={18} />
         </Button>
       </View>
@@ -67,14 +76,22 @@ const JobImages: React.FC<JobImagesProps> = ({
       >
         <View className="flex-row gap-4">
           {job.images.map((image, index) => (
-            <Image
-              key={index}
-              source={{ uri: image }}
-              className="h-15 w-15 rounded-md"
-              resizeMode="cover"
-              // Optional: Add a fallback for error handling
-              onError={() => console.log(`Failed to load image: ${image}`)}
-            />
+            <View key={index} className="flex flex-row">
+              <Image
+                source={{ uri: image }}
+                className="h-15 w-15 rounded-md"
+                resizeMode="cover"
+                // Optional: Add a fallback for error handling
+                onError={() => console.log(`Failed to load image: ${image}`)}
+              />
+
+              <DeleteButton
+                xIcon={true}
+                onDelete={() => {
+                  handleDeleteImage(image);
+                }}
+              />
+            </View>
           ))}
         </View>
       </ScrollView>

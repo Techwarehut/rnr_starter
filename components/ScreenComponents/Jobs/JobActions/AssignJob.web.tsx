@@ -55,7 +55,7 @@ export const AssignJob: React.FC<AssignJobyProps> = ({ onJobAssigned }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="default">
+        <Button variant="default" size="icon">
           <Plus className="text-primary-foreground" size={18} />
         </Button>
       </DropdownMenuTrigger>

@@ -68,7 +68,7 @@ export const AssignJob: React.FC<AssignJobyProps> = ({ onJobAssigned }) => {
 
   return (
     <>
-      <Button onPress={handlePresentModalPress} variant="default">
+      <Button onPress={handlePresentModalPress} variant="default" size="icon">
         <Plus className="text-primary-foreground" size={18} />
       </Button>
 

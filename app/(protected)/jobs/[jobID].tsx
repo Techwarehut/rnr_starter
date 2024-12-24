@@ -125,6 +125,16 @@ const JobDetail = () => {
               [field]: value,
             },
           };
+        } else if (field === "images") {
+          // Ensure 'value' is a string before adding to images
+          if (typeof value === "string") {
+            return {
+              ...prevData,
+              images: [...prevData.images, value], // Add the string value
+            };
+          }
+          // Handle case where value is not a string, for example, if it's a Customer, SiteLocation, or DateType
+          console.error("Invalid value type for images:", value);
         } else {
           return {
             ...prevData,
