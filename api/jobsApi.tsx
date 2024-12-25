@@ -9,6 +9,7 @@ import {
 } from "~/components/ScreenComponents/Jobs/Filters/Statustypes";
 import {
   AssignedUser,
+  Comment,
   Job,
   JobRecurrence,
 } from "~/components/ScreenComponents/Jobs/types"; // Import your Job type
@@ -69,8 +70,6 @@ export const addJob = async (newJob: Job): Promise<Job[]> => {
       newJob._id = generateUniqueId(); // Generate ID for the first job
 
       const createdJobs: Job[] = [];
-
-      console.log(newJob.recurrence);
 
       // If recurrence is defined, create jobs based on the dueDates
       if (newJob.recurrence && newJob.recurrence.totalIterations > 1) {
@@ -585,6 +584,26 @@ export const deleteImageFromJob = async (
         } else {
           reject(new Error("Image not found in the job"));
         }
+      } else {
+        reject(new Error("Job not found")); // Reject if job is not found
+      }
+    }, 1000); // Simulate a delay
+  });
+};
+
+// Function to add an image to a job
+export const addNoteToJob = async (
+  jobId: string,
+  newNote: Comment
+): Promise<Job | null> => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const jobIndex = jobs.findIndex((job) => job._id === jobId);
+      if (jobIndex !== -1) {
+        newNote.commentId = generateUniqueId(); // Generate ID
+        // Add the new image to the job's images array
+        jobs[jobIndex].comments?.push(newNote);
+        resolve(jobs[jobIndex]); // Resolve with the updated job
       } else {
         reject(new Error("Job not found")); // Reject if job is not found
       }

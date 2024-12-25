@@ -258,7 +258,7 @@ const JobBSecondaryInfo: React.FC<JobSecondaryInfoProps> = ({
           </View>
 
           <View className="flex flex-row  items-center justify-between">
-            <Muted>Linked PO</Muted>
+            <Muted>Label</Muted>
             <View className="flex  w-60">
               <Input
                 value={job.purchaseOrderNumber}

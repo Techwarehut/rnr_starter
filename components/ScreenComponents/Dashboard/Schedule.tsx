@@ -128,12 +128,12 @@ const Schedule = () => {
           job.assignedTo && job.assignedTo.length > 0
             ? job.assignedTo.map((user) => user.name).join(", ")
             : "Unassigned";
-      } else if (groupBy === "Purchase Order") {
+      } else if (groupBy === "Label") {
         if (job.purchaseOrderNumber) {
           const purchaseOrderNumber = job.purchaseOrderNumber; // Adjust this according to your data structure
           groupTitle = `${purchaseOrderNumber}`;
         } else {
-          groupTitle = "No Purchase Order"; // Default when there is no project
+          groupTitle = "No Label"; // Default when there is no project
         }
       } else {
         groupTitle = "All Jobs"; // Default title when no grouping

@@ -1,0 +1,32 @@
+{
+  "_id": "1",
+  "businessName": "Comfort Climate HVAC",
+  "businessLogo": "https://via.placeholder.com/300x200?text=Logo+Placeholder",
+
+  "businessType": "HVAC",
+  "businessPhone": "(564) 738-2910",
+  "businessEmail": "contact@comfortclimatehvac.com",
+  "businessWebsite": "https://www.comfortclimatehvac.com",
+  "businessBillingAddress": {
+    "addressLine": "5678 HVAC Lane",
+    "city": "Climate City",
+    "zipCode": "67890",
+    "province": "Warm State",
+    "country": "HVACland"
+  },
+
+  "businessTaxID": "TAX98765432",
+  "taxRate": 13,
+
+  "employeeCount": 30,
+
+  "customerNotificationPreferences": {
+    "email": true,
+    "sms": true
+  },
+
+  "planType": "Core",
+  "subscriptionStartDate": "2024-01-01",
+  "subscriptionEndDate": "2025-01-01",
+  "paymentStatus": "Paid"
+}

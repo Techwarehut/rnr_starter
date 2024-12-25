@@ -6,6 +6,7 @@ import { Stack, useLocalSearchParams } from "expo-router";
 import { Job } from "~/components/ScreenComponents/Jobs/types"; // Import your Job type
 import {
   assignJob,
+  editJob,
   getJobById,
   updateJobPriority,
   updateJobStatus,
@@ -52,8 +53,9 @@ const JobDetail = () => {
     fetchJobDetails();
   }, [jobID]);
 
-  const handleEditJob = () => {
+  const handleEditJob = async () => {
     setEditMode(false);
+    if (job) await editJob(job);
   };
   const handleDeleteJob = () => {};
 

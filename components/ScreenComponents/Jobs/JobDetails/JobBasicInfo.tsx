@@ -1,7 +1,7 @@
 import { Pressable, View } from "react-native";
 import React, { useState } from "react";
 import { Text } from "~/components/ui/text";
-import { Job } from "../types";
+import { Comment, Job } from "../types";
 import InputField from "../../InputField";
 import TextField from "../../TextField";
 import { Badge } from "~/components/ui/badge";
@@ -35,10 +35,13 @@ import DisplayChecklist from "../../Checklist/CheckList";
 import { AssignChecklist } from "../JobActions/AssignChecklist";
 import {
   addChecklistToJob,
+  addNoteToJob,
   deleteChecklistFromJob,
   updateJobRecurrence,
 } from "~/api/jobsApi";
 import JobReqFreqUpdate from "../JobReqFreqUpdate";
+import { useAuth } from "~/ctx/AuthContext";
+import Toast from "react-native-toast-message";
 
 interface JobBasicInfoProps {
   job: Job;
@@ -60,15 +63,28 @@ const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
   const isLargeScreen = useIsLargeScreen();
   const { showSuccessToast, showErrorToast } = useToast();
   const [refreshKey, setRefreshKey] = useState(0);
+  const [note, setNote] = useState("");
   const router = useRouter();
+  const { user } = useAuth();
 
-  const handleAddPurchase = async (purchase: PurchaseOrder) => {
+  const handleAddNote = async () => {
     try {
-      const addedPurchase = await addPurchaseOrder(purchase);
+      const comment: Comment = {
+        commentId: "",
+        text: note,
+        createdBy: {
+          userId: user?._id || "",
+          name: user?.name || "",
+          profileUrl: user?.profileUrl || "",
+        },
+        createdAt: new Date().toISOString(),
+      };
+      const updatedJob = await addNoteToJob(job._id, comment);
+      setNote("");
 
-      showSuccessToast("Purchase Added successfully!");
+      showSuccessToast("Note Added successfully!");
     } catch (error) {
-      showErrorToast("Error Adding Purchase!");
+      showErrorToast("Error Adding Note!");
     }
   };
 
@@ -87,70 +103,73 @@ const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
   };
 
   return (
-    <View className="flex gap-8 mb-4">
-      {editMode ? (
-        <View className="flex gap-2">
-          <Input
-            value={job.jobTitle}
-            onChangeText={(value) => handleInputChange("jobTitle", value)}
-            editable={editMode}
+    <>
+      <View className="flex gap-8 mb-4">
+        {editMode ? (
+          <View className="flex gap-2">
+            <Input
+              value={job.jobTitle}
+              onChangeText={(value) => handleInputChange("jobTitle", value)}
+              editable={editMode}
+            />
+
+            <Textarea
+              value={job.jobDescription}
+              onChangeText={(value) =>
+                handleInputChange("jobDescription", value)
+              }
+              editable={editMode}
+              nativeID="Job Description"
+            />
+          </View>
+        ) : (
+          <>
+            <View>
+              {isLargeScreen ? (
+                <H2>
+                  {job._id}: {job.jobTitle}
+                </H2>
+              ) : (
+                <H2>
+                  {job._id}: {job.jobTitle}
+                </H2>
+              )}
+            </View>
+
+            <Text>{job.jobDescription}</Text>
+          </>
+        )}
+
+        <JobSiteContact job={job} />
+
+        <JobTimesheet
+          job={job}
+          handleInputChange={handleInputChange}
+          editMode={editMode}
+        />
+
+        <View className="flex-row flex-wrap gap-2  md:gap-8 ">
+          <JobPriorityUpdate
+            onChangePriority={(newPriority) => {
+              if (onChangePriority) onChangePriority(job._id, newPriority);
+            }}
+            priority={job.priority}
+          />
+          <JobTypeUpdate
+            onChangeType={(newType) => {
+              if (onChangeType) onChangeType(job._id, newType);
+            }}
+            type={job.jobType}
           />
 
-          <Textarea
-            value={job.jobDescription}
-            onChangeText={(value) => handleInputChange("jobDescription", value)}
-            editable={editMode}
-            nativeID="Job Description"
+          <JobStatusUpdate
+            onChangeStatus={(newStatus) => {
+              if (onChangeStatus) onChangeStatus(job._id, newStatus);
+            }}
+            status={job.status}
           />
         </View>
-      ) : (
-        <>
-          <View>
-            {isLargeScreen ? (
-              <H2>
-                {job._id}: {job.jobTitle}
-              </H2>
-            ) : (
-              <H2>
-                {job._id}: {job.jobTitle}
-              </H2>
-            )}
-          </View>
-
-          <Text>{job.jobDescription}</Text>
-        </>
-      )}
-
-      <JobSiteContact job={job} />
-
-      <JobTimesheet
-        job={job}
-        handleInputChange={handleInputChange}
-        editMode={editMode}
-      />
-
-      <View className="flex-row flex-wrap gap-2  md:gap-8 ">
-        <JobPriorityUpdate
-          onChangePriority={(newPriority) => {
-            if (onChangePriority) onChangePriority(job._id, newPriority);
-          }}
-          priority={job.priority}
-        />
-        <JobTypeUpdate
-          onChangeType={(newType) => {
-            if (onChangeType) onChangeType(job._id, newType);
-          }}
-          type={job.jobType}
-        />
-
-        <JobStatusUpdate
-          onChangeStatus={(newStatus) => {
-            if (onChangeStatus) onChangeStatus(job._id, newStatus);
-          }}
-          status={job.status}
-        />
-      </View>
-      {/* <View className="flex md:flex-row  gap-8 mb-4">
+        {/* <View className="flex md:flex-row  gap-8 mb-4">
         {job.jobType === "Maintenance" && (
           <View className="flex md:w-1/2 gap-2">
             <Text className="text-xl">Recurring Frequency</Text>
@@ -166,77 +185,86 @@ const JobBasicInfo: React.FC<JobBasicInfoProps> = ({
           </View>
         )} */}
 
-      {job.checklistID ? (
-        <DisplayChecklist
-          linkedCheckListId={job.checklistID}
-          jobId={job._id}
-          handleDeleteChecklist={handleDeleteChecklist}
-        />
-      ) : (
-        <View className="flex-row md:flex-1  justify-between">
-          <View className="flex flex-1">
-            <Text className="text-xl">Checklist</Text>
-            <Muted>
-              This can be a safety, inspection or maintainence checklist
-            </Muted>
-          </View>
-          <AssignChecklist
+        {job.checklistID ? (
+          <DisplayChecklist
+            linkedCheckListId={job.checklistID}
             jobId={job._id}
-            handleAddChecklist={handleAddChecklist}
+            handleDeleteChecklist={handleDeleteChecklist}
           />
+        ) : (
+          <View className="flex-row md:flex-1  justify-between">
+            <View className="flex flex-1">
+              <Text className="text-xl">Checklist</Text>
+              <Muted>
+                This can be a safety, inspection or maintainence checklist
+              </Muted>
+            </View>
+            <AssignChecklist
+              jobId={job._id}
+              handleAddChecklist={handleAddChecklist}
+            />
+          </View>
+        )}
+
+        <JobImages
+          job={job}
+          handleInputChange={handleInputChange}
+          editMode={editMode}
+        />
+
+        <View className="flex-row items-center justify-between">
+          <View>
+            <Text className="text-xl">Purchases</Text>
+            <Muted>All Purchases made for this job</Muted>
+          </View>
+
+          <Button
+            variant="default"
+            size="icon"
+            onPress={() =>
+              router.push({
+                pathname: "/purchases/addnew",
+                params: {
+                  jobid: job._id, // Passing the job._id directly, not wrapped in an object
+                },
+              })
+            }
+          >
+            <Plus className="text-primary-foreground" size={18} />
+          </Button>
         </View>
-      )}
 
-      <JobImages
-        job={job}
-        handleInputChange={handleInputChange}
-        editMode={editMode}
-      />
+        <JobPurchaseOrders
+          job={job}
+          handleInputChange={handleInputChange}
+          editMode={editMode}
+        />
 
-      <View className="flex-row items-center justify-between">
-        <View>
-          <Text className="text-xl">Purchases</Text>
-          <Muted>All Purchases made for this job</Muted>
+        <View className="flex-row items-center justify-between">
+          <View>
+            <Text className="text-xl">Notes</Text>
+            <Muted>Quick Notes for anyone to add</Muted>
+          </View>
+          <Button variant="default" size="icon" onPress={handleAddNote}>
+            <Plus className="text-primary-foreground" size={18} />
+          </Button>
         </View>
+        <Textarea
+          value={note}
+          placeholder="Add a note"
+          onChangeText={setNote}
+          editable={true}
+          nativeID="Note"
+        />
 
-        <Button
-          variant="default"
-          size="icon"
-          onPress={() =>
-            router.push({
-              pathname: "/purchases/addnew",
-              params: {
-                jobid: job._id, // Passing the job._id directly, not wrapped in an object
-              },
-            })
-          }
-        >
-          <Plus className="text-primary-foreground" size={18} />
-        </Button>
+        <JobComments
+          job={job}
+          handleInputChange={handleInputChange}
+          editMode={editMode}
+        />
       </View>
-
-      <JobPurchaseOrders
-        job={job}
-        handleInputChange={handleInputChange}
-        editMode={editMode}
-      />
-
-      <View className="flex-row items-center justify-between">
-        <View>
-          <Text className="text-xl">Notes</Text>
-          <Muted>Quick Notes for anyone to add</Muted>
-        </View>
-        <Button variant="default" size="icon">
-          <Plus className="text-primary-foreground" size={18} />
-        </Button>
-      </View>
-
-      <JobComments
-        job={job}
-        handleInputChange={handleInputChange}
-        editMode={editMode}
-      />
-    </View>
+      <Toast />
+    </>
   );
 };
 

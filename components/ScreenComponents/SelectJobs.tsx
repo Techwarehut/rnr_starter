@@ -1,5 +1,5 @@
 import { router, Stack, useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, SectionList, View } from "react-native";
 import Toast from "react-native-toast-message";
 
@@ -49,7 +49,7 @@ export default function SelectJob({
   const [filteredjobs, setFilteredJobs] = useState<Job[]>([]);
   const { showSuccessToast, showErrorToast } = useToast();
   const [searchText, setSearchText] = useState("");
-  const [group, setGroup] = useState("Purchase Order");
+  const [group, setGroup] = useState("Label");
   const [refreshKey, setRefreshKey] = useState(0);
 
   const [checkboxEnabled, setCheckboxEnabled] = useState(true);
@@ -115,9 +115,6 @@ export default function SelectJob({
         paid: false,
       });
     }
-
-    // Log to verify that the state is being set correctly
-    console.log("Selected Statuses Updated", selectedStatuses);
   }, [user]);
 
   const filterJobs = () => {
@@ -233,12 +230,12 @@ export default function SelectJob({
           job.assignedTo && job.assignedTo.length > 0
             ? job.assignedTo.map((user) => user.name).join(", ")
             : "Unassigned";
-      } else if (groupBy === "Purchase Order") {
+      } else if (groupBy === "Label") {
         if (job.purchaseOrderNumber) {
           const purchaseOrderNumber = job.purchaseOrderNumber; // Adjust this according to your data structure
           groupTitle = `${purchaseOrderNumber}`;
         } else {
-          groupTitle = "No Purchase Order"; // Default when there is no project
+          groupTitle = "No Label"; // Default when there is no project
         }
       } else {
         groupTitle = "All Jobs"; // Default title when no grouping
