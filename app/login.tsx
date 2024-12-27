@@ -85,7 +85,7 @@ export default function Login() {
           content="https://veylo.app/VeyloFacebookCover.png"
         />
 
-        <meta name="robots" content="noindex, follow" />
+        <meta name="robots" content="index, follow" />
 
         <link rel="canonical" href="https://veylo.app/login" />
       </Helmet>
