@@ -247,11 +247,11 @@ export default function Login() {
             <View>
               <Muted className="text-center">
                 By continuing, you agree to our{" "}
-                <Link href="/termsofservice">
+                <Link href="https://veylo.app/termsofservice">
                   <Muted className="underline">Terms of Service</Muted>
                 </Link>{" "}
                 and{" "}
-                <Link href="/privacypolicy">
+                <Link href="https://veylo.app/privacypolicy">
                   <Muted className="underline">Privacy Policy</Muted>
                 </Link>
               </Muted>
