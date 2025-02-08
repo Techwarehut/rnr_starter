@@ -41,8 +41,8 @@ export default function Login() {
     router.push("/createaccount");
   };
 
-  const handlelogin = () => {
-    login(userName, password);
+  const handlelogin = (user: string, pwd: string) => {
+    login(user, pwd);
     // router.replace("/(tabs)");
   };
 
@@ -199,7 +199,7 @@ export default function Login() {
             <Muted>OR CONTINUE WITH</Muted>
             <View className="flex-1 h-px bg-muted" />
           </View> */}
-            <View className="gap-4 w-full">
+            {/* <View className="gap-4 w-full">
               <View className="gap-2">
                 <Label nativeID="email">Email</Label>
                 <Input
@@ -228,22 +228,43 @@ export default function Login() {
                   Leave Password blank.
                 </Small>
                 <View style={{ alignSelf: "flex-end" }}>
-                  <Button variant="link" onPress={handlelogin}>
+                  <Button variant="link" onPress={() => {}}>
                     <Text className="text-primary text-right">
                       Forgot Password
                     </Text>
                   </Button>
                 </View>
               </View>
-            </View>
+            </View> */}
+            <P>
+              Check out what you as a business owner, your team lead or your
+              employee would see!
+            </P>
             <Button
               // variant="outline"
               size="lg"
               className="shadow shadow-foreground/5 w-full"
-              onPress={handlelogin}
+              onPress={() => handlelogin("owner", "")}
             >
-              <Text>Login</Text>
+              <Text>Login as Business Owner</Text>
             </Button>
+            <Button
+              variant="secondary"
+              size="lg"
+              className="shadow shadow-foreground/5 w-full"
+              onPress={() => handlelogin("lead", "")}
+            >
+              <Text>Login as Team Lead</Text>
+            </Button>
+            <Button
+              variant="outline"
+              size="lg"
+              className="shadow shadow-foreground/5 w-full"
+              onPress={() => handlelogin("member", "")}
+            >
+              <Text>Login as Employee</Text>
+            </Button>
+
             <View>
               <Muted className="text-center">
                 By continuing, you agree to our{" "}

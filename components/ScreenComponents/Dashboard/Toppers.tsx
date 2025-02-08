@@ -16,6 +16,7 @@ import { User } from "../Team/types";
 import { cn, getInitials } from "~/lib/utils";
 import { fetchCustomers } from "~/api/customerApi";
 import { Customer } from "../Customers/types";
+import RoleWrapper from "../RoleWrapper";
 
 const Toppers = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -67,30 +68,32 @@ const Toppers = () => {
           </CardContent>
         </Card>
       </View>
-      <View className="flex gap-2">
-        <Card className="flex flex-1 p-4 m-2 gap-4">
-          <CardDescription className="text-primary">
-            Revenue Stars
-          </CardDescription>
+      <RoleWrapper roles={["Owner", "Team Lead"]}>
+        <View className="flex gap-2">
+          <Card className="flex flex-1 p-4 m-2 gap-4">
+            <CardDescription className="text-primary">
+              Revenue Stars
+            </CardDescription>
 
-          <CardContent>
-            {customers.slice(0, 3).map((item, index) => (
-              <TableRow
-                className={cn(
-                  "active:bg-secondary w-full",
-                  index % 2 && "bg-muted/40 "
-                )}
-                key={item._id}
-              >
-                <TableCell className="flex-1">
-                  <Text>{item.businessName}</Text>
-                  <Muted>$5000 in Revenue</Muted>
-                </TableCell>
-              </TableRow>
-            ))}
-          </CardContent>
-        </Card>
-      </View>
+            <CardContent>
+              {customers.slice(0, 3).map((item, index) => (
+                <TableRow
+                  className={cn(
+                    "active:bg-secondary w-full",
+                    index % 2 && "bg-muted/40 "
+                  )}
+                  key={item._id}
+                >
+                  <TableCell className="flex-1">
+                    <Text>{item.businessName}</Text>
+                    <Muted>$5000 in Revenue</Muted>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </CardContent>
+          </Card>
+        </View>
+      </RoleWrapper>
     </View>
   );
 };
